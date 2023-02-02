@@ -55,6 +55,7 @@ Don't forget to give the project a star! Thanks again!
 
 More about this in the [CODE_OF_CONDUCT](/CODE_OF_CONDUCT.md) file.
 
+Please read the frontend Rules When the Using the Repositories: https://github.com/it-at-m/kobit-frontend/wiki/Rules-When-the-Using-the-Repositories
 
 ## License
 
