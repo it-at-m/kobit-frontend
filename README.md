@@ -28,9 +28,9 @@ See the frontend System and Software Requirements: https://github.com/it-at-m/ko
 
 ## Roadmap
 
-In the immediate future 1-2 months from now: improving the user interface
-In the nearterm future 2-9 months from now: developing a CMS for admin users
-In the longterm future 12-24 months from now: implentation of an AI Chatbot assistent
+* In the immediate future 1-2 months from now: improving the user interface
+* In the nearterm future 2-9 months from now: developing a CMS for admin users
+* In the longterm future 12-24 months from now: implentation of an AI Chatbot assistent
 
 
 ## Set up
