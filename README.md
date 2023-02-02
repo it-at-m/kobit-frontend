@@ -37,7 +37,7 @@ See the frontend System and Software Requirements: https://github.com/it-at-m/ko
 Installation can be found in the frontend wiki under Installation: https://github.com/it-at-m/kobit-frontend/wiki/Installation
 
 ## Documentation
-Frontend developer documentation can be found in the wiki: https://github.com/it-at-m/kobit-frontend/wiki
+Frontend developer documentation can be found in the frontend wiki: https://github.com/it-at-m/kobit-frontend/wiki
 
 ## Contributing
 
