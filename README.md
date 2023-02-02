@@ -17,7 +17,10 @@ Die KoBITApp ist nutzerzentriert, niederschwelliges Angebot, Beitrag zur Digital
 
 The documentation project is built with technologies we use in our projects:
 
-* *write here the list of used technologies*
+* *Node.js*
+* *Vue.js*
+* *Vuetify*
+* *SpringBoot API Gateway*
 
 ## Roadmap
 
