@@ -24,6 +24,8 @@ The documentation project is built with technologies we use in our projects:
 * *SpringBoot API Gateway 2.7.5*
 * *Maven Apache Version: 3.8.1*
 
+See the frontend System and Software Requirements: https://github.com/it-at-m/kobit-frontend/wiki/System-and-Software-Requirements
+
 ## Roadmap
 
 In the immediate future 1-2 months from now: improving the user interface
