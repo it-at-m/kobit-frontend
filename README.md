@@ -1,6 +1,6 @@
 # KoBITApp Frontend
 
-### Description English:
+### Description English
 
 **Summary**
 
