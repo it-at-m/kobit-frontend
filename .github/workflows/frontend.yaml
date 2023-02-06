@@ -15,5 +15,6 @@ jobs:
           node-version: '16'
           cache: 'npm'
       - run: npm run init
+      - run: npm run lint
       - run: npm run test
       - run: npm run build

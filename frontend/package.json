@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "init": "npm install && npm run clean",
     "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service lint --fix && vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --fix",
     "create-feature": "bash ./scripts/createFeature.sh"
   },
