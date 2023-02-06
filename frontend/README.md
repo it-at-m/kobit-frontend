@@ -1,4 +1,4 @@
-# RefArch-Kickstarter-GUI
+# Kickstarter-GUI
 
 ## Project setup
 ```
