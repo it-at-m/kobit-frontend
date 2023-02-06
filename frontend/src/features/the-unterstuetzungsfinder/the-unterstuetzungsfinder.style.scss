@@ -1,0 +1,22 @@
+@import "src/core/core.style";
+
+.finder-pointer {
+    cursor: pointer;
+}
+
+#id_info_banner {
+    color: black !important;
+    border-color: $info-color !important;
+}
+.v-tooltip__content {
+    max-width:375px !important;
+    display: block !important;
+    margin-top: -2%;
+  }
+  .mdi-menu-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 2px 13px;
+    font-size: 28px;
+}

@@ -1,0 +1,116 @@
+spring:
+  application.name: @project.artifactId@
+  banner.location: banner.txt
+  main:
+    web-application-type: reactive
+  jackson:
+    serialization:
+      indent-output: on
+  session:
+    timeout: 36000  # in seconds; Goal: same lifetime as SSO Session (e.g. 10 hours)
+  realm: ${REALM}
+
+  # spring cloud gateway config
+  cloud:
+    gateway:
+      actuator:
+        verbose:
+          enabled: false
+      globalcors:
+        corsConfigurations:
+          # The cors configuration to allow frontend developers cross origin request via this api gateway
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:8081"
+              - "http://127.0.0.1:8081"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        - id: sso
+          uri: ${SSO_URI}
+          predicates:
+            - Path=/api/sso/userinfo
+          filters:
+            - RewritePath=/api/sso/userinfo, /auth/realms/${spring.realm}/protocol/openid-connect/userinfo
+        - id: backend
+          uri: ${BACKEND_URI}
+          predicates:
+            - Path=${BACKEND_URI_PREDICATE}
+          filters:
+            - RewritePath=${BACKEND_URI_REWRITE_PATH}
+            - RemoveResponseHeader=WWW-Authenticate
+      default-filters:
+        - RemoveResponseHeader=Expires
+        - RemoveRequestHeader=cookie
+        - RemoveRequestHeader=x-xsrf-token
+        - TokenRelay=
+
+  # security config
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URI}
+        registration:
+          keycloak:
+            client-id: kobit
+            client-secret: ${client-secret}
+
+  http:
+    log-request-details: ${LOG_REQUEST}
+server:
+  port: 8080
+  error:
+    include-exception: false
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+
+  # Define the keycloak development test and productive realm here
+
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      cors:
+        allowedOrigins:
+          - "http://localhost:8081"
+          - "http://127.0.0.1:8081"
+        allowedMethods: "*"
+        allowedHeaders: "*"
+        allowCredentials: on
+        maxAge: 3600
+      exposure:
+        include: health, info, prometheus
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    health:
+      enabled: on
+    info:
+      enabled: on
+    prometheus:
+      enabled: on
+  info:
+    env:
+      enabled: true
+info.application.name: ${spring.application.name}
+info.application.version: @project.version@
+
+---
+spring:
+  profiles: no-security
+  autoconfigure:
+    exclude:
+      - org.springframework.cloud.security.oauth2.gateway.TokenRelayAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.client.reactive.ReactiveOAuth2ClientAutoConfiguration
+  cloud:
+    gateway:
+      # The whole list need to be overridden to remove CustomTokenRelayGatewayFilter
+      default-filters:
+        - RemoveResponseHeader=Expires
+        - RemoveRequestHeader=cookie
+        - RemoveRequestHeader=x-xsrf-token

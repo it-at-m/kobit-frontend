@@ -1,0 +1,34 @@
+{
+  "common": {
+    "texts": {
+      "close": "Schließen",
+      "agree": "Zustimmen",
+      "disagree": "Ablehnen"
+    }
+  },
+  "theUnterstuetzungsfinder": {
+    "texts": {
+      "noResults": "Keine Anlaufstellen vorhanden",
+      "pointOfContacts": "Anlaufstellen",
+      "restartFinder": "Neu Starten",
+      "answers": "Ihre Antworten"
+    },
+    "bannerAboveQuestions": {
+      "text":  "Sie können sich mit Ihrem Anliegen auch an Ihre direkte oder übergeordnete, nicht beteiligte Führungskraft wenden.",
+      "close": "Informationsbanner schließen"
+    },
+    "features": {
+      "theMail": {
+        "texts": {
+          "addAddress": "Empfangsadresse hinzufügen",
+          "mailTo": "An",
+          "mailFrom": "Von",
+          "mailTopic": "Betreff",
+          "mailContent": "Inhalt",
+          "mailSend": "Absenden",
+          "confidentiality": "Zustimmung der Schweigepflichtsentbindung"
+        }
+      }
+    }
+  }
+}
