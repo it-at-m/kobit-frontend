@@ -6,24 +6,24 @@
     <v-card-text>
       <v-list v-if="anlaufstelle?.contact">
         <v-list-item
-          v-for="(contact, contactIndex) in anlaufstelle?.contact"
-          :id="`id_base_fields_contact_email${contactIndex}`"
-          :key="contactIndex"
-          :href="`mailto:${contact.email}`"
+            v-for="(contact, contactIndex) in anlaufstelle?.contact"
+            :id="`id_base_fields_contact_email${contactIndex}`"
+            :key="contactIndex"
+            :href="`mailto:${contact.email}`"
         >
           {{ contact.email }}
         </v-list-item>
       </v-list>
       <v-list v-if="hasLinksNotDownloads">
         <div
-          v-for="(link, linkIndex) in anlaufstelle?.links"
-          :key="linkIndex"
+            v-for="(link, linkIndex) in anlaufstelle?.links"
+            :key="linkIndex"
         >
           <v-list-item
-            v-if="link.inDownloads === false"
-            :id="`id_base_fields_contact_link_${linkIndex}`"
-            :href="link.url"
-            target="_blank"
+              v-if="link.inDownloads === false"
+              :id="`id_base_fields_contact_link_${linkIndex}`"
+              :href="link.url"
+              target="_blank"
           >
             {{ link.name }}
           </v-list-item>
@@ -43,10 +43,13 @@ export default class BaseFieldsContact extends Vue {
   @Prop()
   anlaufstelle?: Anlaufstelle;
 
-  get hasLinksNotDownloads(): boolean {
-    return (this.anlaufstelle?.links?.filter(function (o) {
-      return o.inDownloads == false;
-    })?.length > 0);
+  get hasLinksNotDownloads(): boolean | undefined {
+    const filteredLinks = this.anlaufstelle?.links.filter(it => !it.inDownloads)
+    if (filteredLinks !== undefined) {
+      return filteredLinks.length > 0;
+    } else {
+      return false;
+    }
   }
 }
 </script>
