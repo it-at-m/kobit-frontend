@@ -108,4 +108,3 @@ Distributed under the MIT License. See [LICENSE](LICENSE) file for more informat
 
 it@M - opensource@muenchen.de
 
-
