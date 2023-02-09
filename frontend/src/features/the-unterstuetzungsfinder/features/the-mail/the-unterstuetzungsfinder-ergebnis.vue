@@ -340,7 +340,7 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   addAddress(value: Contact, shortCut: string): void {
 
-    const isNotExisting = !this.recipients.find(element => element.contact.email === value.email );
+    const isNotExisting = !this.recipients.find(element => element.contact?.email === value.email );
     
     if (isNotExisting) {
 

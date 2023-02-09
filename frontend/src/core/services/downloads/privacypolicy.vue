@@ -3,8 +3,8 @@
     <v-btn
       v-if="item !== undefined"
       plain
-      :href="item[0]?.textItemView.link"
-      :download="item[0]?.textItemView.header"
+      :href="item.textItemView[0].link"
+      :download="item.textItemView[0].header"
       :loading="isLoading"
     >
       Datenschutzhinweis <v-icon>mdi-download</v-icon>

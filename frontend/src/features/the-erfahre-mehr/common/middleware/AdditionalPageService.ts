@@ -4,7 +4,7 @@ import {getAdditionalContentForPage} from "@/features/the-erfahre-mehr/common/ap
 
 export const useGetAdditionalContent = (pageType: PageType) => {
     const {isLoading, isError, data, error} = useQuery(
-        ['itemWrapper'],
+        ['itemWrapper', pageType],
         () => getAdditionalContentForPage(pageType)
     );
     return {isLoading, isError, data, error};
