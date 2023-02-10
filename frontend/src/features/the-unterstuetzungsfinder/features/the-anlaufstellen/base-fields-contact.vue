@@ -6,10 +6,10 @@
     <v-card-text>
       <v-list v-if="anlaufstelle?.contact">
         <v-list-item
-            v-for="(contact, contactIndex) in anlaufstelle?.contact"
-            :id="`id_base_fields_contact_email${contactIndex}`"
-            :key="contactIndex"
-            :href="`mailto:${contact.email}`"
+          v-for="(contact, contactIndex) in anlaufstelle?.contact"
+          :id="`id_base_fields_contact_email${contactIndex}`"
+          :key="contactIndex"
+          :href="`mailto:${contact.email}`"
         >
           {{ contact.email }}
         </v-list-item>

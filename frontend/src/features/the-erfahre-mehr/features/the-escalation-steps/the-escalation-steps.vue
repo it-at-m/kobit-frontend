@@ -1,5 +1,9 @@
 <template>
-  <base-page-content :item="escalationStepModel">
+  <base-page-content 
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+  >
     <div>
       <v-container
         v-for="(layer, layerIndex) in escalationSteps"
@@ -90,7 +94,10 @@ import {
 import EscalationSteps from "@/features/the-erfahre-mehr/features/the-escalation-steps/EscalationSteps.type";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
-    escalationStepsRoutes
+    escalationStepsRoutes,
+    ESCALATION_STEP_ROUTE_NAME,
+    ESCALATION_STEP_ROUTE_META_ICON,
+    ESCALATION_STEP_ROUTE_META_INFO_TEXT
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
 
 @Component({
@@ -101,6 +108,11 @@ import {
 export default class TheEscalationSteps extends Vue {
 
     panel = [];
+
+    name = ESCALATION_STEP_ROUTE_NAME;
+    icon = ESCALATION_STEP_ROUTE_META_ICON;
+    infoText = ESCALATION_STEP_ROUTE_META_INFO_TEXT;
+
 
     get escalationStepModel(): unknown {
         return escalationStepsRoutes;
