@@ -20,7 +20,7 @@
         class="float-right"
         style="width:220px !important; height:56px !important;"
         src="/images/logo-lhm.svg"
-       alt="Logo der Stadt München mit Link auf die offizielle Homepage">
+        alt="Logo der Stadt München mit Link auf die offizielle Homepage">
     </a>
   </v-app-bar>
 </template>

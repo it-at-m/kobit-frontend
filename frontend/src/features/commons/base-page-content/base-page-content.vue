@@ -21,6 +21,11 @@
               {{ infoText }}
             </v-card-subtitle>
             <slot name="default" />
+            
+            <v-btn v-if="$route.name != 'Erfahre Mehr'" to="/erfahre-mehr" depressed color="secondary" class="ma-5">
+                <v-icon>mdi-arrow-left-bold</v-icon> Zurück zu Erfahre Mehr
+              
+            </v-btn>
           </v-card>
         </v-skeleton-loader>
       </v-col>
@@ -33,6 +38,11 @@
 
 <script lang="ts">
 export default {
+  computed: {
+    currentRouteName() {
+        return this.$route.name;
+    }
+  },
   name: "BasePageContent",
   props: {
     isLoading: {
