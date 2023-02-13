@@ -2,6 +2,15 @@
   <v-container fluid>
     <v-row>
       <v-col>
+        <v-btn
+              v-if="$route.fullPath.includes('/erfahre-mehr/')"
+              to="/erfahre-mehr"
+              depressed
+              color="secondary"
+              class="ma-5"
+            >
+              <v-icon>mdi-arrow-left-bold</v-icon> Zurück
+            </v-btn>
         <v-skeleton-loader
           class="mx-auto"
           type="article"
@@ -21,16 +30,6 @@
               {{ infoText }}
             </v-card-subtitle>
             <slot name="default" />
-            
-            <v-btn
-              v-if="$route.name != 'Erfahre Mehr'"
-              to="/erfahre-mehr"
-              depressed
-              color="secondary"
-              class="ma-5"
-            >
-              <v-icon>mdi-arrow-left-bold</v-icon> Zurück zu Erfahre Mehr
-            </v-btn>
           </v-card>
         </v-skeleton-loader>
       </v-col>
