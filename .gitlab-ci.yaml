@@ -1,5 +1,5 @@
 include:
-  - project: "$INCLUDE_CICD_PROJECT"
+  - project: "$CICD_PROJECT"
     ref: "main"
     file:
-      - "$INCLUDE_CICD_GITLAB_YML"
+      - "$CICD_GITLAB_YML"
