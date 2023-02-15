@@ -1,12 +1,15 @@
 <template>
-  <BasePageContent
-    :is-loading="isLoading"
-    :info-text="infoText"
-    :name="name"
-    :icon="icon"
-  >
-    <ContentList :items="items?.contentItemView" />
-  </BasePageContent>
+    <v-container fluid>
+      <BackButton />
+      <BasePageContent
+        :is-loading="isLoading"
+        :info-text="infoText"
+        :name="name"
+        :icon="icon"
+      >
+        <ContentList :items="items?.contentItemView" />
+      </BasePageContent>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -20,10 +23,11 @@ import {
   LEADERSHIP_COOPERATION_ROUTE_META_INFO_TEXT,
   LEADERSHIP_COOPERATION_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
-  components: {ContentList, BasePageContent},
+  components: {ContentList, BasePageContent, BackButton},
   setup() {
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.LEADERSHIP);
 

@@ -1,4 +1,6 @@
 <template>
+    <v-container fluid>
+    <BackButton />
   <base-page-content 
     :icon="icon"
     :name="name"
@@ -81,6 +83,7 @@
       </v-container>
     </div>
   </base-page-content>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -93,6 +96,8 @@ import {
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps-store.module";
 import EscalationSteps from "@/features/the-erfahre-mehr/features/the-escalation-steps/EscalationSteps.type";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+
 import {
     escalationStepsRoutes,
     ESCALATION_STEP_ROUTE_NAME,
@@ -102,7 +107,7 @@ import {
 
 @Component({
     components: {
-        BasePageContent
+        BasePageContent, BackButton
     }
 })
 export default class TheEscalationSteps extends Vue {

@@ -1,4 +1,6 @@
 <template>
+    <v-container fluid>
+    <BackButton />
   <BasePageContent
     :is-loading="isLoading"
     :info-text="infoText"
@@ -22,6 +24,7 @@
       <TextList :items="filteredFaqs" />
     </v-card-text>
   </BasePageContent>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -36,10 +39,11 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import TextList from "@/features/commons/components/TextList.vue";
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
 import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheFaq",
-  components: {TextList, BasePageContent},
+  components: {TextList, BasePageContent, BackButton},
   setup() {
     const searchText = ref<string>("");
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.FAQ);

@@ -1,4 +1,6 @@
 <template>
+    <v-container fluid>
+    <BackButton />
   <BasePageContent
     :icon="icon"
     :info-text="infoText"
@@ -7,6 +9,7 @@
   >
     <TextList :items="items?.textItemView" />
   </BasePageContent>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -20,10 +23,11 @@ import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
 import TextList from "@/features/commons/components/TextList.vue";
 import {defineComponent} from 'vue';
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
 
 export default defineComponent({
   name: 'TheDownloads',
-  components: {TextList, BasePageContent},
+  components: {TextList, BasePageContent, BackButton},
   setup() {
 
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.DOWNLOADS);

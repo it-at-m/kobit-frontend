@@ -1,4 +1,6 @@
 <template>
+    <v-container fluid>
+    <BackButton />
   <BasePageContent
     :icon="icon"
     :name="name"
@@ -24,6 +26,7 @@
       />
     </div>
   </BasePageContent>
+    </v-container>
 </template>
 
 <script lang="ts">
@@ -40,10 +43,11 @@ import {
 import BasePageContent from '@/features/commons/base-page-content/base-page-content.vue';
 import {useMutation} from '@tanstack/vue-query';
 import {getStepByPosition} from '@/features/the-erfahre-mehr/features/the-dv-fair/api/DVStepClient';
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
 
 export default defineComponent ({
   name: 'the-dv-fair',
-  components: {BasePageContent, StepFinished, StepItems, StepperHeader},
+  components: {BasePageContent, StepFinished, StepItems, StepperHeader, BackButton},
   setup() {
     const currentStep = ref(1);
     const isFinished = ref<boolean>(false);

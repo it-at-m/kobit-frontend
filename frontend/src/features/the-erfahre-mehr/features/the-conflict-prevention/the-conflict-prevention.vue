@@ -1,4 +1,6 @@
-<template>
+<template>  
+  <v-container fluid>
+  <BackButton />
   <BasePageContent
     :is-loading="isLoading"
     :info-text="infoText"
@@ -7,6 +9,7 @@
   >
     <ContentList :items="items?.contentItemView" />
   </BasePageContent>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -21,10 +24,11 @@ import {
 } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: {BasePageContent, ContentList},
+  components: {BasePageContent, ContentList, BackButton},
   setup() {
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PREVENTION);
 

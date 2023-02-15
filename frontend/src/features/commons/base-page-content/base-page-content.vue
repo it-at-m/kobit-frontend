@@ -2,15 +2,6 @@
   <v-container fluid>
     <v-row>
       <v-col>
-        <v-btn
-              v-if="$route.fullPath.includes('/erfahre-mehr/')"
-              to="/erfahre-mehr"
-              depressed
-              color="secondary"
-              class="ma-5"
-            >
-              <v-icon>mdi-arrow-left-bold</v-icon> Zurück
-            </v-btn>
         <v-skeleton-loader
           class="mx-auto"
           type="article"
@@ -60,18 +51,13 @@ export default {
       type: String,
       default: ""
     }
-  },
-  computed: {
-    currentRouteName() {
-        return this.$route.name;
-    }
   }
 };
 </script>
 
 <style scoped>
-
 .mdi-stairs{
     transform: rotateY(180deg) !important;
 }
+
 </style>

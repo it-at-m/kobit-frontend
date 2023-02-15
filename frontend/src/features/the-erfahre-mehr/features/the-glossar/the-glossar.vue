@@ -1,9 +1,12 @@
 <template>
-  <base-page-content
+  <v-container fluid>
+    <BackButton />
+    <base-page-content
     :icon="icon"
     :name="name"
     :info-text="infoText"
     :is-loading="isLoading"
+    class="scrollable"
   >
     <v-card-text>
       <v-row>
@@ -55,6 +58,8 @@
       </v-row>
     </v-card-text>
   </base-page-content>
+    </v-container>
+ 
 </template>
 
 <script lang="ts">
@@ -69,10 +74,12 @@ import {
   GLOSSAR_ROUTE_META_INFO_TEXT,
   GLOSSAR_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
+import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+
 
 export default defineComponent({
   name: "TheGlossar",
-  components: {TextList, BasePageContent},
+  components: {TextList, BasePageContent, BackButton},
   setup() {
     const searchText = ref<string>("");
     const filterLetter = ref<string>("");
@@ -118,17 +125,7 @@ export default defineComponent({
 </script>
 
 
+
 <style scoped>
-/* For catching the line breaks in the data */
 
-.v-list-item__content p {
-  white-space: pre-wrap;
-  text-indent: 0em !important;
-
-}
-
-/* highlight the active filter */
-.active {
-  background-color: #f5f5f5 !important;
-}
 </style>
