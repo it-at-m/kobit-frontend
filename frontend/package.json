@@ -6,7 +6,7 @@
     "init": "npm install",
     "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service lint --fix && vue-cli-service build",
-    "test": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --fix",
     "create-feature": "bash ./scripts/createFeature.sh"
   },
