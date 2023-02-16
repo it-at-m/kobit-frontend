@@ -21,6 +21,6 @@ jobs:
       - name: trigger Job
         uses: appleboy/gitlab-ci-action@master
         with:
-          url: "https://git.muenchen.com"
+          host: "https://git.muenchen.com"
           token: ${{ secrets.GITLAB_PIPELINE_TOKEN }}
           project_id: 7290
