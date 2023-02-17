@@ -1,14 +1,14 @@
 <template>
-    <v-container fluid>
+  <v-container fluid>
     <BackButton />
-  <BasePageContent
-    :icon="icon"
-    :info-text="infoText"
-    :is-loading="isLoading"
-    :name="name"
-  >
-    <TextList :items="items?.textItemView" />
-  </BasePageContent>
+    <BasePageContent
+      :icon="icon"
+      :info-text="infoText"
+      :is-loading="isLoading"
+      :name="name"
+    >
+      <TextList :items="items?.textItemView" />
+    </BasePageContent>
   </v-container>
 </template>
 

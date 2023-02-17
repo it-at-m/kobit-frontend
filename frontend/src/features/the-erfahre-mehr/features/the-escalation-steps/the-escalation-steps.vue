@@ -1,88 +1,88 @@
 <template>
-    <v-container fluid>
+  <v-container fluid>
     <BackButton />
-  <base-page-content 
-    :icon="icon"
-    :name="name"
-    :info-text="infoText"
-  >
-    <div>
-      <v-container
-        v-for="(layer, layerIndex) in escalationSteps"
-        :key="layerIndex"
-        class="mb-0  mt-0"
-        fluid
-        :style="{'background':layer.color}"
-      >
-        <v-row no-gutters>
-          <v-col
-            cols="12"
-            sm="12"
-            class="mr-0 pr-0"
-          >
-            <v-expansion-panels
-              style="background:none !important;"
-              flat
+    <base-page-content 
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+    >
+      <div>
+        <v-container
+          v-for="(layer, layerIndex) in escalationSteps"
+          :key="layerIndex"
+          class="mb-0  mt-0"
+          fluid
+          :style="{'background':layer.color}"
+        >
+          <v-row no-gutters>
+            <v-col
+              cols="12"
+              sm="12"
+              class="mr-0 pr-0"
             >
-              <v-expansion-panel style="background:none !important;">
-                <v-expansion-panel-header
-                  :key="layerIndex"
-                  class="pl-0"
-                >
-                  {{ layer.name }}
-                </v-expansion-panel-header>
-
-                <v-expansion-panel-content>
-                  <p>{{ layer.description }}</p>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-col>
-          <v-col
-            v-for="(step, stepIndex) in layer.steps"
-            :key="stepIndex"
-            class="mt-3"
-            :offset="0"
-            :offset-sm="0"
-            :offset-md="layerIndex"
-            :offset-lg="layerIndex"
-            :offset-xl="layerIndex"
-            cols="12" 
-            sm="12"
-          >
-            <v-row no-gutters>
-              <v-col
-                :offset="0"
-                :offset-sm="0"
-                :offset-md="stepIndex+layerIndex*2"
-                :offset-lg="stepIndex+layerIndex*2"
-                :offset-xl="stepIndex+layerIndex*2"
-                cols="12"
-                sm="12"
-                md="12"
-                lg="12"
-                xl="12"
+              <v-expansion-panels
+                style="background:none !important;"
+                flat
               >
-                <v-expansion-panels
-                  v-model="$data['panel_' + stepIndex]"
-                  :class="{'isMobile': $vuetify.breakpoint.smAndDown, 'isDesktop': $vuetify.breakpoint.mdAndUp}"
+                <v-expansion-panel style="background:none !important;">
+                  <v-expansion-panel-header
+                    :key="layerIndex"
+                    class="pl-0"
+                  >
+                    {{ layer.name }}
+                  </v-expansion-panel-header>
+
+                  <v-expansion-panel-content>
+                    <p>{{ layer.description }}</p>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-col>
+            <v-col
+              v-for="(step, stepIndex) in layer.steps"
+              :key="stepIndex"
+              class="mt-3"
+              :offset="0"
+              :offset-sm="0"
+              :offset-md="layerIndex"
+              :offset-lg="layerIndex"
+              :offset-xl="layerIndex"
+              cols="12" 
+              sm="12"
+            >
+              <v-row no-gutters>
+                <v-col
+                  :offset="0"
+                  :offset-sm="0"
+                  :offset-md="stepIndex+layerIndex*2"
+                  :offset-lg="stepIndex+layerIndex*2"
+                  :offset-xl="stepIndex+layerIndex*2"
+                  cols="12"
+                  sm="12"
+                  md="12"
+                  lg="12"
+                  xl="12"
                 >
-                  <v-expansion-panel>
-                    <v-expansion-panel-header :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}">
-                      Stufe {{ stepIndex+(layerIndex*escalationSteps.length)+1 }}: {{ step.name }}
-                    </v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                      <p>{{ step.description }}</p>
-                    </v-expansion-panel-content>
-                  </v-expansion-panel>
-                </v-expansion-panels>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
-  </base-page-content>
+                  <v-expansion-panels
+                    v-model="$data['panel_' + stepIndex]"
+                    :class="{'isMobile': $vuetify.breakpoint.smAndDown, 'isDesktop': $vuetify.breakpoint.mdAndUp}"
+                  >
+                    <v-expansion-panel>
+                      <v-expansion-panel-header :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}">
+                        Stufe {{ stepIndex+(layerIndex*escalationSteps.length)+1 }}: {{ step.name }}
+                      </v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <p>{{ step.description }}</p>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </base-page-content>
   </v-container>
 </template>
 

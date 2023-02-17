@@ -1,32 +1,32 @@
 <template>
-    <v-container fluid>
+  <v-container fluid>
     <BackButton />
-  <BasePageContent
-    :icon="icon"
-    :name="name"
-    :info-text="infoText"
-    :is-loading="isLoading"
-  >
-    <div v-if="! isFinished">
-      <StepperHeader
-        v-if="step !== undefined"
-        :step="step"
-        :current-step="currentStep"
-        :next-step="nextStep"
-        :set-is-finished="setIsFinished"
-      />
-      <StepItems 
-        :step="step"
-        :current-step="currentStep"
-      />
-    </div>
-    <div v-if="isFinished">
-      <StepFinished
-        :restart-process="restartProcess"
-      />
-    </div>
-  </BasePageContent>
-    </v-container>
+    <BasePageContent
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+      :is-loading="isLoading"
+    >
+      <div v-if="! isFinished">
+        <StepperHeader
+          v-if="step !== undefined"
+          :step="step"
+          :current-step="currentStep"
+          :next-step="nextStep"
+          :set-is-finished="setIsFinished"
+        />
+        <StepItems 
+          :step="step"
+          :current-step="currentStep"
+        />
+      </div>
+      <div v-if="isFinished">
+        <StepFinished
+          :restart-process="restartProcess"
+        />
+      </div>
+    </BasePageContent>
+  </v-container>
 </template>
 
 <script lang="ts">

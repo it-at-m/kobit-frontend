@@ -12,6 +12,7 @@
         md="8"
         lg="9"
         xl="10"
+        class="ma-0 pa-0"
       />
 
       <v-col
@@ -20,10 +21,10 @@
         md="4"
         lg="3"
         xl="2"
+        class="ma-0 pa-0"
       >
-        <p>
           <PrivacyPolicy />
-        </p>
+
       </v-col>
     </v-row>
   </v-footer>

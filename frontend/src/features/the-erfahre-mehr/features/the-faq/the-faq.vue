@@ -1,29 +1,29 @@
 <template>
   <v-container fluid>
     <BackButton />
-  <BasePageContent
-    :is-loading="isLoading"
-    :info-text="infoText"
-    :name="name"
-    :icon="icon"
-  >
-    <v-card-text>
-      <v-row>
-        <v-col>
-          <v-text-field
-            id="id_faq_search"
-            v-model="searchText"
-            label="FAQs durchsuchen"
-            placeholder="Eingabe"
-            outlined
-            append-icon="mdi-magnify"
-            single-line
-          />
-        </v-col>
-      </v-row>
-      <TextList :items="filteredFaqs" />
-    </v-card-text>
-  </BasePageContent>
+    <BasePageContent
+      :is-loading="isLoading"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
+    >
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-text-field
+              id="id_faq_search"
+              v-model="searchText"
+              label="FAQs durchsuchen"
+              placeholder="Eingabe"
+              outlined
+              append-icon="mdi-magnify"
+              single-line
+            />
+          </v-col>
+        </v-row>
+        <TextList :items="filteredFaqs" />
+      </v-card-text>
+    </BasePageContent>
   </v-container>
 </template>
 
