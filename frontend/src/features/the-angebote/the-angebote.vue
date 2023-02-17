@@ -1,5 +1,9 @@
 <template>
-  <base-page-content :item="angeboteModel">
+  <BasePageContent
+  :icon="icon"
+  :name="name"
+  :info-text="infoText"
+  :is-loading="false">
     <v-card-text>
       <v-card
         v-for="(item, itemIndex) in items"
@@ -14,7 +18,7 @@
         <v-card-subtitle>{{ item.meta.infoText }}</v-card-subtitle>
       </v-card>
     </v-card-text>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
@@ -28,9 +32,18 @@ import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 })
 export default class TheAngebote extends Vue {
 
-  get angeboteModel(): unknown {
-    return theAngeboteRoutes;
+  get name(): string {
+    return theAngeboteRoutes.name;
   }
+
+  get icon(): string {
+    return theAngeboteRoutes.meta.icon
+  }
+
+  get infoText(): string {
+    return theAngeboteRoutes.meta.infoText
+  }
+
 
   get items(): unknown[] {
     return [];

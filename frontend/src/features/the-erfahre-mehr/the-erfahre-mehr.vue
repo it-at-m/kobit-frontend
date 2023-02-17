@@ -1,5 +1,9 @@
 <template>
-  <base-page-content :item="erfahreMehrModel">
+  <BasePageContent
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+      :is-loading="false">
     <v-container fluid>
       <v-row>
         <v-col>
@@ -74,7 +78,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
@@ -176,8 +180,16 @@ export default class TheErfahreMehr extends Vue {
     ];
   }
 
-  get erfahreMehrModel(): unknown {
-    return erfahreMehrRoutes;
+  get name(): string {
+    return erfahreMehrRoutes.name;
+  }
+
+  get icon(): string {
+    return erfahreMehrRoutes.meta.icon
+  }
+
+  get infoText(): string {
+    return erfahreMehrRoutes.meta.infoText
   }
 
 }
@@ -201,11 +213,4 @@ export default class TheErfahreMehr extends Vue {
   padding: 2px 5px;
 }
 
-.mdi-stairs {
-  transform: rotateY(180deg);
-}
-
-.v-alert {
-  box-shadow: none !important;
-}
 </style>

@@ -1,27 +1,31 @@
 <template>
-  <base-page-content :item="escalationStepModel">
+  <BasePageContent
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+      :is-loading="false">
     <div>
       <v-container
-        v-for="(layer, layerIndex) in escalationSteps"
-        :key="layerIndex"
-        class="mb-0  mt-0"
-        fluid
-        :style="{'background':layer.color}"
+          v-for="(layer, layerIndex) in escalationSteps"
+          :key="layerIndex"
+          class="mb-0  mt-0"
+          fluid
+          :style="{'background':layer.color}"
       >
         <v-row no-gutters>
           <v-col
-            cols="12"
-            sm="12"
-            class="mr-0 pr-0"
+              cols="12"
+              sm="12"
+              class="mr-0 pr-0"
           >
             <v-expansion-panels
-              style="background:none !important;"
-              flat
+                style="background:none !important;"
+                flat
             >
               <v-expansion-panel style="background:none !important;">
                 <v-expansion-panel-header
-                  :key="layerIndex"
-                  class="pl-0"
+                    :key="layerIndex"
+                    class="pl-0"
                 >
                   {{ layer.name }}
                 </v-expansion-panel-header>
@@ -33,37 +37,38 @@
             </v-expansion-panels>
           </v-col>
           <v-col
-            v-for="(step, stepIndex) in layer.steps"
-            :key="stepIndex"
-            class="mt-3"
-            :offset="0"
-            :offset-sm="0"
-            :offset-md="layerIndex"
-            :offset-lg="layerIndex"
-            :offset-xl="layerIndex"
-            cols="12" 
-            sm="12"
+              v-for="(step, stepIndex) in layer.steps"
+              :key="stepIndex"
+              class="mt-3"
+              :offset="0"
+              :offset-sm="0"
+              :offset-md="layerIndex"
+              :offset-lg="layerIndex"
+              :offset-xl="layerIndex"
+              cols="12"
+              sm="12"
           >
             <v-row no-gutters>
               <v-col
-                :offset="0"
-                :offset-sm="0"
-                :offset-md="stepIndex+layerIndex*2"
-                :offset-lg="stepIndex+layerIndex*2"
-                :offset-xl="stepIndex+layerIndex*2"
-                cols="12"
-                sm="12"
-                md="12"
-                lg="12"
-                xl="12"
+                  :offset="0"
+                  :offset-sm="0"
+                  :offset-md="stepIndex+layerIndex*2"
+                  :offset-lg="stepIndex+layerIndex*2"
+                  :offset-xl="stepIndex+layerIndex*2"
+                  cols="12"
+                  sm="12"
+                  md="12"
+                  lg="12"
+                  xl="12"
               >
                 <v-expansion-panels
-                  v-model="$data['panel_' + stepIndex]"
-                  :class="{'isMobile': $vuetify.breakpoint.smAndDown, 'isDesktop': $vuetify.breakpoint.mdAndUp}"
+                    v-model="$data['panel_' + stepIndex]"
+                    :class="{'isMobile': $vuetify.breakpoint.smAndDown, 'isDesktop': $vuetify.breakpoint.mdAndUp}"
                 >
                   <v-expansion-panel>
-                    <v-expansion-panel-header :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}">
-                      Stufe {{ stepIndex+(layerIndex*escalationSteps.length)+1 }}: {{ step.name }}
+                    <v-expansion-panel-header
+                        :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}">
+                      Stufe {{ stepIndex + (layerIndex * escalationSteps.length) + 1 }}: {{ step.name }}
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                       <p>{{ step.description }}</p>
@@ -76,60 +81,58 @@
         </v-row>
       </v-container>
     </div>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
+import {Component, Vue} from "vue-property-decorator";
 import {
-    Component,
-    Vue
-} from "vue-property-decorator";
-import {
-    getEscalationSteps
+  getEscalationSteps
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps-store.module";
 import EscalationSteps from "@/features/the-erfahre-mehr/features/the-escalation-steps/EscalationSteps.type";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
-    escalationStepsRoutes
+  escalationStepsRoutes
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
 
 @Component({
-    components: {
-        BasePageContent
-    }
+  components: {
+    BasePageContent
+  }
 })
 export default class TheEscalationSteps extends Vue {
 
-    panel = [];
+  get name(): string {
+    return escalationStepsRoutes.name;
+  }
 
-    get escalationStepModel(): unknown {
-        return escalationStepsRoutes;
-    }
+  get icon(): string {
+    return escalationStepsRoutes.meta.icon
+  }
 
-    get escalationSteps(): EscalationSteps[] {
-        return this.$store.getters[getEscalationSteps()];
-    }
+  get infoText(): string {
+    return escalationStepsRoutes.meta.infoText
+  }
 
-    isNotLastObject(escalationStepsIndex: number): boolean {
-        return escalationStepsIndex !== this.escalationSteps.length - 1;
-    }
+  get escalationSteps(): EscalationSteps[] {
+    return this.$store.getters[getEscalationSteps()];
+  }
+
+  isNotLastObject(escalationStepsIndex: number): boolean {
+    return escalationStepsIndex !== this.escalationSteps.length - 1;
+  }
 
 }
 </script>
 
 <style scoped>
-/* For catching the line breaks in the data */
-.v-list-item__content {
-    white-space: pre-wrap;
-    /* 👈 this is the important part */
-}
 
 .isMobile {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 
 
 .isDesktop {
-    max-width: 300px !important;
+  max-width: 300px !important;
 }
 </style>
