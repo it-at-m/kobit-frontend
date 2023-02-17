@@ -15,7 +15,6 @@
               text
               :to="unterstuezungsfinder.path"
             >
-              <b>Wenn Sie Unterstützung bei der Auswahl der Anlaufstellen benötigen, wechseln Sie zum Unterstützungsfinder</b>
               <b>Hier lang zum Unterstützungsfinder</b>
             </v-btn>
           </v-card-actions>
