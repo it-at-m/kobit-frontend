@@ -15,7 +15,8 @@
               text
               :to="unterstuezungsfinder.path"
             >
-              <b>zum Unterstützungsfinder</b>
+              <b>Wenn Sie Unterstützung bei der Auswahl der Anlaufstellen benötigen, wechseln Sie zum Unterstützungsfinder</b>
+              <b>Hier lang zum Unterstützungsfinder</b>
             </v-btn>
           </v-card-actions>
           <v-card-text>
@@ -23,7 +24,8 @@
               <img
                 :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'max-height:30vh;' : 'max-height:50vh;'"
                 style="max-width:90%;"
-                src=""
+                src="/images/hands_wide.jpg"
+                alt="Man sieht jeweils einen Arm von 10 Menschen, die im Kreis stehen. Diese haben ihre Hände aufeinander gelegt."
               >
             </center>
           </v-card-text>
