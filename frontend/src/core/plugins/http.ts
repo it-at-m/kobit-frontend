@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const configuredAxios = axios.create({
-    baseURL: `/api/kobit-backend-service`,
+    baseURL: `${process.env.VUE_APP_API_URL}/api/kobit-backend-service`,
 });
 
 export async function httpGetJson<T>(path: string): Promise<T> {
