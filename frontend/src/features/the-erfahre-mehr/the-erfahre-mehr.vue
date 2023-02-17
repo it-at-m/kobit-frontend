@@ -1,35 +1,36 @@
 <template>
   <BasePageContent
-      :icon="icon"
-      :name="name"
-      :info-text="infoText"
-      :is-loading="false">
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
+  >
     <v-container fluid>
       <v-row>
         <v-col>
           <v-row>
             <v-col
-                v-for="(link, linkIndex) in links"
-                :key="linkIndex"
-                class="ma-0 pa-2"
-                cols="12"
-                sm="12"
-                md="6"
-                :lg="linkIndex >= 3 ? '3' : '3'"
-                xl="linkIndex >= 3 ? '3' : '3'"
+              v-for="(link, linkIndex) in links"
+              :key="linkIndex"
+              class="ma-0 pa-2"
+              cols="12"
+              sm="12"
+              md="6"
+              :lg="linkIndex >= 3 ? '3' : '3'"
+              xl="linkIndex >= 3 ? '3' : '3'"
             >
               <a
-                  :href="link.path"
-                  style="text-decoration: none"
-                  :target="link.name === 'Konfliktnavigator' ? '_blank' : '_self'"
+                :href="link.path"
+                style="text-decoration: none"
+                :target="link.name === 'Konfliktnavigator' ? '_blank' : '_self'"
               >
 
                 <v-card
-                    class="d-flex flex-column"
-                    v:id="`id_alert_${link.name}`"
-                    content-class="elevation-0"
-                    height="100%"
-                    width="100%"
+                  class="d-flex flex-column"
+                  v:id="`id_alert_${link.name}`"
+                  content-class="elevation-0"
+                  height="100%"
+                  width="100%"
                 >
 
                   <v-card-title class="page-titles gray--text">{{ link.name }}</v-card-title>
@@ -40,9 +41,9 @@
                         <v-col cols="2">
                           <p class="secondary--text">
                             <v-icon
-                                color="secondary"
-                                left
-                                align-center
+                              color="secondary"
+                              left
+                              align-center
                             >
                               {{ link.meta.icon }}
                             </v-icon>
@@ -54,18 +55,18 @@
                       </v-row>
                     </v-container>
                   </v-card-text>
-                  <v-spacer/>
+                  <v-spacer />
                   <v-card-actions
-                      height="100%"
-                      class="text--text ma-0 pa-0 fill-height"
+                    height="100%"
+                    class="text--text ma-0 pa-0 fill-height"
                   >
                     <v-container class="fill-height">
                       <v-row class="justify-end align-end ma-0 pa-0 fill-height">
                         <v-col
-                            cols="12"
-                            class="ma-0 pa-0 text-right text-bottom fill-height"
+                          cols="12"
+                          class="ma-0 pa-0 text-right text-bottom fill-height"
                         >
-                          <p class="secondary--text ma-0 pa-0"><i class="mdi mdi-menu-right"/></p>
+                          <p class="secondary--text ma-0 pa-0"><i class="mdi mdi-menu-right" /></p>
                         </v-col>
                       </v-row>
                     </v-container>
@@ -185,11 +186,11 @@ export default class TheErfahreMehr extends Vue {
   }
 
   get icon(): string {
-    return erfahreMehrRoutes.meta.icon
+    return erfahreMehrRoutes.meta.icon;
   }
 
   get infoText(): string {
-    return erfahreMehrRoutes.meta.infoText
+    return erfahreMehrRoutes.meta.infoText;
   }
 
 }

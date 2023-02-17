@@ -1,34 +1,34 @@
 <template>
   <BasePageContent
-      :icon="icon"
-      :name="name"
-      :info-text="infoText"
-      :is-loading="false"
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
   >
     <v-row>
       <v-col
-          cols="12"
-          sm="12"
-          md="4"
-          lg="4"
-          xl="3"
+        cols="12"
+        sm="12"
+        md="4"
+        lg="4"
+        xl="3"
       >
         <v-list
-            v-if="anlaufstellen.length > 0"
-            dense
-            :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'height:33vh;' : 'height:70vh;'"
-            style="overflow-y: scroll"
-            class="custom-scrollbar"
-            order-last
-            order-sm-last
-            order-md-first
+          v-if="anlaufstellen.length > 0"
+          dense
+          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'height:33vh;' : 'height:70vh;'"
+          style="overflow-y: scroll"
+          class="custom-scrollbar"
+          order-last
+          order-sm-last
+          order-md-first
         >
           <v-list-item
-              v-for="anlaufstelle in anlaufstellen"
-              :key="anlaufstelle.id"
-              three-line
-              link
-              @click="setSelectedAnlaufstelle(anlaufstelle)"
+            v-for="anlaufstelle in anlaufstellen"
+            :key="anlaufstelle.id"
+            three-line
+            link
+            @click="setSelectedAnlaufstelle(anlaufstelle)"
           >
             <v-list-item-content>
               <v-list-item-title>
@@ -45,25 +45,25 @@
         </v-list>
       </v-col>
       <v-divider
-          vertical
-          class="mb-3 mt-2"
+        vertical
+        class="mb-3 mt-2"
       />
 
       <v-col
-          cols="12"
-          sm="12"
-          md="8"
-          lg="8"
-          xl="9"
-          order-first
-          order-sm-first
-          order-md-last
+        cols="12"
+        sm="12"
+        md="8"
+        lg="8"
+        xl="9"
+        order-first
+        order-sm-first
+        order-md-last
       >
         <base-card-anlaufstelle
-            v-if="selectedAnlaufstelle"
-            :value="selectedAnlaufstelle"
+          v-if="selectedAnlaufstelle"
+          :value="selectedAnlaufstelle"
         />
-        <the-card-initial-anlaufstelle-page v-else/>
+        <the-card-initial-anlaufstelle-page v-else />
       </v-col>
     </v-row>
   </BasePageContent>
@@ -111,11 +111,11 @@ export default class TheAnlaufstellen extends Vue {
   }
 
   get icon(): string {
-    return theAnlaufstellenRoutes.meta.icon
+    return theAnlaufstellenRoutes.meta.icon;
   }
 
   get infoText(): string {
-    return theAnlaufstellenRoutes.meta.infoText
+    return theAnlaufstellenRoutes.meta.infoText;
   }
 
   get apiState(): Loading {

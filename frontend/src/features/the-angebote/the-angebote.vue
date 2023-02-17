@@ -1,9 +1,10 @@
 <template>
   <BasePageContent
-  :icon="icon"
-  :name="name"
-  :info-text="infoText"
-  :is-loading="false">
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
+  >
     <v-card-text>
       <v-card
         v-for="(item, itemIndex) in items"
@@ -37,11 +38,11 @@ export default class TheAngebote extends Vue {
   }
 
   get icon(): string {
-    return theAngeboteRoutes.meta.icon
+    return theAngeboteRoutes.meta.icon;
   }
 
   get infoText(): string {
-    return theAngeboteRoutes.meta.infoText
+    return theAngeboteRoutes.meta.infoText;
   }
 
 
