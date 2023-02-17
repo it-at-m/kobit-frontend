@@ -1,7 +1,9 @@
 <template>
-  <base-page-content
-    :item="anlaufstellenModel"
-    :is-loading="loading"
+  <BasePageContent
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
   >
     <v-row>
       <v-col
@@ -46,7 +48,7 @@
         vertical
         class="mb-3 mt-2"
       />
-        
+
       <v-col
         cols="12"
         sm="12"
@@ -64,62 +66,65 @@
         <the-card-initial-anlaufstelle-page v-else />
       </v-col>
     </v-row>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
+import {Component, Vue} from "vue-property-decorator";
 import {
-    Component,
-    Vue
-} from "vue-property-decorator";
-import {
-    getAnlaufstellen,
-    getApiState
+  getAnlaufstellen,
+  getApiState
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
 import BaseCardAnlaufstelle
-from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-card-anlaufstelle.vue";
+  from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-card-anlaufstelle.vue";
 import {
-    theAnlaufstellenRoutes
+  theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
-import {
-    Loading
-} from "@/core/services/api/types/Loading.type";
+import {Loading} from "@/core/services/api/types/Loading.type";
 import TheCardInitialAnlaufstellePage
-from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
+  from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
 
 
 @Component({
-    components: {
-        TheCardInitialAnlaufstellePage,
-        BaseCardAnlaufstelle,
-        BasePageContent
-    }
+  components: {
+    TheCardInitialAnlaufstellePage,
+    BaseCardAnlaufstelle,
+    BasePageContent
+  }
 })
 export default class TheAnlaufstellen extends Vue {
 
-    selectedAnlaufstelle: Anlaufstelle | null = null;
+  selectedAnlaufstelle: Anlaufstelle | null = null;
 
-    get loading(): boolean {
-        return this.apiState > Loading.LOADED;
-    }
+  get loading(): boolean {
+    return this.apiState > Loading.LOADED;
+  }
 
-    get anlaufstellen(): Anlaufstelle[] {
-        return this.$store.getters[getAnlaufstellen()];
-    }
+  get anlaufstellen(): Anlaufstelle[] {
+    return this.$store.getters[getAnlaufstellen()];
+  }
 
-    get anlaufstellenModel(): unknown {
-        return theAnlaufstellenRoutes;
-    }
+  get name(): string {
+    return theAnlaufstellenRoutes.name;
+  }
 
-    get apiState(): Loading {
-        return this.$store.getters[getApiState()];
-    }
+  get icon(): string {
+    return theAnlaufstellenRoutes.meta.icon;
+  }
 
-    setSelectedAnlaufstelle(value: Anlaufstelle): void {
-        this.selectedAnlaufstelle = value;
-    }
+  get infoText(): string {
+    return theAnlaufstellenRoutes.meta.infoText;
+  }
+
+  get apiState(): Loading {
+    return this.$store.getters[getApiState()];
+  }
+
+  setSelectedAnlaufstelle(value: Anlaufstelle): void {
+    this.selectedAnlaufstelle = value;
+  }
 
 }
 </script>

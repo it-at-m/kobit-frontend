@@ -1,5 +1,10 @@
 <template>
-  <base-page-content :item="escalationStepModel">
+  <BasePageContent
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
+  >
     <div>
       <v-container
         v-for="(layer, layerIndex) in escalationSteps"
@@ -41,7 +46,7 @@
             :offset-md="layerIndex"
             :offset-lg="layerIndex"
             :offset-xl="layerIndex"
-            cols="12" 
+            cols="12"
             sm="12"
           >
             <v-row no-gutters>
@@ -62,8 +67,10 @@
                   :class="{'isMobile': $vuetify.breakpoint.smAndDown, 'isDesktop': $vuetify.breakpoint.mdAndUp}"
                 >
                   <v-expansion-panel>
-                    <v-expansion-panel-header :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}">
-                      Stufe {{ stepIndex+(layerIndex*escalationSteps.length)+1 }}: {{ step.name }}
+                    <v-expansion-panel-header
+                      :class="{ 'justify-center text-center' : $vuetify.breakpoint.xs || $vuetify.breakpoint.sm}"
+                    >
+                      Stufe {{ stepIndex + (layerIndex * escalationSteps.length) + 1 }}: {{ step.name }}
                     </v-expansion-panel-header>
                     <v-expansion-panel-content>
                       <p>{{ step.description }}</p>
@@ -76,60 +83,58 @@
         </v-row>
       </v-container>
     </div>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
+import {Component, Vue} from "vue-property-decorator";
 import {
-    Component,
-    Vue
-} from "vue-property-decorator";
-import {
-    getEscalationSteps
+  getEscalationSteps
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps-store.module";
 import EscalationSteps from "@/features/the-erfahre-mehr/features/the-escalation-steps/EscalationSteps.type";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
-    escalationStepsRoutes
+  escalationStepsRoutes
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
 
 @Component({
-    components: {
-        BasePageContent
-    }
+  components: {
+    BasePageContent
+  }
 })
 export default class TheEscalationSteps extends Vue {
 
-    panel = [];
+  get name(): string {
+    return escalationStepsRoutes.name;
+  }
 
-    get escalationStepModel(): unknown {
-        return escalationStepsRoutes;
-    }
+  get icon(): string {
+    return escalationStepsRoutes.meta.icon;
+  }
 
-    get escalationSteps(): EscalationSteps[] {
-        return this.$store.getters[getEscalationSteps()];
-    }
+  get infoText(): string {
+    return escalationStepsRoutes.meta.infoText;
+  }
 
-    isNotLastObject(escalationStepsIndex: number): boolean {
-        return escalationStepsIndex !== this.escalationSteps.length - 1;
-    }
+  get escalationSteps(): EscalationSteps[] {
+    return this.$store.getters[getEscalationSteps()];
+  }
+
+  isNotLastObject(escalationStepsIndex: number): boolean {
+    return escalationStepsIndex !== this.escalationSteps.length - 1;
+  }
 
 }
 </script>
 
 <style scoped>
-/* For catching the line breaks in the data */
-.v-list-item__content {
-    white-space: pre-wrap;
-    /* 👈 this is the important part */
-}
 
 .isMobile {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 
 
 .isDesktop {
-    max-width: 300px !important;
+  max-width: 300px !important;
 }
 </style>
