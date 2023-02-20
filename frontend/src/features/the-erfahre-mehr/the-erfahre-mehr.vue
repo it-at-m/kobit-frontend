@@ -1,5 +1,10 @@
 <template>
-  <base-page-content :item="erfahreMehrModel">
+  <BasePageContent
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
+  >
     <v-container fluid>
       <v-row>
         <v-col>
@@ -74,129 +79,139 @@
         </v-col>
       </v-row>
     </v-container>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
 import {
-    Component,
-    Vue
+  Component,
+  Vue
 } from "vue-property-decorator";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import {
-    conflictPreventionRoutes
+  conflictPreventionRoutes
 } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
 import {
-    downloadsRoutes
+  downloadsRoutes
 } from "@/features/the-erfahre-mehr/features/the-downloads/the-downloads.routes";
 import {
-    faqRoutes
+  faqRoutes
 } from "@/features/the-erfahre-mehr/features/the-faq/the-faq.routes";
 import {
-    glossarRoutes
+  glossarRoutes
 } from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
 import {
-    leadershipCooperationRoutes
+  leadershipCooperationRoutes
 } from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 import {
-    dvFairRoutes
+  dvFairRoutes
 } from "@/features/the-erfahre-mehr/features/the-dv-fair/the-dv-fair.routes";
 import {
-    escalationStepsRoutes
+  escalationStepsRoutes
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
 
 import {
-    erfahreMehrRoutes
+  erfahreMehrRoutes
 } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 
 @Component({
-    components: {
-        BaseLinkCard,
-        BasePageContent
-    }
+  components: {
+    BaseLinkCard,
+    BasePageContent
+  }
 })
 export default class TheErfahreMehr extends Vue {
-    get links(): unknown {
-        return [{
-                name: conflictPreventionRoutes.name,
-                path: "/#" + conflictPreventionRoutes.path,
-                meta: conflictPreventionRoutes.meta,
-                color: conflictPreventionRoutes.color
-            },
-            {
-                name: escalationStepsRoutes.name,
-                path: "/#" + escalationStepsRoutes.path,
-                meta: escalationStepsRoutes.meta,
-                color: escalationStepsRoutes.color
-            },
-            {
-                name: dvFairRoutes.name,
-                path: "/#" + dvFairRoutes.path,
-                meta: dvFairRoutes.meta,
-                color: dvFairRoutes.color
+  get links(): unknown {
+    return [{
+      name: conflictPreventionRoutes.name,
+      path: "/#" + conflictPreventionRoutes.path,
+      meta: conflictPreventionRoutes.meta,
+      color: conflictPreventionRoutes.color
+    },
+      {
+        name: escalationStepsRoutes.name,
+        path: "/#" + escalationStepsRoutes.path,
+        meta: escalationStepsRoutes.meta,
+        color: escalationStepsRoutes.color
+      },
+      {
+        name: dvFairRoutes.name,
+        path: "/#" + dvFairRoutes.path,
+        meta: dvFairRoutes.meta,
+        color: dvFairRoutes.color
 
-            },
-            {
-                name: leadershipCooperationRoutes.name,
-                path: "/#" + leadershipCooperationRoutes.path,
-                meta: leadershipCooperationRoutes.meta,
-                color: leadershipCooperationRoutes.color
-            },
-            {
-                name: glossarRoutes.name,
-                path: "/#" + glossarRoutes.path,
-                meta: glossarRoutes.meta,
-                color: glossarRoutes.color
-            },
-            {
-                name: faqRoutes.name,
-                path: "/#" + faqRoutes.path,
-                meta: faqRoutes.meta,
-                color: faqRoutes.color
-            },
+      },
+      {
+        name: "Konfliktnavigator",
+        path: "https://wilma.muenchen.de/pages/umgang-mit-konflikten/apps/wiki/konfliktnavigator/list/view/3721d85f-8dc9-46bf-9e9a-a1f5d5a17728",
+        meta: {
+          icon: "mdi-compass",
+          infoText: "Der Konfliktnavigator auf der WiLMA-Seite „Umgang mit Konflikten“ bietet Ihnen die Möglichkeit, durch ausgewählte Fragen Ihre Situation zu reflektieren und zu analysieren.",
+        },
+        color: "#001f3f"
+      },
+      {
+        name: leadershipCooperationRoutes.name,
+        path: "/#" + leadershipCooperationRoutes.path,
+        meta: leadershipCooperationRoutes.meta,
+        color: leadershipCooperationRoutes.color
+      },
+      {
+        name: glossarRoutes.name,
+        path: "/#" + glossarRoutes.path,
+        meta: glossarRoutes.meta,
+        color: glossarRoutes.color
+      },
+      {
+        name: faqRoutes.name,
+        path: "/#" + faqRoutes.path,
+        meta: faqRoutes.meta,
+        color: faqRoutes.color
+      },
 
-            {
-                name: downloadsRoutes.name,
-                path: "/#" + downloadsRoutes.path,
-                meta: downloadsRoutes.meta,
-                color: downloadsRoutes.color
-            }
+      {
+        name: downloadsRoutes.name,
+        path: "/#" + downloadsRoutes.path,
+        meta: downloadsRoutes.meta,
+        color: downloadsRoutes.color
+      }
 
-        ];
-    }
+    ];
+  }
 
-    get erfahreMehrModel(): unknown {
-        return erfahreMehrRoutes;
-    }
+  get name(): string {
+    return erfahreMehrRoutes.name;
+  }
+
+  get icon(): string {
+    return erfahreMehrRoutes.meta.icon;
+  }
+
+  get infoText(): string {
+    return erfahreMehrRoutes.meta.infoText;
+  }
 
 }
 </script>
 
 <style scoped>
 .page-titles {
-    white-space: pre-wrap !important;
-    text-indent: 0em !important;
-    word-break: keep-all;
+  white-space: pre-wrap !important;
+  text-indent: 0em !important;
+  word-break: keep-all;
 }
 
 .mdi {
-    font-size: 28px;
+  font-size: 28px;
 }
 
 .mdi-menu-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 2px 5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 2px 5px;
 }
 
-.mdi-stairs {
-    transform: rotateY(180deg);
-}
-
-.v-alert {
-    box-shadow: none !important;
-}
 </style>

@@ -128,7 +128,12 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>de.muenchen.kobit.application.frontend</groupId>
+            <artifactId>frontend-frontend</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
 
