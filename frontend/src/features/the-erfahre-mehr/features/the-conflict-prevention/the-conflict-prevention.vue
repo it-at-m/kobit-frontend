@@ -1,12 +1,22 @@
-<template>
-  <BasePageContent
-    :is-loading="isLoading"
-    :info-text="infoText"
-    :name="name"
-    :icon="icon"
-  >
-    <ContentList :items="items?.contentItemView" />
-  </BasePageContent>
+<template>  
+  <v-container fluid>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+    <BasePageContent
+      :is-loading="isLoading"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
+    >
+      <ContentList :items="items?.contentItemView" />
+    </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -21,10 +31,11 @@ import {
 } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: {BasePageContent, ContentList},
+  components: {BasePageContent, ContentList, BackButton},
   setup() {
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PREVENTION);
 

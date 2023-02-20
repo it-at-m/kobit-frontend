@@ -1,27 +1,37 @@
 <template>
-  <BasePageContent
-    :is-loading="isLoading"
-    :info-text="infoText"
-    :name="name"
-    :icon="icon"
-  >
-    <v-card-text>
-      <v-row>
-        <v-col>
-          <v-text-field
-            id="id_faq_search"
-            v-model="searchText"
-            label="FAQs durchsuchen"
-            placeholder="Eingabe"
-            outlined
-            append-icon="mdi-magnify"
-            single-line
-          />
-        </v-col>
-      </v-row>
-      <TextList :items="filteredFaqs" />
-    </v-card-text>
-  </BasePageContent>
+  <v-container fluid>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+    <BasePageContent
+      :is-loading="isLoading"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
+    >
+      <v-card-text>
+        <v-row>
+          <v-col>
+            <v-text-field
+              id="id_faq_search"
+              v-model="searchText"
+              label="FAQs durchsuchen"
+              placeholder="Eingabe"
+              outlined
+              append-icon="mdi-magnify"
+              single-line
+            />
+          </v-col>
+        </v-row>
+        <TextList :items="filteredFaqs" />
+      </v-card-text>
+    </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -36,10 +46,11 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import TextList from "@/features/commons/components/TextList.vue";
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
 import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheFaq",
-  components: {TextList, BasePageContent},
+  components: {TextList, BasePageContent, BackButton},
   setup() {
     const searchText = ref<string>("");
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.FAQ);

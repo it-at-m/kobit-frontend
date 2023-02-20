@@ -56,8 +56,8 @@ export default {
 </script>
 
 <style scoped>
-
 .mdi-stairs{
     transform: rotateY(180deg) !important;
 }
+
 </style>

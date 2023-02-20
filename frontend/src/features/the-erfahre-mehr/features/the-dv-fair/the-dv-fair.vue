@@ -1,29 +1,39 @@
 <template>
-  <BasePageContent
-    :icon="icon"
-    :name="name"
-    :info-text="infoText"
-    :is-loading="isLoading"
-  >
-    <div v-if="! isFinished">
-      <StepperHeader
-        v-if="step !== undefined"
-        :step="step"
-        :current-step="currentStep"
-        :next-step="nextStep"
-        :set-is-finished="setIsFinished"
-      />
-      <StepItems 
-        :step="step"
-        :current-step="currentStep"
-      />
-    </div>
-    <div v-if="isFinished">
-      <StepFinished
-        :restart-process="restartProcess"
-      />
-    </div>
-  </BasePageContent>
+  <v-container fluid>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+    <BasePageContent
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+      :is-loading="isLoading"
+    >
+      <div v-if="! isFinished">
+        <StepperHeader
+          v-if="step !== undefined"
+          :step="step"
+          :current-step="currentStep"
+          :next-step="nextStep"
+          :set-is-finished="setIsFinished"
+        />
+        <StepItems 
+          :step="step"
+          :current-step="currentStep"
+        />
+      </div>
+      <div v-if="isFinished">
+        <StepFinished
+          :restart-process="restartProcess"
+        />
+      </div>
+    </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -40,10 +50,11 @@ import {
 import BasePageContent from '@/features/commons/base-page-content/base-page-content.vue';
 import {useMutation} from '@tanstack/vue-query';
 import {getStepByPosition} from '@/features/the-erfahre-mehr/features/the-dv-fair/api/DVStepClient';
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent ({
   name: 'the-dv-fair',
-  components: {BasePageContent, StepFinished, StepItems, StepperHeader},
+  components: {BasePageContent, StepFinished, StepItems, StepperHeader, BackButton},
   setup() {
     const currentStep = ref(1);
     const isFinished = ref<boolean>(false);

@@ -1,12 +1,22 @@
 <template>
-  <BasePageContent
-    :icon="icon"
-    :info-text="infoText"
-    :is-loading="isLoading"
-    :name="name"
-  >
-    <TextList :items="items?.textItemView" />
-  </BasePageContent>
+  <v-container fluid>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+    <BasePageContent
+      :icon="icon"
+      :info-text="infoText"
+      :is-loading="isLoading"
+      :name="name"
+    >
+      <TextList :items="items?.textItemView" />
+    </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -20,10 +30,11 @@ import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
 import TextList from "@/features/commons/components/TextList.vue";
 import {defineComponent} from 'vue';
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: 'TheDownloads',
-  components: {TextList, BasePageContent},
+  components: {TextList, BasePageContent, BackButton},
   setup() {
 
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.DOWNLOADS);
