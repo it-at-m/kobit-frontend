@@ -9,34 +9,36 @@
     xl="12"
   >
     <v-col>
-      <v-btn             
-        to="/erfahre-mehr"
+      <v-btn
+        :to="link"
         depressed
         color="secondary"
         class="ml-4"
       >
-        <v-icon>mdi-arrow-left-bold</v-icon> Zurück
+        <v-icon>mdi-arrow-left-bold</v-icon> {{ text }}
       </v-btn>
     </v-col>
   </v-row>
 </template>
-  
-  <script lang="ts">
-  
-  import {defineComponent} from "vue";
-  
-  export default defineComponent ( {
-    name: "BackButton",
-    props: {
-      items: {
-        //type of BackButton
-        type: Array,
-        default: () => []
-      }
-    }
-  });
-  </script>
-  
-  <style scoped>
- 
-  </style>
+
+<script lang="ts">
+
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "BackButton",
+  props: {
+    text: {
+      type: String,
+      default: "Zurück"
+    },
+    link: {
+      type: String,
+      default: "/"
+    },
+  }
+});
+</script>
+<style scoped>
+
+</style>

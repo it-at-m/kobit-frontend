@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
-    <BackButton />
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
     <BasePageContent
       :icon="icon"
       :name="name"
@@ -26,6 +29,10 @@
         />
       </div>
     </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
   </v-container>
 </template>
 

@@ -23,8 +23,7 @@
         xl="2"
         class="ma-0 pa-0"
       >
-          <PrivacyPolicy />
-
+        <PrivacyPolicy />
       </v-col>
     </v-row>
   </v-footer>

@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
-    <BackButton />
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -9,6 +12,10 @@
     >
       <ContentList :items="items?.contentItemView" />
     </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
   </v-container>
 </template>
 

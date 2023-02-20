@@ -1,6 +1,9 @@
 <template>
   <v-container fluid>
-    <BackButton />
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -24,6 +27,10 @@
         <TextList :items="filteredFaqs" />
       </v-card-text>
     </BasePageContent>
+    <BackButton
+      :text="'Zurück'"
+      :link="'/erfahre-mehr'"
+    />
   </v-container>
 </template>
 
