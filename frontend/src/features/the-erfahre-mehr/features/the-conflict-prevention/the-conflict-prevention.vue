@@ -31,7 +31,7 @@ import {
 } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheConflictPrevention",

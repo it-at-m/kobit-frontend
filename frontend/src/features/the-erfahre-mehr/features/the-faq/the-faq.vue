@@ -46,7 +46,7 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import TextList from "@/features/commons/components/TextList.vue";
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
 import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheFaq",

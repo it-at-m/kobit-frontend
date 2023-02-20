@@ -50,7 +50,7 @@ import {
 import BasePageContent from '@/features/commons/base-page-content/base-page-content.vue';
 import {useMutation} from '@tanstack/vue-query';
 import {getStepByPosition} from '@/features/the-erfahre-mehr/features/the-dv-fair/api/DVStepClient';
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent ({
   name: 'the-dv-fair',

@@ -81,7 +81,7 @@ import {
   GLOSSAR_ROUTE_META_INFO_TEXT,
   GLOSSAR_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 
 export default defineComponent({

@@ -108,7 +108,7 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import {
   escalationStepsRoutes
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 @Component({
   components: {

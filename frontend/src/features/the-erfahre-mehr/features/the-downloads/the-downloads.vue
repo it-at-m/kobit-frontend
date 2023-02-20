@@ -30,7 +30,7 @@ import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
 import TextList from "@/features/commons/components/TextList.vue";
 import {defineComponent} from 'vue';
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: 'TheDownloads',

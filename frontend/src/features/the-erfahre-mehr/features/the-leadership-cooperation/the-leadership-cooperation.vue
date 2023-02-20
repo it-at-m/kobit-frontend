@@ -30,7 +30,7 @@ import {
   LEADERSHIP_COOPERATION_ROUTE_META_INFO_TEXT,
   LEADERSHIP_COOPERATION_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
-import BackButton from "@/features/the-erfahre-mehr/common/components/BackButton.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
