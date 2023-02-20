@@ -8,10 +8,6 @@
           :loading="isLoading"
         >
           <v-card>
-            <BackButton
-              :text="'Zurück'"
-              :link="'/erfahre-mehr'"
-            />
             <v-card-title>
               <v-icon
                 color="secondary"
