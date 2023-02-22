@@ -65,18 +65,18 @@ export default defineComponent({
         pdfSpacer = pdfSpacer + 45;
       }
 
-      pdf.text("Für Ihr Anliegen werden folgende Anlaufstellen vorgeschlagen:", 80, 120 + pdfSpacer);
-      pdf.line(80, 125 + pdfSpacer, 970, 125 + pdfSpacer);
+      pdf.text("Für Ihr Anliegen werden folgende Anlaufstellen vorgeschlagen:", 80, 90 + pdfSpacer);
+      pdf.line(80, 95 + pdfSpacer, 970, 95 + pdfSpacer);
 
       const convo = this.$store.getters[getConvo()];
 
       for (let i = 0; i < convo.contactPoints.length; i++) {
 
-        pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 160 + (pdfSpacer));
+        pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 110 + (pdfSpacer));
         if (convo.contactPoints[i].contact[0]) {
-          pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 160 + (pdfSpacer + 16));
+          pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 110 + (pdfSpacer + 16));
         } else {
-          pdf.text("Kontakt: N/A", 80, 160 + (pdfSpacer + 16));
+          pdf.text("Kontakt: N/A", 80, 110 + (pdfSpacer + 16));
         }
 
         pdfSpacer = pdfSpacer + 45;
@@ -84,8 +84,8 @@ export default defineComponent({
       }
 
       pdf.line(80, 160 + pdfSpacer, 970, 160 + pdfSpacer);
-      pdf.text("Weitere Informationen finden Sie unter: ", 80, 180 + pdfSpacer);
-      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 325, 180 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
+      pdf.text("Weitere Informationen und Hilfestellungen finden Sie unter ", 80, 180 + pdfSpacer);
+      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 447, 180 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
 
       pdf.setFontSize(12);
 
