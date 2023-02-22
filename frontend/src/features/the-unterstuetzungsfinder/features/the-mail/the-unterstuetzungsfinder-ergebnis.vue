@@ -247,17 +247,7 @@
           xl="3"
           class="text-right"
         >
-          <v-btn
-            class="justify-end"
-            @click="downloadPDF()"
-          >
-            <i
-              data-v-25febbcc=""
-              aria-hidden="true"
-              class="v-icon notranslate mdi mdi-file-pdf theme--dark"
-            />
-            Ihre Antworten drucken
-          </v-btn>
+          <DownloadPDF />
         </v-col>
       </v-row>
     </v-container>
@@ -267,7 +257,9 @@
 <script lang="ts">
 import { Component, Inject, Vue } from "vue-property-decorator";
 import BaseTextField
-  from "@/features/the-unterstuetzungsfinder/features/the-mail/base-text-field.vue";
+  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/base-text-field.vue";
+import DownloadPDF
+  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
 import { DOWNLOAD_DATENSCHUTZ, DownloadProviderService } from "@/core/services/downloads/download-provider.service";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
 import {
@@ -292,14 +284,10 @@ import Contact from "../the-anlaufstellen/types/contact.type";
 import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
 
-import { jsPDF } from "jspdf";
-import {
-  getGivenAnswers,
-  QuestionAndAnswer
-} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+
 
 @Component({
-  components: { PrivacyPolicy, BaseHeadLine, BaseTextField }
+  components: { PrivacyPolicy, BaseHeadLine, BaseTextField, DownloadPDF }
 })
 
 export default class TheUnterstuetzungsfinderErgebnis extends Vue {
@@ -343,10 +331,6 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   get isMoreThenOneRecipient(): boolean {
     return this.recipients.length > 1;
-  }
-
-  get givenAnswers(): QuestionAndAnswer[] {
-    return this.$store.getters[getGivenAnswers()];
   }
 
   unselect(itemNeedToRemove: Recipient): void {
@@ -408,69 +392,6 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
       this.dialog = false;
 
     }
-
-  }
-
-  async downloadPDF() {
-
-    const fragebaum = this.$store.getters[getGivenAnswers()];
-
-
-    const pdf = new jsPDF({
-      orientation: 'p',
-      unit: 'pt',
-      format: [1050, 1485]
-    });
-
-    pdf.setFontSize(20);
-
-    pdf.text("Generierte Ergebnisse durch die KoBITApp", 80, 80);
-
-    pdf.setFontSize(14);
-
-    pdf.text("Ihr KoBIT Fragebaum:", 80, 120);
-    pdf.line(80, 125, 970, 125);
-
-    let pdfSpacer = 120;
-    for (let i = 0; i < fragebaum.length; i++) {
-
-      pdf.text(i + 1 + ". Frage: " + fragebaum[i].questionAnswered, 80, 30 + (pdfSpacer));
-      pdf.text("Ihre Antwort: " + fragebaum[i].answerValue, 80, 30 + (pdfSpacer + 16));
-
-      pdfSpacer = pdfSpacer + 45;
-    }
-
-    pdf.text("Mögliche Anlaufstellen für Sie:", 80, 120 + pdfSpacer);
-    pdf.line(80, 125 + pdfSpacer, 970, 125 + pdfSpacer);
-
-    const convo = this.$store.getters[getConvo()];
-
-    for (let i = 0; i < convo.contactPoints.length; i++) {
-
-      pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 160 + (pdfSpacer));
-      if (convo.contactPoints[i].contact[0]) {
-        pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 160 + (pdfSpacer + 16));
-      } else {
-        pdf.text("Kontakt: N/A", 80, 160 + (pdfSpacer + 16));
-      }
-
-
-      pdfSpacer = pdfSpacer + 45;
-
-    }
-
-
-    pdf.setFontSize(12);
-
-    const today = new Date().toLocaleDateString();
-
-    pdf.text(today, 915, 30);
-    pdf.text(today, 915, 1455);
-
-    pdf.text("KoBIT. Digital. Erleben.", 80, 30);
-    pdf.text("KoBIT. Digital. Erleben.", 80, 1455);
-
-    pdf.save("kobit_fragebogen.pdf");
 
   }
 
