@@ -79,10 +79,13 @@ export default defineComponent({
           pdf.text("Kontakt: N/A", 80, 160 + (pdfSpacer + 16));
         }
 
-
         pdfSpacer = pdfSpacer + 45;
 
       }
+
+      pdf.line(80, 160 + pdfSpacer, 970, 160 + pdfSpacer);
+      pdf.text("Weitere Informationen finden Sie unter: ", 80, 180 + pdfSpacer);
+      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 325, 180 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
 
       pdf.setFontSize(12);
 
