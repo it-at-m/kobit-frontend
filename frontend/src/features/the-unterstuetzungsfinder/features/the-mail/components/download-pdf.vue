@@ -49,7 +49,7 @@ export default defineComponent({
 
       pdf.setFontSize(20);
 
-      pdf.text("Generierte Ergebnisse durch die KoBITApp", 80, 80);
+      pdf.text("Ihre Antworten im Unterstützungsfinder der KoBITApp", 80, 80);
 
       pdf.setFontSize(14);
 
@@ -65,7 +65,7 @@ export default defineComponent({
         pdfSpacer = pdfSpacer + 45;
       }
 
-      pdf.text("Mögliche Anlaufstellen für Sie:", 80, 120 + pdfSpacer);
+      pdf.text("Für Ihr Anliegen werden folgende Anlaufstellen vorgeschlagen:", 80, 120 + pdfSpacer);
       pdf.line(80, 125 + pdfSpacer, 970, 125 + pdfSpacer);
 
       const convo = this.$store.getters[getConvo()];
