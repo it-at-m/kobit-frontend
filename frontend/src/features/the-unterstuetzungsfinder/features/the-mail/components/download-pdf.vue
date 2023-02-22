@@ -53,7 +53,7 @@ export default defineComponent({
 
       pdf.setFontSize(14);
 
-      pdf.text("Ihr KoBIT decisionTree:", 80, 120);
+      pdf.text("Ihr KoBIT Fragebaum:", 80, 120);
       pdf.line(80, 125, 970, 125);
 
       let pdfSpacer = 120;
