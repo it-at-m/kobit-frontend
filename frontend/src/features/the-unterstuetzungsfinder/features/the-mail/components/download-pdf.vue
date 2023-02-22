@@ -39,28 +39,26 @@ export default defineComponent({
 
     async download() {
 
-      const decisionTree = this.$store.getters[getGivenAnswers()];
-
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'pt',
         format: [1050, 1485]
       });
 
-      pdf.setFontSize(20);
+      pdf.setFontSize(17.5);
 
       pdf.text("Ihre Antworten im Unterstützungsfinder der KoBITApp", 80, 80);
 
-      pdf.setFontSize(14);
+      pdf.text("Ihr KoBIT-Fragebaum:", 80, 125);
+      pdf.line(80, 130, 970, 130);
 
-      pdf.text("Ihr KoBIT Fragebaum:", 80, 120);
-      pdf.line(80, 125, 970, 125);
 
-      let pdfSpacer = 120;
+      const decisionTree = this.$store.getters[getGivenAnswers()];
+      let pdfSpacer = 125;
       for (let i = 0; i < decisionTree.length; i++) {
 
         pdf.text(i + 1 + ". Frage: " + decisionTree[i].questionAnswered, 80, 30 + (pdfSpacer));
-        pdf.text("Ihre Antwort: " + decisionTree[i].answerValue, 80, 30 + (pdfSpacer + 16));
+        pdf.text("Ihre Antwort: " + decisionTree[i].answerValue, 80, 30 + (pdfSpacer + 18));
 
         pdfSpacer = pdfSpacer + 45;
       }
@@ -68,15 +66,16 @@ export default defineComponent({
       pdf.text("Für Ihr Anliegen werden folgende Anlaufstellen vorgeschlagen:", 80, 50 + pdfSpacer);
       pdf.line(80, 55 + pdfSpacer, 970, 55 + pdfSpacer);
 
+ 
       const convo = this.$store.getters[getConvo()];
-
+      pdfSpacer = pdfSpacer + 10;
       for (let i = 0; i < convo.contactPoints.length; i++) {
 
-        pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 70 + (pdfSpacer));
+        pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 75 + (pdfSpacer));
         if (convo.contactPoints[i].contact[0]) {
-          pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 70 + (pdfSpacer + 16));
+          pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 75 + (pdfSpacer + 18));
         } else {
-          pdf.text("Kontakt: N/A", 80, 70 + (pdfSpacer + 16));
+          pdf.text("Kontakt: N/A", 80, 75 + (pdfSpacer + 18));
         }
 
         pdfSpacer = pdfSpacer + 45;
@@ -84,8 +83,10 @@ export default defineComponent({
       }
 
       pdf.line(80, 80 + pdfSpacer, 970, 80 + pdfSpacer);
+      pdfSpacer = pdfSpacer + 5;
       pdf.text("Weitere Informationen und Hilfestellungen finden Sie unter ", 80, 100 + pdfSpacer);
-      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 447, 100 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
+      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 537, 100 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
+      pdf.text(".", 858, 100 + pdfSpacer);
 
       pdf.setFontSize(12);
 
