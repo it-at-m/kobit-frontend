@@ -92,7 +92,6 @@
           xl="6"
         >
           <v-combobox
-        
             v-model="recipients"
             prepend-inner-icon="mdi-email"
             chips
@@ -107,14 +106,14 @@
             full-width
             :rules="[v => v.length != 0 || 'An erforderlich.']"
             validate
-            class="pa-0 ma-0" 
+            class="pa-0 ma-0"
             :label="labels.mailTo"
             @keydown="$event.target.blur()"
             @keypress="$event.target.blur()"
             @keyup="$event.target.blur()"
           >
             <template v-slot:selection="{ attrs, item, select, selected }">
-              <v-chip   
+              <v-chip
                 v-bind="attrs"
                 :items="selected"
                 close
@@ -153,10 +152,10 @@
           lg="12"
           xl="6"
         >
-          <v-text-field 
+          <v-text-field
             :value="mailUser.emailAddress"
             outlined
-            prepend-inner-icon="mdi-email-outline" 
+            prepend-inner-icon="mdi-email-outline"
             :label="labels.mailFrom"
             disabled
             color="secondary"
@@ -198,10 +197,10 @@
         </v-col>
         <v-col
           cols="12"
-          sm="12"
-          md="12"
-          lg="6"
-          xl="6"
+          sm="6"
+          md="6"
+          lg="3"
+          xl="3"
         >
           <v-btn
             class="justify-end"
@@ -240,16 +239,28 @@
             </v-card>
           </v-dialog>
         </v-col>
+        <v-col
+          cols="12"
+          sm="6"
+          md="6"
+          lg="3"
+          xl="3"
+          class="text-right"
+        >
+          <DownloadPDF />
+        </v-col>
       </v-row>
     </v-container>
   </v-container>
 </template>
 
 <script lang="ts">
-import {Component, Inject, Vue} from "vue-property-decorator";
+import { Component, Inject, Vue } from "vue-property-decorator";
 import BaseTextField
-  from "@/features/the-unterstuetzungsfinder/features/the-mail/base-text-field.vue";
-import {DOWNLOAD_DATENSCHUTZ, DownloadProviderService} from "@/core/services/downloads/download-provider.service";
+  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/base-text-field.vue";
+import DownloadPDF
+  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
+import { DOWNLOAD_DATENSCHUTZ, DownloadProviderService } from "@/core/services/downloads/download-provider.service";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
 import {
   getDisclaimerMessage,
@@ -258,13 +269,13 @@ import {
 
 import MailService from "@/features/the-unterstuetzungsfinder/features/the-mail/api/the-mail-service.api";
 
-import {getConvo} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+import { getConvo } from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
 
-import {getMailUser} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
+import { getMailUser } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
 
 
-import {theMailLabels} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
-import {commonLabels} from "@/core/core.translation";
+import { theMailLabels } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
+import { commonLabels } from "@/core/core.translation";
 import Mail from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail.type";
 
 import MailUser from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail-user.type";
@@ -274,10 +285,13 @@ import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/ty
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
 
 
+
 @Component({
-  components: {PrivacyPolicy, BaseHeadLine, BaseTextField}
+  components: { PrivacyPolicy, BaseHeadLine, BaseTextField, DownloadPDF }
 })
+
 export default class TheUnterstuetzungsfinderErgebnis extends Vue {
+
 
 
   @Inject(DOWNLOAD_DATENSCHUTZ)
@@ -320,13 +334,13 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
   }
 
   unselect(itemNeedToRemove: Recipient): void {
-        for (let i = 0; i < this.recipients.length; i += 1) {
-          if (this.recipients[parseInt(i.toString(), 10)] === itemNeedToRemove) {
-            this.recipients.splice(i, 1);
-          }
-
-        }
+    for (let i = 0; i < this.recipients.length; i += 1) {
+      if (this.recipients[parseInt(i.toString(), 10)] === itemNeedToRemove) {
+        this.recipients.splice(i, 1);
       }
+
+    }
+  }
 
   agree(): void {
     this.mail.releasedFromConfidentiality = true;
@@ -340,8 +354,8 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   addAddress(value: Contact, shortCut: string): void {
 
-    const isNotExisting = !this.recipients.find(element => element.contact?.email === value.email );
-    
+    const isNotExisting = !this.recipients.find(element => element.contact?.email === value.email);
+
     if (isNotExisting) {
 
       const recipient = Recipient.createEmptyRecipient().withContact(value).withshortCut(shortCut);
@@ -349,7 +363,7 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
       this.recipients.push(recipient);
 
     }
-  
+
   }
 
   isEmailEmpty(value: Contact): boolean {
@@ -358,7 +372,7 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   sendMail(): void {
 
-    if((this.isMoreThenOneRecipient && this.mail.releasedFromConfidentiality) || (this.recipients.length === 1)){
+    if ((this.isMoreThenOneRecipient && this.mail.releasedFromConfidentiality) || (this.recipients.length === 1)) {
 
       this.isActive = false;
       this.dialog = false;
