@@ -462,7 +462,7 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
     pdf.setFontSize(12);
 
-    let today = new Date().toLocaleDateString();
+    const today = new Date().toLocaleDateString();
 
     pdf.text(today, 915, 30);
     pdf.text(today, 915, 1455);
