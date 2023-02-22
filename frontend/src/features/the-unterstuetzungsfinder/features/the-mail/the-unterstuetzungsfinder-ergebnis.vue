@@ -293,6 +293,10 @@ import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/ty
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
 
 import { jsPDF } from "jspdf";
+import {
+  getGivenAnswers,
+  QuestionAndAnswer
+} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
 
 @Component({
   components: { PrivacyPolicy, BaseHeadLine, BaseTextField }
@@ -339,6 +343,10 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   get isMoreThenOneRecipient(): boolean {
     return this.recipients.length > 1;
+  }
+
+  get givenAnswers(): QuestionAndAnswer[] {
+    return this.$store.getters[getGivenAnswers()];
   }
 
   unselect(itemNeedToRemove: Recipient): void {
@@ -403,28 +411,49 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   }
 
-  downloadPDF() {
-    //const pattern = new RegExp("{{[\\d\\D]*?}}", "g");
-    //const template: any = template.replace(pattern, '');
+  async downloadPDF() {
+
+    const fragebaum = this.$store.getters[getGivenAnswers()];
+
 
     const pdf = new jsPDF({
-      orientation: 'l', // landscape
-      unit: 'pt', // points, pixels won't work properly
-      format: [1132, 800] // 1132, 800
+      orientation: 'p',
+      unit: 'pt',
+      format: [840, 1188]
     });
 
-    pdf.text("Hello world!", 10, 10);
+    pdf.text("Ihr KoBIT Fragebaum", 80, 80);
+    pdf.line(80, 85, 760, 85);
+
+    let pdfSpacer = 80;
+    for (let i = 0; i < fragebaum.length; i++) {
+
+      pdf.text(i + 1 + ". Frage: " + fragebaum[i].questionAnswered, 80, 30 + (pdfSpacer));
+      pdf.text("Ihre Antwort: " + fragebaum[i].answerValue, 80, 30 + (pdfSpacer + 16));
+
+      pdfSpacer = pdfSpacer + 45;
+    }
+
+    pdf.text("Mögliche Anlaufstellen für Sie", 80, 80 + pdfSpacer);
+    pdf.line(80, 85 + pdfSpacer, 760, 85 + pdfSpacer);
+
+    const convo = this.$store.getters[getConvo()];
+
+    for (let i = 0; i < convo.contactPoints.length; i++) {
+
+      pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 120 + (pdfSpacer));
+      if (convo.contactPoints[i].contact[0]) {
+        pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 120 + (pdfSpacer + 16));
+      } else {
+        pdf.text("Kontakt: N/A", 80, 120 + (pdfSpacer + 16));
+      }
+
+
+      pdfSpacer = pdfSpacer + 45;
+
+    }
+
     pdf.save("kobit_fragebogen.pdf");
-
-
-    /*pdf.html(template, {
-        callback: function(pdf) {
-            pdf.save('kobit_fragebogen.pdf');
-            //pdf.output('save', 'kobit_fragebogen.pdf');
-
-        }
-    });*/
-
 
   }
 
