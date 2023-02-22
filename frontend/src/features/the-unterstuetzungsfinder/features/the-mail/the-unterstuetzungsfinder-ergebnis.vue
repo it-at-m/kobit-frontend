@@ -419,13 +419,19 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
     const pdf = new jsPDF({
       orientation: 'p',
       unit: 'pt',
-      format: [840, 1188]
+      format: [1050, 1485]
     });
 
-    pdf.text("Ihr KoBIT Fragebaum", 80, 80);
-    pdf.line(80, 85, 760, 85);
+    pdf.setFontSize(20);
 
-    let pdfSpacer = 80;
+    pdf.text("Generierte Ergebnisse durch die KoBITApp", 80, 80);
+
+    pdf.setFontSize(14);
+
+    pdf.text("Ihr KoBIT Fragebaum:", 80, 120);
+    pdf.line(80, 125, 970, 125);
+
+    let pdfSpacer = 120;
     for (let i = 0; i < fragebaum.length; i++) {
 
       pdf.text(i + 1 + ". Frage: " + fragebaum[i].questionAnswered, 80, 30 + (pdfSpacer));
@@ -434,24 +440,35 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
       pdfSpacer = pdfSpacer + 45;
     }
 
-    pdf.text("Mögliche Anlaufstellen für Sie", 80, 80 + pdfSpacer);
-    pdf.line(80, 85 + pdfSpacer, 760, 85 + pdfSpacer);
+    pdf.text("Mögliche Anlaufstellen für Sie:", 80, 120 + pdfSpacer);
+    pdf.line(80, 125 + pdfSpacer, 970, 125 + pdfSpacer);
 
     const convo = this.$store.getters[getConvo()];
 
     for (let i = 0; i < convo.contactPoints.length; i++) {
 
-      pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 120 + (pdfSpacer));
+      pdf.text(convo.contactPoints[i].shortCut + ": " + convo.contactPoints[i].name, 80, 160 + (pdfSpacer));
       if (convo.contactPoints[i].contact[0]) {
-        pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 120 + (pdfSpacer + 16));
+        pdf.text("Kontakt: " + convo.contactPoints[i].contact[0].email, 80, 160 + (pdfSpacer + 16));
       } else {
-        pdf.text("Kontakt: N/A", 80, 120 + (pdfSpacer + 16));
+        pdf.text("Kontakt: N/A", 80, 160 + (pdfSpacer + 16));
       }
 
 
       pdfSpacer = pdfSpacer + 45;
 
     }
+
+
+    pdf.setFontSize(12);
+
+    let today = new Date().toLocaleDateString();
+
+    pdf.text(today, 915, 30);
+    pdf.text(today, 915, 1455);
+
+    pdf.text("KoBIT. Digital. Erleben.", 80, 30);
+    pdf.text("KoBIT. Digital. Erleben.", 80, 1455);
 
     pdf.save("kobit_fragebogen.pdf");
 
