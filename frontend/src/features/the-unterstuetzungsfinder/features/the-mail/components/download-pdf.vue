@@ -1,12 +1,4 @@
 <template>
-  <v-col
-    cols="12"
-    sm="6"
-    md="6"
-    lg="3"
-    xl="3"
-    class="text-right"
-  >
     <v-btn
       class="justify-end"
       @click="download()"
@@ -18,7 +10,6 @@
       />
       Ihre Antworten drucken
     </v-btn>
-  </v-col>
 </template>
 
 <script lang="ts">
