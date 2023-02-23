@@ -16,8 +16,8 @@
           cols="12"
           sm="12"
           :md="givenAnswersAreNotEmpty() === false ? '0': '12'"
-          :lg="givenAnswersAreNotEmpty() === false ? '0': '10'"
-          :xl="givenAnswersAreNotEmpty() === false ? '0': '10'"
+          :lg="givenAnswersAreNotEmpty() === false ? '0': '9'"
+          :xl="givenAnswersAreNotEmpty() === false ? '0': '9'"
         >
           <v-row v-if="currentConvo.contactPoints.length === 0">
             <v-col>
@@ -53,12 +53,11 @@
         </v-col>
         <v-col
           v-if="!isFinished && currentConvo.decisionPoint != null"
-
           cols="12"
           sm="12"
           :md="givenAnswersAreNotEmpty() === false ? '12': '12'"
-          :lg="givenAnswersAreNotEmpty() === false ? '12': '10'"
-          :xl="givenAnswersAreNotEmpty() === false ? '12': '10'"
+          :lg="givenAnswersAreNotEmpty() === false ? '12': '9'"
+          :xl="givenAnswersAreNotEmpty() === false ? '12': '9'"
         >
           <v-row>
             <v-col>
@@ -198,8 +197,8 @@
           cols="12"
           sm="12"
           md="12"
-          lg="2"
-          xl="2"
+          lg="3"
+          xl="3"
         >
           <v-row>
             <v-col>
