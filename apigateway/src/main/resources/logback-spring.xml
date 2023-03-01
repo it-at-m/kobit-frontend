@@ -8,7 +8,7 @@
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
 
 
-    <springProfile name="local,test">
+    <springProfile name="local,dev,demo,prod">
 
         <!-- Log appender -->
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -21,31 +21,31 @@
 
         <!-- Logger -->
         <logger name="de.muenchen.kobit"
-                level="debug"
+                level="info"
                 additivity="false">
             <appender-ref ref="STDOUT" />
         </logger>
 
         <logger name="de.muenchen.allgemein"
-                level="debug"
+                level="info"
                 additivity="false">
             <appender-ref ref="STDOUT" />
         </logger>
 
         <logger name="org.springframework.web"
-                level="debug"
+                level="info"
                 additivity="false">
             <appender-ref ref="STDOUT" />
         </logger>
 
         <logger name="org.springframework.cloud.gateway"
-                level="debug"
+                level="info"
                 additivity="false">
             <appender-ref ref="STDOUT" />
         </logger>
 
         <logger name="org.springframework.security"
-                level="debug"
+                level="info"
                 additivity="false">
             <appender-ref ref="STDOUT" />
         </logger>
@@ -58,7 +58,7 @@
     </springProfile>
 
 
-    <springProfile name="dev,demo,prod">
+    <springProfile name="">
 
         <!-- Log appender -->
         <appender name="JSON_STDOUT" class="ch.qos.logback.core.ConsoleAppender">

@@ -10,10 +10,10 @@
   >
     <v-col>
       <v-btn
-        :to="link"
         depressed
         color="secondary"
         class="ml-4"
+        @click="callback"
       >
         <v-icon>mdi-arrow-left-bold</v-icon> {{ text }}
       </v-btn>
@@ -23,7 +23,7 @@
 
 <script lang="ts">
 
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 
 export default defineComponent({
   name: "BackButton",
@@ -32,9 +32,8 @@ export default defineComponent({
       type: String,
       default: "Zurück"
     },
-    link: {
-      type: String,
-      default: "/"
+    callback: {
+      type: Function
     },
   }
 });

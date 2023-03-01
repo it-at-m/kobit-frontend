@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
     <BasePageContent
       :icon="icon"
       :name="name"
@@ -29,10 +26,7 @@
         />
       </div>
     </BasePageContent>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -51,6 +45,7 @@ import BasePageContent from '@/features/commons/base-page-content/base-page-cont
 import {useMutation} from '@tanstack/vue-query';
 import {getStepByPosition} from '@/features/the-erfahre-mehr/features/the-dv-fair/api/DVStepClient';
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent ({
   name: 'the-dv-fair',
@@ -61,6 +56,10 @@ export default defineComponent ({
     const { isLoading, isError, mutate, data} = useMutation({
       mutationFn: (newStep: number) => getStepByPosition(newStep),
     });
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
 
     function setIsFinished() {
       isFinished.value = true;
@@ -90,7 +89,8 @@ export default defineComponent ({
       step: data,
       restartProcess,
       setIsFinished,
-      nextStep
+      nextStep,
+      back
     };
 
   }

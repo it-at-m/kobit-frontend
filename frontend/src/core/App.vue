@@ -15,8 +15,9 @@ import Vue from "vue";
 import TheBackground from "@/features/the-background/the-background.vue";
 import TheFooterMain from "@/features/the-footer-main/the-footer-main.vue";
 import TheAppBar from "@/features/the-app-bar/the-app-bar.vue";
-import {initAnlaufstellen} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
-import {initTree} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+import {
+  initAnlaufstellen
+} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
 import {initUserMail} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
 import TheDisclaimer from "@/features/the-disclaimer/the-disclaimer.vue";
 
@@ -31,7 +32,6 @@ import TheContent from "@/features/the-content/the-content.vue";
 export default class App extends Vue{
 
   created(): void {
-    this.$store.dispatch(initTree());
     this.$store.dispatch(initAnlaufstellen());
     this.$store.dispatch(initUserMail());
   }

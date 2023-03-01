@@ -17,7 +17,7 @@
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
-                :key="anlaufstelle.contact.contactPointId"
+                :key="anlaufstelle.contact[0].contactPointId"
                 class="pa-0"
               >
                 {{ anlaufstelle.shortCut }}
@@ -39,7 +39,6 @@
                         color="secondary"
                         @click="addAddress(contact, anlaufstelle.shortCut)"
                       >
-                        <!-- {{ labels.addAddress }} -->
                         + {{ contact.email }}
                       </v-btn>
                     </v-card-actions>
@@ -247,7 +246,7 @@
           xl="3"
           class="text-right"
         >
-          <DownloadPDF />
+          <DownloadPDF :given-answers="givenAnswers" :convo="convo"/>
         </v-col>
       </v-row>
     </v-container>
@@ -255,12 +254,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Inject, Vue } from "vue-property-decorator";
-import BaseTextField
-  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/base-text-field.vue";
-import DownloadPDF
-  from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
-import { DOWNLOAD_DATENSCHUTZ, DownloadProviderService } from "@/core/services/downloads/download-provider.service";
+import {Component, Inject, Prop, Vue} from "vue-property-decorator";
+import BaseTextField from "@/features/the-unterstuetzungsfinder/features/the-mail/components/base-text-field.vue";
+import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
+import {DOWNLOAD_DATENSCHUTZ, DownloadProviderService} from "@/core/services/downloads/download-provider.service";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
 import {
   getDisclaimerMessage,
@@ -269,13 +266,11 @@ import {
 
 import MailService from "@/features/the-unterstuetzungsfinder/features/the-mail/api/the-mail-service.api";
 
-import { getConvo } from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
-
-import { getMailUser } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
+import {getMailUser} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
 
 
-import { theMailLabels } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
-import { commonLabels } from "@/core/core.translation";
+import {theMailLabels} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
+import {commonLabels} from "@/core/core.translation";
 import Mail from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail.type";
 
 import MailUser from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail-user.type";
@@ -283,16 +278,20 @@ import Conversation from "../../types/conversation.type";
 import Contact from "../the-anlaufstellen/types/contact.type";
 import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
-
+import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 
 @Component({
-  components: { PrivacyPolicy, BaseHeadLine, BaseTextField, DownloadPDF }
+  components: {PrivacyPolicy, BaseHeadLine, BaseTextField, DownloadPDF}
 })
-
 export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
 
+  @Prop()
+  convo: Conversation | undefined;
+
+  @Prop()
+  givenAnswers: QuestionAndAnswer[] | undefined
 
   @Inject(DOWNLOAD_DATENSCHUTZ)
   download!: DownloadProviderService;
@@ -314,11 +313,6 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   get mailUser(): MailUser {
     return this.$store.getters[getMailUser()];
-  }
-
-
-  get convo(): Conversation {
-    return this.$store.getters[getConvo()];
   }
 
   get disclaimerMessage(): string {
@@ -382,16 +376,7 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
       MailService.postMail(JSON.parse(JSON.stringify(this.mail)));
 
-
-    } else if (this.isMoreThenOneRecipient && !this.mail.releasedFromConfidentiality) {
-
-      this.dialog = true;
-
-    } else {
-
-      this.dialog = false;
-
-    }
+    } else this.dialog = this.isMoreThenOneRecipient && !this.mail.releasedFromConfidentiality;
 
   }
 

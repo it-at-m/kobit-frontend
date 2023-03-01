@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
     <base-page-content
       :icon="icon"
       :name="name"
@@ -62,10 +59,7 @@
         </v-row>
       </v-card-text>
     </base-page-content>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -82,6 +76,7 @@ import {
   GLOSSAR_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 
 export default defineComponent({
@@ -91,7 +86,10 @@ export default defineComponent({
     const searchText = ref<string>("");
     const filterLetter = ref<string>("");
     const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.GLOSSARY);
-
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
     const filteredGlossary = computed(() => {
       return data.value?.textItemView.filter((item) => {
         return (
@@ -123,7 +121,8 @@ export default defineComponent({
       error,
       icon: GLOSSAR_ROUTE_META_ICON,
       infoText: GLOSSAR_ROUTE_META_INFO_TEXT,
-      name: GLOSSAR_ROUTE_NAME
+      name: GLOSSAR_ROUTE_NAME,
+      back
     };
   }
 });
