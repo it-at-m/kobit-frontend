@@ -247,17 +247,11 @@ export default defineComponent({
     }
 
     function updateGivenAnswers(answerCompetence: string, answerValue: string, questionAnswered: string) {
-      console.log({
-        questionAnswered: questionAnswered,
-        answerCompetence: answerCompetence,
-        answerValue: answerValue,
-      })
       givenAnswers.value.push({
         questionAnswered: questionAnswered,
         answerCompetence: answerCompetence,
         answerValue: answerValue,
       });
-      console.log("mutate")
       mutate();
     }
 
