@@ -33,8 +33,8 @@
 
 <script lang="ts">
 import {defineComponent, PropType} from "vue";
-import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
+import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 export default defineComponent({
   name: "GivenAnswers",

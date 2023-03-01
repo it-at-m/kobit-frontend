@@ -12,13 +12,13 @@ import {
 } from "@/features/the-app-bar/features/the-drawer-main/the-drawer-main-store.module";
 import {
     THE_CONFLICT_PREVENTION_MODULE_NAME,
-    theConflictPreventionStoreModule,
-    TheConflictPreventionModuleState
+    TheConflictPreventionModuleState,
+    theConflictPreventionStoreModule
 } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.store.module";
 import {
     THE_DOWNLOADS_MODULE_NAME,
-    theDownloadsStoreModule,
-    TheDownloadsModuleState
+    TheDownloadsModuleState,
+    theDownloadsStoreModule
 } from "@/features/the-erfahre-mehr/features/the-downloads/the-downloads.store.module";
 import {
     THE_FAQ_MODULE_NAME,
@@ -52,32 +52,30 @@ import {
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
 import {
     THE_ERFAHRE_MEHR_MODULE_NAME,
-    theErfahreMehrStoreModule,
-    TheErfahreMehrModuleState
+    TheErfahreMehrModuleState,
+    theErfahreMehrStoreModule
 } from "@/features/the-erfahre-mehr/the-erfahre-mehr-store.module";
 import {
     THE_ANGEBOTE_MODULE_NAME,
-    theAngeboteStoreModule,
-    TheAngeboteModuleState
+    TheAngeboteModuleState,
+    theAngeboteStoreModule
 } from "@/features/the-angebote/the-angebote-store.module";
 import {
-    THE_UNTERSTUEZUNGSFINDER_MODULE_NAME,
-    theUnterstuezungsfinderStoreModule,
-    TheUnterstuezungsfinderStoreState
-} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
-import {
-    THE_DISCLAIMER_MODULE_NAME, theDisclaimerStoreModule,
+    THE_DISCLAIMER_MODULE_NAME,
+    theDisclaimerStoreModule,
     TheDisclaimerStoreState
 } from "@/features/the-disclaimer/the-disclaimer-store.module";
 
 import {
-    THE_MAIL_MODULE_NAME, theMailStoreModule,
+    THE_MAIL_MODULE_NAME,
+    theMailStoreModule,
     TheMailStoreState
 } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-store.module";
 
 
 import {
-    THE_MAIL_USER_MODULE_NAME, theMailUserStoreModule,
+    THE_MAIL_USER_MODULE_NAME,
+    theMailUserStoreModule,
     TheMailUserStoreState
 } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
 
@@ -97,11 +95,10 @@ export interface RootState {
     theEscalationStepsStoreModuleState: TheEscalationStepsStoreModuleState;
     theAnlaufstellenStoreState: TheAnlaufstellenStoreState;
     theAngeboteModuleState: TheAngeboteModuleState;
-    theUnterstuezungsfinderStoreState: TheUnterstuezungsfinderStoreState;
     theDisclaimerStoreState: TheDisclaimerStoreState;
     theMailStoreState: TheMailStoreState;
     theMailUserStoreState: TheMailUserStoreState;
- }
+}
 
 export default new Vuex.Store<RootState>({
     modules: {
@@ -113,11 +110,10 @@ export default new Vuex.Store<RootState>({
         [THE_LEADERSHIP_COOPERATION_MODULE_NAME]: theLeadershipCooperationStoreModule,
         [THE_DV_FAIR_MODULE_NAME]: theDvFairStoreModule,
         [THE_ESCALATION_STEPS_MODULE_NAME]: theEscalationStepsStoreModule,
-        [THE_CONFLICT_PREVENTION_MODULE_NAME] : theConflictPreventionStoreModule,
-        [THE_DOWNLOADS_MODULE_NAME] : theDownloadsStoreModule,
+        [THE_CONFLICT_PREVENTION_MODULE_NAME]: theConflictPreventionStoreModule,
+        [THE_DOWNLOADS_MODULE_NAME]: theDownloadsStoreModule,
         [THE_ANLAUFSTELLEN_MODULE_NAME]: theAnlaufstellenStoreModule,
         [THE_ANGEBOTE_MODULE_NAME]: theAngeboteStoreModule,
-        [THE_UNTERSTUEZUNGSFINDER_MODULE_NAME]:theUnterstuezungsfinderStoreModule,
         [THE_DISCLAIMER_MODULE_NAME]: theDisclaimerStoreModule,
         [THE_MAIL_MODULE_NAME]: theMailStoreModule,
         [THE_MAIL_USER_MODULE_NAME]: theMailUserStoreModule

@@ -14,18 +14,23 @@
 
 <script lang="ts">
 
-import { jsPDF } from "jspdf";
-import {
-  getGivenAnswers
-} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+import {jsPDF} from "jspdf";
 
-import { getConvo } from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
-
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
+import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 
 
 export default defineComponent({
   name: "DownloadPDF",
+  props:{
+    givenAnswers: {
+      //typeof QuestionAndAnswer
+      type: Array,
+    },
+    convo: {
+      type: Conversation
+    }
+  },
   methods: {
 
     async download() {
@@ -44,7 +49,7 @@ export default defineComponent({
       pdf.line(80, 130, 970, 130);
 
 
-      const decisionTree = this.$store.getters[getGivenAnswers()];
+      const decisionTree = this.givenAnswers;
       let pdfSpacer = 125;
       for (let i = 0; i < decisionTree.length; i++) {
 
@@ -57,8 +62,8 @@ export default defineComponent({
       pdf.text("Für Ihr Anliegen werden folgende Anlaufstellen vorgeschlagen:", 80, 50 + pdfSpacer);
       pdf.line(80, 55 + pdfSpacer, 970, 55 + pdfSpacer);
 
- 
-      const convo = this.$store.getters[getConvo()];
+
+      const convo = this.convo;
       pdfSpacer = pdfSpacer + 10;
       for (let i = 0; i < convo.contactPoints.length; i++) {
 

@@ -246,7 +246,7 @@
           xl="3"
           class="text-right"
         >
-          <DownloadPDF />
+          <DownloadPDF :given-answers="givenAnswers" :convo="convo"/>
         </v-col>
       </v-row>
     </v-container>
@@ -278,6 +278,7 @@ import Conversation from "../../types/conversation.type";
 import Contact from "../the-anlaufstellen/types/contact.type";
 import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
+import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 
 @Component({
@@ -288,6 +289,9 @@ export default class TheUnterstuetzungsfinderErgebnis extends Vue {
 
   @Prop()
   convo: Conversation | undefined;
+
+  @Prop()
+  givenAnswers: QuestionAndAnswer[] | undefined
 
   @Inject(DOWNLOAD_DATENSCHUTZ)
   download!: DownloadProviderService;
