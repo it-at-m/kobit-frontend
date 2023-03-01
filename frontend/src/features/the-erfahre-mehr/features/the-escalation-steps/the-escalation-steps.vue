@@ -132,8 +132,7 @@ export default class TheEscalationSteps extends Vue {
   }
 
   back() {
-    const router = useRouter();
-    router.push('/erfahre-mehr');
+    this.$router.push('/erfahre-mehr');
   }
 
 }
