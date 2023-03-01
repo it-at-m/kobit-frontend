@@ -1,10 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
-
+    <BackButton :callback="back"/>
 
     <BasePageContent
       :icon="icon"
@@ -91,10 +87,7 @@
         </v-container>
       </div>
     </BasePageContent>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -109,6 +102,7 @@ import {
   escalationStepsRoutes
 } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 @Component({
   components: {
@@ -135,6 +129,11 @@ export default class TheEscalationSteps extends Vue {
 
   isNotLastObject(escalationStepsIndex: number): boolean {
     return escalationStepsIndex !== this.escalationSteps.length - 1;
+  }
+
+  back() {
+    const router = useRouter();
+    router.push('/erfahre-mehr');
   }
 
 }

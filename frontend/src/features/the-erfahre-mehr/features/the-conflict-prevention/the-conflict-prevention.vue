@@ -1,9 +1,6 @@
 <template>  
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -12,10 +9,7 @@
     >
       <ContentList :items="items?.contentItemView" />
     </BasePageContent>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -32,12 +26,17 @@ import {
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: "TheConflictPrevention",
   components: {BasePageContent, ContentList, BackButton},
   setup() {
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PREVENTION);
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
 
     return {
       isLoading,
@@ -46,7 +45,8 @@ export default defineComponent({
       items: data,
       icon: CONFLICT_PREVENTION_ROUTE_META_ICON,
       infoText: CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
-      name: CONFLICT_PREVENTION_ROUTE_NAME
+      name: CONFLICT_PREVENTION_ROUTE_NAME,
+      back
     };
   }
 });

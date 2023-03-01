@@ -1,4 +1,5 @@
 import TheUnterstuetzungsfinder from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.vue";
+
 export const THE_UNTERSTUETZUNGSFINDER_ROUTE_PATH = "/unterstuetzungsfinder";
 export const THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME = "Unterstützungsfinder";
 export const THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON = "mdi-arrow-decision";

@@ -1,6 +1,7 @@
 import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 import {ActionContext} from "vuex";
-import UnterstuetzungsfinderService from "@/features/the-unterstuetzungsfinder/api/the-unterstuetzungsfinder-service.api";
+import UnterstuetzungsfinderService
+    from "@/features/the-unterstuetzungsfinder/api/the-unterstuetzungsfinder-service.api";
 
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
 import AnlaufstelleService

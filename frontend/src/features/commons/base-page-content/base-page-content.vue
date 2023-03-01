@@ -25,8 +25,16 @@
         </v-skeleton-loader>
       </v-col>
     </v-row>
-    <div v-if="isLoading">
-      <p>Is Loading!</p>
+    <div
+      v-if="isLoading"
+      class="v-progress-linear"
+    >
+      <v-progress-circular
+        :size="150"
+        :width="8"
+        color="secondary"
+        indeterminate
+      />
     </div>
   </v-container>
 </template>
@@ -56,8 +64,9 @@ export default {
 </script>
 
 <style scoped>
-.mdi-stairs{
-    transform: rotateY(180deg) !important;
+.v-progress-linear {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
 }
-
 </style>

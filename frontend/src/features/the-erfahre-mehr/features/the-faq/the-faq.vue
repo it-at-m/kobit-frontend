@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -27,10 +24,7 @@
         <TextList :items="filteredFaqs" />
       </v-card-text>
     </BasePageContent>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -47,6 +41,7 @@ import TextList from "@/features/commons/components/TextList.vue";
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
 import {PageType} from "@/features/the-erfahre-mehr/common/model/PageType";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: "TheFaq",
@@ -54,6 +49,11 @@ export default defineComponent({
   setup() {
     const searchText = ref<string>("");
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.FAQ);
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
+
 
     const filteredFaqs = computed(() => {
       return data.value?.textItemView.filter((item) => {
@@ -72,7 +72,8 @@ export default defineComponent({
       filteredFaqs,
       icon: FAQ_ROUTE_META_ICON,
       infoText: FAQ_ROUTE_META_INFO_TEXT,
-      name: FAQ_ROUTE_NAME
+      name: FAQ_ROUTE_NAME,
+      back
     };
   }
 });

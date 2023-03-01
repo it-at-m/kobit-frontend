@@ -2,7 +2,7 @@
   <v-container fluid>
     <BackButton
       :text="'Zurück'"
-      :link="'/erfahre-mehr'"
+      :callback="back"
     />
     <BasePageContent
       :icon="icon"
@@ -14,7 +14,7 @@
     </BasePageContent>
     <BackButton
       :text="'Zurück'"
-      :link="'/erfahre-mehr'"
+      :callback="back"
     />
   </v-container>
 </template>
@@ -31,6 +31,7 @@ import TextList from "@/features/commons/components/TextList.vue";
 import {defineComponent} from 'vue';
 import {useGetAdditionalContent} from "@/features/the-erfahre-mehr/common/middleware/AdditionalPageService";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: 'TheDownloads',
@@ -38,6 +39,10 @@ export default defineComponent({
   setup() {
 
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.DOWNLOADS);
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
 
     return {
       isLoading,
@@ -46,7 +51,8 @@ export default defineComponent({
       error,
       icon: DOWNLOADS_ROUTE_META_ICON,
       infoText: DOWNLOADS_ROUTE_META_INFO_TEXT,
-      name: DOWNLOADS_ROUTE_NAME
+      name: DOWNLOADS_ROUTE_NAME,
+      back
     };
   },
 });

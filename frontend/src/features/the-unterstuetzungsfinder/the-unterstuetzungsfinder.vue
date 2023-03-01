@@ -1,25 +1,26 @@
 <template>
-  <base-page-content
+  <BasePageContent
     :icon="icon"
     :name="name"
     :info-text="infoText"
-    :is-loading="false"
+    :is-loading="isLoading"
   >
     <v-container
       id="id_chat_container"
       style="max-width: 100%;"
       class="justify-center mt-4 mr-1 ml-1"
     >
+      <BackButton :callback="getPreviousAnswer" />
       <v-row>
         <v-col
           v-if="isFinished"
           cols="12"
           sm="12"
-          :md="givenAnswersAreNotEmpty() === false ? '0': '12'"
-          :lg="givenAnswersAreNotEmpty() === false ? '0': '9'"
-          :xl="givenAnswersAreNotEmpty() === false ? '0': '9'"
+          :md="isGivenAnswersEmpty ? '0': '12'"
+          :lg="isGivenAnswersEmpty ? '0': '9'"
+          :xl="isGivenAnswersEmpty ? '0': '9'"
         >
-          <v-row v-if="currentConvo.contactPoints.length === 0">
+          <v-row v-if="conversation?.contactPoints.length === 0">
             <v-col>
               <base-head-line :text="labels.noResults" />
             </v-col>
@@ -33,7 +34,7 @@
             <v-divider class="mt-3 mb-5" />
             <v-row>
               <v-col>
-                <the-unterstuetzungsfinder-ergebnis />
+                <the-unterstuetzungsfinder-ergebnis :convo="conversation" />
               </v-col>
             </v-row>
           </template>
@@ -44,7 +45,7 @@
                 text
                 outlined
                 :aria-label="labels.restartFinder"
-                @click="resetQuestions()"
+                @click="restart"
               >
                 {{ labels.restartFinder }}
               </v-btn>
@@ -52,53 +53,37 @@
           </v-row>
         </v-col>
         <v-col
-          v-if="!isFinished && currentConvo.decisionPoint != null"
+          v-if="!isFinished && conversation?.decisionPoint !== null"
           cols="12"
           sm="12"
-          :md="givenAnswersAreNotEmpty() === false ? '12': '12'"
-          :lg="givenAnswersAreNotEmpty() === false ? '12': '9'"
-          :xl="givenAnswersAreNotEmpty() === false ? '12': '9'"
+          :md="isGivenAnswersEmpty ? '12': '12'"
+          :lg="isGivenAnswersEmpty ? '12': '9'"
+          :xl="isGivenAnswersEmpty ? '12': '9'"
         >
           <v-row>
-            <v-col>
-              <v-alert
-                v-if="isInfoTextActive"
-                id="id_info_banner"
-                elevation="4"
-                outlined
-              >
-                <v-row>
-                  <v-col>
-                    {{ labels.text }}
-                  </v-col>
-                  <v-btn
-                    icon
-                    :aria-label="labels.close"
-                    @click="closeInfoText()"
-                  >
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </v-row>
-              </v-alert>
-            </v-col>
+            <InfoText
+              :is-info-text-active="isInfoTextActive"
+              :labels="labels"
+              :close-info-text="closeInfoText"
+            />
           </v-row>
           <v-row>
             <v-col>
-              <base-head-line :text="currentConvo.decisionPoint.question" />
+              <base-head-line :text="conversation?.decisionPoint.question" />
             </v-col>
           </v-row>
           <v-divider class="mt-3 mb-5" />
           <v-row no-gutters>
             <v-expansion-panels>
               <v-col
-                v-for="(answer, answerIndex) in currentConvo.decisionPoint.answerOptions"
+                v-for="(answer, answerIndex) in conversation?.decisionPoint.answerOptions"
                 :key="answerIndex"
                 class="pa-2"
                 cols="12"
                 sm="12"
-                :md="givenAnswersAreNotEmpty() === false ? '6': '12'"
-                :lg="givenAnswersAreNotEmpty() === false ? '4': '12'"
-                :xl="givenAnswersAreNotEmpty() === false ? '4': '12'"
+                :md="isGivenAnswersEmpty ? '6': '12'"
+                :lg="isGivenAnswersEmpty ? '4': '12'"
+                :xl="isGivenAnswersEmpty ? '4': '12'"
               >
                 <v-alert
                   dense
@@ -114,7 +99,7 @@
                       <v-col
                         cols="11"
                         sm="11"
-                        @click="updateConversation(answer.competence, answer.germanDescription, currentConvo.decisionPoint.question)"
+                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
                       >
                         <p style="font-size: 14px;">
                           {{ answer.germanDescription }}
@@ -124,18 +109,18 @@
                         cols="1"
                         sm="1"
                         class="pl-0 pr-0"
-                        @click="selectedTooltip !== answerIndex ? (openSelectedTooltip(answerIndex), show = true) : (closeAllTooltips(), show = false)"
+                        @click="selectedToolTip !== answerIndex ? openToolTip(answerIndex) : closeToolTips()"
                       >
                         <v-row v-if="answer.shortDescription">
                           <v-col cols="12">
                             <p
-                              v-if="selectedTooltip !== answerIndex"
+                              v-if="selectedToolTip !== answerIndex"
                               style="text-align: right;"
                             >
                               <i class="mdi mdi-information secondary--text" />
                             </p>
                             <p
-                              v-if="selectedTooltip === answerIndex"
+                              v-if="selectedToolTip === answerIndex"
                               style="text-align: right;"
                             >
                               <i class="mdi mdi-close secondary--text" />
@@ -147,7 +132,7 @@
                             style="height:0 !important;"
                           >
                             <v-tooltip
-                              v-if="selectedTooltip === answerIndex"
+                              v-if="selectedToolTip === answerIndex"
                               v-model="show"
                               bottom
                             >
@@ -172,7 +157,7 @@
                         offset-sm="11"
                         cols="2"
                         sm="1"
-                        @click="updateConversation(answer.competence, answer.germanDescription, currentConvo.decisionPoint.question)"
+                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
                       >
                         <v-row class="pt-0 mt-0 pb-0 mb-0">
                           <v-col
@@ -191,195 +176,125 @@
               </v-col>
             </v-expansion-panels>
           </v-row>
+          <BackButton :callback="getPreviousAnswer" />
         </v-col>
-        <v-col
-          v-if="givenAnswersAreNotEmpty() === true"
-          cols="12"
-          sm="12"
-          md="12"
-          lg="3"
-          xl="3"
-        >
-          <v-row>
-            <v-col>
-              <base-head-line :text="labels.answers" />
-            </v-col>
-          </v-row>
-          <v-divider class="mt-3 mb-5" />
-          <v-row>
-            <v-col>
-              <v-card
-                v-for="(element, elementIndex) in givenAnswers"
-                :key="elementIndex"
-                outlined
-                flat
-                class="mb-1"
-                elevation="3"
-              >
-                <v-card-title><h5>{{ element.questionAnswered }}</h5></v-card-title>
-                <v-card-subtitle>{{ element.answerValue }}</v-card-subtitle>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
+        <GivenAnswers
+          :is-given-answers-empty="isGivenAnswersEmpty"
+          :labels="labels"
+          :given-answers="givenAnswers"
+        />
       </v-row>
     </v-container>
-  </base-page-content>
+  </BasePageContent>
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Vue
-} from "vue-property-decorator";
-import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
-import {
-  theUnterstuetzungsfinderRoutes
-} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
-import {
-  dropGivenAnswers,
-  getAnswers,
-  getApiState,
-  getGivenAnswers,
-  getGivenAnswersCompetencies,
-  getCompetencies,
-  getConvo,
-  initTree,
-  setNextQuestion,
-  isFinished,
-  isInfoTextActive,
-  QuestionAndAnswer,
-  setFinished,
-  setGivenAnswers,
-  toggleInfoTextActive
-} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+import {computed, defineComponent, ref} from "vue";
+import GivenAnswers from "@/features/the-unterstuetzungsfinder/components/GivenAnswers.vue";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
+import InfoText from "@/features/the-unterstuetzungsfinder/components/InfoText.vue";
 import TheUnterstuetzungsfinderErgebnis
   from "@/features/the-unterstuetzungsfinder/features/the-mail/the-unterstuetzungsfinder-ergebnis.vue";
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
-  Loading
-} from "@/core/services/api/types/Loading.type";
-import {
-  Competence
-} from "@/features/the-unterstuetzungsfinder/types/competence.type";
-import {
-  finderLabels
-} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
+  THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
+  THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT,
+  THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME
+} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
+import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/the-unterstuezungsfinder-store.module";
+import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
+import {useNextStep} from "@/features/the-unterstuetzungsfinder/middleware/UnterstuetzungsfinderService";
 
-@Component({
+export default defineComponent({
+  name: "TheUnterstuetzungsfinder",
   components: {
+    BackButton,
+    BasePageContent,
     TheUnterstuetzungsfinderErgebnis,
+    InfoText,
     BaseHeadLine,
-    BasePageContent
-  }
-})
-export default class TheUnterstuetzungsfinder extends Vue {
-  show = false;
-  labels = finderLabels;
-  selectedTooltip = -1;
+    GivenAnswers
+  },
+  setup() {
+    const isInfoTextActive = ref<boolean>(true);
+    const givenAnswers = ref<QuestionAndAnswer[]>([]);
+    const isGivenAnswersEmpty = computed(() => givenAnswers.value.length < 1);
+    const selectedToolTip = ref(-1);
+    const show = ref(false);
+    const router = useRouter();
+    const {
+      isLoading,
+      isError,
+      mutate,
+      data
+    } = useNextStep(givenAnswers.value.map(it => it.answerCompetence));
+    const isFinished = computed(() => data.value?.decisionPoint === null);
 
-
-  get isInfoTextActive(): boolean {
-    return this.$store.getters[isInfoTextActive()];
-  }
-
-  set isInfoTextActive(value: boolean) {
-    this.$store.commit(toggleInfoTextActive(), value);
-  }
-
-  get loading(): boolean {
-    return this.apiState > Loading.LOADED;
-  }
-
-  get apiState(): Loading {
-    return this.$store.getters[getApiState()];
-  }
-
-  get isFinished(): boolean {
-    return this.$store.getters[isFinished()];
-  }
-
-  set isFinished(value: boolean) {
-    this.$store.commit(setFinished(), value);
-  }
-
-  get name(): string {
-    return theUnterstuetzungsfinderRoutes.name;
-  }
-
-  get icon(): string {
-    return theUnterstuetzungsfinderRoutes.meta.icon;
-  }
-
-  get infoText(): string {
-    return theUnterstuetzungsfinderRoutes.meta.infoText;
-  }
-
-  get givenAnswers(): QuestionAndAnswer[] {
-    return this.$store.getters[getGivenAnswers()];
-  }
-
-  get currentConvo(): Conversation {
-    return this.$store.getters[getConvo()];
-  }
-
-  get answers(): Conversation[] {
-    return this.$store.getters[getAnswers()];
-  }
-
-  get kompetenzen(): Competence[] {
-    return this.$store.getters[getCompetencies()];
-  }
-
-  openSelectedTooltip(value: number): void {
-    this.selectedTooltip = value;
-  }
-
-  closeAllTooltips(): void {
-    this.selectedTooltip = -1;
-  }
-
-  async setNextQuestion(value: string[]): Promise<void> {
-    await this.$store.dispatch(setNextQuestion(), value);
-  }
-
-  updateGivenAnswers(answerCompetence: string, answerValue: string, questionAnswered: string): void {
-    this.$store.dispatch(setGivenAnswers(), {
-      questionAnswered: questionAnswered,
-      answerCompetence: answerCompetence,
-      answerValue: answerValue,
-    });
-  }
-
-  closeInfoText(): void {
-    this.isInfoTextActive ? this.isInfoTextActive = false : this.isInfoTextActive;
-  }
-
-  async updateConversation(answerCompetence: string, answerValue: string, questionAnswered: string): Promise<void> {
-
-
-    this.updateGivenAnswers(answerCompetence, answerValue, questionAnswered);
-    await this.setNextQuestion(this.$store.getters[getGivenAnswersCompetencies()]);
-    if (this.currentConvo.decisionPoint === null) {
-      this.isFinished = true;
-      this.closeInfoText();
-
-    } else {
-      this.isFinished = false;
+    function closeToolTips() {
+      selectedToolTip.value = -1;
+      show.value = false;
     }
 
-  }
+    function openToolTip(value: number) {
+      selectedToolTip.value = value;
+      show.value = true;
+    }
 
-  givenAnswersAreNotEmpty(): boolean {
-    return this.givenAnswers.length > 0;
-  }
+    function closeInfoText() {
+      isInfoTextActive.value = false;
+    }
 
-  resetQuestions(): void {
-    this.$store.commit(dropGivenAnswers());
-    this.$store.dispatch(initTree());
+    function updateGivenAnswers(answerCompetence: string, answerValue: string, questionAnswered: string) {
+      givenAnswers.value.push({
+        questionAnswered: questionAnswered,
+        answerCompetence: answerCompetence,
+        answerValue: answerValue,
+      });
+      mutate();
+    }
+
+    function getPreviousAnswer() {
+      if (givenAnswers.value.length > 0) {
+        givenAnswers.value?.pop();
+        mutate();
+      } else {
+        router.push("/");
+      }
+    }
+
+    function restart() {
+      givenAnswers.value = [];
+      mutate();
+    }
+
+    mutate();
+
+    return {
+      isFinished,
+      isGivenAnswersEmpty,
+      isInfoTextActive,
+      selectedToolTip,
+      show,
+      givenAnswers,
+      isLoading,
+      isError,
+      conversation: data,
+      openToolTip,
+      closeToolTips,
+      updateGivenAnswers,
+      closeInfoText,
+      restart,
+      getPreviousAnswer,
+      labels: finderLabels,
+      icon: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
+      name: THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
+      infoText: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT
+    };
   }
-}
+});
+
 </script>
 
 <style lang="scss" scoped>

@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -12,10 +9,7 @@
     >
       <ContentList :items="items?.contentItemView" />
     </BasePageContent>
-    <BackButton
-      :text="'Zurück'"
-      :link="'/erfahre-mehr'"
-    />
+    <BackButton :callback="back"/>
   </v-container>
 </template>
 
@@ -31,12 +25,17 @@ import {
   LEADERSHIP_COOPERATION_ROUTE_NAME
 } from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
   components: {ContentList, BasePageContent, BackButton},
   setup() {
     const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.LEADERSHIP);
+    const router = useRouter();
+    function back() {
+      router.push('/erfahre-mehr');
+    }
 
     return {
       isLoading,
@@ -45,7 +44,8 @@ export default defineComponent({
       items: data,
       icon: LEADERSHIP_COOPERATION_ROUTE_META_ICON,
       infoText: LEADERSHIP_COOPERATION_ROUTE_META_INFO_TEXT,
-      name: LEADERSHIP_COOPERATION_ROUTE_NAME
+      name: LEADERSHIP_COOPERATION_ROUTE_NAME,
+      back
     };
   }
 

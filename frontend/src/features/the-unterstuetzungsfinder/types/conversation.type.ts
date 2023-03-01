@@ -1,9 +1,10 @@
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
+import {Competence} from "@/features/the-unterstuetzungsfinder/types/competence.type";
 
 
 interface AnswerOption {
     competence: string;
-    germanDescription: string;
+    germanDescription: Competence;
     shortDescription: string;
 
 }

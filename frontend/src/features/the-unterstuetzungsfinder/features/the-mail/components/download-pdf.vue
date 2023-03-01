@@ -1,15 +1,15 @@
 <template>
-    <v-btn
-      class="justify-end"
-      @click="download()"
-    >
-      <i
-        data-v-25febbcc=""
-        aria-hidden="true"
-        class="v-icon notranslate mdi mdi-file-pdf theme--dark"
-      />
-      Ihre Antworten drucken
-    </v-btn>
+  <v-btn
+    class="justify-end"
+    @click="download()"
+  >
+    <i
+      data-v-25febbcc=""
+      aria-hidden="true"
+      class="v-icon notranslate mdi mdi-file-pdf theme--dark"
+    />
+    Ihre Antworten drucken
+  </v-btn>
 </template>
 
 <script lang="ts">

@@ -20,7 +20,7 @@ export class I18nLabelMaker {
         });
     }
 
-    labels(): unknown {
+    labels(): I18nLabel {
         this.generateLabels();
         return this.objectBuffer.reduce((acc, current) => ({
             ...acc, ...current
