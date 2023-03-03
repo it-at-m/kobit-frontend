@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import {defineComponent, onMounted} from "vue";
 import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
 import {useSendMail} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
 import {I18nLabel} from "@/core/core.translation";
@@ -31,13 +31,12 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const {isLoading, isError, isSuccess, error} = useSendMail(props.email);
+    const {isLoading, isError, isSuccess} = useSendMail(props.email);
 
     return {
       isLoading,
       isError,
-      isSuccess,
-      error
+      isSuccess
     }
   }
 })

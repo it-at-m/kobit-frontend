@@ -11,9 +11,9 @@ export const useGetMailAddress = () => {
 };
 
 export const useSendMail= (email: Email) => {
-    const {isLoading, isError, isSuccess, error} = useQuery(
+    const {isLoading, isError, isSuccess} = useQuery(
         ['sendMail', email],
         () => sendMail(email)
     );
-    return {isLoading, isError, isSuccess, error};
+    return {isLoading, isError, isSuccess};
 };
