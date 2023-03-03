@@ -16,7 +16,7 @@
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
-                :key="anlaufstelle.contact[0].contactPointId"
+                :key="anlaufstelle.contact[0]?.contactPointId"
                 class="pa-0"
               >
                 {{ anlaufstelle.shortCut }}
