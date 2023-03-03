@@ -3,4 +3,4 @@ import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufste
 export default interface Recipient {
     contact: Contact;
     shortCut: string;
-};
+}

@@ -1,17 +1,17 @@
 <template>
-    <v-row>
-      <v-col>
-        <div v-if="isLoading">
-          {{ lables.mailIsSend }}
-        </div>
-        <div v-if="isError">
-          {{ lables.mailSendError }}
-        </div>
-        <div v-if="isSuccess">
-          {{ lables.mailSendSuccess }}
-        </div>
-      </v-col>
-    </v-row>
+  <v-row>
+    <v-col>
+      <div v-if="isLoading">
+        {{ lables.mailIsSend }}
+      </div>
+      <div v-if="isError">
+        {{ lables.mailSendError }}
+      </div>
+      <div v-if="isSuccess">
+        {{ lables.mailSendSuccess }}
+      </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
