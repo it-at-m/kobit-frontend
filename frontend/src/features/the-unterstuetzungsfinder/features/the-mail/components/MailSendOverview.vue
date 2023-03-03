@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, onMounted} from "vue";
+import {defineComponent} from "vue";
 import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
 import {useSendMail} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
 import {I18nLabel} from "@/core/core.translation";
