@@ -12,7 +12,10 @@ enum TheMailLabels {
     TOPIC = "mailTopic",
     CONTENT = "mailContent",
     SEND = "mailSend",
-    CONFIDENTIALITY = "confidentiality"
+    CONFIDENTIALITY = "confidentiality",
+    MAIL_IS_SEND = "mailIsSend",
+    MAIL_SEND_ERROR = "mailSendError",
+    MAIL_SEND_SUCCESS = "mailSendSuccess"
 }
 
 export const thMailMap = new Map<string,string> ([
@@ -22,7 +25,10 @@ export const thMailMap = new Map<string,string> ([
     [TheMailLabels.TOPIC,`${i18n.t(`${TEXTS}.${TheMailLabels.TOPIC}`)}`],
     [TheMailLabels.CONTENT,`${i18n.t(`${TEXTS}.${TheMailLabels.CONTENT}`)}`],
     [TheMailLabels.SEND,`${i18n.t(`${TEXTS}.${TheMailLabels.SEND}`)}`],
-    [TheMailLabels.CONFIDENTIALITY,`${i18n.t(`${TEXTS}.${TheMailLabels.CONFIDENTIALITY}`)}`]
+    [TheMailLabels.CONFIDENTIALITY,`${i18n.t(`${TEXTS}.${TheMailLabels.CONFIDENTIALITY}`)}`],
+    [TheMailLabels.MAIL_IS_SEND, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_IS_SEND}`)}`],
+    [TheMailLabels.MAIL_SEND_ERROR, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_SEND_ERROR}`)}`],
+    [TheMailLabels.MAIL_SEND_SUCCESS, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_SEND_SUCCESS}`)}`],
 
 ]);
 
