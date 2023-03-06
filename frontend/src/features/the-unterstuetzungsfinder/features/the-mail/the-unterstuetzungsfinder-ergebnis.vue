@@ -4,6 +4,8 @@
       <MailSendOverview
         :email="email"
         :lables="labels"
+        :need-to-send-mail="needToSendMail"
+        :after-mail-send="afterMailSend"
       />
     </v-container>
     <v-container v-if="isActive">
@@ -275,6 +277,7 @@ export default defineComponent({
     const isActive = ref(true);
     const isDialog = ref(false);
     const isPrivacyDisclaimerAlertActive = ref(false);
+    const needToSendMail = ref(false)
     const recipients = ref<Recipient[]>([]);
     const isMoreThenOneRecipient = computed(() => recipients.value.length > 1);
     const multipleRecipientsDialog = ref(false);
@@ -326,9 +329,14 @@ export default defineComponent({
         email.value = mail;
         isActive.value = false;
         isDialog.value = false;
+        needToSendMail.value = true;
       } else {
         isDialog.value = isMoreThenOneRecipient && !mail.releasedFromConfidentiality;
       }
+    }
+
+    function afterMailSend() {
+      needToSendMail.value = false;
     }
 
     return {
@@ -343,12 +351,14 @@ export default defineComponent({
       isMoreThenOneRecipient,
       email,
       multipleRecipientsDialog,
+      needToSendMail,
       showTextInfo: false,
       commonLabels: commonLabels,
       labels: theMailLabels,
       finderLabel: finderLabels,
       multiRecipientsDisclaimer: DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
       privacyDisclaimer: DISCLAIMER_MESSAGE_PRIVACY,
+      afterMailSend,
       showPrivacyDisclaimer,
       closePrivacyDisclaimer,
       addAddress,

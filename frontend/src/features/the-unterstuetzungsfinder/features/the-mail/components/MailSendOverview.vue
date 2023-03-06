@@ -28,15 +28,29 @@ export default defineComponent({
     },
     lables: {
       type: Object as () => I18nLabel
+    },
+    needToSendMail: {
+      type: Boolean
+    },
+    afterMailSend: {
+      type: Function
     }
   },
   setup(props) {
-    const {isLoading, isError, isSuccess} = useSendMail(props.email);
-
+    //work around because hooks are only allowed to be called inside setup
+    if(props.needToSendMail) {
+      const {isLoading, isError, isSuccess} = useSendMail(props.email);
+      props.afterMailSend();
+      return {
+        isLoading,
+        isError,
+        isSuccess
+      }
+    }
     return {
-      isLoading,
-      isError,
-      isSuccess
+      isLoading: true,
+      isError: false,
+      isSuccess: false
     }
   }
 })
