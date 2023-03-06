@@ -181,24 +181,11 @@
       </v-row>
       <v-row>
         <v-col
-          cols="12"
-          sm="12"
-          md="12"
-          lg="6"
-          xl="6"
-        >
-          <v-checkbox
-            v-if="isMoreThenOneRecipient"
-            v-model="email.releasedFromConfidentiality"
-            :label="labels.confidentiality"
-          />
-        </v-col>
-        <v-col
-          cols="12"
-          sm="6"
-          md="6"
-          lg="3"
-          xl="3"
+            sm="12"
+            md="3"
+            lg="3"
+            xl="3"
+            offset-xl="6"
         >
           <v-btn
             class="justify-end"
@@ -207,48 +194,40 @@
           >
             {{ labels.mailSend }}
           </v-btn>
-          <v-dialog
-            :value="multipleRecipientsDialog"
-            persistent
-            width="500"
-          >
-            <v-card>
-              <v-card-title />
-              <v-card-text>
-                {{ multiRecipientsDisclaimer }}
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn
-                  color="red"
-                  text
-                  @click="disagree()"
-                >
-                  {{ commonLabels.disagree }}
-                </v-btn>
-                <v-btn
-                  color="green"
-                  text
-                  @click="agree()"
-                >
-                  {{ commonLabels.agree }}
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-col>
         <v-col
-          cols="12"
-          sm="6"
-          md="6"
-          lg="3"
-          xl="3"
-          class="text-right"
+            sm="12"
+            md="3"
+            lg="3"
+            xl="3"
         >
           <DownloadPDF
             :given-answers="givenAnswers"
             :convo="convo"
           />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          offset-xl="6">
+          <v-checkbox
+              v-if="isMoreThenOneRecipient"
+              v-model="email.releasedFromConfidentiality"
+              :label="labels.confidentiality"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-btn
+              color="secondary"
+              text
+              outlined
+              :aria-label="finderLabel.restartFinder"
+              @click="restart"
+          >
+            {{ finderLabel.restartFinder }}
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -273,6 +252,7 @@ import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/type
 import {commonLabels} from "@/core/core.translation";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import MailSendOverview from "@/features/the-unterstuetzungsfinder/features/the-mail/components/MailSendOverview.vue";
+import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
 
 export default defineComponent({
   name: "TheUnterstuetzungsfinderErgebnis",
@@ -283,6 +263,12 @@ export default defineComponent({
     },
     givenAnswers: {
       type: Array as () => QuestionAndAnswer[]
+    },
+    restart: {
+      type: Function
+    },
+    restartText: {
+      type: String
     }
   },
   setup(props) {
@@ -360,6 +346,7 @@ export default defineComponent({
       showTextInfo: false,
       commonLabels: commonLabels,
       labels: theMailLabels,
+      finderLabel: finderLabels,
       multiRecipientsDisclaimer: DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
       privacyDisclaimer: DISCLAIMER_MESSAGE_PRIVACY,
       showPrivacyDisclaimer,
