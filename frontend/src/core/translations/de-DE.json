@@ -26,7 +26,10 @@
           "mailTopic": "Betreff",
           "mailContent": "Inhalt",
           "mailSend": "Absenden",
-          "confidentiality": "Zustimmung der Schweigepflichtsentbindung"
+          "confidentiality": "Zustimmung zur Schweigepflichtsentbindung",
+          "mailIsSend": "Ihre Email wird versendet bitte warten!",
+          "mailSendError": "Es gab ein Problem beim Senden Ihrer Email!",
+          "mailSendSuccess": "Ihre Mail wurde erfolgreich versendet. Sie sollten eine Kopie erhalten haben. Bitte kehren Sie zur Startseite zurück oder starten Sie einen neuen Vorgang."
         }
       }
     }

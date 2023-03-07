@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
     <base-page-content
       :icon="icon"
       :name="name"
@@ -59,7 +59,7 @@
         </v-row>
       </v-card-text>
     </base-page-content>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
   </v-container>
 </template>
 

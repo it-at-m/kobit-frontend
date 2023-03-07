@@ -1,6 +1,6 @@
 <template>  
   <v-container fluid>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -9,7 +9,7 @@
     >
       <ContentList :items="items?.contentItemView" />
     </BasePageContent>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
   </v-container>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
     <BasePageContent
       :is-loading="isLoading"
       :info-text="infoText"
@@ -24,7 +24,7 @@
         <TextList :items="filteredFaqs" />
       </v-card-text>
     </BasePageContent>
-    <BackButton :callback="back"/>
+    <BackButton :callback="back" />
   </v-container>
 </template>
 

@@ -66,19 +66,6 @@ import {
     TheDisclaimerStoreState
 } from "@/features/the-disclaimer/the-disclaimer-store.module";
 
-import {
-    THE_MAIL_MODULE_NAME,
-    theMailStoreModule,
-    TheMailStoreState
-} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-store.module";
-
-
-import {
-    THE_MAIL_USER_MODULE_NAME,
-    theMailUserStoreModule,
-    TheMailUserStoreState
-} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
-
 Vue.use(Vuex);
 const notOnProduction = process.env.NODE_ENV !== 'production';
 
@@ -96,8 +83,6 @@ export interface RootState {
     theAnlaufstellenStoreState: TheAnlaufstellenStoreState;
     theAngeboteModuleState: TheAngeboteModuleState;
     theDisclaimerStoreState: TheDisclaimerStoreState;
-    theMailStoreState: TheMailStoreState;
-    theMailUserStoreState: TheMailUserStoreState;
 }
 
 export default new Vuex.Store<RootState>({
@@ -114,9 +99,7 @@ export default new Vuex.Store<RootState>({
         [THE_DOWNLOADS_MODULE_NAME]: theDownloadsStoreModule,
         [THE_ANLAUFSTELLEN_MODULE_NAME]: theAnlaufstellenStoreModule,
         [THE_ANGEBOTE_MODULE_NAME]: theAngeboteStoreModule,
-        [THE_DISCLAIMER_MODULE_NAME]: theDisclaimerStoreModule,
-        [THE_MAIL_MODULE_NAME]: theMailStoreModule,
-        [THE_MAIL_USER_MODULE_NAME]: theMailUserStoreModule
+        [THE_DISCLAIMER_MODULE_NAME]: theDisclaimerStoreModule
     },
     strict: notOnProduction
 });

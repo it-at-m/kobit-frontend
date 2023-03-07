@@ -10,7 +10,6 @@
         style="max-width: 100%;"
         class="justify-center mt-4 mr-1 ml-1"
     >
-      <BackButton :callback="getPreviousAnswer"/>
       <v-row>
         <v-col
             v-if="isFinished"
@@ -34,23 +33,14 @@
             <v-divider class="mt-3 mb-5"/>
             <v-row>
               <v-col>
-                <the-unterstuetzungsfinder-ergebnis :convo="conversation" :given-answers="givenAnswers"/>
+                <the-unterstuetzungsfinder-ergebnis
+                    :convo="conversation"
+                    :given-answers="givenAnswers"
+                    :restart="restart"
+                />
               </v-col>
             </v-row>
           </template>
-          <v-row>
-            <v-col>
-              <v-btn
-                  color="secondary"
-                  text
-                  outlined
-                  :aria-label="labels.restartFinder"
-                  @click="restart"
-              >
-                {{ labels.restartFinder }}
-              </v-btn>
-            </v-col>
-          </v-row>
         </v-col>
         <v-col
             v-if="!isFinished && conversation?.decisionPoint !== null"
@@ -176,7 +166,7 @@
               </v-col>
             </v-expansion-panels>
           </v-row>
-          <BackButton :callback="getPreviousAnswer"/>
+          <BackButton v-if="givenAnswers.length > 0" :callback="getPreviousAnswer"/>
         </v-col>
         <GivenAnswers
             :is-given-answers-empty="isGivenAnswersEmpty"
@@ -203,7 +193,6 @@ import {
 } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import {useMutation} from "@tanstack/vue-query";
 import {nextStep} from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
@@ -224,7 +213,6 @@ export default defineComponent({
     const isGivenAnswersEmpty = computed(() => givenAnswers.value.length < 1);
     const selectedToolTip = ref(-1);
     const show = ref(false);
-    const router = useRouter();
     const {isLoading, isError, mutate, data} = useMutation({
       mutationFn: () => {
         return nextStep(givenAnswers.value.map(it => it.answerCompetence));
@@ -259,8 +247,6 @@ export default defineComponent({
       if (givenAnswers.value.length > 0) {
         givenAnswers.value?.pop();
         mutate();
-      } else {
-        router.push("/");
       }
     }
 

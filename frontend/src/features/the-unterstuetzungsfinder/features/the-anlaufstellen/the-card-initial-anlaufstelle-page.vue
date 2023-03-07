@@ -15,18 +15,18 @@
               text
               :to="unterstuezungsfinder.path"
             >
-              <b>Hier lang zum Unterstützungsfinder</b>
+              <b>Zum Unterstützungsfinder</b>
             </v-btn>
           </v-card-actions>
           <v-card-text>
-            <center>
+            <div style="text-align: center;">
               <img
                 :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'max-height:30vh;' : 'max-height:50vh;'"
                 style="max-width:90%;"
                 src="/images/hands_wide.jpg"
                 alt="Man sieht jeweils einen Arm von 10 Menschen, die im Kreis stehen. Diese haben ihre Hände aufeinander gelegt."
               >
-            </center>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>

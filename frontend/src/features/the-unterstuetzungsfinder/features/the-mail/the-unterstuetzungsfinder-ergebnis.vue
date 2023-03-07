@@ -1,11 +1,12 @@
 <template>
   <v-container>
     <v-container v-if="!isActive">
-      <v-row>
-        <v-col>
-          <p>Ihre Mail wurde erfolgreich versendet! Bitte starten Sie ein neues Verfahren mit den Button!!</p>
-        </v-col>
-      </v-row>
+      <MailSendOverview
+        :email="email"
+        :lables="labels"
+        :need-to-send-mail="needToSendMail"
+        :after-mail-send="afterMailSend"
+      />
     </v-container>
     <v-container v-if="isActive">
       <v-row>
@@ -17,7 +18,7 @@
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
-                :key="anlaufstelle.contact[0].contactPointId"
+                :key="anlaufstelle.contact[0]?.contactPointId"
                 class="pa-0"
               >
                 {{ anlaufstelle.shortCut }}
@@ -31,7 +32,7 @@
 
                   <template v-for="contact in anlaufstelle.contact">
                     <v-card-actions
-                      v-if="isEmailEmpty(contact)"
+                      v-if="contact.email"
                       :key="contact.contactPointId"
                     >
                       <v-btn
@@ -56,25 +57,25 @@
             elevation="4"
             type="warning"
           >
-            {{ disclaimerMessage }}
+            {{ multiRecipientsDisclaimer }}
           </v-alert>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-alert
-            v-if="isMedicalRecordAlertActive || isMedicalInputDirty"
+            v-if="isPrivacyDisclaimerAlertActive"
             elevation="4"
             type="warning"
           >
             <v-row>
               <v-col>
-                {{ disclaimerMessageMedicalRecord }}
+                {{ privacyDisclaimer }}
                 <PrivacyPolicy />
               </v-col>
               <v-btn
                 icon
-                @click="closeMedicalRecordAlert()"
+                @click="closePrivacyDisclaimer"
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
@@ -103,7 +104,7 @@
             color="secondary"
             disable-lookup
             full-width
-            :rules="[v => v.length != 0 || 'An erforderlich.']"
+            :rules="[v => v.length !== 0 || 'An erforderlich.']"
             validate
             class="pa-0 ma-0"
             :label="labels.mailTo"
@@ -132,14 +133,14 @@
           xl="6"
         >
           <v-text-field
-            v-model="mail.subject"
+            v-model="email.subject"
             outlined
             prepend-inner-icon="mdi-email-edit"
             :label="labels.mailTopic"
             :rules="[v => !!v || 'Betreff erforderlich.']"
             validate
             color="secondary"
-            @focus="showMedicalRecordAlert()"
+            @focus="showPrivacyDisclaimer"
           />
         </v-col>
       </v-row>
@@ -152,7 +153,7 @@
           xl="6"
         >
           <v-text-field
-            :value="mailUser.emailAddress"
+            :value="mailAddress.emailAddress"
             outlined
             prepend-inner-icon="mdi-email-outline"
             :label="labels.mailFrom"
@@ -168,7 +169,7 @@
           xl="6"
         >
           <v-textarea
-            v-model="mail.message"
+            v-model="email.message"
             dense
             outlined
             prepend-inner-icon="mdi-text-box-multiple-outline"
@@ -176,77 +177,59 @@
             :label="labels.mailContent"
             :rules="[v => !!v || 'Inhalt erforderlich.']"
             validate
-            @focus="showMedicalRecordAlert()"
+            @focus="showPrivacyDisclaimer"
           />
         </v-col>
       </v-row>
       <v-row>
         <v-col
-          cols="12"
-          sm="12"
-          md="12"
-          lg="6"
-          xl="6"
-        >
+            offset-xl="6">
           <v-checkbox
-            v-if="isMoreThenOneRecipient"
-            v-model="mail.releasedFromConfidentiality"
-            :label="labels.confidentiality"
+              v-if="isMoreThenOneRecipient"
+              v-model="email.releasedFromConfidentiality"
+              :label="labels.confidentiality"
           />
         </v-col>
+      </v-row>
+      <v-row>
         <v-col
-          cols="12"
-          sm="6"
-          md="6"
-          lg="3"
-          xl="3"
+            sm="12"
+            md="3"
+            lg="3"
+            xl="3"
+            offset-xl="6"
         >
           <v-btn
             class="justify-end"
-            :disabled="recipients.length === 0 || !mail.subject || !mail.message"
-            @click="sendMail()"
+            :disabled="recipients.length === 0 || !email.subject || !email.message"
+            @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
           >
             {{ labels.mailSend }}
           </v-btn>
-          <v-dialog
-            :value="dialog"
-            persistent
-            width="500"
-          >
-            <v-card>
-              <v-card-title />
-              <v-card-text>
-                {{ disclaimerMessage }}
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn
-                  color="red"
-                  text
-                  @click="disagree()"
-                >
-                  {{ commonLabels.disagree }}
-                </v-btn>
-                <v-btn
-                  color="green"
-                  text
-                  @click="agree()"
-                >
-                  {{ commonLabels.agree }}
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
         </v-col>
         <v-col
-          cols="12"
-          sm="6"
-          md="6"
-          lg="3"
-          xl="3"
-          class="text-right"
+            sm="12"
+            md="3"
+            lg="3"
+            xl="3"
         >
-          <DownloadPDF :given-answers="givenAnswers" :convo="convo"/>
+          <DownloadPDF
+            :given-answers="givenAnswers"
+            :convo="convo"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-btn
+              color="secondary"
+              text
+              outlined
+              :aria-label="finderLabel.restartFinder"
+              @click="restart"
+          >
+            {{ finderLabel.restartFinder }}
+          </v-btn>
         </v-col>
       </v-row>
     </v-container>
@@ -254,144 +237,139 @@
 </template>
 
 <script lang="ts">
-import {Component, Inject, Prop, Vue} from "vue-property-decorator";
-import BaseTextField from "@/features/the-unterstuetzungsfinder/features/the-mail/components/base-text-field.vue";
+
+import {computed, defineComponent, onMounted, ref} from "vue";
 import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
-import {DOWNLOAD_DATENSCHUTZ, DownloadProviderService} from "@/core/services/downloads/download-provider.service";
-import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
-import {
-  getDisclaimerMessage,
-  getDisclaimerMessageMedicalRecord
-} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-store.module";
-
-import MailService from "@/features/the-unterstuetzungsfinder/features/the-mail/api/the-mail-service.api";
-
-import {getMailUser} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-user-store.module";
-
-
-import {theMailLabels} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
-import {commonLabels} from "@/core/core.translation";
-import Mail from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail.type";
-
-import MailUser from "@/features/the-unterstuetzungsfinder/features/the-mail/types/mail-user.type";
-import Conversation from "../../types/conversation.type";
-import Contact from "../the-anlaufstellen/types/contact.type";
-import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
+import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
+import {useGetMailAddress} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
+import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
+import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
+import {
+  DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
+  DISCLAIMER_MESSAGE_PRIVACY
+} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-constants";
+import {theMailLabels} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
+import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
+import {commonLabels} from "@/core/core.translation";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
+import MailSendOverview from "@/features/the-unterstuetzungsfinder/features/the-mail/components/MailSendOverview.vue";
+import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
 
+export default defineComponent({
+  name: "TheUnterstuetzungsfinderErgebnis",
+  components: {MailSendOverview, PrivacyPolicy, DownloadPDF},
+  props: {
+    convo: {
+      type: Conversation
+    },
+    givenAnswers: {
+      type: Array as () => QuestionAndAnswer[]
+    },
+    restart: {
+      type: Function
+    },
+    restartText: {
+      type: String
+    }
+  },
+  setup(props) {
+    const isActive = ref(true);
+    const isDialog = ref(false);
+    const isPrivacyDisclaimerAlertActive = ref(false);
+    const needToSendMail = ref(false)
+    const recipients = ref<Recipient[]>([]);
+    const isMoreThenOneRecipient = computed(() => recipients.value.length > 1);
+    const multipleRecipientsDialog = ref(false);
+    const email = ref<Email>({});
 
-@Component({
-  components: {PrivacyPolicy, BaseHeadLine, BaseTextField, DownloadPDF}
-})
-export default class TheUnterstuetzungsfinderErgebnis extends Vue {
+    const {isLoading, isError, data, error} = useGetMailAddress();
 
-
-  @Prop()
-  convo: Conversation | undefined;
-
-  @Prop()
-  givenAnswers: QuestionAndAnswer[] | undefined
-
-  @Inject(DOWNLOAD_DATENSCHUTZ)
-  download!: DownloadProviderService;
-
-  isActive = true;
-
-  labels = theMailLabels;
-  commonLabels = commonLabels;
-
-  dialog = false;
-  recipients: Recipient[] = [];
-
-  isMedicalRecordAlertActive = false
-  isMedicalInputDirty = false;
-
-  mail = Mail.createEmptyMail();
-  signature = "[LDAP-NAME]";
-
-
-  get mailUser(): MailUser {
-    return this.$store.getters[getMailUser()];
-  }
-
-  get disclaimerMessage(): string {
-    return this.$store.getters[getDisclaimerMessage()];
-  }
-
-  get disclaimerMessageMedicalRecord(): string {
-    return this.$store.getters[getDisclaimerMessageMedicalRecord()];
-  }
-
-  get isMoreThenOneRecipient(): boolean {
-    return this.recipients.length > 1;
-  }
-
-  unselect(itemNeedToRemove: Recipient): void {
-    for (let i = 0; i < this.recipients.length; i += 1) {
-      if (this.recipients[parseInt(i.toString(), 10)] === itemNeedToRemove) {
-        this.recipients.splice(i, 1);
+    onMounted(() => {
+      let message = "Automatisch eingefügte Antworten des Unterstützungsfinders:\n";
+      for (let i = 0; i < props.givenAnswers?.length; i++) {
+        message = message + (i + 1 + ". Frage: " + props.givenAnswers[i].questionAnswered + " ");
+        message = message + ("Ihre Antwort: " + props.givenAnswers[i].answerValue + "\n");
       }
+      email.value = {message: message, ...email.value};
+    });
 
-    }
-  }
-
-  agree(): void {
-    this.mail.releasedFromConfidentiality = true;
-    this.dialog = false;
-  }
-
-  disagree(): void {
-    this.mail.releasedFromConfidentiality = false;
-    this.dialog = false;
-  }
-
-  addAddress(value: Contact, shortCut: string): void {
-
-    const isNotExisting = !this.recipients.find(element => element.contact?.email === value.email);
-
-    if (isNotExisting) {
-
-      const recipient = Recipient.createEmptyRecipient().withContact(value).withshortCut(shortCut);
-
-      this.recipients.push(recipient);
-
+    function addAddress(value: Contact, shortCut: string): void {
+      if (recipients.value.find(it => it.contact.email === value.email)) {
+        //do nothing because contact already added
+      } else {
+        recipients.value.push({contact: value, shortCut: shortCut});
+      }
     }
 
+    function showPrivacyDisclaimer() {
+      isPrivacyDisclaimerAlertActive.value = true;
+    }
+
+    function closePrivacyDisclaimer() {
+      isPrivacyDisclaimerAlertActive.value = false;
+    }
+
+    function unselect(itemNeedToRemove: Recipient): void {
+      recipients.value = recipients.value.filter(it => it.shortCut !== itemNeedToRemove.shortCut);
+    }
+
+    function agree() {
+      email.value = {releasedFromConfidentiality: true, ...email.value};
+      multipleRecipientsDialog.value = false;
+    }
+
+    function disagree(): void {
+      email.value = {releasedFromConfidentiality: true, ...email.value};
+      multipleRecipientsDialog.value = false;
+    }
+
+    function sendMail(mail: Email) {
+      if ((isMoreThenOneRecipient && mail.releasedFromConfidentiality) || recipients.value.length == 1) {
+        email.value = mail;
+        isActive.value = false;
+        isDialog.value = false;
+        needToSendMail.value = true;
+      } else {
+        isDialog.value = isMoreThenOneRecipient && !mail.releasedFromConfidentiality;
+      }
+    }
+
+    function afterMailSend() {
+      needToSendMail.value = false;
+    }
+
+    return {
+      isLoading,
+      isError,
+      error,
+      isActive,
+      isDialog,
+      isPrivacyDisclaimerAlertActive,
+      recipients,
+      mailAddress: data,
+      isMoreThenOneRecipient,
+      email,
+      multipleRecipientsDialog,
+      needToSendMail,
+      showTextInfo: false,
+      commonLabels: commonLabels,
+      labels: theMailLabels,
+      finderLabel: finderLabels,
+      multiRecipientsDisclaimer: DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
+      privacyDisclaimer: DISCLAIMER_MESSAGE_PRIVACY,
+      afterMailSend,
+      showPrivacyDisclaimer,
+      closePrivacyDisclaimer,
+      addAddress,
+      disagree,
+      agree,
+      unselect,
+      sendMail
+    };
   }
+});
 
-  isEmailEmpty(value: Contact): boolean {
-    return !!value.email || value.email !== "";
-  }
-
-  sendMail(): void {
-
-    if ((this.isMoreThenOneRecipient && this.mail.releasedFromConfidentiality) || (this.recipients.length === 1)) {
-
-      this.isActive = false;
-      this.dialog = false;
-
-      this.mail.pushAnlaufstellenMailToRecipients(this.recipients);
-      this.mail.from = this.mailUser.emailAddress;
-
-      MailService.postMail(JSON.parse(JSON.stringify(this.mail)));
-
-    } else this.dialog = this.isMoreThenOneRecipient && !this.mail.releasedFromConfidentiality;
-
-  }
-
-  showMedicalRecordAlert(): void {
-    this.isMedicalRecordAlertActive = true;
-    this.isMedicalInputDirty = true;
-  }
-
-  closeMedicalRecordAlert(): void {
-    this.isMedicalRecordAlertActive = false;
-    this.isMedicalInputDirty = false;
-  }
-
-
-}
 </script>
 
 <style scoped>
