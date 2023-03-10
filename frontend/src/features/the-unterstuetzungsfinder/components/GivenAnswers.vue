@@ -4,8 +4,8 @@
     cols="12"
     sm="12"
     md="12"
-    lg="3"
-    xl="3"
+    lg="5"
+    xl="5"
   >
     <v-row>
       <v-col>

@@ -16,8 +16,8 @@
             cols="12"
             sm="12"
             :md="isGivenAnswersEmpty ? '0': '12'"
-            :lg="isGivenAnswersEmpty ? '0': '9'"
-            :xl="isGivenAnswersEmpty ? '0': '9'"
+            :lg="isGivenAnswersEmpty ? '0': '7'"
+            :xl="isGivenAnswersEmpty ? '0': '7'"
         >
           <v-row v-if="conversation?.contactPoints.length === 0">
             <v-col>
@@ -47,8 +47,8 @@
             cols="12"
             sm="12"
             :md="isGivenAnswersEmpty ? '12': '12'"
-            :lg="isGivenAnswersEmpty ? '12': '9'"
-            :xl="isGivenAnswersEmpty ? '12': '9'"
+            :lg="isGivenAnswersEmpty ? '12': '7'"
+            :xl="isGivenAnswersEmpty ? '12': '7'"
         >
           <v-row>
             <InfoText
