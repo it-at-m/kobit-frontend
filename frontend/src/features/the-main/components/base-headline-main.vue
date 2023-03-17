@@ -1,21 +1,26 @@
 <template>
   <div>
     <div class="headline text-lg-h3">
-      Konfliktbegleitung mit IT-Unterstützung-die KoBITApp
+      {{ labels.headline }}
     </div>
     <div class="subtitle-1 text-lg-h6">
-      Mit den Bausteinen der KoBITApp können Sie sich die Unterstützung selbst zusammenstellen, die Sie brauchen.
+      {{ labels.subtitle }}
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {defineComponent} from "vue";
+import {I18nLabel} from "@/core/core.translation";
 
-@Component({})
-export default class BaseHeadlineMain extends Vue {
-
-}
+export default defineComponent({
+  name: "BaseHeadlineMain",
+  props: {
+    labels: {
+      type: Object as () => I18nLabel
+    }
+  }
+})
 </script>
 
 <style scoped>
