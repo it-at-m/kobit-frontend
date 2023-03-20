@@ -161,43 +161,49 @@
             color="secondary"
           />
         </v-col>
-        <v-col
-          cols="12"
-          sm="12"
-          md="12"
-          lg="12"
-          xl="6"
-        >
-          <v-textarea
-            v-model="email.message"
-            dense
-            outlined
-            prepend-inner-icon="mdi-text-box-multiple-outline"
-            color="secondary"
-            :label="labels.mailContent"
-            :rules="[v => !!v || 'Inhalt erforderlich.']"
-            validate
-            @focus="showPrivacyDisclaimer"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-            offset-xl="6">
-          <v-checkbox
-              v-if="isMoreThenOneRecipient"
-              v-model="email.releasedFromConfidentiality"
-              :label="labels.confidentiality"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
+        <v-row>
+          <v-col
+            cols="12"
             sm="12"
-            md="3"
-            lg="3"
-            xl="3"
-            offset-xl="6"
+            md="12"
+            lg="12"
+            xl="6"
+          >
+            <v-alert dismissible
+                     type="info"
+            color="blue-grey lighten-4">{{ labels.textFieldAlert }}</v-alert>
+            <v-textarea
+              v-model="email.message"
+              dense
+              outlined
+              prepend-inner-icon="mdi-text-box-multiple-outline"
+              color="secondary"
+              :label="labels.mailContent"
+              :rules="[v => !!v || 'Inhalt erforderlich.']"
+              validate
+              @focus="showPrivacyDisclaimer"
+            />
+          </v-col>
+        </v-row>
+      </v-row>
+      <v-row>
+        <v-col
+          offset-xl="6"
+        >
+          <v-checkbox
+            v-if="isMoreThenOneRecipient"
+            v-model="email.releasedFromConfidentiality"
+            :label="labels.confidentiality"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col
+          sm="12"
+          md="3"
+          lg="3"
+          xl="3"
+          offset-xl="6"
         >
           <v-btn
             class="justify-end"
@@ -208,10 +214,10 @@
           </v-btn>
         </v-col>
         <v-col
-            sm="12"
-            md="3"
-            lg="3"
-            xl="3"
+          sm="12"
+          md="3"
+          lg="3"
+          xl="3"
         >
           <DownloadPDF
             :given-answers="givenAnswers"
@@ -222,11 +228,11 @@
       <v-row>
         <v-col>
           <v-btn
-              color="secondary"
-              text
-              outlined
-              :aria-label="finderLabel.restartFinder"
-              @click="restart"
+            color="secondary"
+            text
+            outlined
+            :aria-label="finderLabel.restartFinder"
+            @click="restart"
           >
             {{ finderLabel.restartFinder }}
           </v-btn>

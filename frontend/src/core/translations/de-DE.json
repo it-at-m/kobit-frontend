@@ -29,7 +29,8 @@
           "confidentiality": "Zustimmung zur Schweigepflichtsentbindung",
           "mailIsSend": "Ihre Email wird versendet bitte warten!",
           "mailSendError": "Es gab ein Problem beim Senden Ihrer Email!",
-          "mailSendSuccess": "Ihre Mail wurde erfolgreich versendet. Sie sollten eine Kopie erhalten haben. Bitte kehren Sie zur Startseite zurück oder starten Sie einen neuen Vorgang."
+          "mailSendSuccess": "Ihre Mail wurde erfolgreich versendet. Sie sollten eine Kopie erhalten haben. Bitte kehren Sie zur Startseite zurück oder starten Sie einen neuen Vorgang.",
+          "textFieldAlert": "Der initiale Inhalt des Textfeldes wurde durch die Kobit-App erstellt und beinhaltet Ihre getroffenen Angaben aus dem Unterstüzungsfinder. Sie können das Feld frei bearbeiten und auch die vorab ausgefüllten Inhalte wieder entfernen."
         }
       }
     }
