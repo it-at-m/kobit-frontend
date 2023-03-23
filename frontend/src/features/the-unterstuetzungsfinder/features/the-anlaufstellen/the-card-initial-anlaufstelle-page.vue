@@ -35,10 +35,9 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Vue} from "vue-property-decorator";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 
-@Component({})
 export default class TheCardInitialAnlaufstellePage extends Vue {
 
   get unterstuezungsfinder(): unknown {

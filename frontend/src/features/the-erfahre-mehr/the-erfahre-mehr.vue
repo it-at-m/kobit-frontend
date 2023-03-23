@@ -6,6 +6,10 @@
     :is-loading="false"
   >
     <v-container fluid>
+      <BackButton
+          :text="'Zurück'"
+          :callback="back"
+      />
       <v-row>
         <v-col>
           <v-row>
@@ -115,9 +119,11 @@ import {
 } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 @Component({
   components: {
+    BackButton,
     BaseLinkCard,
     BasePageContent
   }
@@ -191,6 +197,10 @@ export default class TheErfahreMehr extends Vue {
 
   get infoText(): string {
     return erfahreMehrRoutes.meta.infoText;
+  }
+
+  back() {
+    this.$router.push("/");
   }
 
 }

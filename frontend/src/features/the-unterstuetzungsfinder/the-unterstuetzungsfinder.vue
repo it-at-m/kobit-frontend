@@ -170,6 +170,10 @@
             v-if="givenAnswers.length > 0"
             :callback="getPreviousAnswer"
           />
+          <BackButton
+            v-else
+            :callback="back"
+          />
         </v-col>
         <GivenAnswers
           :is-given-answers-empty="isGivenAnswersEmpty"
@@ -199,6 +203,7 @@ import BackButton from "@/features/commons/components/BackButton.vue";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import {useMutation} from "@tanstack/vue-query";
 import {nextStep} from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
+import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: "TheUnterstuetzungsfinder",
@@ -216,12 +221,17 @@ export default defineComponent({
     const isGivenAnswersEmpty = computed(() => givenAnswers.value.length < 1);
     const selectedToolTip = ref(-1);
     const show = ref(false);
+    const router = useRouter();
     const {isLoading, isError, mutate, data} = useMutation({
       mutationFn: () => {
         return nextStep(givenAnswers.value.map(it => it.answerCompetence));
       }
     });
     const isFinished = computed(() => data.value?.decisionPoint === null);
+
+    function back() {
+      router.push('/');
+    }
 
     function closeToolTips() {
       selectedToolTip.value = -1;
@@ -276,6 +286,7 @@ export default defineComponent({
       closeInfoText,
       restart,
       getPreviousAnswer,
+      back,
       labels: finderLabels,
       icon: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
       name: THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
