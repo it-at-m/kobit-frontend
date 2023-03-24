@@ -25,23 +25,16 @@
         </v-skeleton-loader>
       </v-col>
     </v-row>
-    <div
-      v-if="isLoading"
-      class="v-progress-linear"
-    >
-      <v-progress-circular
-        :size="150"
-        :width="8"
-        color="secondary"
-        indeterminate
-      />
-    </div>
+    <LoadingSpinner :is-loading="isLoading" />
   </v-container>
 </template>
 
 <script lang="ts">
+import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+
 export default {
   name: "BasePageContent",
+  components: {LoadingSpinner},
   props: {
     isLoading: {
       type: Boolean,

@@ -34,5 +34,19 @@
         }
       }
     }
+  },
+  "BaseHeadLine": {
+    "admin": {
+      "texts": {
+        "headline": "Admin Bereich",
+        "subtitle": "Der Admin Bereich findet sich aktuell im Aufbau. Weitere Funktionen kommen nach und nach dazu."
+      }
+    },
+    "main": {
+      "texts": {
+        "headline": "Konfliktbegleitung mit IT-Unterstützung-die KoBITApp",
+        "subtitle": "Mit den Bausteinen der KoBITApp können Sie sich die Unterstützung selbst zusammenstellen, die Sie brauchen."
+      }
+    }
   }
 }

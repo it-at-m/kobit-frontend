@@ -13,6 +13,7 @@ import {theAnlaufstellenRoutes} from "@/features/the-unterstuetzungsfinder/featu
 import {singleAnlaufstelleRoutes} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/single-anlaufstelle.routes";
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
+import {adminRoutes} from "@/features/admin/adminRoutes";
 
 Vue.use(Router);
 
@@ -48,6 +49,7 @@ export default new Router({
         escalationStepsRoutes,
         theAnlaufstellenRoutes,
         singleAnlaufstelleRoutes,
-        theAngeboteRoutes
+        theAngeboteRoutes,
+        adminRoutes
     ]
 });

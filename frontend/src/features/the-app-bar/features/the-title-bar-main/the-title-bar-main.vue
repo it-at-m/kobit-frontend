@@ -3,8 +3,7 @@
     app
     clipped-left
   >
-    <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-
+    <v-app-bar-nav-icon @click.stop="changeDrawer" />
     <v-toolbar-title>
       <a
         style="color:#111;text-decoration: none;"
@@ -27,26 +26,20 @@
 </template>
 
 <script lang="ts">
-import {
-  Component,
-  Vue
-} from "vue-property-decorator";
-import {
-  drawerGetter,
-  drawerMutator
-} from "@/features/the-app-bar/features/the-title-bar-main/the-title-bar-main-store.module";
 
-@Component({})
-export default class TheTitleBarMain extends Vue {
+import {defineComponent} from "vue";
 
-  get drawer(): boolean {
-    return this.$store.getters[drawerGetter()];
+export default defineComponent({
+  name: "TheTitleBarMain",
+  props: {
+    drawer: {
+      type: Boolean
+    },
+    changeDrawer: {
+      type: Function
+    }
   }
-
-  set drawer(value: boolean) {
-    this.$store.commit(drawerMutator(), value);
-  }
-}
+})
 </script>
 
 <style scoped>
