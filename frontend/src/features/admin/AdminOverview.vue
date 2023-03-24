@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <the-random-quote-generator />
+        <TheRandomQuoteGenerator />
         <base-headline-main :labels="labels" />
         <v-container>
           <v-row>
@@ -38,44 +38,29 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
+import {defineComponent} from "vue";
 import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
+import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import {
   theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
-import {I18nLabel} from "@/core/core.translation";
-import {mainBaseHeadLineLabels} from "@/features/the-main/i18n";
+import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
 
-@Component({
-  components: {BaseLinkCard, BaseHeadlineMain, TheRandomQuoteGenerator}
+export default defineComponent({
+  name: "AdminOverview",
+  components: {BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
+  setup() {
+    return {
+      labels: adminBaseHeadLineLabels,
+      anlaufstellen: theAnlaufstellenRoutes,
+      unterstuetzungsfinder: theUnterstuetzungsfinderRoutes,
+      erfahreMehr: erfahreMehrRoutes
+    }
+  }
 })
-export default class Main extends Vue {
-
-  get labels(): I18nLabel {
-    return mainBaseHeadLineLabels;
-  }
-
-  get anlaufstellen(): unknown {
-    return theAnlaufstellenRoutes;
-  }
-
-  get unterstuetzungsfinder(): unknown {
-    return theUnterstuetzungsfinderRoutes;
-  }
-
-  get angebote(): unknown {
-    return theAngeboteRoutes;
-  }
-
-  get erfahreMehr(): unknown {
-    return erfahreMehrRoutes;
-  }
-}
 </script>
 
 <style scoped>

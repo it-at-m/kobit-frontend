@@ -9,9 +9,8 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
 import BaseListDrawer from "@/features/the-app-bar/features/the-drawer-main/base-list-drawer.vue";
-import {drawerGetter} from "@/features/the-app-bar/features/the-title-bar-main/the-title-bar-main-store.module";
 import {ListItem} from "@/features/the-app-bar/features/the-title-bar-main/list-item.type";
 import {listItemsGetter} from "@/features/the-app-bar/features/the-drawer-main/the-drawer-main-store.module";
 
@@ -19,12 +18,19 @@ import {listItemsGetter} from "@/features/the-app-bar/features/the-drawer-main/t
   components: {BaseListDrawer}
 })
 export default class TheDrawerMain extends Vue {
-  get listItems(): ListItem[] {
-    return this.$store.getters[listItemsGetter()];
-  }
+  @Prop()
+  isAdmin?: boolean
 
-  get drawer(): boolean {
-    return this.$store.getters[drawerGetter()];
+  @Prop()
+  drawer!: boolean
+
+  get listItems(): ListItem[] {
+    const items = this.$store.getters[listItemsGetter()];
+    if(this.isAdmin != undefined && this.isAdmin) {
+      return items;
+    }else {
+      return items.filter((it: { name: string }) => it.name != "Admin")
+    }
   }
 }
 </script>
