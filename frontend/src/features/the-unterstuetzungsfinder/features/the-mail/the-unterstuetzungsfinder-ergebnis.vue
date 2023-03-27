@@ -205,11 +205,25 @@
       </v-row>
       <v-row>
         <v-col
+            sm="12"
+            md="2"
+            lg="2"
+            xl="2">
+          <v-btn
+              color="secondary"
+              text
+              outlined
+              :aria-label="finderLabel.restartFinder"
+              @click="restart"
+          >
+            {{ finderLabel.restartFinder }}
+          </v-btn>
+        </v-col>
+        <v-col
           sm="12"
-          md="3"
-          lg="3"
-          xl="3"
-          offset-xl="6"
+          md="2"
+          lg="2"
+          xl="2"
         >
           <v-btn
               class="justify-end"
@@ -217,30 +231,6 @@
               @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
           >
             {{ labels.mailSend }}
-          </v-btn>
-        </v-col>
-        <v-col
-          sm="12"
-          md="3"
-          lg="3"
-          xl="3"
-        >
-          <DownloadPDF
-              :given-answers="givenAnswers"
-              :convo="convo"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-btn
-            color="secondary"
-            text
-            outlined
-            :aria-label="finderLabel.restartFinder"
-            @click="restart"
-          >
-            {{ finderLabel.restartFinder }}
           </v-btn>
         </v-col>
       </v-row>

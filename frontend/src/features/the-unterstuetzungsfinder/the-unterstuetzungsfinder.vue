@@ -179,6 +179,7 @@
           :is-given-answers-empty="isGivenAnswersEmpty"
           :labels="labels"
           :given-answers="givenAnswers"
+          :convo="conversation"
         />
       </v-row>
     </v-container>

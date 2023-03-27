@@ -28,6 +28,14 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <DownloadPDF
+            :given-answers="givenAnswers"
+            :convo="convo"
+        />
+      </v-col>
+    </v-row>
   </v-col>
 </template>
 
@@ -35,10 +43,12 @@
 import {defineComponent, PropType} from "vue";
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
+import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
+import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 
 export default defineComponent({
   name: "GivenAnswers",
-  components: {BaseHeadLine},
+  components: {DownloadPDF, BaseHeadLine},
   props: {
     isGivenAnswersEmpty: {
       type: Boolean
@@ -49,6 +59,9 @@ export default defineComponent({
     },
     givenAnswers: {
       type: Array as PropType<Array<QuestionAndAnswer>>
+    },
+    convo: {
+      type: Conversation
     }
   }
 });
