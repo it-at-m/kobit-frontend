@@ -54,8 +54,10 @@
         <v-col>
           <v-alert
               v-if="isMoreThenOneRecipient"
+              class="black--text"
               elevation="4"
               type="warning"
+              color="orange"
           >
             {{ multiRecipientsDisclaimer }}
           </v-alert>
@@ -67,6 +69,8 @@
               v-if="isPrivacyDisclaimerAlertActive"
               elevation="4"
               type="warning"
+              color="orange"
+              class="black--text"
           >
             <v-row>
               <v-col>
@@ -170,8 +174,9 @@
               xl="6"
           >
             <v-alert dismissible
+                     class="black--text"
                      type="info"
-                     color="blue-grey lighten-4">{{ labels.textFieldAlert }}
+                     color="orange">{{ labels.textFieldAlert }}
             </v-alert>
             <v-textarea
                 v-model="email.message"
