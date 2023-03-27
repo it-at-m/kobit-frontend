@@ -5,6 +5,9 @@
     :info-text="infoText"
     :is-loading="false"
   >
+    <BackButton
+      :callback="back"
+    />
     <v-row>
       <v-col
         cols="12"
@@ -85,10 +88,12 @@ import {
 import {Loading} from "@/core/services/api/types/Loading.type";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 
 @Component({
   components: {
+    BackButton,
     TheCardInitialAnlaufstellePage,
     BaseCardAnlaufstelle,
     BasePageContent
@@ -124,6 +129,10 @@ export default class TheAnlaufstellen extends Vue {
 
   setSelectedAnlaufstelle(value: Anlaufstelle): void {
     this.selectedAnlaufstelle = value;
+  }
+
+  back() {
+    this.$router.push('/');
   }
 
 }

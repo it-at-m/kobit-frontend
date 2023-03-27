@@ -15,7 +15,8 @@ enum TheMailLabels {
     CONFIDENTIALITY = "confidentiality",
     MAIL_IS_SEND = "mailIsSend",
     MAIL_SEND_ERROR = "mailSendError",
-    MAIL_SEND_SUCCESS = "mailSendSuccess"
+    MAIL_SEND_SUCCESS = "mailSendSuccess",
+    TEXT_FIELD_ALERT = "textFieldAlert"
 }
 
 export const thMailMap = new Map<string,string> ([
@@ -29,6 +30,7 @@ export const thMailMap = new Map<string,string> ([
     [TheMailLabels.MAIL_IS_SEND, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_IS_SEND}`)}`],
     [TheMailLabels.MAIL_SEND_ERROR, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_SEND_ERROR}`)}`],
     [TheMailLabels.MAIL_SEND_SUCCESS, `${i18n.t(`${TEXTS}.${TheMailLabels.MAIL_SEND_SUCCESS}`)}`],
+    [TheMailLabels.TEXT_FIELD_ALERT, `${i18n.t(`${TEXTS}.${TheMailLabels.TEXT_FIELD_ALERT}`)}`],
 
 ]);
 

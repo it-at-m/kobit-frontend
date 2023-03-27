@@ -10,6 +10,6 @@ export const theAnlaufstellenRoutes = {
     component: TheAnlaufstellen,
     meta: {
         icon: THE_ANLAUFSTELLEN_ROUTE_META_ICON,
-        infoText: `Hier finden Sie eine Übersicht über die Anlaufstellen, die Sie in schwierigen Situationen und Konflikten unterstützen.`,
+        infoText: `Hier finden Sie eine Übersicht über die Anlaufstellen, die Sie in schwierigen Situationen und Konflikten unterstützen. Diese sind in alphabetischer Reihenfolge angeordnet.`,
     },
 };
