@@ -224,6 +224,9 @@
           md="2"
           lg="2"
           xl="2"
+          offset-md="1"
+          offset-lg="1"
+          offset-xl="1"
         >
           <v-btn
               class="justify-end"
