@@ -5,6 +5,9 @@ export interface ContactResponse {
     email?: string | null;
 }
 
+/**
+ * @deprecated this is not the correct model and should be removed the contact interface should be used instead
+ */
 export default class Contact {
     contactPointId?: string;
     email?: string;

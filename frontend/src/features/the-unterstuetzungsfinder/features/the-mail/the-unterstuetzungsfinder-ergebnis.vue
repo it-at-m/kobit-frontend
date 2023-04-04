@@ -2,24 +2,24 @@
   <v-container>
     <v-container v-if="!isActive">
       <MailSendOverview
-          :email="email"
-          :lables="labels"
-          :need-to-send-mail="needToSendMail"
-          :after-mail-send="afterMailSend"
+        :email="email"
+        :lables="labels"
+        :need-to-send-mail="needToSendMail"
+        :after-mail-send="afterMailSend"
       />
     </v-container>
     <v-container v-if="isActive">
       <v-row>
         <v-col>
           <v-tabs
-              v-if="convo.contactPoints.length !== 0"
-              vertical
-              color="secondary"
+            v-if="convo.contactPoints.length !== 0"
+            vertical
+            color="secondary"
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
-                  :key="anlaufstelle.contact[0]?.contactPointId"
-                  class="pa-0"
+                :key="anlaufstelle.contact[0]?.contactPointId"
+                class="pa-0"
               >
                 {{ anlaufstelle.shortCut }}
               </v-tab>
@@ -27,18 +27,18 @@
                 <v-card flat>
                   <v-card-title>{{ anlaufstelle.name }}</v-card-title>
                   <v-card-text>
-                    <span v-html="anlaufstelle.description"/>
+                    <span v-html="anlaufstelle.description" />
                   </v-card-text>
 
                   <template v-for="contact in anlaufstelle.contact">
                     <v-card-actions
-                        v-if="contact.email"
-                        :key="contact.contactPointId"
+                      v-if="contact.email"
+                      :key="contact.contactPointId"
                     >
                       <v-btn
-                          text
-                          color="secondary"
-                          @click="addAddress(contact, anlaufstelle.shortCut)"
+                        text
+                        color="secondary"
+                        @click="addAddress(contact, anlaufstelle.shortCut)"
                       >
                         + {{ contact.email }}
                       </v-btn>
@@ -53,11 +53,11 @@
       <v-row>
         <v-col>
           <v-alert
-              v-if="isMoreThenOneRecipient"
-              class="black--text"
-              elevation="4"
-              type="warning"
-              color="orange"
+            v-if="isMoreThenOneRecipient"
+            class="black--text"
+            elevation="4"
+            type="warning"
+            color="orange"
           >
             {{ multiRecipientsDisclaimer }}
           </v-alert>
@@ -66,20 +66,20 @@
       <v-row>
         <v-col>
           <v-alert
-              v-if="isPrivacyDisclaimerAlertActive"
-              elevation="4"
-              type="warning"
-              color="orange"
-              class="black--text"
+            v-if="isPrivacyDisclaimerAlertActive"
+            elevation="4"
+            type="warning"
+            color="orange"
+            class="black--text"
           >
             <v-row>
               <v-col>
                 {{ privacyDisclaimer }}
-                <PrivacyPolicy/>
+                <PrivacyPolicy />
               </v-col>
               <v-btn
-                  icon
-                  @click="closePrivacyDisclaimer"
+                icon
+                @click="closePrivacyDisclaimer"
               >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
@@ -89,40 +89,40 @@
       </v-row>
       <v-row>
         <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-            xl="6"
+          cols="12"
+          sm="12"
+          md="12"
+          lg="12"
+          xl="6"
         >
           <v-combobox
-              v-model="recipients"
-              prepend-inner-icon="mdi-email"
-              chips
-              clearable
-              deletable-chips
-              multiple
-              outlined
-              height="56px"
-              append-icon=""
-              color="secondary"
-              disable-lookup
-              full-width
-              :rules="[v => v.length !== 0 || 'An erforderlich.']"
-              validate
-              class="pa-0 ma-0"
-              :label="labels.mailTo"
-              @keydown="$event.target.blur()"
-              @keypress="$event.target.blur()"
-              @keyup="$event.target.blur()"
+            v-model="recipients"
+            prepend-inner-icon="mdi-email"
+            chips
+            clearable
+            deletable-chips
+            multiple
+            outlined
+            height="56px"
+            append-icon=""
+            color="secondary"
+            disable-lookup
+            full-width
+            :rules="[v => v.length !== 0 || 'An erforderlich.']"
+            validate
+            class="pa-0 ma-0"
+            :label="labels.mailTo"
+            @keydown="$event.target.blur()"
+            @keypress="$event.target.blur()"
+            @keyup="$event.target.blur()"
           >
             <template v-slot:selection="{ attrs, item, select, selected }">
               <v-chip
-                  v-bind="attrs"
-                  :items="selected"
-                  close
-                  @click="select"
-                  @click:close="unselect(item)"
+                v-bind="attrs"
+                :items="selected"
+                close
+                @click="select"
+                @click:close="unselect(item)"
               >
                 {{ item.shortCut }}
               </v-chip>
@@ -130,71 +130,74 @@
           </v-combobox>
         </v-col>
         <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-            xl="6"
+          cols="12"
+          sm="12"
+          md="12"
+          lg="12"
+          xl="6"
         >
           <v-text-field
-              v-model="email.subject"
-              outlined
-              prepend-inner-icon="mdi-email-edit"
-              :label="labels.mailTopic"
-              :rules="[v => !!v || 'Betreff erforderlich.']"
-              validate
-              color="secondary"
-              @focus="showPrivacyDisclaimer"
+            v-model="email.subject"
+            outlined
+            prepend-inner-icon="mdi-email-edit"
+            :label="labels.mailTopic"
+            :rules="[v => !!v || 'Betreff erforderlich.']"
+            validate
+            color="secondary"
+            @focus="showPrivacyDisclaimer"
           />
         </v-col>
       </v-row>
       <v-row>
         <v-col
+          cols="12"
+          sm="12"
+          md="12"
+          lg="12"
+          xl="6"
+        >
+          <v-text-field
+            :value="mailAddress.emailAddress"
+            outlined
+            prepend-inner-icon="mdi-email-outline"
+            :label="labels.mailFrom"
+            disabled
+            color="secondary"
+          />
+        </v-col>
+        <v-row>
+          <v-col
             cols="12"
             sm="12"
             md="12"
             lg="12"
             xl="6"
-        >
-          <v-text-field
-              :value="mailAddress.emailAddress"
-              outlined
-              prepend-inner-icon="mdi-email-outline"
-              :label="labels.mailFrom"
-              disabled
-              color="secondary"
-          />
-        </v-col>
-        <v-row>
-          <v-col
-              cols="12"
-              sm="12"
-              md="12"
-              lg="12"
-              xl="6"
           >
-            <v-alert dismissible
-                     class="black--text"
-                     type="info"
-                     color="orange">{{ labels.textFieldAlert }}
+            <v-alert
+              dismissible
+              class="black--text"
+              type="info"
+              color="orange"
+            >
+              {{ labels.textFieldAlert }}
             </v-alert>
             <v-textarea
-                v-model="email.message"
-                dense
-                outlined
-                prepend-inner-icon="mdi-text-box-multiple-outline"
-                color="secondary"
-                :label="labels.mailContent"
-                :rules="[v => !!v || 'Inhalt erforderlich.']"
-                validate
-                @focus="showPrivacyDisclaimer"
+              v-model="email.message"
+              dense
+              outlined
+              prepend-inner-icon="mdi-text-box-multiple-outline"
+              color="secondary"
+              :label="labels.mailContent"
+              :rules="[v => !!v || 'Inhalt erforderlich.']"
+              validate
+              @focus="showPrivacyDisclaimer"
             />
           </v-col>
         </v-row>
       </v-row>
       <v-row>
         <v-col
-            offset-xl="6"
+          offset-xl="6"
         >
           <v-checkbox
             v-if="isMoreThenOneRecipient"
@@ -205,16 +208,17 @@
       </v-row>
       <v-row>
         <v-col
-            sm="12"
-            md="2"
-            lg="2"
-            xl="2">
+          sm="12"
+          md="2"
+          lg="2"
+          xl="2"
+        >
           <v-btn
-              color="secondary"
-              text
-              outlined
-              :aria-label="finderLabel.restartFinder"
-              @click="restart"
+            color="secondary"
+            text
+            outlined
+            :aria-label="finderLabel.restartFinder"
+            @click="restart"
           >
             {{ finderLabel.restartFinder }}
           </v-btn>
@@ -229,9 +233,9 @@
           offset-xl="1"
         >
           <v-btn
-              class="justify-end"
-              :disabled="recipients.length === 0 || !email.subject || !email.message"
-              @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
+            class="justify-end"
+            :disabled="recipients.length === 0 || !email.subject || !email.message"
+            @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
           >
             {{ labels.mailSend }}
           </v-btn>
@@ -249,7 +253,7 @@ import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
 import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 import {useGetMailAddress} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
 import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
-import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
+import Contact from "@/features/commons/types/contact.type";
 import {
   DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
   DISCLAIMER_MESSAGE_PRIVACY

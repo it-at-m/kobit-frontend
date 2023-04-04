@@ -13,9 +13,11 @@
   "dependencies": {
     "@tanstack/vue-query": "4.13.3",
     "@types/jspdf": "^2.0.0",
+    "@types/marked": "^4.0.8",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
     "jspdf": "^2.5.1",
+    "marked": "^4.3.0",
     "moment": "^2.24.0",
     "vue": "^2.7",
     "vue-class-component": "^7.2.3",

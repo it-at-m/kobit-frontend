@@ -7,8 +7,8 @@
   >
     <v-container fluid>
       <BackButton
-          :text="'Zurück'"
-          :callback="back"
+        :text="'Zurück'"
+        :callback="back"
       />
       <v-row>
         <v-col>

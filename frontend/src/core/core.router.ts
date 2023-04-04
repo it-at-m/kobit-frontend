@@ -14,6 +14,7 @@ import {singleAnlaufstelleRoutes} from "@/features/the-unterstuetzungsfinder/fea
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {adminRoutes} from "@/features/admin/adminRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
 
 Vue.use(Router);
 
@@ -50,6 +51,7 @@ export default new Router({
         theAnlaufstellenRoutes,
         singleAnlaufstelleRoutes,
         theAngeboteRoutes,
-        adminRoutes
+        adminRoutes,
+        adminContactPointsRoutes
     ]
 });

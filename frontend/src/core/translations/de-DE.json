@@ -48,5 +48,20 @@
         "subtitle": "Mit den Bausteinen der KoBITApp können Sie sich die Unterstützung selbst zusammenstellen, die Sie brauchen."
       }
     }
+  },
+  "Admin":{
+    "contactPoints": {
+      "texts": {
+        "addNewTitle": "Hinzufügen",
+        "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
+        "addContact": "Kontakt hinzufügen",
+        "addLink":"Link hinzufügen",
+        "addFile": "Datei hinzufügen",
+        "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: "
+      }
+    }
   }
 }

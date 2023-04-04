@@ -1,25 +1,29 @@
 export interface LinkResponse {
-    id?: string;
+    contactPointId?: string;
     name?: string | null;
     url?: string | null;
     inDownloads?: boolean | null;
 }
 
+/**
+ * @deprecated the interface should be used instead
+ */
+
 export default class Link {
-    id?: string;
+    contactPointId?: string;
     name?: string;
     url?: string;
     inDownloads?: boolean;
 
     constructor(id?: string, name?: string, url?: string, inDownloads?: boolean) {
-        this.id = id;
+        this.contactPointId = id;
         this.name = name;
         this.url = url;
         this.inDownloads = inDownloads;
     }
 
     withId(value: string): Link {
-        this.id = value;
+        this.contactPointId = value;
         return this;
     }
 
