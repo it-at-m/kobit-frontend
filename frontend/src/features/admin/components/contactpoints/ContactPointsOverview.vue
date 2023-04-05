@@ -35,7 +35,7 @@
               :key="item.id"
               three-line
               link
-              :disabled="selectedItem !== undefined"
+              :disabled="selectedItem !== undefined || isAddNew"
               @click="setSelectedItem(item)"
           >
             <v-list-item-content>
@@ -69,6 +69,7 @@
         <NewContactPoint
             v-if="isAddNew"
             :label="label"
+            @cancel="cancelNew"
         />
         <EditContactPoint
             v-if="selectedItem"
@@ -89,7 +90,6 @@ import {
   ADMIN_CONTACTPOINTS_INFO_TEXT,
   ADMIN_CONTACTPOINTS_ROUTE_NAME
 } from "@/features/admin/components/contactpoints/contactPointsRoutes";
-import {useGetContactPointListItems} from "@/features/admin/components/contactpoints/middelware/useContactPoints";
 import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
 import {useRouter} from "vue-router/composables";
 import BackButton from "@/features/commons/components/BackButton.vue";
@@ -100,6 +100,7 @@ import NewContactPoint from "@/features/admin/components/contactpoints/component
 import EditContactPoint from "@/features/admin/components/contactpoints/components/EditContactPoint.vue";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
+import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 
 export default defineComponent({
   name: "ContactPointsOverview",
@@ -130,11 +131,16 @@ export default defineComponent({
       isAddNew.value = true
     }
 
+    const cancelNew = () => {
+      isAddNew.value = false;
+    }
+
     return {
       back,
       setSelectedItem,
       setIsAddNew,
       unselectItem,
+      cancelNew,
       isAddNew,
       isLoading,
       isError,

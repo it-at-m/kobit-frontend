@@ -1,13 +1,5 @@
-import {httpDeleteJson, httpGetJson, httpPostJson, httpPutJson} from "@/core/plugins/http";
-import {ContactPoint, ContactPointListItem} from "@/features/commons/types/ContactPoint";
-
-export const getContactPoints = () => {
-    return httpGetJson<ContactPointListItem[]>("/anlaufstellen-management/a");
-};
-
-export const getContactPointById = (id: string) => {
-    return httpGetJson<ContactPoint>("/anlaufstellen-management/anlaufstellen/" + id);
-};
+import {httpDeleteJson, httpPostJson, httpPutJson} from "@/core/plugins/http";
+import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 export const postContactPoint = (contactPoint: ContactPoint) => {
     return httpPostJson<ContactPoint>("/anlaufstellen-management/anlaufstellen", contactPoint);

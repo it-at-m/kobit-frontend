@@ -17,7 +17,7 @@
         xl="3"
       >
         <v-list
-          v-if="anlaufstellen.length > 0"
+          v-if="listItems?.length > 0"
           dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'height:33vh;' : 'height:70vh;'"
           style="overflow-y: scroll"
@@ -27,21 +27,21 @@
           order-md-first
         >
           <v-list-item
-            v-for="anlaufstelle in anlaufstellen"
-            :key="anlaufstelle.id"
+            v-for="listItem in listItems"
+            :key="listItem.id"
             three-line
             link
-            @click="setSelectedAnlaufstelle(anlaufstelle)"
+            @click="setSelectedItem(listItem)"
           >
             <v-list-item-content>
               <v-list-item-title>
-                {{ anlaufstelle.name }}
+                {{ listItem.name }}
               </v-list-item-title>
-              <v-list-item-subtitle v-if="anlaufstelle.shortCut">
-                {{ anlaufstelle.shortCut }}
+              <v-list-item-subtitle v-if="listItem.shortCut">
+                {{ listItem.shortCut }}
               </v-list-item-subtitle>
-              <v-list-item-subtitle v-if="anlaufstelle.department">
-                {{ anlaufstelle.department }}
+              <v-list-item-subtitle v-if="listItem.department">
+                {{ listItem.department }}
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -51,7 +51,6 @@
         vertical
         class="mb-3 mt-2"
       />
-
       <v-col
         cols="12"
         sm="12"
@@ -62,36 +61,72 @@
         order-sm-first
         order-md-last
       >
-        <base-card-anlaufstelle
-          v-if="selectedAnlaufstelle"
-          :value="selectedAnlaufstelle"
-        />
-        <the-card-initial-anlaufstelle-page v-else />
+        <the-card-initial-anlaufstelle-page v-if="selectedItemId === undefined" />
+        <base-card-anlaufstelle v-else/>
       </v-col>
     </v-row>
   </BasePageContent>
 </template>
 
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+
+import {defineComponent, ref, watch} from "vue";
+import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
+import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 import {
-  getAnlaufstellen,
-  getApiState
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
-import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
-import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
-import BaseCardAnlaufstelle
-  from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-card-anlaufstelle.vue";
-import {
-  theAnlaufstellenRoutes
+  THE_ANLAUFSTELLEN_ROUTE_NAME
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
-import {Loading} from "@/core/services/api/types/Loading.type";
+import {THE_ANGEBOTE_ROUTE_META_ICON} from "@/features/the-angebote/the-angebote.routes";
+import {THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import {useRoute, useRouter} from "vue-router/composables";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
+import BaseCardAnlaufstelle
+  from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-card-anlaufstelle.vue";
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
 
+export default defineComponent({
+  name: "TheAnlaufstellen",
+  components: {BackButton, BasePageContent, BaseCardAnlaufstelle, TheCardInitialAnlaufstellePage},
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const selectedItemId = ref<string>();
+    const {isLoading, isError, listItems, error} = useGetContactPointListItems();
 
-@Component({
+    watch(() => route.params.id, (newId) => {
+      console.log(newId);
+      selectedItemId.value = newId
+    });
+
+    const setSelectedItem = (value: ContactPointListItem) => {
+      selectedItemId.value = value.id;
+      if(value?.id) {
+        router.push({path: "/anlaufstellen/"+selectedItemId.value});
+      }
+    }
+
+    const back = () => {
+      router.push("/");
+    }
+
+    return {
+      name: THE_ANLAUFSTELLEN_ROUTE_NAME,
+      icon: THE_ANGEBOTE_ROUTE_META_ICON,
+      infoText: THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT,
+      isLoading,
+      isError,
+      listItems,
+      error,
+      selectedItemId,
+      setSelectedItem,
+      back,
+    }
+  }
+})
+
+/*@Component({
   components: {
     BackButton,
     TheCardInitialAnlaufstellePage,
@@ -111,31 +146,11 @@ export default class TheAnlaufstellen extends Vue {
     return this.$store.getters[getAnlaufstellen()];
   }
 
-  get name(): string {
-    return theAnlaufstellenRoutes.name;
-  }
-
-  get icon(): string {
-    return theAnlaufstellenRoutes.meta.icon;
-  }
-
-  get infoText(): string {
-    return theAnlaufstellenRoutes.meta.infoText;
-  }
-
-  get apiState(): Loading {
-    return this.$store.getters[getApiState()];
-  }
-
-  setSelectedAnlaufstelle(value: Anlaufstelle): void {
-    this.selectedAnlaufstelle = value;
-  }
-
   back() {
     this.$router.push('/');
   }
 
-}
+}*/
 </script>
 
 <style scoped>

@@ -31,7 +31,7 @@ export default defineComponent({
 
         const save = () => {
           const result = mutateAsync({contactPoint: props.contactPointToSave, id: props.id});
-          result.then(() => router.push("/anlaufstellen"))
+          result.then((it) => router.push("/anlaufstellen/"+it.id))
               .catch(() => emit('error'));
         }
 

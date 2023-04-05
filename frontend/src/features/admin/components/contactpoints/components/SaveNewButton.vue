@@ -29,7 +29,7 @@ export default defineComponent({
         const save = () => {
           console.log(props.contactPointToSave)
           const result = mutateAsync(props.contactPointToSave);
-          result.then(() => router.push("/anlaufstellen"))
+          result.then((it) => router.push("/anlaufstellen/"+it.id))
               .catch(() => emit('error'));
         }
 

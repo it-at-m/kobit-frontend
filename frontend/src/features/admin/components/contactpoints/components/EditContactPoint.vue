@@ -55,9 +55,7 @@
               v-for="contact in writableContactPoint.contact"
               :key="contact.id">
             <v-col
-                cols="12"
-                xl="6"
-                lg="12">
+                cols="5">
               <v-text-field
                   label="E-Mail"
                   v-model="contact.email"
@@ -88,10 +86,8 @@
           <v-card-title>
             Links
           </v-card-title>
-          <div
-              v-for="link in writableContactPoint.links"
-              :key="link.id">
-            <v-row>
+            <v-row v-for="link in writableContactPoint.links"
+                   :key="link.id">
               <v-col
                   cols="5"
               >
@@ -116,7 +112,6 @@
                 </v-btn>
               </v-col>
             </v-row>
-          </div>
           <v-row>
             <v-btn
                 depressed
@@ -162,7 +157,6 @@
 import {computed, defineComponent, ref, watch} from "vue";
 import {I18nLabel} from "@/core/core.translation";
 import {Contact, ContactPoint, ContactPointListItem, Link} from "@/features/commons/types/ContactPoint";
-import {useGetContactPoint} from "@/features/admin/components/contactpoints/middelware/useContactPoints";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import {marked} from "marked";
 import AddLinkDialog from "@/features/admin/components/contactpoints/components/AddLinkDialog.vue";
@@ -172,6 +166,7 @@ import {useRouter} from "vue-router/composables";
 import AddContactDialog from "@/features/admin/components/contactpoints/components/AddContactDialog.vue";
 import MarkDownAlert from "@/features/admin/components/contactpoints/components/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/components/contactpoints/components/DeleteButton.vue";
+import {useGetContactPoint} from "@/features/commons/middleware/useGetContactPoints";
 
 export default defineComponent({
   name: "EditContactPoint",
@@ -185,7 +180,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const {isLoading, isError: isReadError, data: contactPoint} = useGetContactPoint(props.listItem?.id);
+    const id = ref(props.listItem?.id);
+    const {isLoading, isError: isReadError, data: contactPoint} = useGetContactPoint(id);
     const isWriteError = ref(false);
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
@@ -261,13 +257,15 @@ export default defineComponent({
 
     function removeLink(item: Link) {
       if (writableContactPoint.value?.links) {
-        writableContactPoint.value.links = writableContactPoint.value.links.filter(it => it !== item);
+        const links = writableContactPoint.value.links.filter(it => it !== item)
+        writableContactPoint.value = {...writableContactPoint.value, links:links} as ContactPoint;
       }
     }
 
     function removeContact(contact: Contact) {
       if (writableContactPoint.value?.contact) {
-        writableContactPoint.value.contact = writableContactPoint.value.contact.filter(it => it !== contact);
+        const contacts = writableContactPoint.value.contact.filter(it => it !== contact);
+        writableContactPoint.value = {...writableContactPoint.value, contact: contacts} as ContactPoint;
       }
     }
 

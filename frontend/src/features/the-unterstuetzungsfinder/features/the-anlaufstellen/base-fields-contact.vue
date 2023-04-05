@@ -4,9 +4,9 @@
       Kontakt
     </v-card-title>
     <v-card-text>
-      <v-list v-if="anlaufstelle?.contact">
+      <v-list v-if="contactPoint?.contact">
         <v-list-item
-          v-for="(contact, contactIndex) in anlaufstelle?.contact"
+          v-for="(contact, contactIndex) in contactPoint?.contact"
           :id="`id_base_fields_contact_email${contactIndex}`"
           :key="contactIndex"
           :href="`mailto:${contact.email}`"
@@ -16,7 +16,7 @@
       </v-list>
       <v-list v-if="hasLinksNotDownloads">
         <div
-          v-for="(link, linkIndex) in anlaufstelle?.links"
+          v-for="(link, linkIndex) in contactPoint?.links"
           :key="linkIndex"
         >
           <v-list-item
@@ -35,16 +35,16 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import Anlaufstelle from "./types/anlaufstelle.type";
+import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 @Component({})
 export default class BaseFieldsContact extends Vue {
 
   @Prop()
-  anlaufstelle?: Anlaufstelle;
+  contactPoint?: ContactPoint;
 
   get hasLinksNotDownloads(): boolean | undefined {
-    const filteredLinks = this.anlaufstelle?.links.filter(it => !it.inDownloads);
+    const filteredLinks = this.contactPoint?.links?.filter(it => !it.inDownloads);
     if (filteredLinks !== undefined) {
       return filteredLinks.length > 0;
     } else {

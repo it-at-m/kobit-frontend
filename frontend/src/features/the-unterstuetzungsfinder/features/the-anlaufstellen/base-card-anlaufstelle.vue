@@ -1,21 +1,22 @@
 <template>
   <v-container fluid>
+    <LoadingSpinner :is-loading="isLoading"/>
     <v-row>
       <v-col>
         <v-card
-          flat
-          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'border-top:1px solid #eee;' : ''"
+            flat
+            :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'border-top:1px solid #eee;' : ''"
         >
-          <v-card-title>{{ anlaufstelle.name }}</v-card-title>
+          <v-card-title>{{ contactPoint?.name }}</v-card-title>
           <v-card-text>
-            <span v-html="anlaufstelle.description" />
+            <span v-html="computeMarkdown"/>
             <base-fields-contact
-              v-if="anlaufstelle.contact"
-              :anlaufstelle="anlaufstelle"
+                v-if="contactPoint?.contact"
+                :contactPoint="contactPoint"
             />
             <base-fields-additional-content
-              v-if="isAdditionalContentAvailable"
-              :anlaufstelle="anlaufstelle"
+                v-if="linksInDownLoads?.length > 0"
+                :links="linksInDownLoads"
             />
           </v-card-text>
         </v-card>
@@ -25,35 +26,42 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
-import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
+
+import {computed, defineComponent, ref, watch} from "vue";
+import {useGetContactPoint} from "@/features/commons/middleware/useGetContactPoints";
+import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import {marked} from "marked";
 import BaseFieldsContact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-fields-contact.vue";
-import BaseFieldsAdditionalContent from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-fields-additional-content.vue";
+import BaseFieldsAdditionalContent
+  from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/base-fields-additional-content.vue";
+import {useRoute} from "vue-router/composables";
+import {Link} from "@/features/commons/types/ContactPoint";
 
-@Component({
-  components: {BaseFieldsAdditionalContent, BaseFieldsContact}
+export default defineComponent({
+  name: "BaseCardAnlaufstelle",
+  components: {BaseFieldsAdditionalContent, BaseFieldsContact, LoadingSpinner},
+  setup() {
+    const route = useRoute();
+    const pageId = ref<string>(route.params.id);
+    const {isLoading, isError, data: contactPoint, error, refetch} = useGetContactPoint(pageId);
+    const linksInDownLoads = ref<Link[]>();
+    watch(() => route.params.id, (newId) => {
+      pageId.value = newId;
+      refetch();
+    });
+
+    computed(() => linksInDownLoads.value = contactPoint.value?.links?.filter(it => it.inDownloads))
+    const computeMarkdown = computed(() => marked.parse(contactPoint.value?.description || ""));
+    return {
+      isLoading,
+      isError,
+      contactPoint,
+      error,
+      computeMarkdown,
+      linksInDownLoads
+    }
+  }
 })
-export default class BaseCardAnlaufstelle extends Vue {
-  @Prop()
-  id!: string;
-
-  @Prop()
-  value!: Anlaufstelle;
-
-
-  get anlaufstelle(): Anlaufstelle {
-    return this.value;
-  }
-
-  get isAdditionalContentAvailable(): boolean {
-
-   if (this.anlaufstelle.links) {
-     return (this.anlaufstelle.links.filter(function(o){ return o.inDownloads == true; }).length > 0 );
-   } else {
-     return false;
-   }
-  }
-}
 </script>
 
 <style lang="scss" scoped>

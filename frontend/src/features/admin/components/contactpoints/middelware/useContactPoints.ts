@@ -1,26 +1,10 @@
-import {useMutation, useQuery} from "@tanstack/vue-query";
+import {useMutation} from "@tanstack/vue-query";
 import {
     deleteContactPoint,
-    getContactPointById,
-    getContactPoints,
     postContactPoint,
     putContactPoint
-} from "@/features/admin/components/contactpoints/api/ContactPointsClient";
+} from "@/features/admin/components/contactpoints/api/ContactPointsManipulationClient";
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
-
-export const useGetContactPointListItems = () => {
-    const {isLoading, isError, data, error} = useQuery(
-        ['listItems'],
-        () => getContactPoints()
-    );
-    return {isLoading, isError, listItems: data, error};
-};
-
-export const useGetContactPoint = (id: string) =>
-    useQuery(
-        ['contactPoint', id],
-        () => getContactPointById(id)
-    );
 
 export const useCreateNewContactPoint = () =>
     useMutation({

@@ -4,16 +4,16 @@
       Downloads
     </v-card-title>
     <v-card-text>
-      <v-list v-if="anlaufstelle?.links">
+      <v-list v-if="links">
         <div
-          v-for="(download, downloadIndex) in anlaufstelle.links"
-          :key="downloadIndex"
+            v-for="(download, downloadIndex) in links"
+            :key="downloadIndex"
         >
           <v-list-item
-            v-if="download.inDownloads === true"
-            :id="`id_base_fields_additional_content_downloads_${downloadIndex}`"
-            :href="download.url"
-            target="_blank"
+              v-if="download.inDownloads === true"
+              :id="`id_base_fields_additional_content_downloads_${downloadIndex}`"
+              :href="download.url"
+              target="_blank"
           >
             {{ download.name }}
           </v-list-item>
@@ -25,13 +25,13 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from "vue-property-decorator";
-import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
+import {Link} from "@/features/commons/types/ContactPoint";
 
 @Component({})
-export default class BaseFieldsAdditionalContent extends Vue{
+export default class BaseFieldsAdditionalContent extends Vue {
 
   @Prop()
-  anlaufstelle?: Anlaufstelle;
+  links?: Link[];
 }
 </script>
 

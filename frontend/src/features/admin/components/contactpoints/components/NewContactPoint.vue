@@ -144,7 +144,7 @@
       <v-btn
           class="ma-2"
           color="error"
-          @click="$emit('unselectItem')">
+          @click="$emit('cancel')">
         Abbruch
       </v-btn>
     </v-card>
