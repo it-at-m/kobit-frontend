@@ -31,8 +31,8 @@
     <v-row>
       <v-col>
         <DownloadPDF
-            :given-answers="givenAnswers"
-            :convo="convo"
+          :given-answers="givenAnswers"
+          :convo="convo"
         />
       </v-col>
     </v-row>
