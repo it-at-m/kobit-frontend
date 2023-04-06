@@ -96,7 +96,6 @@ export default defineComponent({
     const {isLoading, isError, listItems, error} = useGetContactPointListItems();
 
     watch(() => route.params.id, (newId) => {
-      console.log(newId);
       selectedItemId.value = newId
     });
 

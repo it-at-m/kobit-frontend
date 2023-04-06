@@ -14,7 +14,7 @@
             <v-text-field
                 label="E-Mail"
                 v-model="newContact.email"
-                :rules="[rules]"
+                :rules="[rule]"
             />
           </v-col>
         </v-row>
@@ -23,6 +23,7 @@
             depressed
             color="secondary"
             class="ml-4 black--text"
+          :disabled="! isSavable"
             @click="$emit('addNewContact', newContact)"
         >
           Hinzufügen
@@ -40,8 +41,8 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import Contact from "@/features/commons/types/contact.type";
+import {computed, defineComponent, ref} from "vue";
+import {Contact} from "@/features/commons/types/ContactPoint";
 
 export default defineComponent({
       name: "AddContactDialog",
@@ -51,14 +52,25 @@ export default defineComponent({
         }
       },
       setup() {
-        const newContact = ref(new Contact());
+        const newContact = ref<Contact>({email: ""});
 
-        const rules = (value: string) => {
+        const validMail = (value: string) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || "Keine valide E-Mail!";
+          return pattern.test(value);
+        }
+        const rule = (value: string) => {
+          return validMail(value) || "Keine valide E-Mail!";
         }
 
-        return {newContact, rules}
+        const isSavable = computed(() => {
+          if(! newContact.value){
+            return false;
+          }else {
+            return validMail(newContact.value.email) && (newContact.value.email.length > 1);
+          }
+        })
+
+        return {newContact, rule, isSavable}
       }
     }
 )</script>
