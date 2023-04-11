@@ -181,7 +181,6 @@ export default defineComponent({
     const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
 
     const addNewContact = (value: Contact) => {
-      console.log(value);
       if (newContactPoint.value?.contact) {
         newContactPoint.value.contact.push(value);
       } else {

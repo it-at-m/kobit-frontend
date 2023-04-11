@@ -27,7 +27,6 @@ export default defineComponent({
         const router = useRouter();
 
         const save = () => {
-          console.log(props.contactPointToSave)
           const result = mutateAsync(props.contactPointToSave);
           result.then((it) => router.push("/anlaufstellen/"+it.id))
               .catch(() => emit('error'));
