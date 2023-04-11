@@ -1,5 +1,10 @@
 import Vue from "vue";
 import Router from "vue-router";
+// Add this import at the top of core.router.ts
+import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
+
+
+
 import {theMainRoutes} from "@/features/the-main/the-main.routes";
 import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 import {
@@ -45,7 +50,8 @@ routerMethods.forEach((method: string) => {
 });
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
-export default new Router({
+
+const router = new Router({
     base: process.env.BASE_URL,
     routes: [
         theMainRoutes,
@@ -65,3 +71,17 @@ export default new Router({
         adminContactPointsRoutes
     ]
 });
+
+router.beforeEach((to, _, next) => {
+    if (to.path === '/admin' || to.path.startsWith('/admin/')) {
+        vuetify.framework.theme.themes.light = adminTheme.themes.light;
+        vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
+    } else {
+        vuetify.framework.theme.themes.light = kobitTheme.themes.light;
+        vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
+    }
+    next();
+});
+
+
+export default router;
