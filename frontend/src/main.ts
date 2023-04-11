@@ -25,11 +25,9 @@ moment.locale(window.navigator.language);
 // Set up the navigation guard before creating the Vue instance
 router.beforeEach((to, _, next) => {
   if (to.path === "/admin" || to.path.startsWith("/admin/")) {
-    console.log("Admin");
     vuetify.framework.theme.themes.light = adminTheme.themes.light;
     vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
   } else {
-    console.log("Not Admin");
     vuetify.framework.theme.themes.light = kobitTheme.themes.light;
     vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
   }
