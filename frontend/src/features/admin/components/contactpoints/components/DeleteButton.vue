@@ -1,7 +1,6 @@
 <template>
   <v-row justify="center">
     <v-btn
-        class="ma-2"
         color="warning"
         :loading="isLoading"
         :disabled="isLoading"

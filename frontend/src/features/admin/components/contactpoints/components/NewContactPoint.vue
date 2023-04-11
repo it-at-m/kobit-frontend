@@ -46,6 +46,7 @@
           </v-col>
         </v-row>
         <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
         <v-card-title>
           Kontakte
         </v-card-title>
@@ -82,6 +83,7 @@
               @cancel="cancel"
               @addNewContact="addNewContact"/>
         </v-row>
+        <v-spacer></v-spacer>
         <v-spacer></v-spacer>
         <v-card-title>
           Links
@@ -130,6 +132,8 @@
           />
         </v-row>
       </v-form>
+      <v-spacer></v-spacer>
+      <hr />
       <v-spacer></v-spacer>
       <v-card-title>
         Kompetenzen
