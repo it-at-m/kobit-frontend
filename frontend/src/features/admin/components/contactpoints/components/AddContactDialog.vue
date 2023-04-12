@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="isDialogActive" persistent max-width="590" class="ma-0 pa-0">
+  <v-dialog
+    v-model="isDialogActive"
+    persistent
+    max-width="590"
+    class="ma-0 pa-0"
+  >
     v-model="isDialogActive"
     persistent
     max-width="590"
@@ -11,18 +16,34 @@
       <v-card-content>
         <v-row class="ma-0 pa-0">
           <v-col cols="12">
-            <v-text-field label="E-Mail" v-model="newContact.email" :rules="[rule]" />
+            <v-text-field
+              v-model="newContact.email"
+              label="E-Mail"
+              :rules="[rule]"
+            />
           </v-col>
         </v-row>
       </v-card-content>
       <v-card-actions>
         <v-row class="ma-0 pa-0">
-          <v-col cols="12" class="ma-0 pa-0">
-            <v-btn depressed color="success" :disabled="!isSavable"
-              @click="$emit('addNewContact', newContact)">
+          <v-col
+            cols="12"
+            class="ma-0 pa-0"
+          >
+            <v-btn
+              depressed
+              color="success"
+              :disabled="!isSavable"
+              @click="$emit('addNewContact', newContact)"
+            >
               Hinzufügen
             </v-btn>
-            <v-btn depressed color="error" class="ml-4" @click="$emit('cancel')">
+            <v-btn
+              depressed
+              color="error"
+              class="ml-4"
+              @click="$emit('cancel')"
+            >
               Abbrechen
             </v-btn>
           </v-col>

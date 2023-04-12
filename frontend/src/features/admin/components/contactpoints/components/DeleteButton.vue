@@ -1,34 +1,37 @@
 <template>
   <v-row justify="center">
     <v-btn
-        color="warning"
-        :loading="isLoading"
-        :disabled="isLoading"
-        @click="openDialog">
+      color="warning"
+      :loading="isLoading"
+      :disabled="isLoading"
+      @click="openDialog"
+    >
       Löschen
     </v-btn>
     <v-dialog
-        v-model="isDialogActive"
-        persistent
-        max-width="590">
+      v-model="isDialogActive"
+      persistent
+      max-width="590"
+    >
       <v-card>
         <v-card>Soll die Anlaufstelle wirklich gelöscht werden?</v-card>
-        <v-card-text>Das Löschen der Anlaufstelle kann nicht rückgängig gemacht werden. Eine Löschung kann nur durch das
+        <v-card-text>
+          Das Löschen der Anlaufstelle kann nicht rückgängig gemacht werden. Eine Löschung kann nur durch das
           erneute Anlegen der Anlaufstelle bereinigt werden.
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
-              color="green darken-1"
-              text
-              @click="isDialogActive = false"
+            color="green darken-1"
+            text
+            @click="isDialogActive = false"
           >
             Abbrechen
           </v-btn>
           <v-btn
-              color="green darken-1"
-              text
-              @click="deleteContactPoint"
+            color="green darken-1"
+            text
+            @click="deleteContactPoint"
           >
             Löschen
           </v-btn>

@@ -33,7 +33,7 @@ import TheContent from "@/features/the-content/the-content.vue";
 export default class App extends Vue{
 
   created(): void {
-    this.$store.dispatch(initAnlaufstellen());
+    //this.$store.dispatch(initAnlaufstellen());
   }
 }
 </script>

@@ -13,11 +13,11 @@ export interface ContactPoint {
 }
 
 export interface Contact {
-    email: string
+    email: string;
 }
 
 export interface Link {
-    contactPointId?: string
+    contactPointId?: string;
     name?: string;
     url?: string;
     inDownloads?: boolean;

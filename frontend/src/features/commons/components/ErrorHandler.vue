@@ -8,9 +8,10 @@
         {{ message }}
       </v-card-text>
       <v-btn
-          class="ma-2"
-      color="error"
-      @click="$emit('closeError')">
+        class="ma-2"
+        color="error"
+        @click="$emit('closeError')"
+      >
         Schließen
       </v-btn>
     </v-card>

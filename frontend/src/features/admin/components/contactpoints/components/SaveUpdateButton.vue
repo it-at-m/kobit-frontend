@@ -1,9 +1,10 @@
 <template>
   <v-btn
-      color="success"
-      :loading="isLoading"
-      :disabled="isLoading"
-      @click="save">
+    color="success"
+    :loading="isLoading"
+    :disabled="isLoading"
+    @click="save"
+  >
     Speichern
   </v-btn>
 </template>

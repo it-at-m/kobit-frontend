@@ -1,6 +1,10 @@
 <template>
-
-  <v-dialog v-model="isDialogActive" persistent max-width="590" class="ma-0 pa-0">
+  <v-dialog
+    v-model="isDialogActive"
+    persistent
+    max-width="590"
+    class="ma-0 pa-0"
+  >
     <v-card class="ma-0 pa-0">
       <v-card-title>
         Neuen Link hinzufügen
@@ -8,21 +12,41 @@
       <v-card-content>
         <v-row class="ma-0 pa-0">
           <v-col cols="12">
-            <v-text-field label="Titel" :rules="[nameRule]" v-model="newLink.name" />
+            <v-text-field
+              v-model="newLink.name"
+              label="Titel"
+              :rules="[nameRule]"
+            />
           </v-col>
           <v-col cols="12">
-            <v-text-field label="URL" :rules="[linkRule]" v-model="newLink.url" />
+            <v-text-field
+              v-model="newLink.url"
+              label="URL"
+              :rules="[linkRule]"
+            />
           </v-col>
         </v-row>
       </v-card-content>
       <v-card-actions>
         <v-row class="ma-0 pa-0">
-          <v-col cols="12" class="ma-0 pa-0">
-            <v-btn depressed color="success" :disabled="!isSavable"
-              @click="$emit('addNewLink', newLink)">
+          <v-col
+            cols="12"
+            class="ma-0 pa-0"
+          >
+            <v-btn
+              depressed
+              color="success"
+              :disabled="!isSavable"
+              @click="$emit('addNewLink', newLink)"
+            >
               Hinzufügen
             </v-btn>
-            <v-btn depressed color="error" class="ml-4" @click="$emit('cancel')">
+            <v-btn
+              depressed
+              color="error"
+              class="ml-4"
+              @click="$emit('cancel')"
+            >
               Abbrechen
             </v-btn>
           </v-col>
@@ -30,10 +54,6 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
-
-
-
-
 </template>
 
 <script lang="ts">

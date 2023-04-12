@@ -62,7 +62,7 @@
         order-md-last
       >
         <the-card-initial-anlaufstelle-page v-if="selectedItemId === undefined" />
-        <base-card-anlaufstelle v-else/>
+        <base-card-anlaufstelle v-else />
       </v-col>
     </v-row>
   </BasePageContent>

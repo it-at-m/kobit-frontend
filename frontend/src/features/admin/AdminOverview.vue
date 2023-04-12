@@ -14,7 +14,6 @@
             >
               <base-link-card :item="anlaufstellen" />
             </v-col>
-            <!--
             <v-col
               cols="12"
               sm="12"
@@ -31,7 +30,6 @@
             >
               <base-link-card :item="erfahreMehr" />
             </v-col>
-            -->
           </v-row>
         </v-container>
       </v-col>

@@ -1,22 +1,22 @@
 <template>
   <v-container fluid>
-    <LoadingSpinner :is-loading="isLoading"/>
+    <LoadingSpinner :is-loading="isLoading" />
     <v-row>
       <v-col>
         <v-card
-            flat
-            :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'border-top:1px solid #eee;' : ''"
+          flat
+          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'border-top:1px solid #eee;' : ''"
         >
           <v-card-title>{{ contactPoint?.name }}</v-card-title>
           <v-card-text>
-            <span v-html="computeMarkdown"/>
+            <span v-html="computeMarkdown" />
             <base-fields-contact
-                v-if="contactPoint?.contact"
-                :contactPoint="contactPoint"
+              v-if="contactPoint?.contact"
+              :contact-point="contactPoint"
             />
             <base-fields-additional-content
-                v-if="linksInDownLoads?.length > 0"
-                :links="linksInDownLoads"
+              v-if="linksInDownLoads?.length > 0"
+              :links="linksInDownLoads"
             />
           </v-card-text>
         </v-card>

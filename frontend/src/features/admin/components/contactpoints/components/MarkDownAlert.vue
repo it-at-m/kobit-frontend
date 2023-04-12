@@ -1,12 +1,15 @@
 <template>
   <v-alert
-      dismissible
-      class="black--text"
-      type="info"
-      color="grey"
+    dismissible
+    class="black--text"
+    type="info"
+    color="grey"
   >
     {{ label.markdownHint }}
-    <a href="https://www.w3schools.io/file/markdown-cheatsheet/" target="_blank">W3Schools</a>
+    <a
+      href="https://www.w3schools.io/file/markdown-cheatsheet/"
+      target="_blank"
+    >W3Schools</a>
   </v-alert>
 </template>
 
