@@ -1,175 +1,128 @@
 <template>
   <v-container fluid>
-    <ErrorHandler :is-error="isWriteError" message="Fehler" @closeError="closeError"/>
-    <v-card
-      flat
-      :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'border-top:1px solid #eee;' : ''"
-      style="overflow-y: scroll"
-      >
-      <v-card-title> Neue Anlaufstelle Anlegen</v-card-title>
-      <v-form>
-        <v-row>
-          <v-col
-              cols="12"
-              md="4"
-              sm="12"
-          >
-            <v-text-field
-                :value="newContactPoint?.name"
-                @input="changeName"
-            />
-          </v-col>
-          <v-col
-              cols="12"
-              md="4"
-              sm="12"
-          >
-            <v-text-field
-                :value="newContactPoint?.shortCut"
-                @input="changeShortCut"
-                label="Kurzbezeichnung der Anlaufstelle"
-            />
-          </v-col>
-        </v-row>
-        <v-divider class="mt-3 mb-5"/>
-        <MarkDownAlert :label="label"/>
-        <v-row>
-          <v-col>
-            <v-textarea
-                :value="newContactPoint?.description"
-                @input="changeDescription"
-                label="Beschreibung"
-            />
-          </v-col>
-          <v-col>
-            <div v-html="computeMarkdown"/>
-          </v-col>
-        </v-row>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-card-title>
-          Kontakte
-        </v-card-title>
-        <v-row
-            v-for="contact in newContactPoint?.contact"
-            :key="contact.id">
-          <v-col
-              cols="12"
-              xl="6"
-              lg="12">
-            <v-text-field
-                label="E-Mail"
-                v-model="contact.email"
-                readonly
-            />
-          </v-col>
-          <v-col>
-            <v-btn
-                @click="removeContact(contact)">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-btn
-              depressed
-              color="secondary"
-              class="ml-4 black--text"
-              @click="openContactDialog">
-            {{ label.addContact }}
-          </v-btn>
-          <AddContactDialog
-              :is-dialog-active="isContactDialogOpen"
-              @cancel="cancel"
-              @addNewContact="addNewContact"/>
-        </v-row>
-        <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-card-title>
-          Links
-        </v-card-title>
-        <div
-            v-for="link in newContactPoint?.links"
-            :key="link.id">
+    <ErrorHandler :is-error="isWriteError" message="Fehler" @closeError="closeError" />
+    <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+      class="ma-0 pa-0">
+      <v-card-title class="pa-0"> Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document  ml-auto"></span></v-card-title>
+      <v-card-content>
+        <v-form>
           <v-row>
-            <v-col
-                cols="5"
-            >
-              <v-text-field
-                  label="Titel"
-                  v-model="link.name"
-                  readonly
-              />
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+              <v-text-field :value="newContactPoint?.name" @input="changeName" label="Name der Anlaufstelle" />
             </v-col>
-            <v-col
-                cols="5">
-              <v-text-field
-                  label="URL"
-                  v-model="link.url"
-                  readonly
-              />
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+              <v-text-field :value="newContactPoint?.shortCut" @input="changeShortCut"
+                label="Kurzbezeichnung der Anlaufstelle" />
             </v-col>
-            <v-col>
-              <v-btn
-                  @click="removeLink(link)">
+          </v-row>
+          <v-divider class="mt-3 mb-5" />
+          <MarkDownAlert :label="label" />
+          <v-row class="ma-0 pa-0">
+            <v-col cols="6">
+              <v-textarea :value="newContactPoint?.description" @input="changeDescription" label="Beschreibung" />
+            </v-col>
+            <v-col cols="6">
+              <div v-html="computeMarkdown" style="border-bottom: 2px solid #eee" />
+            </v-col>
+          </v-row>
+          <v-divider class="mt-3 mb-5" />
+          <v-row>
+            <v-col cols="12" class="mb-0 pb-0">
+              <h3 class="pa-0">
+                Kontakte
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row v-for="contact in newContactPoint?.contact" :key="contact.id">
+            <v-col lg="10" md="10" sm="10" cols="8" class="mb-0 pb-0">
+              <v-text-field label="E-Mail" v-model="contact.email" readonly />
+            </v-col>
+            <v-col lg="2" md="2" sm="2" cols="4" class="mb-0 pb-0">
+              <v-btn @click="removeContact(contact)">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-col>
           </v-row>
-        </div>
-        <v-row>
-          <v-btn
-              depressed
-              color="secondary"
-              class="ml-4 black--text"
-              @click="openLinkDialog">
-            {{ label.addLink }}
-          </v-btn>
-          <AddLinkDialog
-              :is-dialog-active="isLinkDialogOpen"
-              @cancel="cancel"
-              @addNewLink="addNewLink"
-          />
-        </v-row>
-      </v-form>
-      <v-spacer></v-spacer>
-      <hr />
-      <v-spacer></v-spacer>
-      <v-card-title>
-        Kompetenzen
-      </v-card-title>
-      <v-card-subtitle>
-        Kompetenzen können nur über den Unterstützungsfinder eingepflegt werden.
-      </v-card-subtitle>
-      <SaveNewButton
-          :contact-point-to-save="newContactPoint"
-          @error="error"
-      />
-      <v-btn
-          class="ma-2"
-          color="error"
-          @click="$emit('cancel')">
-        Abbruch
-      </v-btn>
+          <v-row>
+            <v-col cols="12">
+              <v-btn depressed color="secondary" class="ml-4 buttonText--text" @click="openContactDialog">
+                + {{ label.addContact }}
+              </v-btn>
+            </v-col>
+            <v-col cols="12">
+              <AddContactDialog :is-dialog-active="isContactDialogOpen" @cancel="cancel"
+                @addNewContact="addNewContact" />
+            </v-col>
+          </v-row>
+          <v-divider class="mt-3 mb-5" />
+
+          <v-row>
+            <v-col cols="12" class="mb-0 pb-0">
+              <h3 class="pa-0">
+                Links
+              </h3>
+            </v-col>
+          </v-row>
+          <v-row v-for="link in newContactPoint?.links" :key="link.id">
+            <v-col lg="5" md="5" sm="5" cols="4">
+              <v-text-field label="Titel" v-model="link.name" readonly />
+            </v-col>
+            <v-col lg="5" md="5" sm="5" cols="4">
+              <v-text-field label="URL" v-model="link.url" readonly />
+            </v-col>
+            <v-col lg="2" md="2" sm="2" cols="4">
+              <v-btn @click="removeLink(link)">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-col>
+
+          </v-row>
+          <v-row>
+            <v-col cols="12">
+              <v-btn depressed color="secondary" class="ml-4 buttonText--text" @click="openLinkDialog">
+                + {{ label.addLink }}
+              </v-btn>
+            </v-col>
+            <v-col cols="12">
+              <AddLinkDialog :is-dialog-active="isLinkDialogOpen" @cancel="cancel" @addNewLink="addNewLink" />
+            </v-col>
+          </v-row>
+          <v-divider class="mt-3 mb-5" />
+          <v-row>
+            <v-col cols="12">
+              <p>
+                Hinweis: Kompetenzen können nur über den Unterstützungsfinder eingepflegt werden.
+              </p>
+            </v-col>
+          </v-row>
+          <v-divider class="mt-3 mb-5" />
+        </v-form>
+      </v-card-content>
+      <v-card-actions class="ma-0 pa-0">
+        <SaveNewButton :contact-point-to-save="newContactPoint" @error="error" />
+        <v-btn class="ma-2" color="error" @click="$emit('cancel')">
+          Abbruch
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from "vue";
-import {I18nLabel} from "@/core/core.translation";
+import { computed, defineComponent, ref } from "vue";
+import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
-import {Contact, ContactPoint, Link} from "@/features/commons/types/ContactPoint";
+import { Contact, ContactPoint, Link } from "@/features/commons/types/ContactPoint";
 import MarkDownAlert from "@/features/admin/components/contactpoints/components/MarkDownAlert.vue";
-import {marked} from "marked";
+import { marked } from "marked";
 import AddContactDialog from "@/features/admin/components/contactpoints/components/AddContactDialog.vue";
 import AddLinkDialog from "@/features/admin/components/contactpoints/components/AddLinkDialog.vue";
 import SaveNewButton from "@/features/admin/components/contactpoints/components/SaveNewButton.vue";
-import {useRouter} from "vue-router/composables";
+import { useRouter } from "vue-router/composables";
 
 export default defineComponent({
   name: "NewContactPoint",
-      components: {SaveNewButton, AddLinkDialog, AddContactDialog, MarkDownAlert, ErrorHandler},
+  components: { SaveNewButton, AddLinkDialog, AddContactDialog, MarkDownAlert, ErrorHandler },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -188,7 +141,7 @@ export default defineComponent({
       if (newContactPoint.value?.contact) {
         newContactPoint.value.contact.push(value);
       } else {
-        newContactPoint.value = {...newContactPoint.value, contact: [value]} as ContactPoint;
+        newContactPoint.value = { ...newContactPoint.value, contact: [value] } as ContactPoint;
       }
       isContactDialogOpen.value = false;
     }
@@ -207,7 +160,7 @@ export default defineComponent({
       if (newContactPoint.value?.links) {
         newContactPoint.value.links.push(value);
       } else {
-        newContactPoint.value = {...newContactPoint.value, links: [value]} as ContactPoint;
+        newContactPoint.value = { ...newContactPoint.value, links: [value] } as ContactPoint;
       }
       isLinkDialogOpen.value = false;
     }
@@ -223,15 +176,15 @@ export default defineComponent({
     }
 
     const changeName = (value: string) => {
-      newContactPoint.value = {...newContactPoint.value, name: value} as ContactPoint;
+      newContactPoint.value = { ...newContactPoint.value, name: value } as ContactPoint;
     }
 
     const changeShortCut = (value: string) => {
-      newContactPoint.value = {...newContactPoint.value, shortCut:value} as ContactPoint;
+      newContactPoint.value = { ...newContactPoint.value, shortCut: value } as ContactPoint;
     }
 
     const changeDescription = (value: string) => {
-      newContactPoint.value = {...newContactPoint.value, description:value} as ContactPoint;
+      newContactPoint.value = { ...newContactPoint.value, description: value } as ContactPoint;
     }
 
     const cancel = () => {

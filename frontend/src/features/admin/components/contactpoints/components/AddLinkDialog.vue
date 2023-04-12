@@ -1,59 +1,46 @@
 <template>
-  <v-row justify="center">
-    <v-dialog
-        v-model="isDialogActive"
-        persistent
-        max-width="590"
-    >
-    <v-card>
+
+  <v-dialog v-model="isDialogActive" persistent max-width="590" class="ma-0 pa-0">
+    <v-card class="ma-0 pa-0">
       <v-card-title>
         Neuen Link hinzufügen
       </v-card-title>
-      <v-row>
-        <v-col>
-          <v-text-field
-              label="Titel"
-              :rules="[nameRule]"
-              v-model="newLink.name"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-text-field
-              label="URL"
-              :rules="[linkRule]"
-              v-model="newLink.url"
-          />
-        </v-col>
-      </v-row>
-      <v-spacer></v-spacer>
-      <v-btn
-          depressed
-          color="secondary"
-          class="ml-4 black--text"
-          :disabled="!isSavable"
-          @click="$emit('addNewLink', newLink)"
-      >
-        Hinzufügen
-      </v-btn>
-      <v-btn
-          depressed
-          color="secondary"
-          class="ml-4 black--text"
-          @click="$emit('cancel')">
-        Abbrechen
-      </v-btn>
+      <v-card-content>
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12">
+            <v-text-field label="Titel" :rules="[nameRule]" v-model="newLink.name" />
+          </v-col>
+          <v-col cols="12">
+            <v-text-field label="URL" :rules="[linkRule]" v-model="newLink.url" />
+          </v-col>
+        </v-row>
+      </v-card-content>
+      <v-card-actions>
+        <v-row class="ma-0 pa-0">
+          <v-col cols="12" class="ma-0 pa-0">
+            <v-btn depressed color="success" :disabled="!isSavable"
+              @click="$emit('addNewLink', newLink)">
+              Hinzufügen
+            </v-btn>
+            <v-btn depressed color="error" class="ml-4" @click="$emit('cancel')">
+              Abbrechen
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card-actions>
     </v-card>
-    </v-dialog>
-  </v-row>
+  </v-dialog>
+
+
+
+
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from "vue";
-import {Link} from "@/features/commons/types/ContactPoint";
+import { computed, defineComponent, ref } from "vue";
+import { Link } from "@/features/commons/types/ContactPoint";
 
-export default defineComponent ({
+export default defineComponent({
   name: "AddLinkDialog",
   props: {
     isDialogActive: {
@@ -61,7 +48,7 @@ export default defineComponent ({
     }
   },
   setup() {
-    const newLink = ref<Link>({name:"", url:""});
+    const newLink = ref<Link>({ name: "", url: "" });
 
     const validUrl = (value: string) => {
       const pattern = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=]+$/;
@@ -73,11 +60,11 @@ export default defineComponent ({
     }
 
     const nameRule = (value: string) => {
-      return value.length>0 || "Titel muss gefüllt werden!"
+      return value.length > 0 || "Titel muss gefüllt werden!"
     }
 
     const isSavable = computed(() => {
-      if(newLink.value.name && newLink.value.url) {
+      if (newLink.value.name && newLink.value.url) {
         return newLink.value.name.length > 0 && newLink.value.url.length > 0 && validUrl(newLink.value.url);
       }
       return false;

@@ -3,8 +3,6 @@ import Router from "vue-router";
 // Add this import at the top of core.router.ts
 import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
 
-
-
 import {theMainRoutes} from "@/features/the-main/the-main.routes";
 import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 import {

@@ -4,17 +4,10 @@
     <ErrorHandler :is-error="isWriteError || isReadError" :message="errorMessage" @closeError="closeError" />
     <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
       class="ma-0 pa-0">
+      <v-card-title class="pa-0">Anlaufstelle - Bearbeiten <span class="mdi mdi-pencil  ml-auto"></span></v-card-title>
       <v-card-content>
-
-
         <div v-if="!isLoading && writableContactPoint">
           <v-form>
-            <v-row>
-              <v-col cols="12">
-                <h3 class="pa-0">Anlaufstelle - Bearbeiten <span class="mdi mdi-pencil  ml-auto"></span></h3>
-
-              </v-col>
-            </v-row>
             <v-row>
               <v-col cols="12" sm="12" md="6" lg="6" xl="6">
                 <v-text-field :value="writableContactPoint.name" @input="changeName" label="Name der Anlaufstelle" />
@@ -35,7 +28,6 @@
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
-
             <v-row>
               <v-col cols="12" class="mb-0 pb-0">
                 <h3 class="pa-0">
@@ -43,9 +35,7 @@
                 </h3>
               </v-col>
             </v-row>
-
             <v-row v-for="contact in writableContactPoint.contact" :key="contact.id">
-
               <v-col lg="10" md="10" sm="10" cols="8" class="mb-0 pb-0">
                 <v-text-field label="E-Mail" v-model="contact.email" readonly />
               </v-col>
@@ -54,6 +44,8 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="12">
                 <v-btn depressed color="secondary" class="buttonText--text" @click="openContactDialog">
                   + {{ label.addContact }}
@@ -65,7 +57,6 @@
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
-
             <v-row>
               <v-col cols="12" class="mb-0 pb-0">
                 <h3 class="pa-0">
@@ -86,7 +77,6 @@
                 </v-btn>
               </v-col>
             </v-row>
-
             <v-row>
               <v-col cols="12">
                 <v-btn depressed color="secondary" class="buttonText--text" @click="openLinkDialog">
