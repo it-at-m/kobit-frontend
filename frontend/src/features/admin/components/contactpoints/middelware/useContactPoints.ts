@@ -7,10 +7,10 @@ import {
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 export const useCreateNewContactPoint = () =>
-    useMutation({
-            mutationFn: (newContactPoint: ContactPoint) => postContactPoint(newContactPoint)
-        }
-    );
+useMutation({
+    mutationFn: async (newContactPoint: ContactPoint) =>
+      await postContactPoint(newContactPoint),
+  });
 
 export const useUpdateContactPoint = () => useMutation({
     mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)

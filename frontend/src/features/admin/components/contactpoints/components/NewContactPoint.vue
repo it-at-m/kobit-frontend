@@ -308,7 +308,7 @@ export default defineComponent({
     }
     const closeError = () => {
       isWriteError.value = false;
-      router.go(0);
+      //router.go(0);
     }
 
     return {

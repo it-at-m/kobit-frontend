@@ -28,20 +28,17 @@ export default defineComponent({
     const router = useRouter();
 
     const save = async () => {
-  // Add empty contact and links arrays if they don't exist
-  /*
-  if (!props.contactPointToSave?.competences) {
-    props.contactPointToSave.competences = ["WORKPLACE_CONFLICT"];
-  }*/
+      // Add empty contact and links arrays if they don't exist
 
-  try {
-  const result = await mutateAsync(props.contactPointToSave);
-  router.push("/anlaufstellen/" + result.id);
-} catch (error) {
-  const typedError = error as any;
-  emit("error", typedError.response.data.error);
-}
-};
+
+      try {
+        const result = await mutateAsync(props.contactPointToSave);
+        router.push("/anlaufstellen/" + result.id);
+      } catch (error) {
+        const typedError = error as any;
+        emit("error", typedError.response.data.error);
+      }
+    };
 
     return {
       isLoading,
@@ -51,4 +48,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
