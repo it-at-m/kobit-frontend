@@ -9,7 +9,7 @@
       <v-card-title>
         Neuen Link hinzufügen
       </v-card-title>
-      <v-card-content>
+      <v-card-text>
         <v-row class="ma-0 pa-0">
           <v-col cols="12">
             <v-text-field
@@ -26,7 +26,7 @@
             />
           </v-col>
         </v-row>
-      </v-card-content>
+      </v-card-text>
       <v-card-actions>
         <v-row class="ma-0 pa-0">
           <v-col

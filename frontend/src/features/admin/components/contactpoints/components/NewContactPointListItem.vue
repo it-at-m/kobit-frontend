@@ -1,5 +1,6 @@
 <template>
   <v-list-item
+    :disabled="disabled"
     three-line
     link
     @click="setIsAddNew"
@@ -32,11 +33,11 @@ export default defineComponent({
     },
     setIsAddNew: {
       type: Function
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   }
-}
-)</script>
-
-<style scoped>
-
-</style>
+});
+</script>

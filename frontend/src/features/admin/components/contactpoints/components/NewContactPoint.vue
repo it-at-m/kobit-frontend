@@ -2,7 +2,7 @@
   <v-container fluid>
     <ErrorHandler
       :is-error="isWriteError"
-      message="Fehler"
+      :message="errorMessage"
       @closeError="closeError"
     />
     <v-card
@@ -13,7 +13,7 @@
       <v-card-title class="pa-0">
         Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document  ml-auto" />
       </v-card-title>
-      <v-card-content>
+      <v-card-text>
         <v-form>
           <v-row>
             <v-col
@@ -199,7 +199,7 @@
           </v-row>
           <v-divider class="mt-3 mb-5" />
         </v-form>
-      </v-card-content>
+      </v-card-text>
       <v-card-actions class="ma-0 pa-0">
         <SaveNewButton
           :contact-point-to-save="newContactPoint"
@@ -242,6 +242,7 @@ export default defineComponent({
     const isContactDialogOpen = ref(false);
     const isLinkDialogOpen = ref(false);
     const isWriteError = ref(false);
+    const errorMessage = ref('');
     const router = useRouter();
 
     const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
@@ -301,10 +302,10 @@ export default defineComponent({
       isContactDialogOpen.value = false;
     }
 
-    const error = () => {
+    const error = (message: string) => {
+      errorMessage.value = message;
       isWriteError.value = true;
     }
-
     const closeError = () => {
       isWriteError.value = false;
       router.go(0);
@@ -316,6 +317,7 @@ export default defineComponent({
       isContactDialogOpen,
       isLinkDialogOpen,
       isWriteError,
+      errorMessage,
       changeName,
       changeShortCut,
       changeDescription,

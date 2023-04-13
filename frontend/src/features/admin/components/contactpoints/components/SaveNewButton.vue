@@ -11,36 +11,44 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {ContactPoint} from "@/features/commons/types/ContactPoint";
-import {useCreateNewContactPoint} from "@/features/admin/components/contactpoints/middelware/useContactPoints";
-import {useRouter} from "vue-router/composables";
+import { defineComponent } from "vue";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import { useCreateNewContactPoint } from "@/features/admin/components/contactpoints/middelware/useContactPoints";
+import { useRouter } from "vue-router/composables";
 
 export default defineComponent({
-      name: "SaveNewButton",
-      props: {
-        contactPointToSave: {
-          type: Object as () => ContactPoint
-        }
-      },
-      setup(props, {emit}) {
-        const {isLoading, mutateAsync} = useCreateNewContactPoint();
-        const router = useRouter();
-
-        const save = () => {
-          const result = mutateAsync(props.contactPointToSave);
-          result.then((it) => router.push("/anlaufstellen/"+it.id))
-              .catch(() => emit('error'));
-        }
-
-        return {
-          isLoading,
-          save
-        }
-      }
+  name: "SaveNewButton",
+  props: {
+    contactPointToSave: {
+      type: Object as () => ContactPoint
     }
-)</script>
+  },
+  setup(props, { emit }) {
+    const { isLoading, mutateAsync } = useCreateNewContactPoint();
+    const router = useRouter();
 
-<style scoped>
+    const save = async () => {
+  // Add empty contact and links arrays if they don't exist
+  /*
+  if (!props.contactPointToSave?.competences) {
+    props.contactPointToSave.competences = ["WORKPLACE_CONFLICT"];
+  }*/
 
-</style>
+  try {
+  const result = await mutateAsync(props.contactPointToSave);
+  router.push("/anlaufstellen/" + result.id);
+} catch (error) {
+  const typedError = error as any;
+  emit("error", typedError.response.data.error);
+}
+};
+
+    return {
+      isLoading,
+      save,
+    };
+  },
+});
+</script>
+
+<style scoped></style>

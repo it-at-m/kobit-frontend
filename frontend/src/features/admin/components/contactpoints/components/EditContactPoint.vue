@@ -14,7 +14,7 @@
       <v-card-title class="pa-0">
         Anlaufstelle - Bearbeiten <span class="mdi mdi-pencil  ml-auto" />
       </v-card-title>
-      <v-card-content>
+      <v-card-text>
         <div v-if="!isLoading && writableContactPoint">
           <v-form>
             <v-row>
@@ -201,7 +201,7 @@
             <v-divider class="mt-3 mb-5" />
           </v-form>
         </div>
-      </v-card-content>
+      </v-card-text>
       <v-card-actions class="ma-0 pa-0">
         <SaveUpdate
           :id="listItem.id"
@@ -239,7 +239,6 @@ import AddContactDialog from "@/features/admin/components/contactpoints/componen
 import MarkDownAlert from "@/features/admin/components/contactpoints/components/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/components/contactpoints/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
-
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -266,20 +265,16 @@ export default defineComponent({
         writableContactPoint.value = newValue;
       }
     })
-
     const openLinkDialog = () => {
       isLinkDialogOpen.value = true;
     }
-
     const openContactDialog = () => {
       isContactDialogOpen.value = true;
     }
-
     const cancel = () => {
       isLinkDialogOpen.value = false;
       isContactDialogOpen.value = false;
     }
-
     const addNewLink = (value: Link) => {
       const newLink = { ...value, contactPointId: props.listItem?.id } as Link;
       if (writableContactPoint.value?.links) {
@@ -289,7 +284,6 @@ export default defineComponent({
       }
       isLinkDialogOpen.value = false;
     }
-
     const addNewContact = (value: Contact) => {
       const newContact = { ...value, contactPointId: props.listItem?.id } as Contact
       if (writableContactPoint.value?.contact) {
@@ -299,48 +293,36 @@ export default defineComponent({
       }
       isContactDialogOpen.value = false;
     }
-
     const computeMarkdown = computed(() => marked.parse(writableContactPoint.value?.description || ""));
-
     const changeName = (value: string) => writableContactPoint.value = {
       ...writableContactPoint.value,
       name: value
     } as ContactPoint;
-
-
     const changeShortCut = (value: string) =>
       writableContactPoint.value = { ...writableContactPoint.value, shortCut: value } as ContactPoint;
-
-
     const changeDescription = (value: string) => writableContactPoint.value = {
       ...writableContactPoint.value,
       description: value
     } as ContactPoint;
-
-
     const error = () => {
       isWriteError.value = true;
     }
-
     const closeError = () => {
       isWriteError.value = false;
       router.go(0);
     }
-
     function removeLink(item: Link) {
       if (writableContactPoint.value?.links) {
         const links = writableContactPoint.value.links.filter(it => it !== item)
         writableContactPoint.value = { ...writableContactPoint.value, links: links } as ContactPoint;
       }
     }
-
     function removeContact(contact: Contact) {
       if (writableContactPoint.value?.contact) {
         const contacts = writableContactPoint.value.contact.filter(it => it !== contact);
         writableContactPoint.value = { ...writableContactPoint.value, contact: contacts } as ContactPoint;
       }
     }
-
     return {
       isLoading,
       writableContactPoint,
@@ -371,18 +353,15 @@ export default defineComponent({
 ::-webkit-scrollbar {
   width: 20px;
 }
-
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
 }

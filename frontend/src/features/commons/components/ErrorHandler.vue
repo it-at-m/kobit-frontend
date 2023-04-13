@@ -5,7 +5,17 @@
         Es ist ein Fehler aufgetreten!
       </v-card-title>
       <v-card-text>
-        {{ message }}
+        <p v-if="message">
+          {{ message }}
+        </p>
+        <ul v-if="validationErrors">
+          <li
+            v-for="(error, index) in validationErrors"
+            :key="index"
+          >
+            {{ error }}
+          </li>
+        </ul>
       </v-card-text>
       <v-btn
         class="ma-2"
@@ -19,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ErrorHandler",
@@ -30,10 +40,14 @@ export default defineComponent({
     },
     message: {
       type: String
+    },
+    validationErrors: {
+      type: Array,
+      default: () => []
     }
   }
-}
-)</script>
+});
+</script>
 
 <style scoped>
 
