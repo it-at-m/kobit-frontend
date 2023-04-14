@@ -219,7 +219,7 @@
           color="error"
           @click="$emit('unselectItem')"
         >
-        <v-icon>mdi-cancel</v-icon> Abbruch
+          <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
         <DeleteButton
           :id="listItem.id"

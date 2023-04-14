@@ -43,7 +43,7 @@
               :disabled="!isSavable"
               @click="$emit('addNewLink', newLink)"
             >
-            <v-icon>mdi-plus</v-icon> Hinzufügen
+              <v-icon>mdi-plus</v-icon> Hinzufügen
             </v-btn>
             <v-btn
               depressed
@@ -51,7 +51,7 @@
               class="ml-4"
               @click="$emit('cancel')"
             >
-            <v-icon>mdi-cancel</v-icon> Abbrechen
+              <v-icon>mdi-cancel</v-icon> Abbrechen
             </v-btn>
           </v-col>
         </v-row>

@@ -28,9 +28,8 @@
                 label="Name der Anlaufstelle"
                 :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
                 :counter="100"
-                @input="changeName"
                 prepend-inner-icon="mdi-format-letter-case"
-
+                @input="changeName"
               />
             </v-col>
             <v-col
@@ -45,8 +44,8 @@
                 label="Kurzbezeichnung der Anlaufstelle"
                 :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.', v => /^[a-zA-ZäöüÄÖÜ\s]+$/.test(v) || 'Die Kurzbezeichnung darf nur Buchstaben und Umlaute enthalten']"
                 :counter="10"
-                @input="changeShortCut"
                 prepend-inner-icon="mdi-format-font-size-decrease"
+                @input="changeShortCut"
               />
             </v-col>
           </v-row>
@@ -59,8 +58,8 @@
                 label="Beschreibung"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                 :counter="2000"
-                @input="changeDescription"
                 prepend-inner-icon="mdi-format-align-left"
+                @input="changeDescription"
               />
             </v-col>
             <v-col cols="6">
@@ -221,7 +220,7 @@
           color="error"
           @click="$emit('cancel')"
         >
-        <v-icon>mdi-cancel</v-icon> Abbruch
+          <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
       </v-card-actions>
     </v-card>

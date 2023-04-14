@@ -14,7 +14,9 @@
       :timeout="3000"
       bottom
     >
-    <p class="pa-0 ma-0">Erfolgreich gespeichert! <v-icon>mdi-check</v-icon></p>
+      <p class="pa-0 ma-0">
+        Erfolgreich gespeichert! <v-icon>mdi-check</v-icon>
+      </p>
     </v-snackbar>
   </div>
 </template>
