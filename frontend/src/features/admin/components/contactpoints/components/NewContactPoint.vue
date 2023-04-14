@@ -1,106 +1,50 @@
 <template>
   <v-container fluid>
-    <ErrorHandler
-      :is-error="isWriteError"
-      :message="errorMessage"
-      @closeError="closeError"
-    />
-    <v-card
-      flat
-      :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-      class="ma-0 pa-0"
-    >
+    <ErrorHandler :is-error="isWriteError" :message="errorMessage" @closeError="closeError" />
+    <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+      class="ma-0 pa-0">
       <v-card-title class="pa-0">
         Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document  ml-auto" />
       </v-card-title>
       <v-card-text>
-        <v-form>
+        <v-form v-model="isFormValid">
           <v-row>
-            <v-col
-              cols="12"
-              sm="12"
-              md="6"
-              lg="6"
-              xl="6"
-            >
-              <v-text-field
-                :value="newContactPoint?.name"
-                label="Name der Anlaufstelle"
-                :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 3 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
-                :counter="100"
-                @input="changeName"
-              />
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+              <v-text-field :value="newContactPoint?.name" label="Name der Anlaufstelle"
+                :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
+                :counter="100" @input="changeName" />
             </v-col>
-            <v-col
-              cols="12"
-              sm="12"
-              md="6"
-              lg="6"
-              xl="6"
-            >
-              <v-text-field
-                :value="newContactPoint?.shortCut"
-                label="Kurzbezeichnung der Anlaufstelle"
+            <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+              <v-text-field :value="newContactPoint?.shortCut" label="Kurzbezeichnung der Anlaufstelle"
                 :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.', v => /^[a-zA-ZäöüÄÖÜ]+$/.test(v) || 'Die Kurzbezeichnung darf nur Buchstaben und Umlaute enthalten']"
-                :counter="10"
-                @input="changeShortCut"
-              />
+                :counter="10" @input="changeShortCut" />
             </v-col>
           </v-row>
           <v-divider class="mt-3 mb-5" />
           <MarkDownAlert :label="label" />
           <v-row class="ma-0 pa-0">
             <v-col cols="6">
-              <v-textarea
-                :value="newContactPoint?.description"
-                label="Beschreibung"
+              <v-textarea :value="newContactPoint?.description" label="Beschreibung"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                :counter="2000"
-                @input="changeDescription"
-              />
+                :counter="2000" @input="changeDescription" />
             </v-col>
             <v-col cols="6">
-              <div
-                style="border-bottom: 2px solid #eee"
-                v-html="computeMarkdown"
-              />
+              <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
             </v-col>
           </v-row>
           <v-divider class="mt-3 mb-5" />
           <v-row>
-            <v-col
-              cols="12"
-              class="mb-0 pb-0"
-            >
+            <v-col cols="12" class="mb-0 pb-0">
               <h3 class="pa-0">
                 Kontakte
               </h3>
             </v-col>
           </v-row>
-          <v-row
-            v-for="contact in newContactPoint?.contact"
-            :key="contact.id"
-          >
-            <v-col
-              lg="10"
-              md="10"
-              sm="10"
-              cols="8"
-              class="mb-0 pb-0"
-            >
-              <v-text-field
-                v-model="contact.email"
-                label="E-Mail"
-                readonly
-              />
+          <v-row v-for="contact in newContactPoint?.contact" :key="contact.id">
+            <v-col lg="10" md="10" sm="10" cols="8" class="mb-0 pb-0">
+              <v-text-field v-model="contact.email" label="E-Mail" readonly />
             </v-col>
-            <v-col
-              lg="2"
-              md="2"
-              sm="2"
-              cols="4"
-              class="mb-0 pb-0"
-            >
+            <v-col lg="2" md="2" sm="2" cols="4" class="mb-0 pb-0">
               <v-btn @click="removeContact(contact)">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
@@ -108,69 +52,32 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-btn
-                depressed
-                color="secondary"
-                class="ml-4 buttonText--text"
-                @click="openContactDialog"
-              >
+              <v-btn depressed color="secondary" class="ml-4 buttonText--text" @click="openContactDialog">
                 + {{ label.addContact }}
               </v-btn>
             </v-col>
             <v-col cols="12">
-              <AddContactDialog
-                :is-dialog-active="isContactDialogOpen"
-                @cancel="cancel"
-                @addNewContact="addNewContact"
-              />
+              <AddContactDialog :is-dialog-active="isContactDialogOpen" @cancel="cancel"
+                @addNewContact="addNewContact" />
             </v-col>
           </v-row>
           <v-divider class="mt-3 mb-5" />
 
           <v-row>
-            <v-col
-              cols="12"
-              class="mb-0 pb-0"
-            >
+            <v-col cols="12" class="mb-0 pb-0">
               <h3 class="pa-0">
                 Links
               </h3>
             </v-col>
           </v-row>
-          <v-row
-            v-for="link in newContactPoint?.links"
-            :key="link.id"
-          >
-            <v-col
-              lg="5"
-              md="5"
-              sm="5"
-              cols="4"
-            >
-              <v-text-field
-                v-model="link.name"
-                label="Titel"
-                readonly
-              />
+          <v-row v-for="link in newContactPoint?.links" :key="link.id">
+            <v-col lg="5" md="5" sm="5" cols="4">
+              <v-text-field v-model="link.name" label="Titel" readonly />
             </v-col>
-            <v-col
-              lg="5"
-              md="5"
-              sm="5"
-              cols="4"
-            >
-              <v-text-field
-                v-model="link.url"
-                label="URL"
-                readonly
-              />
+            <v-col lg="5" md="5" sm="5" cols="4">
+              <v-text-field v-model="link.url" label="URL" readonly />
             </v-col>
-            <v-col
-              lg="2"
-              md="2"
-              sm="2"
-              cols="4"
-            >
+            <v-col lg="2" md="2" sm="2" cols="4">
               <v-btn @click="removeLink(link)">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
@@ -178,21 +85,13 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <v-btn
-                depressed
-                color="secondary"
-                class="ml-4 buttonText--text"
-                @click="openLinkDialog"
-              >
+              <v-btn depressed color="secondary" class="ml-4 buttonText--text" @click="openLinkDialog">
                 + {{ label.addLink }}
               </v-btn>
             </v-col>
             <v-col cols="12">
-              <AddLinkDialog
-                :is-dialog-active="isLinkDialogOpen"
-                @cancel="cancel"
-                @addNewLink="addNewLink"
-              />
+              <AddLinkDialog :is-dialog-active="isLinkDialogOpen" @cancel="cancel" @addNewLink="addNewLink"
+                />
             </v-col>
           </v-row>
           <v-divider class="mt-3 mb-5" />
@@ -207,15 +106,8 @@
         </v-form>
       </v-card-text>
       <v-card-actions class="ma-0 pa-0">
-        <SaveNewButton
-          :contact-point-to-save="newContactPoint"
-          @error="error"
-        />
-        <v-btn
-          class="ma-2"
-          color="error"
-          @click="$emit('cancel')"
-        >
+        <SaveNewButton :contact-point-to-save="newContactPoint" @error="error" :disabled="!isFormValid"  />
+        <v-btn class="ma-2" color="error" @click="$emit('cancel')">
           Abbruch
         </v-btn>
       </v-card-actions>
@@ -243,6 +135,9 @@ export default defineComponent({
       type: Object as () => I18nLabel
     }
   },
+  data: () => ({
+    isFormValid: false,
+  }),
   setup() {
     const newContactPoint = ref<ContactPoint>();
     const isContactDialogOpen = ref(false);

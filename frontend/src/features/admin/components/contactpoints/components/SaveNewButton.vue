@@ -1,11 +1,5 @@
 <template>
-  <v-btn
-    class="ma-2"
-    color="success"
-    :loading="isLoading"
-    :disabled="isLoading"
-    @click="save"
-  >
+  <v-btn class="ma-2" color="success" :loading="isLoading" :disabled="disabled || isLoading" @click="save">
     Speichern
   </v-btn>
 </template>
@@ -21,6 +15,10 @@ export default defineComponent({
   props: {
     contactPointToSave: {
       type: Object as () => ContactPoint
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -28,6 +26,11 @@ export default defineComponent({
     const router = useRouter();
 
     const save = async () => {
+      // Check if there's at least one contact in the array
+      if (!props.contactPointToSave.contact || props.contactPointToSave.contact.length === 0) {
+        emit("error", "Mindestens ein Kontakt ist erforderlich.");
+        return;
+      }
       try {
         const result = await mutateAsync(props.contactPointToSave);
         router.push("/anlaufstellen/" + result.id);

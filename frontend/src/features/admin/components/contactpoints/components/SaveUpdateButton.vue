@@ -1,10 +1,5 @@
 <template>
-  <v-btn
-    color="success"
-    :loading="isLoading"
-    :disabled="isLoading"
-    @click="save"
-  >
+  <v-btn color="success" :loading="isLoading" :disabled="disabled || isLoading" @click="save">
     Speichern
   </v-btn>
 </template>
@@ -23,6 +18,10 @@ export default defineComponent({
     },
     id: {
       type: String
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, { emit }) {
@@ -30,19 +29,23 @@ export default defineComponent({
     const router = useRouter();
 
     const save = () => {
-  mutateAsync({ contactPoint: props.contactPointToSave, id: props.id })
-    .then(() => {
-      router.push("/admin/contactpoints/");
-    })
-    .catch((error) => {
-      const statusCode = error.response?.status;
-      const fallbackErrorMessage = "An unexpected error occurred";
-      const customErrorMessage = error.response?.data?.error || fallbackErrorMessage;
-      
-        emit("error", error.response?.data?.error);
+      if (!props.contactPointToSave.contact || props.contactPointToSave.contact?.length === 0) {
+        emit("error", "Mindestens ein Kontakt ist erforderlich.");
+        return;
+      }
+      mutateAsync({ contactPoint: props.contactPointToSave, id: props.id })
+        .then(() => {
+          router.push("/admin/contactpoints/");
+        })
+        .catch((error) => {
+          const statusCode = error.response?.status;
+          const fallbackErrorMessage = "An unexpected error occurred";
+          const customErrorMessage = error.response?.data?.error || fallbackErrorMessage;
 
-    });
-};
+          emit("error", error.response?.data?.error);
+
+        });
+    };
 
     return {
       isLoading,
