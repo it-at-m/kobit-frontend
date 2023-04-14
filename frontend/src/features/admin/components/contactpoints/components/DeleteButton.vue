@@ -6,7 +6,7 @@
       :disabled="isLoading"
       @click="openDialog"
     >
-      Löschen
+    <v-icon>mdi-delete</v-icon>  Löschen
     </v-btn>
     <v-dialog
       v-model="isDialogActive"
@@ -33,7 +33,7 @@
             text
             @click="deleteContactPoint"
           >
-            Löschen
+          <v-icon>mdi-delete</v-icon> Löschen
           </v-btn>
         </v-card-actions>
       </v-card>

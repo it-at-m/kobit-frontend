@@ -20,6 +20,7 @@
               v-model="newContact.email"
               label="E-Mail"
               :rules="[rule]"
+              prepend-inner-icon="mdi-email"
             />
           </v-col>
         </v-row>
@@ -36,7 +37,7 @@
               :disabled="!isSavable"
               @click="$emit('addNewContact', newContact)"
             >
-              Hinzufügen
+            <v-icon>mdi-plus</v-icon> Hinzufügen
             </v-btn>
             <v-btn
               depressed
@@ -44,7 +45,7 @@
               class="ml-4"
               @click="$emit('cancel')"
             >
-              Abbrechen
+            <v-icon>mdi-cancel</v-icon> Abbrechen
             </v-btn>
           </v-col>
         </v-row>

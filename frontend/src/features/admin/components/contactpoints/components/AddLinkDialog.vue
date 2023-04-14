@@ -16,6 +16,7 @@
               v-model="newLink.name"
               label="Titel"
               :rules="[nameRule]"
+              prepend-inner-icon="mdi-web"
             />
           </v-col>
           <v-col cols="12">
@@ -23,6 +24,7 @@
               v-model="newLink.url"
               label="URL"
               :rules="[linkRule]"
+              prepend-inner-icon="mdi-link"
             />
           </v-col>
         </v-row>
@@ -39,7 +41,7 @@
               :disabled="!isSavable"
               @click="$emit('addNewLink', newLink)"
             >
-              Hinzufügen
+            <v-icon>mdi-plus</v-icon> Hinzufügen
             </v-btn>
             <v-btn
               depressed
@@ -47,7 +49,7 @@
               class="ml-4"
               @click="$emit('cancel')"
             >
-              Abbrechen
+            <v-icon>mdi-cancel</v-icon> Abbrechen
             </v-btn>
           </v-col>
         </v-row>

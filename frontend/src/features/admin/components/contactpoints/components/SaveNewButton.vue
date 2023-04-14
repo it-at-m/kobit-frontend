@@ -1,6 +1,12 @@
 <template>
-  <v-btn class="ma-2" color="success" :loading="isLoading" :disabled="disabled || isLoading" @click="save">
-    Speichern
+  <v-btn
+    class="ma-2"
+    color="success"
+    :loading="isLoading"
+    :disabled="disabled || isLoading"
+    @click="save"
+  >
+  <v-icon>mdi-content-save</v-icon> Speichern
   </v-btn>
 </template>
 
