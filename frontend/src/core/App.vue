@@ -5,14 +5,15 @@
     </transition>
     <the-background />
     <the-content />
-    <the-disclaimer />
+    <template v-if="showDisclaimer">
+      <the-disclaimer />
+    </template>
     <the-footer-main />
   </v-app>
 </template>
 
 <script lang="ts">
-
-import {Component} from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Vue from "vue";
 import TheBackground from "@/features/the-background/the-background.vue";
 import TheFooterMain from "@/features/the-footer-main/the-footer-main.vue";
@@ -34,6 +35,10 @@ export default class App extends Vue{
 
   created(): void {
     this.$store.dispatch(initAnlaufstellen());
+  }
+
+  get showDisclaimer() {
+    return !/^\/admin(\/|$)/.test(this.$route.path);
   }
 }
 </script>

@@ -21,6 +21,7 @@
               label="E-Mail"
               :rules="[rule]"
               prepend-inner-icon="mdi-email"
+              :counter="500"
             />
           </v-col>
         </v-row>
@@ -73,7 +74,11 @@ export default defineComponent({
       return pattern.test(value);
     }
     const rule = (value: string) => {
-      return validMail(value) || "Keine valide E-Mail!";
+      if(!validMail(value)){
+        return "Keine valide E-Mail!"
+      } else if (value.length > 500){
+        return  "Die E-Mail muss weniger als 500 Zeichen umfassen"
+      }
     }
 
     const isSavable = computed(() => {

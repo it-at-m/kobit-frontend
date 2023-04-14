@@ -17,6 +17,7 @@
               label="Titel"
               :rules="[nameRule]"
               prepend-inner-icon="mdi-web"
+              :counter="100"
             />
           </v-col>
           <v-col cols="12">
@@ -25,6 +26,7 @@
               label="URL"
               :rules="[linkRule]"
               prepend-inner-icon="mdi-link"
+              :counter="2000"
             />
           </v-col>
         </v-row>
@@ -78,11 +80,20 @@ export default defineComponent({
     }
 
     const linkRule = (value: string) => {
-      return validUrl(value) || "Keine valide URL angeben!";
+      if(!validUrl(value)){
+        return "Keine valide URL angeben!";
+      } else if (value.length > 2000){
+        return  "Der Link muss weniger als 2000 Zeichen umfassen"
+      }
     }
 
     const nameRule = (value: string) => {
-      return value.length > 0 || "Titel muss gefüllt werden!"
+      if(value.length === 0 ){
+        return "Titel muss gefüllt werden!"
+      } else if (value.length > 100) {
+        return  "Der Link Name muss weniger als 100 Zeichen umfassen"
+      }
+
     }
 
     const isSavable = computed(() => {

@@ -29,7 +29,6 @@
           <NewContactPointListItem
             :label="label"
             :set-is-add-new="setIsAddNew"
-            :disabled="selectedItem !== undefined || isAddNew"
           />
           <v-list-item
             v-for="item in listItems"
