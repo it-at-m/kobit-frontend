@@ -217,7 +217,7 @@
         <v-btn
           class="ma-2"
           color="error"
-          @click="$emit('unselectItem')"
+          @click="cancelForm"
         >
           <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
@@ -278,6 +278,11 @@ export default defineComponent({
     }
     const openContactDialog = () => {
       isContactDialogOpen.value = true;
+    }
+    const cancelForm = () => {
+      router.push("/admin/contactpoints/");
+      router.go(0);
+        
     }
     const cancel = () => {
       isLinkDialogOpen.value = false;
@@ -344,6 +349,7 @@ export default defineComponent({
       isWriteError,
       openLinkDialog,
       openContactDialog,
+      cancelForm,
       cancel,
       addNewLink,
       addNewContact,
