@@ -42,12 +42,10 @@ import {defineComponent} from "vue";
 import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
 import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
-import {
-  theAnlaufstellenRoutes
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
+import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
 
 export default defineComponent({
   name: "AdminOverview",
@@ -55,7 +53,7 @@ export default defineComponent({
   setup() {
     return {
       labels: adminBaseHeadLineLabels,
-      anlaufstellen: theAnlaufstellenRoutes,
+      anlaufstellen: adminContactPointsRoutes,
       unterstuetzungsfinder: theUnterstuetzungsfinderRoutes,
       erfahreMehr: erfahreMehrRoutes
     }

@@ -12,7 +12,7 @@
       <v-btn
         depressed
         color="secondary"
-        class="ml-4 black--text"
+        class="ml-4 buttonText--text"
         @click="callback"
       >
         <v-icon>mdi-arrow-left-bold</v-icon> {{ text }}

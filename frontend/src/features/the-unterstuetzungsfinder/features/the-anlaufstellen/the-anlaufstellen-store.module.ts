@@ -8,8 +8,8 @@ import {ActionContext} from "vuex";
 import {Loading} from "@/core/services/api/types/Loading.type";
 import {
     ContactResponse
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
-import {LinkResponse} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/link.type";
+} from "@/features/commons/types/contact.type";
+import {LinkResponse} from "@/features/commons/types/link.type";
 
 
 export const THE_ANLAUFSTELLEN_MODULE_NAME = 'theAnlaufstellenStoreModule';
