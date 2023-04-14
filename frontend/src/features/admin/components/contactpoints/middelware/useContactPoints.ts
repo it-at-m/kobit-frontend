@@ -13,7 +13,8 @@ useMutation({
   });
 
 export const useUpdateContactPoint = () => useMutation({
-    mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+    mutationFn: async (updateContactPoint: UpdateContactPoint) => 
+        await putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
 });
 
 export const useDeleteContactPoint = () => useMutation({

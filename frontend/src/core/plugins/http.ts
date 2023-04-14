@@ -25,11 +25,10 @@ export async function httpPostJson<T>(path: string, data: any): Promise<T> {
 }
 
 export async function httpPutJson<T>(path: string, data: any): Promise<T> {
-    return configuredAxios.put(path, data).then((res) => res.data as T)
-        .catch(function () {
-            throw new Error('Request was not successful');
-        })
+    return configuredAxios.put(path, data)
+        .then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
 }
+
 
 export async function httpDeleteJson(path: string) {
     return configuredAxios.delete(path);

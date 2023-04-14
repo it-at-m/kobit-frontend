@@ -2,7 +2,7 @@
   <v-container fluid>
     <LoadingSpinner :is-loading="isLoading" />
     <ErrorHandler
-      :is-error="isWriteError || isReadError"
+      :is-error="isWriteError"
       :message="errorMessage"
       @closeError="closeError"
     />
@@ -258,8 +258,7 @@ export default defineComponent({
     const isContactDialogOpen = ref(false);
     const router = useRouter();
     const writableContactPoint = ref<ContactPoint>();
-    const errorMessage = "Während des Abfragen oder Speichern der Daten gab es einen Fehler. " +
-      "Bitte versuchen Sie es erneut. Sollte der Fehler weiterhin bestehen, dann wenden sie sich an: "
+    const errorMessage = ref('');
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
@@ -304,12 +303,13 @@ export default defineComponent({
       ...writableContactPoint.value,
       description: value
     } as ContactPoint;
-    const error = () => {
+    const error = (message: string) => {
+      errorMessage.value = message;
       isWriteError.value = true;
-    }
+    };
+
     const closeError = () => {
       isWriteError.value = false;
-      router.go(0);
     }
     function removeLink(item: Link) {
       if (writableContactPoint.value?.links) {
@@ -353,15 +353,18 @@ export default defineComponent({
 ::-webkit-scrollbar {
   width: 20px;
 }
+
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
 }

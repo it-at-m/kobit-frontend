@@ -28,9 +28,6 @@ export default defineComponent({
     const router = useRouter();
 
     const save = async () => {
-      // Add empty contact and links arrays if they don't exist
-
-
       try {
         const result = await mutateAsync(props.contactPointToSave);
         router.push("/anlaufstellen/" + result.id);
