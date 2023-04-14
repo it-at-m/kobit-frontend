@@ -58,9 +58,9 @@ export const theDrawerMainModule = {
         [GET_LIST_ITEMS](state: TheMainDrawerModuleState): ListItem[] {
 
             if (state.isAdminPage) {
-                adminRoutes.name = "Admin Home";
-                adminRoutes.meta.icon = "mdi-home"
-                theMainRoutes.name = "Admin Abmelden";
+                adminRoutes.name = "Admin Dashboard";
+                adminRoutes.meta.icon = "mdi-home";
+                theMainRoutes.name = "Adminbereich Verlassen";
                 theMainRoutes.meta.icon = "mdi-logout";
 
                 return state.listAdminItems;

@@ -26,6 +26,8 @@
               <v-text-field
                 :value="newContactPoint?.name"
                 label="Name der Anlaufstelle"
+                :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 3 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
+                :counter="100"
                 @input="changeName"
               />
             </v-col>
@@ -39,6 +41,8 @@
               <v-text-field
                 :value="newContactPoint?.shortCut"
                 label="Kurzbezeichnung der Anlaufstelle"
+                :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.', v => /^[a-zA-ZäöüÄÖÜ]+$/.test(v) || 'Die Kurzbezeichnung darf nur Buchstaben und Umlaute enthalten']"
+                :counter="10"
                 @input="changeShortCut"
               />
             </v-col>
@@ -50,6 +54,8 @@
               <v-textarea
                 :value="newContactPoint?.description"
                 label="Beschreibung"
+                :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                :counter="2000"
                 @input="changeDescription"
               />
             </v-col>
