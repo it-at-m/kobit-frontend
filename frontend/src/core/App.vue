@@ -1,16 +1,19 @@
 <template>
   <v-app>
-    <the-app-bar />
+    <transition mode="out-in">
+      <the-app-bar key="the-app-bar" />
+    </transition>
     <the-background />
     <the-content />
-    <the-disclaimer />
+    <template v-if="showDisclaimer">
+      <the-disclaimer />
+    </template>
     <the-footer-main />
   </v-app>
 </template>
 
 <script lang="ts">
-
-import {Component} from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Vue from "vue";
 import TheBackground from "@/features/the-background/the-background.vue";
 import TheFooterMain from "@/features/the-footer-main/the-footer-main.vue";
@@ -33,11 +36,37 @@ export default class App extends Vue{
   created(): void {
     this.$store.dispatch(initAnlaufstellen());
   }
+
+  get showDisclaimer() {
+    return !/^\/admin(\/|$)/.test(this.$route.path);
+  }
 }
 </script>
 
 <style>
-
+.v-main {
+  padding-top: 64px !important; /* or whatever value you want for the padding */
+}
+.v-navigation-drawer {
+  top: 64px !important; /* or whatever value you want for the top position */
+  display: flex;
+  flex-direction: column;
+  height: 100% !important;
+  max-height: calc(100% - 64px) !important;
+}
+/* Move the navigation drawer to the top on mobile devices */
+@media (max-width: 1280px) {
+  .v-navigation-drawer {
+    top: 0 !important; /* or whatever value you want for the top position */
+  display: flex;
+  flex-direction: column;
+  height: 100% !important;
+  max-height: calc(100% - 0px) !important;
+  }
+ .v-main {
+  padding: 128px 0px 0px 0px;
+}
+}
 @media screen and (max-width: 960px)  {
   /* mobile scrollbar */
   ::-webkit-scrollbar {

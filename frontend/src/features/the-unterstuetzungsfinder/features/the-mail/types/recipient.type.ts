@@ -1,4 +1,4 @@
-import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
+import Contact from "@/features/commons/types/contact.type";
 
 export default interface Recipient {
     contact: Contact;

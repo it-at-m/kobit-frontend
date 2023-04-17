@@ -1,6 +1,6 @@
-import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
-import {Competence} from "@/features/the-unterstuetzungsfinder/types/competence.type";
-import Link from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/link.type";
+import Contact from "@/features/commons/types/contact.type";
+import {Competence} from "@/features/commons/types/competence.type";
+import Link from "@/features/commons/types/link.type";
 
 export interface AnlaufstelleResponse {
     id?: string;

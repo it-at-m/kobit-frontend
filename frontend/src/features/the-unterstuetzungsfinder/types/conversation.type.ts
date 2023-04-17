@@ -1,5 +1,5 @@
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
-import {Competence} from "@/features/the-unterstuetzungsfinder/types/competence.type";
+import {Competence} from "@/features/commons/types/competence.type";
 
 
 interface AnswerOption {

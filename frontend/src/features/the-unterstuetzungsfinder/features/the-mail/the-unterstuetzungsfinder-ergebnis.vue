@@ -253,7 +253,7 @@ import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
 import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 import {useGetMailAddress} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
 import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
-import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
+import Contact from "@/features/commons/types/contact.type";
 import {
   DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
   DISCLAIMER_MESSAGE_PRIVACY

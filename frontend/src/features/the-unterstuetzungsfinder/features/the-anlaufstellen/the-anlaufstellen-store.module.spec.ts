@@ -3,9 +3,9 @@ import {
     theAnlaufstellenStoreModule
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
-import {Competence} from "@/features/the-unterstuetzungsfinder/types/competence.type";
-import Contact from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/contact.type";
-import Link from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/link.type";
+import {Competence} from "@/features/commons/types/competence.type";
+import Contact from "@/features/commons/types/contact.type";
+import Link from "@/features/commons/types/link.type";
 
 describe("the-anlaufstellen-store.module", () => {
     const state =  {
