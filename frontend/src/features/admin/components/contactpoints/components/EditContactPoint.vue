@@ -54,7 +54,8 @@
             <v-row class="ma-0 pa-0">
               <v-col cols="6">
                 <v-textarea
-                  v-model="writableContactPoint.description"
+                  :value="writableContactPoint.description"
+                  @input="changeDescription"
                   label="Beschreibung"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                   :counter="2000"
