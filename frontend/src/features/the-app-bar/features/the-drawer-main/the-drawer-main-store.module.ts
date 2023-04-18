@@ -7,6 +7,7 @@ import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfi
 import { erfahreMehrRoutes } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 
 import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/components/experiencemore/experienceMoreRoutes";
 import { adminRoutes } from "@/features/admin/adminRoutes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";
@@ -49,6 +50,7 @@ export const theDrawerMainModule = {
         listAdminItems: [
             adminRoutes,
             adminContactPointsRoutes,
+            adminExperienceMoreRoutes,
             theMainRoutes,
 
         ],
