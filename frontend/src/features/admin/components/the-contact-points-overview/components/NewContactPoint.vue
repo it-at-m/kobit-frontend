@@ -232,11 +232,11 @@ import { computed, defineComponent, ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import { Contact, ContactPoint, Link } from "@/features/commons/types/ContactPoint";
-import MarkDownAlert from "@/features/admin/components/contactpoints/components/MarkDownAlert.vue";
+import MarkDownAlert from "@/features/admin/components/the-contact-points-overview/components/MarkDownAlert.vue";
 import { marked } from "marked";
-import AddContactDialog from "@/features/admin/components/contactpoints/components/AddContactDialog.vue";
-import AddLinkDialog from "@/features/admin/components/contactpoints/components/AddLinkDialog.vue";
-import SaveNewButton from "@/features/admin/components/contactpoints/components/SaveNewButton.vue";
+import AddContactDialog from "@/features/admin/components/the-contact-points-overview/components/AddContactDialog.vue";
+import AddLinkDialog from "@/features/admin/components/the-contact-points-overview/components/AddLinkDialog.vue";
+import SaveNewButton from "@/features/admin/components/the-contact-points-overview/components/SaveNewButton.vue";
 import { useRouter } from "vue-router/composables";
 
 export default defineComponent({

@@ -1,4 +1,4 @@
-import ExperienceMoreOverview from "@/features/admin/components/experiencemore/ExperienceMoreOverview.vue";
+import ExperienceMoreOverview from "@/features/admin/components/the-experience-more-overview/ExperienceMoreOverview.vue";
 
 export const ADMIN_EXPERIENCEMORE_PATH = "/admin/erfahre-mehr";
 export const ADMIN_EXPERIENCEMORE_ROUTE_NAME = "Erfahre Mehr bearbeiten";

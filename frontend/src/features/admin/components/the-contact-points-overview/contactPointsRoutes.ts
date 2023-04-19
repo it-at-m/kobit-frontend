@@ -1,4 +1,4 @@
-import ContactPointsOverview from "@/features/admin/components/contactpoints/ContactPointsOverview.vue";
+import ContactPointsOverview from "@/features/admin/components/the-contact-points-overview/ContactPointsOverview.vue";
 
 export const ADMIN_CONTACTPOINTS_PATH = "/admin/contactpoints";
 export const ADMIN_CONTACTPOINTS_ROUTE_NAME = "Anlaufstellen bearbeiten";

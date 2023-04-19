@@ -44,8 +44,8 @@ import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-rando
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
-import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
-import {adminExperienceMoreRoutes} from "@/features/admin/components/experiencemore/experienceMoreRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/components/the-contact-points-overview/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
 
 export default defineComponent({
   name: "AdminOverview",

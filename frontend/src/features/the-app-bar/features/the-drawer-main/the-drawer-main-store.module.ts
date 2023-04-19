@@ -6,8 +6,8 @@ import {
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import { erfahreMehrRoutes } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 
-import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
-import {adminExperienceMoreRoutes} from "@/features/admin/components/experiencemore/experienceMoreRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/components/the-contact-points-overview/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
 import { adminRoutes } from "@/features/admin/adminRoutes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";

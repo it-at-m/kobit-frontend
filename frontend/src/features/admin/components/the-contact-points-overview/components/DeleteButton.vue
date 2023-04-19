@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { useDeleteContactPoint } from "@/features/admin/components/contactpoints/middelware/useContactPoints";
+import { useDeleteContactPoint } from "@/features/admin/components/the-contact-points-overview/middelware/useContactPoints";
 import { useRouter } from "vue-router/composables";
 
 export default defineComponent({

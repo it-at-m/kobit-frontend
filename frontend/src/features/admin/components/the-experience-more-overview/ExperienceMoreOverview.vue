@@ -5,86 +5,86 @@
     :name="name"
     :icon="icon"
   >
-      <v-container fluid>
-        <BackButton
-          :text="'Zurück'"
-          :callback="back"
-        />
-        <v-row>
-          <v-col>
-            <v-row>
-              <v-col
-                v-for="(link, linkIndex) in links"
-                :key="linkIndex"
-                class="ma-0 pa-2"
-                cols="12"
-                sm="12"
-                md="6"
-                :lg="linkIndex >= 3 ? '3' : '3'"
-                xl="linkIndex >= 3 ? '3' : '3'"
+    <v-container fluid>
+      <BackButton
+        :text="'Zurück'"
+        :callback="back"
+      />
+      <v-row>
+        <v-col>
+          <v-row>
+            <v-col
+              v-for="(link, linkIndex) in links"
+              :key="linkIndex"
+              class="ma-0 pa-2"
+              cols="12"
+              sm="12"
+              md="6"
+              :lg="linkIndex >= 3 ? '3' : '3'"
+              xl="linkIndex >= 3 ? '3' : '3'"
+            >
+              <a
+                :href="link.path"
+                style="text-decoration: none"
+                :target="link.name === 'Konfliktnavigator' ? '_blank' : '_self'"
               >
-                <a
-                  :href="link.path"
-                  style="text-decoration: none"
-                  :target="link.name === 'Konfliktnavigator' ? '_blank' : '_self'"
+  
+                <v-card
+                  class="d-flex flex-column"
+                  v:id="`id_alert_${link.name}`"
+                  content-class="elevation-0"
+                  height="100%"
+                  width="100%"
                 >
   
-                  <v-card
-                    class="d-flex flex-column"
-                    v:id="`id_alert_${link.name}`"
-                    content-class="elevation-0"
+                  <v-card-title class="page-titles gray--text">{{ link.name }}</v-card-title>
+                  <v-card-text class="text--text ma-0 pa-0">
+                    <v-container class="fill-height">
+                      <v-row class="align-center">
+  
+                        <v-col cols="2">
+                          <p class="secondary--text">
+                            <v-icon
+                              color="secondary"
+                              left
+                              align-center
+                            >
+                              {{ link.meta.icon }}
+                            </v-icon>
+                          </p>
+                        </v-col>
+                        <v-col cols="10">
+                          <p class="gray--text">{{ link.meta.infoText }}</p>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-spacer />
+                  <v-card-actions
                     height="100%"
-                    width="100%"
+                    class="text--text ma-0 pa-0 fill-height"
                   >
+                    <v-container class="fill-height">
+                      <v-row class="justify-end align-end ma-0 pa-0 fill-height">
+                        <v-col
+                          cols="12"
+                          class="ma-0 pa-0 text-right text-bottom fill-height"
+                        >
+                          <p class="secondary--text ma-0 pa-0"><i class="mdi mdi-menu-right" /></p>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-card-actions>
   
-                    <v-card-title class="page-titles gray--text">{{ link.name }}</v-card-title>
-                    <v-card-text class="text--text ma-0 pa-0">
-                      <v-container class="fill-height">
-                        <v-row class="align-center">
-  
-                          <v-col cols="2">
-                            <p class="secondary--text">
-                              <v-icon
-                                color="secondary"
-                                left
-                                align-center
-                              >
-                                {{ link.meta.icon }}
-                              </v-icon>
-                            </p>
-                          </v-col>
-                          <v-col cols="10">
-                            <p class="gray--text">{{ link.meta.infoText }}</p>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-spacer />
-                    <v-card-actions
-                      height="100%"
-                      class="text--text ma-0 pa-0 fill-height"
-                    >
-                      <v-container class="fill-height">
-                        <v-row class="justify-end align-end ma-0 pa-0 fill-height">
-                          <v-col
-                            cols="12"
-                            class="ma-0 pa-0 text-right text-bottom fill-height"
-                          >
-                            <p class="secondary--text ma-0 pa-0"><i class="mdi mdi-menu-right" /></p>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-actions>
-  
-                  </v-card>
-                </a>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
-    </BasePageContent>
-  </template>
+                </v-card>
+              </a>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </BasePageContent>
+</template>
   
   <script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -96,7 +96,7 @@ import {
   ADMIN_EXPERIENCEMORE_ICON,
   ADMIN_EXPERIENCEMORE_INFO_TEXT,
   ADMIN_EXPERIENCEMORE_ROUTE_NAME
-} from "@/features/admin/components/experiencemore/experienceMoreRoutes";
+} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
 
 import {
     conflictPreventionRoutes

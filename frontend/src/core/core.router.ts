@@ -24,8 +24,8 @@ import {
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {adminRoutes} from "@/features/admin/adminRoutes";
-import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
-import {adminExperienceMoreRoutes} from "@/features/admin/components/experiencemore/experienceMoreRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/components/the-contact-points-overview/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
 import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-details.routes";
