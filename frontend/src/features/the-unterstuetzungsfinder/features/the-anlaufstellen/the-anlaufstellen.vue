@@ -77,7 +77,7 @@ import {
   THE_ANLAUFSTELLEN_ROUTE_NAME
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {THE_ANGEBOTE_ROUTE_META_ICON} from "@/features/the-angebote/the-angebote.routes";
-import {THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import {THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT} from "@/features/the-experience-more/the-experience-more.routes";
 import {useRoute, useRouter} from "vue-router/composables";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";

@@ -4,7 +4,7 @@ import {
     theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import { erfahreMehrRoutes } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import { erfahreMehrRoutes } from "@/features/the-experience-more/the-experience-more.routes";
 
 import {adminContactPointsRoutes} from "@/features/admin/components/the-contact-points-overview/contactPointsRoutes";
 import {adminExperienceMoreRoutes} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";

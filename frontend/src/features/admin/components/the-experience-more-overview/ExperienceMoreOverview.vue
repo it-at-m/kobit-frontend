@@ -100,25 +100,25 @@ import {
 
 import {
     conflictPreventionRoutes
-  } from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
+  } from "@/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
   import {
     downloadsRoutes
-  } from "@/features/the-erfahre-mehr/features/the-downloads/the-downloads.routes";
+  } from "@/features/the-experience-more/features/the-downloads/the-downloads.routes";
   import {
     faqRoutes
-  } from "@/features/the-erfahre-mehr/features/the-faq/the-faq.routes";
+  } from "@/features/the-experience-more/features/the-faq/the-faq.routes";
   import {
     glossarRoutes
-  } from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
+  } from "@/features/the-experience-more/features/the-glossar/the-glossar.routes";
   import {
     leadershipCooperationRoutes
-  } from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
+  } from "@/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
   import {
     dvFairRoutes
-  } from "@/features/the-erfahre-mehr/features/the-dv-fair/the-dv-fair.routes";
+  } from "@/features/the-experience-more/features/the-dv-fair/the-dv-fair.routes";
   import {
     escalationStepsRoutes
-  } from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
+  } from "@/features/the-experience-more/features/the-escalation-steps/the-escalation-steps.routes";
 
 export default defineComponent({
   name: "ExperienceMoreOverview",
