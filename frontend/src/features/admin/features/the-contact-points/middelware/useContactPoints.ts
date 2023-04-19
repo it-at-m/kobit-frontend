@@ -3,7 +3,7 @@ import {
     deleteContactPoint,
     postContactPoint,
     putContactPoint
-} from "@/features/admin/components/the-contact-points-overview/api/ContactPointsManipulationClient";
+} from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 export const useCreateNewContactPoint = () =>

@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
-import { useUpdateContactPoint } from "@/features/admin/components/the-contact-points-overview/middelware/useContactPoints";
+import { useUpdateContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 import { useRouter } from "vue-router/composables";
 
 export default defineComponent({

@@ -23,12 +23,28 @@ import {
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {adminRoutes} from "@/features/admin/adminRoutes";
-import {adminContactPointsRoutes} from "@/features/admin/components/the-contact-points-overview/contactPointsRoutes";
-import {adminExperienceMoreRoutes} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
 import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-details.routes";
+
+import {adminRoutes} from "@/features/admin/adminRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
+import {
+    adminConflictPreventionRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+  import {
+    adminDownloadsRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-downloads/the-downloads.routes";
+  import {
+    adminFaqRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-faq/the-faq.routes";
+  import {
+    adminGlossarRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-glossar/the-glossar.routes";
+  import {
+    adminLeadershipCooperationRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 
 Vue.use(Router);
 
@@ -68,7 +84,12 @@ const router = new Router({
         theAngeboteRoutes,
         adminRoutes,
         adminContactPointsRoutes,
-        adminExperienceMoreRoutes
+        adminExperienceMoreRoutes,
+        adminConflictPreventionRoutes,
+        adminDownloadsRoutes,
+        adminFaqRoutes,
+        adminGlossarRoutes,
+        adminLeadershipCooperationRoutes,
     ]
 });
 

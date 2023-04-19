@@ -20,23 +20,21 @@
               cols="12"
               sm="12"
               md="6"
-              :lg="linkIndex >= 3 ? '3' : '3'"
-              xl="linkIndex >= 3 ? '3' : '3'"
+              :lg="linkIndex >= 4 ? '4' : '4'"
+              :xl="linkIndex >= 4 ? '4' : '4'"
             >
               <a
                 :href="link.path"
                 style="text-decoration: none"
                 :target="link.name === 'Konfliktnavigator' ? '_blank' : '_self'"
-              >
-  
+              >  
                 <v-card
                   class="d-flex flex-column"
                   v:id="`id_alert_${link.name}`"
                   content-class="elevation-0"
                   height="100%"
                   width="100%"
-                >
-  
+                >  
                   <v-card-title class="page-titles gray--text">{{ link.name }}</v-card-title>
                   <v-card-text class="text--text ma-0 pa-0">
                     <v-container class="fill-height">
@@ -74,8 +72,7 @@
                         </v-col>
                       </v-row>
                     </v-container>
-                  </v-card-actions>
-  
+                  </v-card-actions>  
                 </v-card>
               </a>
             </v-col>
@@ -96,29 +93,23 @@ import {
   ADMIN_EXPERIENCEMORE_ICON,
   ADMIN_EXPERIENCEMORE_INFO_TEXT,
   ADMIN_EXPERIENCEMORE_ROUTE_NAME
-} from "@/features/admin/components/the-experience-more-overview/experienceMoreRoutes";
+} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
 
 import {
-    conflictPreventionRoutes
-  } from "@/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+    adminConflictPreventionRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
   import {
-    downloadsRoutes
-  } from "@/features/the-experience-more/features/the-downloads/the-downloads.routes";
+    adminDownloadsRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-downloads/the-downloads.routes";
   import {
-    faqRoutes
-  } from "@/features/the-experience-more/features/the-faq/the-faq.routes";
+    adminFaqRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-faq/the-faq.routes";
   import {
-    glossarRoutes
-  } from "@/features/the-experience-more/features/the-glossar/the-glossar.routes";
+    adminGlossarRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-glossar/the-glossar.routes";
   import {
-    leadershipCooperationRoutes
-  } from "@/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
-  import {
-    dvFairRoutes
-  } from "@/features/the-experience-more/features/the-dv-fair/the-dv-fair.routes";
-  import {
-    escalationStepsRoutes
-  } from "@/features/the-experience-more/features/the-escalation-steps/the-escalation-steps.routes";
+    adminLeadershipCooperationRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 
 export default defineComponent({
   name: "ExperienceMoreOverview",
@@ -134,57 +125,35 @@ export default defineComponent({
     }
 
     const links =  [{
-        name: conflictPreventionRoutes.name,
-        path: "/#" + conflictPreventionRoutes.path,
-        meta: conflictPreventionRoutes.meta,
-        color: conflictPreventionRoutes.color
+        name: adminConflictPreventionRoutes.name,
+        path: "/#" + adminConflictPreventionRoutes.path,
+        meta: adminConflictPreventionRoutes.meta,
+        color: adminConflictPreventionRoutes.color
       },
         {
-          name: escalationStepsRoutes.name,
-          path: "/#" + escalationStepsRoutes.path,
-          meta: escalationStepsRoutes.meta,
-          color: escalationStepsRoutes.color
+          name: adminLeadershipCooperationRoutes.name,
+          path: "/#" + adminLeadershipCooperationRoutes.path,
+          meta: adminLeadershipCooperationRoutes.meta,
+          color: adminLeadershipCooperationRoutes.color
         },
         {
-          name: dvFairRoutes.name,
-          path: "/#" + dvFairRoutes.path,
-          meta: dvFairRoutes.meta,
-          color: dvFairRoutes.color
-  
+          name: adminGlossarRoutes.name,
+          path: "/#" + adminGlossarRoutes.path,
+          meta: adminGlossarRoutes.meta,
+          color: adminGlossarRoutes.color
         },
         {
-          name: "Konfliktnavigator",
-          path: "https://wilma.muenchen.de/pages/umgang-mit-konflikten/apps/wiki/konfliktnavigator/list/view/3721d85f-8dc9-46bf-9e9a-a1f5d5a17728",
-          meta: {
-            icon: "mdi-compass",
-            infoText: "Der Konfliktnavigator auf der WiLMA-Seite „Umgang mit Konflikten“ bietet Ihnen die Möglichkeit, durch ausgewählte Fragen Ihre Situation zu reflektieren und zu analysieren.",
-          },
-          color: "#001f3f"
-        },
-        {
-          name: leadershipCooperationRoutes.name,
-          path: "/#" + leadershipCooperationRoutes.path,
-          meta: leadershipCooperationRoutes.meta,
-          color: leadershipCooperationRoutes.color
-        },
-        {
-          name: glossarRoutes.name,
-          path: "/#" + glossarRoutes.path,
-          meta: glossarRoutes.meta,
-          color: glossarRoutes.color
-        },
-        {
-          name: faqRoutes.name,
-          path: "/#" + faqRoutes.path,
-          meta: faqRoutes.meta,
-          color: faqRoutes.color
+          name: adminFaqRoutes.name,
+          path: "/#" + adminFaqRoutes.path,
+          meta: adminFaqRoutes.meta,
+          color: adminFaqRoutes.color
         },
   
         {
-          name: downloadsRoutes.name,
-          path: "/#" + downloadsRoutes.path,
-          meta: downloadsRoutes.meta,
-          color: downloadsRoutes.color
+          name: adminDownloadsRoutes.name,
+          path: "/#" + adminDownloadsRoutes.path,
+          meta: adminDownloadsRoutes.meta,
+          color: adminDownloadsRoutes.color
         }
   
       ];

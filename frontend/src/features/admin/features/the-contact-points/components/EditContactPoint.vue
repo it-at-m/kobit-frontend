@@ -238,13 +238,13 @@ import { I18nLabel } from "@/core/core.translation";
 import { Contact, ContactPoint, ContactPointListItem, Link } from "@/features/commons/types/ContactPoint";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { marked } from "marked";
-import AddLinkDialog from "@/features/admin/components/the-contact-points-overview/components/AddLinkDialog.vue";
-import SaveUpdate from "@/features/admin/components/the-contact-points-overview/components/SaveUpdateButton.vue";
+import AddLinkDialog from "@/features/admin/features/the-contact-points/components/AddLinkDialog.vue";
+import SaveUpdate from "@/features/admin/features/the-contact-points/components/SaveUpdateButton.vue";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import { useRouter } from "vue-router/composables";
-import AddContactDialog from "@/features/admin/components/the-contact-points-overview/components/AddContactDialog.vue";
-import MarkDownAlert from "@/features/admin/components/the-contact-points-overview/components/MarkDownAlert.vue";
-import DeleteButton from "@/features/admin/components/the-contact-points-overview/components/DeleteButton.vue";
+import AddContactDialog from "@/features/admin/features/the-contact-points/components/AddContactDialog.vue";
+import MarkDownAlert from "@/features/admin/features/the-contact-points/components/MarkDownAlert.vue";
+import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
 export default defineComponent({
   name: "EditContactPoint",
