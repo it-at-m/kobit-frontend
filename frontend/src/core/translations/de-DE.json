@@ -52,14 +52,13 @@
   "Admin":{
     "contactPoints": {
       "texts": {
-        "titleLabel": "Name der Anlaufstelle",
-        "shortCutLabel": "Kurzbeschreibung der Anlaufstelle",
-        "descriptionLabel": "Beschreibung",
+        "addNewTitle": "Hinzufügen",
+        "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
         "addContact": "Kontakt hinzufügen",
         "addLink":"Link hinzufügen",
-        "add": "Hinzufügen",
-        "addDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
-        "cancel": "Abbruch",
+        "addFile": "Datei hinzufügen",
+        "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
+        "cancel": "Abbrechen",
         "save": "Speichern",
         "delete": "Löschen",
         "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: "
