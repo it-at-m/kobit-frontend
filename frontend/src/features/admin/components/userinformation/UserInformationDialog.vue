@@ -57,7 +57,6 @@ export default defineComponent({
 
     watch(adminRole, (newValue) => {
       if(newValue) {
-        console.log(newValue)
         if(newValue.isCentralAdmin) {
           infoText.value = labels.centralAdmin;
         } else {
@@ -67,9 +66,7 @@ export default defineComponent({
             infoText.value = labels.noAdmin;
           }
         }
-        console.log(labels.department + newValue.department)
         departmentText.value = labels.department + newValue.department;
-        console.log(departmentText.value)
       }
     })
 
