@@ -1,56 +1,122 @@
-<template>  
+<template>
   <v-container fluid>
+
     <BackButton :callback="back" />
-    <BasePageContent
-      :is-loading="isLoading"
-      :info-text="infoText"
-      :name="name"
-      :icon="icon"
-    >
-      <ContentList :items="items?.contentItemView" />
+    <BasePageContent :is-loading="false" :info-text="infoText" :name="name" :icon="icon">
+      <LoadingSpinner :is-loading="isLoading" />
+      <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        class="ma-0 pa-0">
+        <v-card-title class="pa-0">
+        </v-card-title>
+        <v-card-text>
+          <div v-if="!isLoading && writableContentItem">
+            <v-divider class="mt-3 mb-5" />
+            <MarkDownAlert :label="label" />
+            <v-row class="ma-0 pa-0">
+              <v-col cols="6">
+                <v-textarea :value="writableContentItem.contentItemView[0].content" label="Beschreibung"
+                  :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                  :counter="2000" @input="changeContent" />
+              </v-col>
+              <v-col cols="6">
+                <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
+              </v-col>
+            </v-row>
+          </div>
+        </v-card-text>
+      </v-card>
     </BasePageContent>
     <BackButton :callback="back" />
+
   </v-container>
 </template>
 
 <script lang="ts">
-
-import {defineComponent} from "vue";
-import {useGetAdditionalContent} from "@/features/the-experience-more/common/middleware/AdditionalPageService";
-import {PageType} from "@/features/the-experience-more/common/model/PageType";
+import { computed, defineComponent, ref, watch } from "vue";
+import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import { useGetAdditionalContent } from "@/features/the-experience-more/common/middleware/AdditionalPageService";
+import { PageType } from "@/features/the-experience-more/common/model/PageType";
 import {
-  CONFLICT_PREVENTION_ROUTE_META_ICON,
-  CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
-  CONFLICT_PREVENTION_ROUTE_NAME
-} from "@/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+  ADMIN_CONFLICT_PREVENTION_ROUTE_NAME,
+  ADMIN_CONFLICT_PREVENTION_ROUTE_META_ICON,
+  ADMIN_CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT
+} from "@/features/admin/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+import { marked } from "marked";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
-
+import { useRouter } from "vue-router/composables";
+import { ContentItem, ItemWrapper } from "../model/Item";
+import MarkDownAlert from "@/features/admin/features/the-contact-points/components/MarkDownAlert.vue";
+import { I18nLabel } from "@/core/core.translation";
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: {BasePageContent, ContentList, BackButton},
+  components: { BasePageContent, MarkDownAlert, ContentList, BackButton, LoadingSpinner },
+  props: {
+    label: {
+      type: Object as () => I18nLabel
+    },
+  },
   setup() {
-    const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PREVENTION);
+
+    const { isLoading, isError, data: itemWrapper, error } = useGetAdditionalContent(PageType.PREVENTION);
     const router = useRouter();
+
+    const writableContentItem = ref<ItemWrapper>();
+
+    watch(itemWrapper, (newValue) => {
+      if (!writableContentItem.value) {
+        writableContentItem.value = newValue;
+      }
+    })
+    const computeMarkdown = computed(() => marked.parse(writableContentItem.value?.contentItemView[0]?.content || ""));
+
+    const changeContent = (value: string) => {
+      if (writableContentItem.value) {
+        writableContentItem.value.contentItemView[0].content = value;
+      }
+    };
+
     function back() {
       router.push('/admin/erfahre-mehr');
     }
 
     return {
+      writableContentItem,
       isLoading,
       isError,
       error,
-      items: data,
-      icon: CONFLICT_PREVENTION_ROUTE_META_ICON,
-      infoText: CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
-      name: CONFLICT_PREVENTION_ROUTE_NAME,
-      back
+      computeMarkdown,
+      itemWrapper,
+      icon: ADMIN_CONFLICT_PREVENTION_ROUTE_META_ICON,
+      infoText: ADMIN_CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
+      name: ADMIN_CONFLICT_PREVENTION_ROUTE_NAME + "<span class=\"mdi mdi-pencil  ml-auto\" />",
+      back,
+      changeContent
     };
   }
+
+
 });
 </script>
 
 <style scoped>
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
 </style>

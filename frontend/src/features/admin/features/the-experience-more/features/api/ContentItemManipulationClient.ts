@@ -1,7 +1,7 @@
 import {httpPutJson} from "@/core/plugins/http";
-import {ContentItem} from "@/features/admin/features/the-experience-more/features/model/ContentItem";
+import {ContentItem} from "@/features/admin/features/the-experience-more/features/model/Item";
 
 
 export const putContentItem = (contentItem: ContentItem, id: string) => {
-    return httpPutJson<ContentItem>("/additional/" + contentItem.page_type + "/content-item/" + id, contentItem);
+    return httpPutJson<ContentItem>("/additional/" + contentItem.pageType + "/content-item/" + id, contentItem);
 }

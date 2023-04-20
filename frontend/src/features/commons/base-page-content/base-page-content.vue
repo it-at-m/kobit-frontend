@@ -15,10 +15,10 @@
               >
                 {{ icon }}
               </v-icon>
-              {{ name }}
+              <div v-html="name">{{ name }}</div> 
             </v-card-title>
             <v-card-subtitle>
-              {{ infoText }}
+            {{ infoText }}
             </v-card-subtitle>
             <slot name="default" />
           </v-card>

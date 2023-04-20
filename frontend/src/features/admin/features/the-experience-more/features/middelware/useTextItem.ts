@@ -2,14 +2,14 @@ import {useMutation} from "@tanstack/vue-query";
 import {
     putTextItem
 } from "@/features/admin/features/the-experience-more/features/api/TextItemManipulationClient";
-import { TextItem } from "../model/TextItem";
+import { TextItem } from "@/features/admin/features/the-experience-more/features/model/Item";
 
-export const useUpdateContactPoint = () => useMutation({
-    mutationFn: async (updateContactPoint: UpdateContactPoint) => 
-        await putTextItem(updateContactPoint.content, updateContactPoint.id)
+export const useUpdateTextItem = () => useMutation({
+    mutationFn: async (updateTextItem: useUpdateTextItem) => 
+        await putTextItem(updateTextItem.content, updateTextItem.id)
 });
 
-export interface UpdateContactPoint {
+export interface useUpdateTextItem {
     id: string;
     content: TextItem;
 }
