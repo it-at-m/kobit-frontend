@@ -12,10 +12,10 @@
           {{ labels.informationTitle }}
         </v-card-title>
         <v-card-subtitle>
-          {{ departmentText }}
+          {{ adminRole.department }}
         </v-card-subtitle>
         <v-card-text>
-          {{ infoText }}
+          {{ adminRole.infoText }}
         </v-card-text>
 
         <v-divider></v-divider>
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, watch} from "vue";
+import {defineComponent} from "vue";
 import {useGetAdminUserInfo} from "@/features/admin/components/userinformation/middleware/useGetAdminUserInfo";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import {adminInformationLabels} from "@/features/admin/i18n";
@@ -51,30 +51,12 @@ export default defineComponent({
   },
   setup() {
     const {isLoading, isError, data: adminRole} = useGetAdminUserInfo();
-    const infoText = ref();
     const labels = adminInformationLabels;
-    const departmentText =  ref();
-
-    watch(adminRole, (newValue) => {
-      if(newValue) {
-        if(newValue.isCentralAdmin) {
-          infoText.value = labels.centralAdmin;
-        } else {
-          if(newValue.isDepartmentAdmin) {
-            infoText.value = labels.departmentAdmin;
-          } else {
-            infoText.value = labels.noAdmin;
-          }
-        }
-        departmentText.value = labels.department + newValue.department;
-      }
-    })
 
     return {
       isLoading,
       isError,
-      infoText,
-      departmentText,
+      adminRole,
       labels
     }
   }

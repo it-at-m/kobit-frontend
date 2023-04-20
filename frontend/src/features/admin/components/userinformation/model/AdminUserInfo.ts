@@ -3,3 +3,8 @@ export default interface AdminUserInfo{
     readonly isDepartmentAdmin: boolean,
     readonly department: string
 }
+
+export interface AdminTextInfo {
+    readonly department: string;
+    readonly infoText?: string;
+}
