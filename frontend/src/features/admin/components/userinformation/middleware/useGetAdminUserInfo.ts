@@ -1,7 +1,7 @@
 import {useQuery} from "@tanstack/vue-query";
 import {getAdminUserInfo} from "@/features/admin/components/userinformation/api/AdminInfoClient";
-import AdminUserInfo, {AdminTextInfo} from "@/features/admin/components/userinformation/model/AdminUserInfo";
 import {adminInformationLabels} from "@/features/admin/i18n";
+import {AdminTextInfo, AdminUserInfo} from "@/features/admin/components/userinformation/model/AdminUserInfo";
 
 const mapAdminInfoToText = (adminInfo: AdminUserInfo): AdminTextInfo => {
     const labels = adminInformationLabels

@@ -1,4 +1,4 @@
-export default interface AdminUserInfo{
+export interface AdminUserInfo{
     readonly isCentralAdmin: boolean,
     readonly isDepartmentAdmin: boolean,
     readonly department: string
