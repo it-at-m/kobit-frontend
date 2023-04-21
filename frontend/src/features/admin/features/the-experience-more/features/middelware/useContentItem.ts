@@ -5,12 +5,12 @@ import {
 import { ContentItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
 
-export const useUpdateContentItem = () => useMutation({
-    mutationFn: async (updateContentItem: useUpdateContentItem) => 
+export const UseUpdateContentItem = () => useMutation({
+    mutationFn: async (updateContentItem: UseUpdateContentItem) => 
         await putContentItem( updateContentItem.id, updateContentItem.pageType, updateContentItem.contentItem)
 });
 
-export interface useUpdateContentItem {
+export interface UseUpdateContentItem {
     id: string;
     pageType: PageType;
     contentItem: ContentItem;

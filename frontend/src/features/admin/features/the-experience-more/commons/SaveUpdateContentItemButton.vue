@@ -23,13 +23,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { ContactPoint } from "@/features/commons/types/ContactPoint";
 import { ContentItem } from "@/features/commons/types/Item";
-
-import { useUpdateContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
-import { useUpdateContentItem } from "@/features/admin/features/the-experience-more/features/middelware/useContentItem";
-
-
+import { UseUpdateContentItem } from "@/features/admin/features/the-experience-more/features/middelware/useContentItem";
 import { useRouter } from "vue-router/composables";
 
 export default defineComponent({
@@ -50,7 +45,7 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    const { isLoading, mutateAsync } = useUpdateContentItem();
+    const { isLoading, mutateAsync } = UseUpdateContentItem();
     const router = useRouter();
     const showSnackbar = ref(false);
 

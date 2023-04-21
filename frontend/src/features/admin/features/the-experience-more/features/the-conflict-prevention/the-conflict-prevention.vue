@@ -2,6 +2,7 @@
   <v-container fluid>
     <BasePageContent :is-loading="false" :info-text="infoText" :name="name" :icon="icon">
       <LoadingSpinner :is-loading="isLoading" />
+      <ErrorHandler :is-error="isWriteError" :message="errorMessage" @closeError="closeError" />
       <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
         class="ma-0 pa-0">
         <v-card-title class="pa-0" />
@@ -25,8 +26,10 @@
 
         </v-card-text>
         <v-card-actions class="ma-0 pa-0">
-          <SaveUpdateContentItem :id="writableContentItem?.contentItemView[0].id" :pageType="writableContentItem?.contentItemView[0].pageType" :contentItemToSave="writableContentItem?.contentItemView[0]"
-            :disabled="!isFormValid" @error="error"  class="ml-2"  />
+          <SaveUpdateContentItem :id="writableContentItem?.contentItemView[0].id"
+            :pageType="writableContentItem?.contentItemView[0].pageType"
+            :contentItemToSave="writableContentItem?.contentItemView[0]" :disabled="!isFormValid" @error="error"
+            class="ml-2" />
           <v-btn class="ma-2" color="error" @click="cancelForm">
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
@@ -55,11 +58,11 @@ import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { I18nLabel } from "@/core/core.translation";
 import { adminContentItemLabels } from "@/features/admin/features/the-experience-more/i18n";
 import SaveUpdateContentItem from "@/features/admin/features/the-experience-more/commons/SaveUpdateContentItemButton.vue";
-
+import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, SaveUpdateContentItem },
+  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner,ErrorHandler, SaveUpdateContentItem },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -113,7 +116,9 @@ export default defineComponent({
       writableContentItem,
       isLoading,
       isError,
+      errorMessage,
       isReadError,
+      isWriteError,
       computeMarkdown,
       itemWrapper,
       icon: ADMIN_CONFLICT_PREVENTION_ROUTE_META_ICON,
