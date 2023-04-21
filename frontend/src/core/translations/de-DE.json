@@ -14,7 +14,7 @@
       "answers": "Ihre Antworten"
     },
     "bannerAboveQuestions": {
-      "text":  "Sie können sich mit Ihrem Anliegen auch an Ihre direkte oder übergeordnete, nicht beteiligte Führungskraft wenden.",
+      "text": "Sie können sich mit Ihrem Anliegen auch an Ihre direkte oder übergeordnete, nicht beteiligte Führungskraft wenden.",
       "close": "Informationsbanner schließen"
     },
     "features": {
@@ -49,18 +49,30 @@
       }
     }
   },
-  "Admin":{
+  "Admin": {
+    "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: ",
     "contactPoints": {
       "texts": {
         "addNewTitle": "Hinzufügen",
         "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
         "addContact": "Kontakt hinzufügen",
-        "addLink":"Link hinzufügen",
+        "addLink": "Link hinzufügen",
         "addFile": "Datei hinzufügen",
         "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
         "cancel": "Abbrechen",
-        "save": "Speichern",
-        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: "
+        "save": "Speichern"
+      }
+    },
+    "contentItems": {
+      "texts": {
+        "addNewTitle": "Hinzufügen",
+        "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
+        "addContact": "Kontakt hinzufügen",
+        "addLink": "Link hinzufügen",
+        "addFile": "Datei hinzufügen",
+        "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
+        "cancel": "Abbrechen",
+        "save": "Speichern"
       }
     }
   }

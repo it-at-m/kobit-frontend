@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    <BackButton :callback="back" />
     <BasePageContent
       :is-loading="false"
       :info-text="infoText"
@@ -37,9 +36,23 @@
             </v-row>
           </div>
         </v-card-text>
+        <v-card-actions class="ma-0 pa-0">
+        <!--<SaveUpdate
+          :id="listItem.id"
+          :contact-point-to-save="writableContactPoint"
+          :disabled="!isFormValid"
+          @error="error"
+        />-->
+        <v-btn
+          class="ma-2"
+          color="error"
+          @click="cancelForm"
+        >
+          <v-icon>mdi-cancel</v-icon> Abbruch
+        </v-btn>
+      </v-card-actions>
       </v-card>
     </BasePageContent>
-    <BackButton :callback="back" />
   </v-container>
 </template>
 
@@ -56,14 +69,14 @@ import {
 import { marked } from "marked";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
-import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRouter } from "vue-router/composables";
 import { ContentItem, ItemWrapper } from "../model/Item";
-import MarkDownAlert from "@/features/admin/features/the-contact-points/components/MarkDownAlert.vue";
+import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { I18nLabel } from "@/core/core.translation";
+import {adminContentItemLabels} from "@/features/admin/features/the-experience-more/i18n";
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: { BasePageContent, MarkDownAlert, ContentList, BackButton, LoadingSpinner },
+  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -92,8 +105,14 @@ export default defineComponent({
     function back() {
       router.push('/admin/erfahre-mehr');
     }
+    const cancelForm = () => {
+      router.push("/admin/erfahre-mehr/");
+      router.go(0);
+        
+    }
 
     return {
+      label: adminContentItemLabels,
       writableContentItem,
       isLoading,
       isError,
@@ -104,6 +123,7 @@ export default defineComponent({
       infoText: ADMIN_CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
       name: ADMIN_CONFLICT_PREVENTION_ROUTE_NAME + "<span class=\"mdi mdi-pencil  ml-auto\" />",
       back,
+      cancelForm,
       changeContent
     };
   }

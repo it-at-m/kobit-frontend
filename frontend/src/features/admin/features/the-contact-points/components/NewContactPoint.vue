@@ -232,7 +232,7 @@ import { computed, defineComponent, ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import { Contact, ContactPoint, Link } from "@/features/commons/types/ContactPoint";
-import MarkDownAlert from "@/features/admin/features/the-contact-points/components/MarkDownAlert.vue";
+import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { marked } from "marked";
 import AddContactDialog from "@/features/admin/features/the-contact-points/components/AddContactDialog.vue";
 import AddLinkDialog from "@/features/admin/features/the-contact-points/components/AddLinkDialog.vue";

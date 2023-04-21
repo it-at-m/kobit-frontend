@@ -2,6 +2,7 @@ import i18n from "@/core/plugins/i18n";
 import {I18nLabelMaker} from "@/core/core.translation";
 
 const ADMIN_CONTACT_POINTS_PATH = "Admin.contactPoints.texts"
+const ADMIN_MARKDOWN_PATH = "Admin"
 
 enum AdminContactPointsLabels {
     ADD_NEW_TITLE="addNewTitle",
@@ -26,7 +27,7 @@ const adminContactPoints = new Map<string, string>([
     [AdminContactPointsLabels.ADD_LINK, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_LINK}`)}`],
     [AdminContactPointsLabels.ADD_FILE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_FILE}`)}`],
     [AdminContactPointsLabels.ADD_FILE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_FILE}`)}`],
-    [AdminContactPointsLabels.MARKDOWN_HINT, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.MARKDOWN_HINT}`)}`],
+    [AdminContactPointsLabels.MARKDOWN_HINT, `${i18n.t(`${ADMIN_MARKDOWN_PATH}.${AdminContactPointsLabels.MARKDOWN_HINT}`)}`],
 ])
 
 export const adminContactPointLabels = new I18nLabelMaker(adminContactPoints, AdminContactPointsLabels).labels();

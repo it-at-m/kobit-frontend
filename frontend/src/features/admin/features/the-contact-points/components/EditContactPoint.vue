@@ -243,7 +243,7 @@ import SaveUpdate from "@/features/admin/features/the-contact-points/components/
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import { useRouter } from "vue-router/composables";
 import AddContactDialog from "@/features/admin/features/the-contact-points/components/AddContactDialog.vue";
-import MarkDownAlert from "@/features/admin/features/the-contact-points/components/MarkDownAlert.vue";
+import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
 export default defineComponent({
