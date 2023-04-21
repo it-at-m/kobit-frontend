@@ -1,38 +1,76 @@
 <template>
   <v-container fluid>
-    <BasePageContent :is-loading="false" :info-text="infoText" :name="name" :icon="icon">
+    <BasePageContent
+      :is-loading="false"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
+    >
       <LoadingSpinner :is-loading="isLoading" />
-      <ErrorHandler :is-error="isWriteError" :message="errorMessage" @closeError="closeError" />
-      <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-        class="ma-0 pa-0">
+      <ErrorHandler
+        :is-error="isWriteError"
+        :message="errorMessage"
+        @closeError="closeError"
+      />
+      <v-card
+        flat
+        :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        class="ma-0 pa-0"
+      >
         <v-card-title class="pa-0" />
         <v-card-text>
           <div v-if="!isLoading && writableContentItem">
-
             <v-divider class="mt-3 mb-5" />
             <MarkDownAlert :label="label" />
             <v-form v-model="isFormValid">
               <v-row class="ma-0 pa-0">
-                <v-col cols="12" sm="12" md="12" lg="6" xl="6">
-                  <v-textarea class="custom-textarea" :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
-                    label="Beschreibung" rows="20"
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <v-textarea
+                    class="custom-textarea"
+                    :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
+                    label="Beschreibung"
+                    rows="20"
                     :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                    :counter="4000" @input="changeContent" />
-
+                    :counter="4000"
+                    @input="changeContent"
+                  />
                 </v-col>
-                <v-col cols="12" sm="12" md="12" lg="6" xl="6">
-                  <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
+                <v-col
+                  cols="12"
+                  sm="12"
+                  md="12"
+                  lg="6"
+                  xl="6"
+                >
+                  <div
+                    style="border-bottom: 2px solid #eee"
+                    v-html="computeMarkdown"
+                  />
                 </v-col>
-              </v-row> </v-form>
+              </v-row>
+            </v-form>
           </div>
-
         </v-card-text>
         <v-card-actions>
-          <SaveUpdateContentItem :id="writableContentItem?.contentItemView[0].id"
-            :pageType="writableContentItem?.contentItemView[0].pageType"
-            :contentItemToSave="writableContentItem?.contentItemView[0]" :disabled="!isFormValid" @error="error"
-            class="ml-2" />
-          <v-btn class="ma-2" color="error" @click="cancelForm">
+          <SaveUpdateContentItem
+            :id="writableContentItem?.contentItemView[0].id"
+            :page-type="writableContentItem?.contentItemView[0].pageType"
+            :content-item-to-save="writableContentItem?.contentItemView[0]"
+            :disabled="!isFormValid"
+            class="ml-2"
+            @error="error"
+          />
+          <v-btn
+            class="ma-2"
+            color="error"
+            @click="cancelForm"
+          >
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
         </v-card-actions>
