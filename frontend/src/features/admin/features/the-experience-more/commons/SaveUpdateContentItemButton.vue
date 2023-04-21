@@ -33,12 +33,15 @@ import { useUpdateContentItem } from "@/features/admin/features/the-experience-m
 import { useRouter } from "vue-router/composables";
 
 export default defineComponent({
-  name: "SaveUpdate",
+  name: "SaveUpdateContentItem",
   props: {
-    contactPointToSave: {
-      type: Object as () => ContactPoint
+    contentItemToSave: {
+      type: Object as () => ContentItem
     },
     id: {
+      type: String
+    },
+    pageType: {
       type: String
     },
     disabled: {
@@ -56,15 +59,15 @@ export default defineComponent({
     };
 
     const save = () => {
-      if (!props.contactPointToSave.contact || props.contactPointToSave.contact?.length === 0) {
-        emit("error", "Mindestens ein Kontakt ist erforderlich.");
+      if (!props.contentItemToSave?.content || props.contentItemToSave.content?.length === 0) {
+        emit("error", "Textbereich darf nicht leer sein.");
         return;
       }
-      mutateAsync({ contactPoint: props.contactPointToSave, id: props.id })
+      mutateAsync({id: props.id, pageType: props.pageType, contentItem: props.contentItemToSave })
         .then(() => {
           showSuccessSnackbar();
           setTimeout(() => {
-            router.push("/admin/contactpoints/");
+            router.push("/admin/erfahre-mehr/");
             router.go(0);
           }, 1000); // delay for 1 second
         })

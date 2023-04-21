@@ -1,53 +1,33 @@
 <template>
   <v-container fluid>
-    <BasePageContent
-      :is-loading="false"
-      :info-text="infoText"
-      :name="name"
-      :icon="icon"
-    >
+    <BasePageContent :is-loading="false" :info-text="infoText" :name="name" :icon="icon">
       <LoadingSpinner :is-loading="isLoading" />
-      <v-card
-        flat
-        :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-        class="ma-0 pa-0"
-      >
+      <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        class="ma-0 pa-0">
         <v-card-title class="pa-0" />
         <v-card-text>
           <div v-if="!isLoading && writableContentItem">
+
             <v-divider class="mt-3 mb-5" />
             <MarkDownAlert :label="label" />
-            <v-row class="ma-0 pa-0">
-              <v-col cols="6">
-                <v-textarea
-                  :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
-                  label="Beschreibung"
-                  :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                  :counter="2000"
-                  @input="changeContent"
-                />
-              </v-col>
-              <v-col cols="6">
-                <div
-                  style="border-bottom: 2px solid #eee"
-                  v-html="computeMarkdown"
-                />
-              </v-col>
-            </v-row>
+            <v-form v-model="isFormValid">
+              <v-row class="ma-0 pa-0">
+                <v-col cols="6">
+                  <v-textarea :value="writableContentItem.contentItemView?.[0]?.content ?? ''" label="Beschreibung"
+                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                    :counter="2000" @input="changeContent" />
+                </v-col>
+                <v-col cols="6">
+                  <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
+                </v-col>
+              </v-row> </v-form>
           </div>
+
         </v-card-text>
         <v-card-actions class="ma-0 pa-0">
-          <!--<SaveUpdate
-          :id="listItem.id"
-          :contact-point-to-save="writableContactPoint"
-          :disabled="!isFormValid"
-          @error="error"
-        />-->
-          <v-btn
-            class="ma-2"
-            color="error"
-            @click="cancelForm"
-          >
+          <SaveUpdateContentItem :id="writableContentItem?.contentItemView[0].id" :pageType="writableContentItem?.contentItemView[0].pageType" :contentItemToSave="writableContentItem?.contentItemView[0]"
+            :disabled="!isFormValid" @error="error"  class="ml-2"  />
+          <v-btn class="ma-2" color="error" @click="cancelForm">
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
         </v-card-actions>
@@ -73,18 +53,25 @@ import { useRouter } from "vue-router/composables";
 import { ItemWrapper } from "@/features/commons/types/Item";
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { I18nLabel } from "@/core/core.translation";
-import {adminContentItemLabels} from "@/features/admin/features/the-experience-more/i18n";
+import { adminContentItemLabels } from "@/features/admin/features/the-experience-more/i18n";
+import SaveUpdateContentItem from "@/features/admin/features/the-experience-more/commons/SaveUpdateContentItemButton.vue";
+
+
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner },
+  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, SaveUpdateContentItem },
   props: {
     label: {
       type: Object as () => I18nLabel
     },
   },
+  data: () => ({
+    isFormValid: false,
+  }),
   setup() {
-
-    const { isLoading, isError, data: itemWrapper, error } = useGetAdditionalContent(PageType.PREVENTION);
+    const errorMessage = ref('');
+    const isWriteError = ref(false);
+    const { isLoading, isError, data: itemWrapper, isError: isReadError, } = useGetAdditionalContent(PageType.PREVENTION);
     const router = useRouter();
 
     const writableContentItem = ref<ItemWrapper>();
@@ -109,15 +96,24 @@ export default defineComponent({
     const cancelForm = () => {
       router.push("/admin/erfahre-mehr/");
       router.go(0);
-        
+
     }
+    const error = (message: string) => {
+      errorMessage.value = message;
+      isWriteError.value = true;
+    };
+
+    const closeError = () => {
+      isWriteError.value = false;
+    }
+
 
     return {
       label: adminContentItemLabels,
       writableContentItem,
       isLoading,
       isError,
-      error,
+      isReadError,
       computeMarkdown,
       itemWrapper,
       icon: ADMIN_CONFLICT_PREVENTION_ROUTE_META_ICON,
@@ -125,6 +121,8 @@ export default defineComponent({
       name: ADMIN_CONFLICT_PREVENTION_ROUTE_NAME + "<span class=\"mdi mdi-pencil  ml-auto\" />",
       back,
       cancelForm,
+      error,
+      closeError,
       changeContent
     };
   }
