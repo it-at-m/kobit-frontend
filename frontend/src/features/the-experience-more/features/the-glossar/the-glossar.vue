@@ -76,7 +76,7 @@ import {
   GLOSSAR_ROUTE_NAME
 } from "@/features/the-experience-more/features/the-glossar/the-glossar.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
+import { useRouter } from "vue-router/composables";
 
 
 export default defineComponent({
@@ -91,7 +91,7 @@ export default defineComponent({
       router.push('/erfahre-mehr');
     }
     const filteredGlossary = computed(() => {
-      return data.value?.textItemView.filter((item) => {
+      return data.value?.textItemView?.filter((item) => {
         return (
           item.header
             .toLowerCase()
@@ -101,14 +101,15 @@ export default defineComponent({
             .toLowerCase()
             .startsWith(filterLetter.value.toLowerCase()))
           ;
-      });
+      }) ?? [];
     });
 
     const glossaryAlphabet = computed(() => data.value?.textItemView
-      .map((it) =>
+      ?.map((it) =>
         it.header.charAt(0).toUpperCase())
       .sort()
       .filter((it, i, self) => self.indexOf(it) == i)
+      ?? []
     );
 
     return {

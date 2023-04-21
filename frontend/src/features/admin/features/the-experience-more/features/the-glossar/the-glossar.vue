@@ -91,7 +91,7 @@ export default defineComponent({
       router.push('/admin/erfahre-mehr');
     }
     const filteredGlossary = computed(() => {
-      return data.value?.textItemView.filter((item) => {
+      return data.value?.textItemView?.filter((item) => {
         return (
           item.header
             .toLowerCase()
@@ -101,14 +101,15 @@ export default defineComponent({
             .toLowerCase()
             .startsWith(filterLetter.value.toLowerCase()))
           ;
-      });
+      }) ?? [];
     });
 
     const glossaryAlphabet = computed(() => data.value?.textItemView
-      .map((it) =>
+      ?.map((it) =>
         it.header.charAt(0).toUpperCase())
       .sort()
       .filter((it, i, self) => self.indexOf(it) == i)
+      ?? []
     );
 
     return {

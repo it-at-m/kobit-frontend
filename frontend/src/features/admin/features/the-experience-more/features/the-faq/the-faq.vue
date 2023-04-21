@@ -56,12 +56,12 @@ export default defineComponent({
 
 
     const filteredFaqs = computed(() => {
-      return data.value?.textItemView.filter((item) => {
+      return data.value?.textItemView?.filter((item) => {
         return (
-            item.header
-                .toLowerCase()
-                .indexOf(searchText.value.toLowerCase()) != -1);
-      });
+          item.header
+            .toLowerCase()
+            .indexOf(searchText.value.toLowerCase()) != -1);
+      }) ?? [];
     });
 
     return {

@@ -20,7 +20,7 @@
             <v-row class="ma-0 pa-0">
               <v-col cols="6">
                 <v-textarea
-                  :value="writableContentItem.contentItemView[0].content"
+                  :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
                   label="Beschreibung"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                   :counter="2000"
@@ -37,20 +37,20 @@
           </div>
         </v-card-text>
         <v-card-actions class="ma-0 pa-0">
-        <!--<SaveUpdate
+          <!--<SaveUpdate
           :id="listItem.id"
           :contact-point-to-save="writableContactPoint"
           :disabled="!isFormValid"
           @error="error"
         />-->
-        <v-btn
-          class="ma-2"
-          color="error"
-          @click="cancelForm"
-        >
-          <v-icon>mdi-cancel</v-icon> Abbruch
-        </v-btn>
-      </v-card-actions>
+          <v-btn
+            class="ma-2"
+            color="error"
+            @click="cancelForm"
+          >
+            <v-icon>mdi-cancel</v-icon> Abbruch
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </BasePageContent>
   </v-container>
@@ -70,7 +70,7 @@ import { marked } from "marked";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import ContentList from "@/features/commons/components/ContentList.vue";
 import { useRouter } from "vue-router/composables";
-import { ContentItem, ItemWrapper } from "../model/Item";
+import { ItemWrapper } from "@/features/commons/types/Item";
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { I18nLabel } from "@/core/core.translation";
 import {adminContentItemLabels} from "@/features/admin/features/the-experience-more/i18n";
@@ -94,13 +94,14 @@ export default defineComponent({
         writableContentItem.value = newValue;
       }
     })
-    const computeMarkdown = computed(() => marked.parse(writableContentItem.value?.contentItemView[0]?.content || ""));
+    const computeMarkdown = computed(() => marked.parse(writableContentItem.value?.contentItemView?.[0]?.content || ""));
 
     const changeContent = (value: string) => {
-      if (writableContentItem.value) {
+      if (writableContentItem.value?.contentItemView?.[0]) {
         writableContentItem.value.contentItemView[0].content = value;
       }
     };
+
 
     function back() {
       router.push('/admin/erfahre-mehr');

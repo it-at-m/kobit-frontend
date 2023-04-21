@@ -2,7 +2,7 @@ import {useMutation} from "@tanstack/vue-query";
 import {
     putTextItem
 } from "@/features/admin/features/the-experience-more/features/api/TextItemManipulationClient";
-import { TextItem } from "@/features/admin/features/the-experience-more/features/model/Item";
+import { TextItem } from "@/features/commons/types/Item";
 
 export const useUpdateTextItem = () => useMutation({
     mutationFn: async (updateTextItem: useUpdateTextItem) => 

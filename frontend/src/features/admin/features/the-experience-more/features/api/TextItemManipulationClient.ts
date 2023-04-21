@@ -1,5 +1,5 @@
 import {httpPutJson} from "@/core/plugins/http";
-import {TextItem} from "@/features/admin/features/the-experience-more/features/model/Item";
+import {TextItem} from "@/features/commons/types/Item";
 
 
 export const putTextItem = (textItem: TextItem, id: string) => {
