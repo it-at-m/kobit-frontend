@@ -1,25 +1,38 @@
 <template>
   <v-container fluid>
-
     <BackButton :callback="back" />
-    <BasePageContent :is-loading="false" :info-text="infoText" :name="name" :icon="icon">
+    <BasePageContent
+      :is-loading="false"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
+    >
       <LoadingSpinner :is-loading="isLoading" />
-      <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-        class="ma-0 pa-0">
-        <v-card-title class="pa-0">
-        </v-card-title>
+      <v-card
+        flat
+        :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        class="ma-0 pa-0"
+      >
+        <v-card-title class="pa-0" />
         <v-card-text>
           <div v-if="!isLoading && writableContentItem">
             <v-divider class="mt-3 mb-5" />
             <MarkDownAlert :label="label" />
             <v-row class="ma-0 pa-0">
               <v-col cols="6">
-                <v-textarea :value="writableContentItem.contentItemView[0].content" label="Beschreibung"
+                <v-textarea
+                  :value="writableContentItem.contentItemView[0].content"
+                  label="Beschreibung"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                  :counter="2000" @input="changeContent" />
+                  :counter="2000"
+                  @input="changeContent"
+                />
               </v-col>
               <v-col cols="6">
-                <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
+                <div
+                  style="border-bottom: 2px solid #eee"
+                  v-html="computeMarkdown"
+                />
               </v-col>
             </v-row>
           </div>
@@ -27,7 +40,6 @@
       </v-card>
     </BasePageContent>
     <BackButton :callback="back" />
-
   </v-container>
 </template>
 
