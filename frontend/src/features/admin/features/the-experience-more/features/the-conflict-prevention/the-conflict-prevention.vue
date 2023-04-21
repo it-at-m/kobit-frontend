@@ -13,19 +13,21 @@
             <MarkDownAlert :label="label" />
             <v-form v-model="isFormValid">
               <v-row class="ma-0 pa-0">
-                <v-col cols="6">
-                  <v-textarea :value="writableContentItem.contentItemView?.[0]?.content ?? ''" label="Beschreibung"
-                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                    :counter="2000" @input="changeContent" />
+                <v-col cols="12" sm="12" md="12" lg="6" xl="6">
+                  <v-textarea class="custom-textarea" :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
+                    label="Beschreibung" rows="20"
+                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                    :counter="4000" @input="changeContent" />
+
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="12" sm="12" md="12" lg="6" xl="6">
                   <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
                 </v-col>
               </v-row> </v-form>
           </div>
 
         </v-card-text>
-        <v-card-actions class="ma-0 pa-0">
+        <v-card-actions>
           <SaveUpdateContentItem :id="writableContentItem?.contentItemView[0].id"
             :pageType="writableContentItem?.contentItemView[0].pageType"
             :contentItemToSave="writableContentItem?.contentItemView[0]" :disabled="!isFormValid" @error="error"
@@ -40,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, onMounted, onUpdated, defineComponent, ref, watch } from "vue";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { useGetAdditionalContent } from "@/features/the-experience-more/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
@@ -62,7 +64,7 @@ import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner,ErrorHandler, SaveUpdateContentItem },
+  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -72,6 +74,7 @@ export default defineComponent({
     isFormValid: false,
   }),
   setup() {
+
     const errorMessage = ref('');
     const isWriteError = ref(false);
     const { isLoading, isError, data: itemWrapper, isError: isReadError, } = useGetAdditionalContent(PageType.PREVENTION);
@@ -123,7 +126,7 @@ export default defineComponent({
       itemWrapper,
       icon: ADMIN_CONFLICT_PREVENTION_ROUTE_META_ICON,
       infoText: ADMIN_CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
-      name: ADMIN_CONFLICT_PREVENTION_ROUTE_NAME + "<span class=\"mdi mdi-pencil  ml-auto\" />",
+      name: ADMIN_CONFLICT_PREVENTION_ROUTE_NAME,
       back,
       cancelForm,
       error,
@@ -155,4 +158,13 @@ export default defineComponent({
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
 }
+
+.custom-textarea ::v-deep textarea {
+  font-size: 0.875rem !important;
+  font-weight: 400;
+  line-height: 1.375rem !important;
+  letter-spacing: 0.0071428571em !important;
+  max-height: 50%  !important;
+}
+
 </style>

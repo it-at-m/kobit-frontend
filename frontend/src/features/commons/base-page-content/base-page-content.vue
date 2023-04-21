@@ -15,9 +15,7 @@
               >
                 {{ icon }}
               </v-icon>
-              <div v-html="name">
-                {{ name }}
-              </div> 
+              {{ name }}
             </v-card-title>
             <v-card-subtitle>
               {{ infoText }}
