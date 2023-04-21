@@ -67,8 +67,8 @@
     "information": {
       "texts": {
         "informationTitle": "Ihre Berechtigungen",
-        "centralAdmin": "Sie besitzen die Rolle des zentralen Administrators. Das bedeutet, dass Sie Informationen aller Anlaufstellen anpassen können. Darüber hinaus können Sie unter \"Erfahre Mehr\" auch Stadtweite Informationen anpassen und verändern. Bitte Beachten Sie, dass wenn Sie unter \"Erfahre Mehr\" Änderungen vornehmen, werden diese für die alle Referate übernommen.",
-        "departmentAdmin": "Sie sind Administrator für das oben genannte Referat. Sie können Anlaufstellen bearbeiten, die nur für ihre Referat zuständig sind. Stadtweite Anlaufstellen oder Anlaufstellen anderer Referate dürfen Sie nicht bearbeiten. Unter \"Erfahre Mehr\" können Sie das Glossar, FAQ und die Downloads verändern. Die hier getätigten Änderungen beschränken sich aber weider nur auf ihr Referat.",
+        "centralAdmin": "Sie besitzen die Rolle des zentralen Administrators. Das bedeutet, dass Sie Informationen aller Anlaufstellen anpassen können. Darüber hinaus können Sie unter \"Erfahre Mehr\" auch Stadtweite Informationen anpassen und verändern. Bitte Beachten Sie, dass wenn Sie unter \"Erfahre Mehr\" Änderungen vornehmen, diese für die alle Referate übernommen.",
+        "departmentAdmin": "Sie sind Administrator für das oben genannte Referat. Sie können Anlaufstellen für ihr Referat bearbeiten. Stadtweite Anlaufstellen oder Anlaufstellen anderer Referate dürfen Sie nicht bearbeiten. Unter \"Erfahre Mehr\" können Sie das Glossar, FAQ und die Downloads verändern. Die hier getätigten Änderungen beschränken sich aber wieder nur auf ihr Referat.",
         "department": "Referat: ",
         "noAdmin": "Sie sind kein Admin!"
       }
