@@ -293,7 +293,6 @@ export default defineComponent({
           if (newValue) {
             const department = newValue.department;
             newContactPoint.value = {...newContactPoint.value, departments: [department]} as ContactPoint;
-            console.log(newContactPoint.value);
             isCentralAdmin.value = newValue.isCentralAdmin;
           }
         })
