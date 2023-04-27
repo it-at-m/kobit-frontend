@@ -55,10 +55,12 @@ export default defineComponent({
       }
       mutateAsync(props.contactPointToSave).then(() => {
         showSuccessSnackbar();
-        router.push("/admin/contactpoints");
-        router.go(0)
-      }).catch(err => {
-        emit("error", "ContactPoint could not be saved!")
+        setTimeout(() => {
+          router.push("/admin/contactpoints/");
+          router.go(0);
+        }, 1000);
+      }).catch(() => {
+        emit("error", "Die Anlaufstelle konnte nicht gespeichert werden.")
       })
     };
 
