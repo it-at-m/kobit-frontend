@@ -53,17 +53,13 @@ export default defineComponent({
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
-      try {
-        const result = await mutateAsync(props.contactPointToSave);
+      mutateAsync(props.contactPointToSave).then(() => {
         showSuccessSnackbar();
-          setTimeout(() => {
-            router.push("/admin/contactpoints/");
-            router.go(0);
-          }, 1000); // delay for 1 second
-      } catch (error) {
-        const typedError = error as any;
-        emit("error", typedError.response.data.error);
-      }
+        router.push("/admin/contactpoints");
+        router.go(0)
+      }).catch(err => {
+        emit("error", "ContactPoint could not be saved!")
+      })
     };
 
     return {

@@ -46,9 +46,14 @@
               <v-list-item-subtitle v-if="item.shortCut">
                 {{ item.shortCut }}
               </v-list-item-subtitle>
-              <v-list-item-subtitle v-if="item.department">
-                {{ item.department }}
-              </v-list-item-subtitle>
+              <div v-if="item.departments">
+                <v-list-item-subtitle
+                v-for="department in item.departments"
+                :key="department.id">
+                  {{ department }}
+                </v-list-item-subtitle>
+              </div>
+
             </v-list-item-content>
           </v-list-item>
         </v-list>

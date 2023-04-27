@@ -6,18 +6,21 @@ const ADMIN_CONTACT_POINTS_PATH = "Admin.contactPoints.texts"
 enum AdminContactPointsLabels {
     ADD_NEW_TITLE="addNewTitle",
     ADD_NEW_DESCRIPTION = "addNewDescription",
+    ADD_DEPARTMENT = "addDepartment",
     EDIT="edit",
     CANCEL="cancel",
     SAVE="save",
     ADD_CONTACT = "addContact",
     ADD_LINK = "addLink",
     ADD_FILE = "addFile",
-    MARKDOWN_HINT = "markdownHint"
+    MARKDOWN_HINT = "markdownHint",
+    ADD_DEPARTMENT_HINT = "addDepartmentHint"
 }
 
 const adminContactPoints = new Map<string, string>([
     [AdminContactPointsLabels.ADD_NEW_TITLE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_NEW_TITLE}`)}`],
     [AdminContactPointsLabels.ADD_NEW_DESCRIPTION, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_NEW_DESCRIPTION}`)}`],
+    [AdminContactPointsLabels.ADD_DEPARTMENT, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_DEPARTMENT}`)}`],
     [AdminContactPointsLabels.EDIT, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.EDIT}`)}`],
     [AdminContactPointsLabels.CANCEL, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.CANCEL}`)}`],
     [AdminContactPointsLabels.SAVE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.SAVE}`)}`],
@@ -27,6 +30,7 @@ const adminContactPoints = new Map<string, string>([
     [AdminContactPointsLabels.ADD_FILE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_FILE}`)}`],
     [AdminContactPointsLabels.ADD_FILE, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_FILE}`)}`],
     [AdminContactPointsLabels.MARKDOWN_HINT, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.MARKDOWN_HINT}`)}`],
+    [AdminContactPointsLabels.ADD_DEPARTMENT_HINT, `${i18n.t(`${ADMIN_CONTACT_POINTS_PATH}.${AdminContactPointsLabels.ADD_DEPARTMENT_HINT}`)}`],
 ])
 
 export const adminContactPointLabels = new I18nLabelMaker(adminContactPoints, AdminContactPointsLabels).labels();
