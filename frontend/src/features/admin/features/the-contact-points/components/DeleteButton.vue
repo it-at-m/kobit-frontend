@@ -26,7 +26,7 @@
             text
             @click="isDialogActive = false"
           >
-            Abbrechen
+            Abbruch
           </v-btn>
           <v-btn
             color="green darken-1"

@@ -7,7 +7,7 @@
       :info-text="infoText"
       :is-loading="isLoading"
     >
-      <v-card-text>
+      <v-card-text class="pb-10">
         <v-row>
           <v-col>
             <v-text-field
@@ -66,7 +66,7 @@
 <script lang="ts">
 
 import { computed, defineComponent, ref } from "vue";
-import TextList from "@/features/commons/components/TextList.vue";
+import TextList from "@/features/admin/features/the-experience-more/commons/TextList.vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import { useGetAdditionalContent } from "@/features/the-experience-more/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";

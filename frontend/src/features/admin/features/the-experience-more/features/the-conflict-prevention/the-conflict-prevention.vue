@@ -36,8 +36,8 @@
                     :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
                     label="Beschreibung"
                     rows="20"
-                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                    :counter="4000"
+                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 5000) || 'Die Beschreibung muss weniger als 5000 Zeichen umfassen']"
+                    :counter="5000"
                     @input="changeContent"
                   />
                 </v-col>
