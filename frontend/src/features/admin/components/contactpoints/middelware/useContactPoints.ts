@@ -7,14 +7,13 @@ import {
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 export const useCreateNewContactPoint = () =>
-useMutation({
-    mutationFn: async (newContactPoint: ContactPoint) =>
-      await postContactPoint(newContactPoint),
-  });
+    useMutation({
+        mutationFn: (newContactPoint: ContactPoint) =>
+            postContactPoint(newContactPoint),
+    });
 
 export const useUpdateContactPoint = () => useMutation({
-    mutationFn: async (updateContactPoint: UpdateContactPoint) => 
-        await putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+    mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
 });
 
 export const useDeleteContactPoint = () => useMutation({
