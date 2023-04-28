@@ -1,44 +1,90 @@
 <template>
   <v-container fluid>
     <BackButton :callback="back" />
-    <base-page-content :icon="icon" :name="name" :info-text="infoText" :is-loading="isLoading">
+    <base-page-content
+      :icon="icon"
+      :name="name"
+      :info-text="infoText"
+      :is-loading="isLoading"
+    >
       <v-card-text class="pb-10">
         <v-row>
           <v-col>
-            <v-text-field id="id_glossar_search" v-model="searchText" label="Glossar durchsuchen" placeholder="Eingabe"
-              outlined append-icon="mdi-magnify" single-line />
+            <v-text-field
+              id="id_glossar_search"
+              v-model="searchText"
+              label="Glossar durchsuchen"
+              placeholder="Eingabe"
+              outlined
+              append-icon="mdi-magnify"
+              single-line
+            />
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" md="12" lg="12" xl="12" class="d-flex justify-end">
-            <v-btn color="success" @click="openAddDialog">
+          <v-col
+            cols="12"
+            sm="12"
+            md="12"
+            lg="12"
+            xl="12"
+            class="d-flex justify-end"
+          >
+            <v-btn
+              color="success"
+              @click="openAddDialog"
+            >
               <v-icon>mdi mdi-plus</v-icon> Hinzufügen
             </v-btn>
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12" sm="12" md="12" lg="12" xl="12">
+          <v-col
+            cols="12"
+            sm="12"
+            md="12"
+            lg="12"
+            xl="12"
+          >
             <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
-              <button :class="{ active: filterLetter === '' }" class="pa-2" @click="filterLetter = ''">
+              <button
+                :class="{ active: filterLetter === '' }"
+                class="pa-2"
+                @click="filterLetter = ''"
+              >
                 Filter Zurücksetzen
               </button>
 
-              <span v-for="(letter, letterIndex) in glossaryAlphabet" :key="letterIndex"><button :key="letterIndex"
-                  :class="{ active: filterLetter === letter }" class="pa-2" @click="filterLetter = letter">{{
-                    letter
-                  }}</button><span v-if="letterIndex + 1 !== glossaryAlphabet.length">·</span></span>
+              <span
+                v-for="(letter, letterIndex) in glossaryAlphabet"
+                :key="letterIndex"
+              ><button
+                :key="letterIndex"
+                :class="{ active: filterLetter === letter }"
+                class="pa-2"
+                @click="filterLetter = letter"
+              >{{
+                letter
+              }}</button><span v-if="letterIndex + 1 !== glossaryAlphabet.length">·</span></span>
             </p>
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <TextList :page-type="pageType" :items="filteredGlossary" />
+            <TextList
+              :page-type="pageType"
+              :items="filteredGlossary"
+            />
           </v-col>
         </v-row>
       </v-card-text>
     </base-page-content>
     <BackButton :callback="back" />
-    <AddDialog :page-type="pageType" :show-dialog.sync="addDialog" @save:show-dialog="addDialog = $event" />
+    <AddDialog
+      :page-type="pageType"
+      :show-dialog.sync="addDialog"
+      @save:show-dialog="addDialog = $event"
+    />
   </v-container>
 </template>
 

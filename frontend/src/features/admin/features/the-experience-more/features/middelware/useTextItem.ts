@@ -14,15 +14,23 @@ useMutation({
       await postTextItem(newTextItem.pageType, newTextItem.textItem)
   });
 
-export const UseUpdateTextItem = () => useMutation({
-    mutationFn: async (updateTextItem: UseTextItem) => 
-        await putTextItem(updateTextItem.id, updateTextItem.pageType, updateTextItem.textItem )
+  export const UseUpdateTextItem = () => useMutation({
+    mutationFn: async (updateTextItem: UseTextItem) => {
+        if (updateTextItem.id) {
+            return await putTextItem(updateTextItem.id, updateTextItem.pageType, updateTextItem.textItem);
+        }
+        throw new Error('ID is missing');
+    }
 });
 
 export const UseDeleteTextItem = () => useMutation({
-    mutationFn: async (textItemToDelete: UseTextItem) => deleteTextItem(textItemToDelete.id, textItemToDelete.pageType)
+    mutationFn: async (textItemToDelete: UseTextItem) => {
+        if (textItemToDelete.id) {
+            return deleteTextItem(textItemToDelete.id, textItemToDelete.pageType);
+        }
+        throw new Error('ID is missing');
+    }
 });
-
 export interface UseTextItem {
     id?: string;
     pageType: PageType;

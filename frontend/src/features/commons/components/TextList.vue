@@ -1,6 +1,11 @@
 <template>
   <v-list>
-    <v-list-item v-for="(item, i) in sortedItems" :key="i" two-line :href="item.link">
+    <v-list-item
+      v-for="(item, i) in sortedItems"
+      :key="i"
+      two-line
+      :href="item.link"
+    >
       <v-list-item-content>
         <v-list-item-title><b>{{ item.header }}</b></v-list-item-title>
         <v-list-item-subtitle>

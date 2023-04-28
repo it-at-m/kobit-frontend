@@ -2,8 +2,6 @@ import {httpDeleteJson, httpPostJson, httpPutJson} from "@/core/plugins/http";
 import {TextItem} from "@/features/commons/types/Item";
 
 export const postTextItem = (pageType: string, textItem: TextItem) => {
-    console.log(pageType)
-    console.log(textItem)
     return httpPostJson<TextItem>("/additional/" + pageType, textItem);
 };
 

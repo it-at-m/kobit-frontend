@@ -1,6 +1,10 @@
 <template>
   <v-row>
-    <v-dialog v-model="localShowDialog" max-width="750px" @click:outside="cancel">
+    <v-dialog
+      v-model="localShowDialog"
+      max-width="750px"
+      @click:outside="cancel"
+    >
       <v-card>
         <v-card-title class="text-h5">
           Soll die Definition wirklich gelöscht werden?
@@ -11,16 +15,27 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="error" @click="cancel">
+          <v-btn
+            color="error"
+            @click="cancel"
+          >
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
-          <v-btn color="green darken-1 white--text" @click="deleteItem">
+          <v-btn
+            color="green darken-1 white--text"
+            @click="deleteItem"
+          >
             <v-icon>mdi-delete</v-icon> Löschen
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="isSnackbarActive" :timeout="SNACKBAR_TIMEOUT" color="green darken-1" bottom>
+    <v-snackbar
+      v-model="isSnackbarActive"
+      :timeout="SNACKBAR_TIMEOUT"
+      color="green darken-1"
+      bottom
+    >
       <p class="pa-0 ma-0">
         {{ snackbarMessage }} <v-icon>mdi-check</v-icon>
       </p>
@@ -92,7 +107,6 @@ export default defineComponent({
           return "Definition erfolgreich gelöscht!";
         case PageType.FAQ:
           return "FAQ erfolgreich gelöscht!";
-        // Add other cases if needed
         default:
           return "Eintrag erfolgreich gelöscht!";
       }
