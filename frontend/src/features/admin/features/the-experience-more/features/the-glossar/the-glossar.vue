@@ -32,13 +32,13 @@
         </v-row>
         <v-row>
           <v-col>
-            <TextList :items="filteredGlossary" />
+            <TextList :page-type="pageType" :items="filteredGlossary" />
           </v-col>
         </v-row>
       </v-card-text>
     </base-page-content>
     <BackButton :callback="back" />
-    <AddDialog :show-dialog.sync="addDialog" @save:show-dialog="addDialog = $event" />
+    <AddDialog :page-type="pageType" :show-dialog.sync="addDialog" @save:show-dialog="addDialog = $event" />
   </v-container>
 </template>
 
@@ -56,7 +56,7 @@ import {
 } from "@/features/admin/features/the-experience-more/features/the-glossar/the-glossar.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRouter } from "vue-router/composables";
-import AddDialog from "@/features/admin/features/the-experience-more/commons/AddDialog.vue";
+import AddDialog from "@/features/admin/features/the-experience-more/commons/AddTextItemDialog.vue";
 
 export default defineComponent({
   name: "TheGlossar",
@@ -96,6 +96,8 @@ export default defineComponent({
       ?? []
     );
 
+    const pageType = computed(() => PageType.GLOSSARY);
+
     return {
       isLoading,
       isError,
@@ -108,6 +110,7 @@ export default defineComponent({
       icon: ADMIN_GLOSSAR_ROUTE_META_ICON,
       infoText: ADMIN_GLOSSAR_ROUTE_META_INFO_TEXT,
       name: ADMIN_GLOSSAR_ROUTE_NAME,
+      pageType,
       back,
       openAddDialog
     };

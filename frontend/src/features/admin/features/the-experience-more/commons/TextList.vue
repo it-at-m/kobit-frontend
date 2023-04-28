@@ -52,11 +52,13 @@
     <edit-dialog
       :show-dialog="editDialog"
       :current-item="currentItem"
+      :page-type="pageType"
       @update:showDialog="editDialog = $event"
     />
     <delete-dialog
       :show-dialog="deleteDialog"
       :current-item="currentItem"
+      :page-type="pageType"
       @update:showDialog="deleteDialog = $event"
     />
   </div>
@@ -64,11 +66,12 @@
   
   
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
-import EditDialog from "@/features/admin/features/the-experience-more/commons/EditDialog.vue";
-import DeleteDialog from "@/features/admin/features/the-experience-more/commons/DeleteDialog.vue";
+import { defineComponent, ref, PropType, computed } from "vue";
+import EditDialog from "@/features/admin/features/the-experience-more/commons/EditTextItemDialog.vue";
+import DeleteDialog from "@/features/admin/features/the-experience-more/commons/DeleteTextItemDialog.vue";
 import { TextItem } from "@/features/commons/types/Item";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import { PageType } from "@/features/the-experience-more/common/model/PageType";
 
 export default defineComponent({
     name: "TextList",
@@ -82,6 +85,10 @@ export default defineComponent({
             type: Array,
             default: () => [],
         },
+        pageType: {
+      type: String as PropType<PageType>,
+      default: PageType.GLOSSARY
+    }
     },
     setup(props) {
         const editDialog = ref(false);
