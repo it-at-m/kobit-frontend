@@ -1,54 +1,32 @@
 <template>
   <v-container fluid>
     <BackButton :callback="back" />
-    <base-page-content
-      :icon="icon"
-      :name="name"
-      :info-text="infoText"
-      :is-loading="isLoading"
-    >
+    <base-page-content :icon="icon" :name="name" :info-text="infoText" :is-loading="isLoading">
       <v-card-text class="pb-10">
         <v-row>
           <v-col>
-            <v-text-field
-              id="id_glossar_search"
-              v-model="searchText"
-              label="Glossar durchsuchen"
-              placeholder="Eingabe"
-              outlined
-              append-icon="mdi-magnify"
-              single-line
-            />
+            <v-text-field id="id_glossar_search" v-model="searchText" label="Glossar durchsuchen" placeholder="Eingabe"
+              outlined append-icon="mdi-magnify" single-line />
           </v-col>
         </v-row>
         <v-row>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-            xl="12"
-          >
+          <v-col cols="12" sm="12" md="12" lg="12" xl="12" class="d-flex justify-end">
+            <v-btn color="success" @click="openAddDialog">
+              <v-icon>mdi mdi-plus</v-icon> Hinzufügen
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" sm="12" md="12" lg="12" xl="12">
             <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
-              <button
-                :class="{ active: filterLetter === '' }"
-                class="pa-2"
-                @click="filterLetter = ''"
-              >
+              <button :class="{ active: filterLetter === '' }" class="pa-2" @click="filterLetter = ''">
                 Filter Zurücksetzen
               </button>
 
-              <span
-                v-for="(letter, letterIndex) in glossaryAlphabet"
-                :key="letterIndex"
-              ><button
-                :key="letterIndex"
-                :class="{ active: filterLetter === letter }"
-                class="pa-2"
-                @click="filterLetter = letter"
-              >{{
-                letter
-              }}</button><span v-if="letterIndex + 1 !== glossaryAlphabet.length">·</span></span>
+              <span v-for="(letter, letterIndex) in glossaryAlphabet" :key="letterIndex"><button :key="letterIndex"
+                  :class="{ active: filterLetter === letter }" class="pa-2" @click="filterLetter = letter">{{
+                    letter
+                  }}</button><span v-if="letterIndex + 1 !== glossaryAlphabet.length">·</span></span>
             </p>
           </v-col>
         </v-row>
@@ -60,6 +38,7 @@
       </v-card-text>
     </base-page-content>
     <BackButton :callback="back" />
+    <AddDialog :show-dialog.sync="addDialog" @save:show-dialog="addDialog = $event" />
   </v-container>
 </template>
 
@@ -71,22 +50,27 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import { useGetAdditionalContent } from "@/features/the-experience-more/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
 import {
-  GLOSSAR_ROUTE_META_ICON,
-  GLOSSAR_ROUTE_META_INFO_TEXT,
-  GLOSSAR_ROUTE_NAME
-} from "@/features/the-experience-more/features/the-glossar/the-glossar.routes";
+  ADMIN_GLOSSAR_ROUTE_NAME,
+  ADMIN_GLOSSAR_ROUTE_META_ICON,
+  ADMIN_GLOSSAR_ROUTE_META_INFO_TEXT
+} from "@/features/admin/features/the-experience-more/features/the-glossar/the-glossar.routes";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
-
+import { useRouter } from "vue-router/composables";
+import AddDialog from "@/features/admin/features/the-experience-more/commons/AddDialog.vue";
 
 export default defineComponent({
   name: "TheGlossar",
-  components: { TextList, BasePageContent, BackButton },
+  components: { TextList, BasePageContent, BackButton, AddDialog },
   setup() {
     const searchText = ref<string>("");
     const filterLetter = ref<string>("");
     const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.GLOSSARY);
     const router = useRouter();
+    const addDialog = ref(false);
+
+    function openAddDialog() {
+      addDialog.value = true;
+    }
     function back() {
       router.push('/admin/erfahre-mehr');
     }
@@ -120,10 +104,12 @@ export default defineComponent({
       filterLetter,
       searchText,
       error,
-      icon: GLOSSAR_ROUTE_META_ICON,
-      infoText: GLOSSAR_ROUTE_META_INFO_TEXT,
-      name: GLOSSAR_ROUTE_NAME,
-      back
+      addDialog,
+      icon: ADMIN_GLOSSAR_ROUTE_META_ICON,
+      infoText: ADMIN_GLOSSAR_ROUTE_META_INFO_TEXT,
+      name: ADMIN_GLOSSAR_ROUTE_NAME,
+      back,
+      openAddDialog
     };
   }
 });

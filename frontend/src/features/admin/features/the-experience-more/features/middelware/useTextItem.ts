@@ -1,10 +1,18 @@
 import {useMutation} from "@tanstack/vue-query";
 import {
     putTextItem,
-    deleteTextItem
+    deleteTextItem,
+    postTextItem
 } from "@/features/admin/features/the-experience-more/features/api/TextItemManipulationClient";
 import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
+
+
+export const useCreateNewTextItem = () =>
+useMutation({
+    mutationFn: async (newTextItem: UseTextItem) =>
+      await postTextItem(newTextItem.pageType, newTextItem.textItem)
+  });
 
 export const UseUpdateTextItem = () => useMutation({
     mutationFn: async (updateTextItem: UseTextItem) => 
@@ -16,7 +24,7 @@ export const UseDeleteTextItem = () => useMutation({
 });
 
 export interface UseTextItem {
-    id: string;
+    id?: string;
     pageType: PageType;
     textItem: TextItem;
 }

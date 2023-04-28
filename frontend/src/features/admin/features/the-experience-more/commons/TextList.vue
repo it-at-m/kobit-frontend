@@ -2,7 +2,7 @@
   <div>
     <v-expansion-panels>
       <v-expansion-panel
-        v-for="(item, i) in items"
+        v-for="(item, i) in sortedItems"
         :key="i"
       >
         <v-expansion-panel-header style="border-bottom: solid 1px #cccccc">
@@ -38,7 +38,7 @@
                 <v-icon>mdi-pencil</v-icon> Bearbeiten
               </v-btn>
               <v-btn
-                color="green darken-1 ml-2"
+                color="green darken-1 ml-2 white--text"
                 @click="openDeleteDialog(item)"
               >
                 <v-icon>mdi-delete</v-icon> Löschen
@@ -83,7 +83,7 @@ export default defineComponent({
             default: () => [],
         },
     },
-    setup() {
+    setup(props) {
         const editDialog = ref(false);
         const deleteDialog = ref(false);
         const currentItem = ref<TextItem | null>(null);
@@ -98,22 +98,20 @@ export default defineComponent({
             deleteDialog.value = true;
         }
 
+        const sortedItems = computed(() => {
+          return [...props.items].sort((a, b) => {
+            return a.header.localeCompare(b.header, undefined, { sensitivity: 'base' });
+          });
+        });
+
         return {
             editDialog,
             deleteDialog,
             currentItem,
             openEditDialog,
-            openDeleteDialog
+            openDeleteDialog,
+            sortedItems
         };
     },
 });
 </script>
-
-<style scoped>
-.item-header, .item-entry {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 100%;
-}
-</style>

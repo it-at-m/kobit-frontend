@@ -23,7 +23,7 @@
                     v-model="editedItem.header"
                     label="Header"
                     :rules="[headerRule]"
-                    maxlength="200"
+                    maxlength="250"
                     counter
                   />
                 </v-col>
@@ -64,11 +64,11 @@
     <v-snackbar
       v-model="isSnackbarActive"
       :timeout="SNACKBAR_TIMEOUT"
-      color="green darken-1"
+      color="success"
       bottom
     >
       <p class="pa-0 ma-0">
-        Definition erfolgreich gelöscht! <v-icon>mdi-check</v-icon>
+        Definition erfolgreich geändert! <v-icon>mdi-check</v-icon>
       </p>
     </v-snackbar>
   </v-row>
@@ -120,10 +120,10 @@ export default defineComponent({
         );
 
         const headerRule = (value: string) => {
-            if (!value || value.length < 5) {
-                return "Die Kopfzeile muss mindestens 5 Zeichen lang sein.";
-            } else if (value.length > 200) {
-                return "Die Kopfzeile darf nicht länger als 200 Zeichen sein.";
+            if (!value || value.length < 3) {
+                return "Die Kopfzeile muss mindestens 3 Zeichen lang sein.";
+            } else if (value.length > 250) {
+                return "Die Kopfzeile darf nicht länger als 250 Zeichen sein.";
             } else {
                 return true;
             }

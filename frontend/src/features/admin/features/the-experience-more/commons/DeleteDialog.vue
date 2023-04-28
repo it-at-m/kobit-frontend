@@ -22,7 +22,7 @@
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
           <v-btn
-            color="green darken-1"
+            color="green darken-1 white--text"
             @click="deleteItem"
           >
             <v-icon>mdi-delete</v-icon> Löschen
