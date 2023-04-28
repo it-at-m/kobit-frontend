@@ -115,3 +115,11 @@ export default defineComponent({
     },
 });
 </script>
+<style scoped>
+.item-header, .item-entry {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+}
+</style>
