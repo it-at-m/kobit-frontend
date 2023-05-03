@@ -6,10 +6,7 @@
         :key="i"
       >
         <v-expansion-panel-header style="border-bottom: solid 1px #cccccc">
-          <v-list-item
-            two-line
-            :href="item.link"
-          >
+          <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-title class="item-header">
                 <b>{{ item.header }}</b>
@@ -23,6 +20,27 @@
           </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
+          <v-row class="pt-5">
+            <v-col
+              cols="12"
+              sm="12"
+              md="12"
+              lg="12"
+              xl="12"
+            >
+              <p v-if="item.link && item.link.endsWith('.pdf')">
+                <embed
+                  :src="item.link + '#view=FitH'"
+                  type="application/pdf"
+                  width="100%"
+                  height="300px"
+                >
+              </p>
+              <p v-else>
+                No preview available
+              </p>
+            </v-col>
+          </v-row>
           <v-row class="pt-5">
             <v-col
               cols="12"
@@ -48,7 +66,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
-  
+
     <edit-dialog
       :show-dialog="editDialog"
       :current-item="currentItem"
@@ -74,59 +92,60 @@ import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
 
 export default defineComponent({
-    name: "TextList",
-    components: {
-        LoadingSpinner,
-        EditDialog,
-        DeleteDialog,
+  name: "TextList",
+  components: {
+    LoadingSpinner,
+    EditDialog,
+    DeleteDialog,
+  },
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
     },
-    props: {
-        items: {
-            type: Array,
-            default: () => [],
-        },
-        pageType: {
+    pageType: {
       type: String as PropType<PageType>,
       default: PageType.GLOSSARY
     }
-    },
-    setup(props) {
-        const editDialog = ref(false);
-        const deleteDialog = ref(false);
-        const currentItem = ref<TextItem | null>(null);
+  },
+  setup(props) {
+    const editDialog = ref(false);
+    const deleteDialog = ref(false);
+    const currentItem = ref<TextItem | null>(null);
 
-        function openEditDialog(item: TextItem) {
-            currentItem.value = item;
-            editDialog.value = true;
-        }
+    function openEditDialog(item: TextItem) {
+      currentItem.value = item;
+      editDialog.value = true;
+    }
 
-        function openDeleteDialog(item: TextItem) {
-            currentItem.value = item;
-            deleteDialog.value = true;
-        }
+    function openDeleteDialog(item: TextItem) {
+      currentItem.value = item;
+      deleteDialog.value = true;
+    }
 
-        const sortedItems = computed(() => {
-          return [...props.items].sort((a, b) => {
-            return a.header.localeCompare(b.header, undefined, { sensitivity: 'base' });
-          });
-        });
+    const sortedItems = computed(() => {
+      return [...props.items].sort((a, b) => {
+        return a.header.localeCompare(b.header, undefined, { sensitivity: 'base' });
+      });
+    });
 
-        return {
-            editDialog,
-            deleteDialog,
-            currentItem,
-            openEditDialog,
-            openDeleteDialog,
-            sortedItems
-        };
-    },
+    return {
+      editDialog,
+      deleteDialog,
+      currentItem,
+      openEditDialog,
+      openDeleteDialog,
+      sortedItems
+    };
+  },
 });
 </script>
 <style scoped>
-.item-header, .item-entry {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: pre-wrap;
-    max-width: 100%;
+.item-header,
+.item-entry {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
 </style>

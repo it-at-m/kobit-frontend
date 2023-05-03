@@ -89,11 +89,19 @@ export default defineComponent({
         emit("delete", props.currentItem);
       }
       emit("update:showDialog", false);
-      mutateAsync({ id: props.currentItem.id, pageType: props.currentItem.pageType, textItem: props.currentItem })
+      mutateAsync({ id: props.currentItem.id, pageType: props.currentItem.pageType, link: props.currentItem.link,  textItem: props.currentItem })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
-            router.push("/admin/erfahre-mehr/glossar/");
+            if (props.currentItem.pageType == "GLOSSARY") {
+              router.push("/admin/erfahre-mehr/glossar");
+            } else if (props.currentItem.pageType == "FAQ") {
+              router.push("/admin/erfahre-mehr/faq");
+            } else if (props.currentItem.pageType == "DOWNLOADS") {
+              router.push("/admin/erfahre-mehr/downloads-und-links");
+            } else {
+              router.push("/admin/erfahre-mehr/");
+            }
             router.go(0);
           }, 1000); // delay for 1 second
         })

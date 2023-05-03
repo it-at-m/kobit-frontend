@@ -9,6 +9,8 @@ export const putTextItem = (id: string, pageType: string, textItem: TextItem) =>
     return httpPutJson<TextItem>("/additional/" + pageType + "/text-item/" + id, textItem);
 }
 
-export const deleteTextItem = (id: string, pageType: string) => {
-    return httpDeleteJson("/additional/" + pageType + "/text-item/" + id);
-}
+export const deleteTextItem = (id: string, pageType: string, link: string) => {
+    const url = `/additional/${pageType}/text-item/${id}?link=${encodeURIComponent(link)}`;
+    return httpDeleteJson(url);
+  }
+  

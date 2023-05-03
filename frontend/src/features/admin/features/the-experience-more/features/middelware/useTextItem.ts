@@ -6,6 +6,7 @@ import {
 } from "@/features/admin/features/the-experience-more/features/api/TextItemManipulationClient";
 import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
+import { link } from "fs";
 
 
 export const useCreateNewTextItem = () =>
@@ -26,7 +27,7 @@ useMutation({
 export const UseDeleteTextItem = () => useMutation({
     mutationFn: async (textItemToDelete: UseTextItem) => {
         if (textItemToDelete.id) {
-            return deleteTextItem(textItemToDelete.id, textItemToDelete.pageType);
+            return deleteTextItem(textItemToDelete.id, textItemToDelete.pageType, textItemToDelete.link);
         }
         throw new Error('ID is missing');
     }
@@ -34,5 +35,6 @@ export const UseDeleteTextItem = () => useMutation({
 export interface UseTextItem {
     id?: string;
     pageType: PageType;
+    link: string;
     textItem: TextItem;
 }

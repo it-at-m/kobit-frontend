@@ -39,6 +39,17 @@
                   />
                 </v-col>
               </v-row>
+              <v-row v-if="props.pageType === 'DOWNLOADS'">
+                <v-col cols="12">
+                  <p>{{ editedItem.link }}</p>
+                  <v-file-input
+                    v-model="editedItem.link"
+                    :rules="fileRules"
+                    accept=".pdf,.doc,.docx,.odf"
+                    placeholder="Datei auswählen"
+                  />
+                </v-col>
+              </v-row>
             </v-form>
           </v-container>
         </v-card-text>
@@ -123,6 +134,14 @@ export default defineComponent({
       }
     );
 
+    const file = ref<File | null>(null);
+    const fileRules = computed(() => [
+      (value: File | null) =>
+        !!value && ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type) ||
+        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt."
+    ]);
+
+
     const headerRule = (value: string) => {
       if (!value || value.length < 3) {
         return "Die Kopfzeile muss mindestens 3 Zeichen lang sein.";
@@ -196,7 +215,7 @@ export default defineComponent({
 
 
     function saveEdit() {
-      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value })
+      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -228,6 +247,9 @@ export default defineComponent({
 
 
     return {
+      props,
+      fileRules,
+      file,
       dialog,
       editedItem,
       errorMessage,

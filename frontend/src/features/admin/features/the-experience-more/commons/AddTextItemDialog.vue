@@ -12,7 +12,7 @@
       />
       <v-card>
         <v-card-title>
-          <span class="text-h5">Element Bearbeiten</span>
+          <span class="text-h5">Element Hinzufügen</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -36,6 +36,16 @@
                     :rules="[entryRule]"
                     maxlength="1500"
                     counter
+                  />
+                </v-col>
+              </v-row>
+              <v-row v-if="props.pageType === 'DOWNLOADS'">
+                <v-col cols="12">
+                  <v-file-input
+                    v-model="file"
+                    :rules="fileRules"
+                    accept=".pdf,.doc,.docx,.odf"
+                    placeholder="Datei auswählen"
                   />
                 </v-col>
               </v-row>
@@ -123,6 +133,14 @@ export default defineComponent({
       }
     );
 
+    const file = ref<File | null>(null);
+    const fileRules = computed(() => [
+      (value: File | null) => !!value || "Eine Datei muss ausgewählt werden.",
+      (value: File | null) =>
+        !!value && ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type) ||
+        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt."
+    ]);
+
     const headerRule = (value: string) => {
       if (!value || value.length < 3) {
         return "Die Kopfzeile muss mindestens 3 Zeichen lang sein.";
@@ -199,7 +217,7 @@ export default defineComponent({
     function saveAdd() {
 
       addedItem.value.pageType = props.pageType;
-      mutateAsync({ pageType: addedItem.value.pageType as PageType, textItem: addedItem.value })
+      mutateAsync({ pageType: addedItem.value.pageType as PageType, textItem: addedItem.value, link: addedItem.value.link })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -231,6 +249,9 @@ export default defineComponent({
 
 
     return {
+      props,
+      fileRules,
+      file,
       dialog,
       addedItem,
       errorMessage,
