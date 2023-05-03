@@ -17,7 +17,7 @@ const filterForEditableContactPoints = (listItems: ContactPointListItem[], admin
     if (adminUserInfo.isCentralAdmin) {
         return listItems
     } else {
-        return listItems.filter(it => it.department.includes(adminUserInfo.department));
+        return listItems.filter(it => it.departments.includes(adminUserInfo.department));
     }
 }
 
