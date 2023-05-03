@@ -1,43 +1,43 @@
 <template>
   <BasePageContent
-    :is-loading="false"
-    :info-text="infoText"
-    :name="name"
-    :icon="icon"
+      :is-loading="false"
+      :info-text="infoText"
+      :name="name"
+      :icon="icon"
   >
     <BackButton
-      :callback="back"
+        :callback="back"
     />
     <v-row>
       <v-col
-        cols="12"
-        sm="12"
-        md="4"
-        lg="4"
-        xl="3"
+          cols="12"
+          sm="12"
+          md="4"
+          lg="4"
+          xl="3"
       >
         <v-list
-          v-if="!isLoading && listItems.length > 0"
-          dense
-          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'height:33vh;' : 'height:70vh;'"
-          style="overflow-y: scroll"
-          class="custom-scrollbar"
-          order-last
-          order-sm-last
-          order-md-first
+            v-if="!isLoading && listItems.length > 0"
+            dense
+            :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm? 'height:33vh;' : 'height:70vh;'"
+            style="overflow-y: scroll"
+            class="custom-scrollbar"
+            order-last
+            order-sm-last
+            order-md-first
         >
           <NewContactPointListItem
-            :label="label"
-            :set-is-add-new="setIsAddNew"
-            :disabled="selectedItem !== undefined || isAddNew"
+              :label="label"
+              :set-is-add-new="setIsAddNew"
+              :disabled="selectedItem !== undefined || isAddNew"
           />
           <v-list-item
-            v-for="item in listItems"
-            :key="item.id"
-            three-line
-            link
-            :disabled="selectedItem !== undefined || isAddNew"
-            @click="setSelectedItem(item)"
+              v-for="item in listItems"
+              :key="item.id"
+              three-line
+              link
+              :disabled="selectedItem !== undefined || isAddNew "
+              @click="setSelectedItem(item)"
           >
             <v-list-item-content>
               <v-list-item-title>
@@ -51,29 +51,29 @@
         </v-list>
       </v-col>
       <v-divider
-        vertical
-        class="mb-3 mt-2"
+          vertical
+          class="mb-3 mt-2"
       />
       <v-col
-        cols="12"
-        sm="12"
-        md="8"
-        lg="8"
-        xl="9"
-        order-first
-        order-sm-first
-        order-md-last
+          cols="12"
+          sm="12"
+          md="8"
+          lg="8"
+          xl="9"
+          order-first
+          order-sm-first
+          order-md-last
       >
         <NewContactPoint
-          v-if="isAddNew"
-          :label="label"
-          @cancel="cancelNew"
+            v-if="isAddNew"
+            :label="label"
+            @cancel="cancelNew"
         />
         <EditContactPoint
-          v-if="selectedItem"
-          :label="label"
-          :list-item="selectedItem"
-          @unselectItem="unselectItem"
+            v-if="selectedItem"
+            :label="label"
+            :list-item="selectedItem"
+            @unselectItem="unselectItem"
         />
       </v-col>
     </v-row>
@@ -98,7 +98,7 @@ import NewContactPoint from "@/features/admin/components/contactpoints/component
 import EditContactPoint from "@/features/admin/components/contactpoints/components/EditContactPoint.vue";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
-import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
+import {useGetEditableContactPoints} from "@/features/commons/middleware/useGetContactPoints";
 
 export default defineComponent({
   name: "ContactPointsOverview",
@@ -109,7 +109,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const {isLoading, isError, listItems, error} = useGetContactPointListItems();
+    const {isLoading, isError, data: listItems, error} = useGetEditableContactPoints();
     const selectedItem = ref<ContactPointListItem>();
     const isAddNew = ref(false);
 

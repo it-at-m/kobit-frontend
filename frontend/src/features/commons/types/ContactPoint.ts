@@ -27,5 +27,5 @@ export interface ContactPointListItem {
     id?: string;
     name: string;
     shortCut: string;
-    departments: string[];
+    department: string[];
 }
