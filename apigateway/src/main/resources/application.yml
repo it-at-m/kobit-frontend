@@ -59,7 +59,9 @@ spring:
             client-id: kobit
             client-secret: ${client-secret}
             scope:
-              - ${CLIENT_SCOPE}
+              - LHM
+              - openid
+              - roles
 
   http:
     log-request-details: ${LOG_REQUEST}
