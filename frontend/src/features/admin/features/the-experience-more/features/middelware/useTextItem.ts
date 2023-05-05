@@ -6,14 +6,20 @@ import {
 } from "@/features/admin/features/the-experience-more/features/api/TextItemManipulationClient";
 import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-experience-more/common/model/PageType";
-import { link } from "fs";
 
 
 export const useCreateNewTextItem = () =>
-useMutation({
-    mutationFn: async (newTextItem: UseTextItem) =>
-      await postTextItem(newTextItem.pageType, newTextItem.textItem)
+  useMutation({
+    mutationFn: async (newTextItem: UseTextItem, file?: File) => {
+      const headers = {
+        "X-CSRF-TOKEN": (newTextItem.headers?.["X-CSRF-TOKEN"] || "") as string,
+        "Content-Type": "application/json",
+      };
+
+      await postTextItem(newTextItem.pageType, newTextItem.textItem, newTextItem.file, headers);
+    },
   });
+
 
   export const UseUpdateTextItem = () => useMutation({
     mutationFn: async (updateTextItem: UseTextItem) => {
@@ -37,4 +43,6 @@ export interface UseTextItem {
     pageType: PageType;
     link: string;
     textItem: TextItem;
+    file?: File;
+    headers?: { 'X-CSRF-TOKEN': string | null };
 }

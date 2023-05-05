@@ -64,7 +64,7 @@
             color="success"
             :loading="isLoading"
             :disabled="!isFormValid || isLoading"
-            @click="saveAdd"
+            @click="() => saveAdd(file)"
           >
             <v-icon>mdi-content-save</v-icon> Speichern
           </v-btn>
@@ -85,9 +85,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref } from "vue";
+import { defineComponent, watch, PropType, computed, ref, onMounted } from "vue";
 import { TextItem } from "@/features/commons/types/Item";
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn } from "vuetify/lib";
+import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
 import { useCreateNewTextItem } from "../features/middelware/useTextItem";
 import { useRouter } from "vue-router/composables";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
@@ -98,6 +98,7 @@ export default defineComponent({
   components: { ErrorHandler },
   data: () => ({
     isFormValid: false,
+    csrfToken: null,
   }),
   props: {
     showDialog: {
@@ -213,11 +214,35 @@ export default defineComponent({
       isWriteError.value = false;
     }
 
+    const csrfToken = ref<string | null>(null);
 
-    function saveAdd() {
+    onMounted(() => {
+      // Retrieve the CSRF token from the server and store it in the component's data
+      const csrfToken: string | null = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? null;
 
+    });
+
+
+    function saveAdd(file?: File | null) {
       addedItem.value.pageType = props.pageType;
-      mutateAsync({ pageType: addedItem.value.pageType as PageType, textItem: addedItem.value, link: addedItem.value.link })
+
+      const headers = {
+  'X-CSRF-TOKEN': csrfToken.value ?? '',
+  'Content-Type': 'multipart/form-data'
+};
+
+
+
+
+
+
+      mutateAsync({
+        pageType: addedItem.value.pageType as PageType,
+        textItem: addedItem.value,
+        link: addedItem.value.link,
+        file: file ? file : undefined,
+        headers: headers
+      })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -248,6 +273,7 @@ export default defineComponent({
     }
 
 
+
     return {
       props,
       fileRules,
@@ -267,6 +293,7 @@ export default defineComponent({
       error,
       closeError,
       isSnackbarActive,
+      csrfToken,
       isLoading,
       SNACKBAR_TIMEOUT: 3000, // in milliseconds
     };
