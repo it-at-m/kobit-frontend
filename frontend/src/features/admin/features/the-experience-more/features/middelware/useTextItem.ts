@@ -12,8 +12,7 @@ export const useCreateNewTextItem = () =>
   useMutation({
     mutationFn: async (newTextItem: UseTextItem, file?: File) => {
       const headers = {
-        "X-CSRF-TOKEN": (newTextItem.headers?.["X-CSRF-TOKEN"] || "") as string,
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       };
 
       await postTextItem(newTextItem.pageType, newTextItem.textItem, newTextItem.file, headers);
@@ -44,5 +43,5 @@ export interface UseTextItem {
     link: string;
     textItem: TextItem;
     file?: File;
-    headers?: { 'X-CSRF-TOKEN': string | null };
+    headers?: { 'Content-Type': string | null };
 }

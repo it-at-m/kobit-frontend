@@ -1,7 +1,15 @@
 <template>
   <v-row>
-    <v-dialog v-model="dialog" max-width="1000px" @click:outside="closeDialog">
-      <ErrorHandler :is-error="isWriteError" :message="errorMessage" @closeError="closeError" />
+    <v-dialog
+      v-model="dialog"
+      max-width="1000px"
+      @click:outside="closeDialog"
+    >
+      <ErrorHandler
+        :is-error="isWriteError"
+        :message="errorMessage"
+        @closeError="closeError"
+      />
       <v-card>
         <v-card-title>
           <span class="text-h5">Element Hinzufügen</span>
@@ -11,20 +19,34 @@
             <v-form v-model="isFormValid">
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="addedItem.header" :label="headerLabel" :rules="[headerRule]" maxlength="250"
-                    counter />
+                  <v-text-field
+                    v-model="addedItem.header"
+                    :label="headerLabel"
+                    :rules="[headerRule]"
+                    maxlength="250"
+                    counter
+                  />
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12">
-                  <v-textarea v-model="addedItem.entry" :label="entryLabel" :rules="[entryRule]" maxlength="1500"
-                    counter />
+                  <v-textarea
+                    v-model="addedItem.entry"
+                    :label="entryLabel"
+                    :rules="[entryRule]"
+                    maxlength="1500"
+                    counter
+                  />
                 </v-col>
               </v-row>
               <v-row v-if="props.pageType === 'DOWNLOADS'">
                 <v-col cols="12">
-                  <v-file-input v-model="file" :rules="fileRules" accept=".pdf,.doc,.docx,.odf"
-                    placeholder="Datei auswählen" />
+                  <v-file-input
+                    v-model="file"
+                    :rules="fileRules"
+                    accept=".pdf,.doc,.docx,.odf"
+                    placeholder="Datei auswählen"
+                  />
                 </v-col>
               </v-row>
             </v-form>
@@ -32,17 +54,29 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="error" @click="cancelAdd">
+          <v-btn
+            color="error"
+            @click="cancelAdd"
+          >
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
-          <v-btn color="success" :loading="isLoading" :disabled="!isFormValid || isLoading"
-            @click="() => saveAdd(file)">
+          <v-btn
+            color="success"
+            :loading="isLoading"
+            :disabled="!isFormValid || isLoading"
+            @click="() => saveAdd(file)"
+          >
             <v-icon>mdi-content-save</v-icon> Speichern
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-snackbar v-model="isSnackbarActive" :timeout="SNACKBAR_TIMEOUT" color="success" bottom>
+    <v-snackbar
+      v-model="isSnackbarActive"
+      :timeout="SNACKBAR_TIMEOUT"
+      color="success"
+      bottom
+    >
       <p class="pa-0 ma-0">
         {{ snackbarMessage }} <v-icon>mdi-check</v-icon>
       </p>
@@ -200,7 +234,6 @@ export default defineComponent({
       addedItem.value.pageType = props.pageType;
 
       const headers = {
-        'X-CSRF-TOKEN': csrfToken.value ?? '',
         'Content-Type': 'multipart/form-data'
       };
 
@@ -209,7 +242,6 @@ export default defineComponent({
         textItem: addedItem.value,
         link: addedItem.value.link,
         file: file ? file : undefined,
-        headers: headers
       })
         .then(() => {
           isSnackbarActive.value = true;

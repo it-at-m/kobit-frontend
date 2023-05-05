@@ -20,6 +20,16 @@ export async function httpGetJson<T>(path: string): Promise<T> {
       });
 }
 
+export const httpPostMultipart = async <T>(
+    url: string,
+    formData: FormData,
+    headers?: Record<string, string>
+  ): Promise<T> => {
+
+    return configuredAxios.post(url,formData, {headers}).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
+
+  };
+
 export async function httpPostJson<T>(path: string, data: any): Promise<T> {
     return configuredAxios.post(path, data).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
 }

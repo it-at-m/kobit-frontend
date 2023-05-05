@@ -1,56 +1,40 @@
-import {httpDeleteJson, httpPostJson, httpPutJson} from "@/core/plugins/http";
+import {httpDeleteJson, httpPostJson, httpPutJson, httpPostMultipart} from "@/core/plugins/http";
 import {TextItem} from "@/features/commons/types/Item";
 
 
-export const httpPostMultipart = async <T>(
-    url: string,
-    formData: FormData,
-    headers?: Record<string, string>
-  ): Promise<T> => {
-    console.log("Request headers:", headers); // log the headers
-  
-    const response = await fetch(url, {
-      method: "POST",
-      body: formData,
-      headers,
-    });
-  
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-  
-    return response.json();
-  };
+
   
   
 
-  export const postTextItem = (pageType: string, textItem: TextItem, file?: File, headers?: Record<string, string>) => {
+export const postTextItem = async (pageType: string, textItem: TextItem, file?: File, headers?: Record<string, string>) => {
     if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-  
-      formData.append("textItemView", JSON.stringify(textItem));
-  
-      const validatedHeaders = headers ? headers as Record<string, string> : undefined;
-  
-      return httpPostMultipart<TextItem>(
-        "/additional/" + pageType,
-        formData,
-        validatedHeaders
-      )
-        .then((response) => {
-          return response;
-        })
-        .catch((error) => {
-          throw error;
-        });
+        const formData = new FormData();
+        formData.append("file", file);
+        
+        const linkResponse = await httpPostMultipart<string>(
+            `/additional/file/${pageType}`,
+            formData,
+            headers
+        );
+        
+        // Update the text item with the link
+        textItem.link = linkResponse;
+        
+        const textItemResponse = await httpPostJson<TextItem>(
+            `/additional/${pageType}`,
+            textItem
+        );
+        
+        return textItemResponse;
     } else {
-      return httpPostJson<TextItem>(
-        "/additional/" + pageType,
-        textItem
-      );
+        return httpPostJson<TextItem>(
+            `/additional/${pageType}`,
+            textItem
+        );
     }
-  };
+};
+
+
   
 
 
