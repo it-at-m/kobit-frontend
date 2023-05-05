@@ -124,6 +124,17 @@ export default defineComponent({
     const isWriteError = ref(false);
     const errorMessage = ref('');
 
+
+    onMounted(async () => {
+  const response = await fetch("/api/kobit-backend-service/csrf");
+  const token = await response.text();
+
+  // Store the CSRF token in the component's data
+  csrfToken.value = token;
+  
+});
+
+
     watch(
       () => props.showDialog,
       (val) => {

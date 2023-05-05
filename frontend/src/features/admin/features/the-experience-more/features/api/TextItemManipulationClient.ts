@@ -7,8 +7,10 @@ export const httpPostMultipart = async <T>(
     formData: FormData,
     headers?: Record<string, string>
   ): Promise<T> => {
+    console.log("Request headers:", headers); // log the headers
+  
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       body: formData,
       headers,
     });
@@ -19,6 +21,7 @@ export const httpPostMultipart = async <T>(
   
     return response.json();
   };
+  
   
 
   export const postTextItem = (pageType: string, textItem: TextItem, file?: File, headers?: Record<string, string>) => {
