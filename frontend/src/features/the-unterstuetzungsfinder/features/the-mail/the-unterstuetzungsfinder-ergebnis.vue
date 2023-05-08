@@ -277,9 +277,6 @@ export default defineComponent({
     },
     restart: {
       type: Function
-    },
-    restartText: {
-      type: String
     }
   },
   setup(props) {

@@ -216,7 +216,21 @@ export default defineComponent({
     BaseHeadLine,
     GivenAnswers
   },
-  setup() {
+  props: {
+    icon: {
+      type: String
+    },
+    infoText: {
+      type: String
+    },
+    name: {
+      type: String
+    },
+    backPath: {
+      type: String
+    }
+  },
+  setup(props) {
     const isInfoTextActive = ref<boolean>(true);
     const givenAnswers = ref<QuestionAndAnswer[]>([]);
     const isGivenAnswersEmpty = computed(() => givenAnswers.value.length < 1);
@@ -231,7 +245,7 @@ export default defineComponent({
     const isFinished = computed(() => data.value?.decisionPoint === null);
 
     function back() {
-      router.push('/');
+      router.push(props.backPath);
     }
 
     function closeToolTips() {
