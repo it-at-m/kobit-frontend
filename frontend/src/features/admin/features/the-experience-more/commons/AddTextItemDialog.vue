@@ -47,7 +47,7 @@
                     accept=".pdf,.doc,.docx,.odf"
                     placeholder="Datei auswählen"
                   >
-                    <template>
+                    <template v-slot:selection>
                       <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
                     </template>
                   </v-file-input>
@@ -211,18 +211,6 @@ export default defineComponent({
 
     function cancelAdd() {
       closeDialog();
-      setTimeout(() => {
-        if (props.pageType == "GLOSSARY") {
-          router.push("/admin/erfahre-mehr/glossar");
-        } else if (props.pageType == "FAQ") {
-          router.push("/admin/erfahre-mehr/faq");
-        } else if (props.pageType == "DOWNLOADS") {
-          router.push("/admin/erfahre-mehr/downloads-und-links");
-        } else {
-          router.push("/admin/erfahre-mehr/");
-        }
-        router.go(0);
-      }, 1); // delay for 1 second
     }
 
     const error = (message: string) => {
@@ -234,7 +222,8 @@ export default defineComponent({
       isWriteError.value = false;
     };
 
-    const customFileName = (fileName: string, maxFileNameInputLength: GLfloat) => {
+    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
+      console.log(maxFileNameInputLength)
       if (!fileName) return '';
       if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
 

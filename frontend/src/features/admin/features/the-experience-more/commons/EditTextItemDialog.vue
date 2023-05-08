@@ -41,14 +41,14 @@
               </v-row>
               <v-row v-if="props.pageType === 'DOWNLOADS'">
                 <v-col cols="12">
-                  <p>Aktuelle Datei: {{ getFileNameFromLink(editedItem.link) }}</p>
+                  <p>Aktuelle Datei: {{ editedItem.link ? getFileNameFromLink(editedItem.link.toString()) : '' }}</p>
                   <v-file-input
                     v-model="file"
                     :rules="fileRules"
                     accept=".pdf,.doc,.docx,.odf"
                     placeholder="Neue Datei auswählen und ersetzen"
                   >
-                    <template>
+                    <template v-slot:selection>
                       <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
                     </template>
                   </v-file-input>
@@ -176,7 +176,7 @@ export default defineComponent({
         case PageType.FAQ:
           return "Frage";
         case PageType.DOWNLOADS:
-        return "Download Name";
+          return "Download Name";
         default:
           return "Kopfzeile";
       }
@@ -188,8 +188,8 @@ export default defineComponent({
           return "Definition";
         case PageType.FAQ:
           return "Antwort";
-          case PageType.DOWNLOADS:
-        return "Download Beschreibung";
+        case PageType.DOWNLOADS:
+          return "Download Beschreibung";
         default:
           return "Definition";
       }
@@ -213,18 +213,6 @@ export default defineComponent({
 
     function cancelEdit() {
       closeDialog();
-      setTimeout(() => {
-        if (editedItem.value.pageType == "GLOSSARY") {
-          router.push("/admin/erfahre-mehr/glossar");
-        } else if (editedItem.value.pageType == "FAQ") {
-          router.push("/admin/erfahre-mehr/faq");
-        } else if (editedItem.value.pageType == "DOWNLOADS") {
-          router.push("/admin/erfahre-mehr/downloads-und-links");
-        } else {
-          router.push("/admin/erfahre-mehr/");
-        }
-        router.go(0);
-      }, 1); // delay for 1 second
     }
 
     const error = (message: string) => {
@@ -237,13 +225,20 @@ export default defineComponent({
     }
 
     const getFileNameFromLink = (link: string) => {
-      const url = new URL(link);
-      return url.pathname.split('/').pop() || '';
+      console.log(link);
+      if (!link) {
+        return '';
+      }
+      try {
+        const url = new URL(link);
+        return url.pathname.split('/').pop() || '';
+      } catch (error) {
+        console.error(`Invalid URL: ${link}`);
+        return '';
+      }
     };
 
-
-
-    const customFileName = (fileName: string, maxFileNameInputLength: GLfloat) => {
+    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
       if (!fileName) return '';
       if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
 
