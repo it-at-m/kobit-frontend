@@ -72,7 +72,18 @@
         "addFile": "Datei hinzufügen",
         "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
         "cancel": "Abbrechen",
-        "save": "Speichern"
+        "save": "Speichern",
+        "delete": "Löschen",
+        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: "
+      }
+    },
+    "information": {
+      "texts": {
+        "informationTitle": "Ihre Berechtigungen",
+        "centralAdmin": "Sie besitzen die Rolle des zentralen Administrators. Das bedeutet, dass Sie Informationen aller Anlaufstellen anpassen können. Darüber hinaus können Sie unter \"Erfahre Mehr\" auch Stadtweite Informationen anpassen und verändern. Bitte Beachten Sie, dass wenn Sie unter \"Erfahre Mehr\" Änderungen vornehmen, diese für die alle Referate übernommen.",
+        "departmentAdmin": "Sie sind Administrator für das oben genannte Referat. Sie können Anlaufstellen für ihr Referat bearbeiten. Stadtweite Anlaufstellen oder Anlaufstellen anderer Referate dürfen Sie nicht bearbeiten. Unter \"Erfahre Mehr\" können Sie das Glossar, FAQ und die Downloads verändern. Die hier getätigten Änderungen beschränken sich aber wieder nur auf ihr Referat.",
+        "department": "Referat: ",
+        "noAdmin": "Sie sind kein Admin!"
       }
     }
   }

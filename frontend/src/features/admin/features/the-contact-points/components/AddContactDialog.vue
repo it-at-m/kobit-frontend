@@ -5,10 +5,6 @@
     max-width="590"
     class="ma-0 pa-0"
   >
-    v-model="isDialogActive"
-    persistent
-    max-width="590"
-    >
     <v-card class="ma-0 pa-0">
       <v-card-title>
         Neuen Kontakt hinzufügen
