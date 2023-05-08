@@ -49,7 +49,7 @@ spring:
 
   # security config
   security:
-    oauth2:edit text item
+    oauth2:
       client:
         provider:
           keycloak:
