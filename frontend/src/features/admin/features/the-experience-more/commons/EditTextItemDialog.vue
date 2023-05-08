@@ -225,7 +225,6 @@ export default defineComponent({
     }
 
     const getFileNameFromLink = (link: string) => {
-      console.log(link);
       if (!link) {
         return '';
       }

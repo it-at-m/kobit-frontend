@@ -223,7 +223,6 @@ export default defineComponent({
     };
 
     const customFileName = (fileName: string, maxFileNameInputLength: number) => {
-      console.log(maxFileNameInputLength)
       if (!fileName) return '';
       if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
 
