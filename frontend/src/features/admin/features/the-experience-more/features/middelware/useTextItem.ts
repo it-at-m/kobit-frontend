@@ -10,7 +10,7 @@ import { PageType } from "@/features/the-experience-more/common/model/PageType";
 
 export const useCreateNewTextItem = () =>
   useMutation({
-    mutationFn: async (newTextItem: UseTextItem, file?: File) => {
+    mutationFn: async (newTextItem: UseTextItem) => {
       const headers = {
         "Content-Type": "multipart/form-data",
       };
@@ -23,7 +23,10 @@ export const useCreateNewTextItem = () =>
   export const UseUpdateTextItem = () => useMutation({
     mutationFn: async (updateTextItem: UseTextItem) => {
         if (updateTextItem.id) {
-            return await putTextItem(updateTextItem.id, updateTextItem.pageType, updateTextItem.textItem);
+            const headers = {
+                "Content-Type": "multipart/form-data",
+              };
+            return await putTextItem(updateTextItem.id, updateTextItem.pageType, updateTextItem.textItem, updateTextItem.file, headers);
         }
         throw new Error('ID is missing');
     }

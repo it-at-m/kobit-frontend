@@ -23,7 +23,7 @@
                     v-model="addedItem.header"
                     :label="headerLabel"
                     :rules="[headerRule]"
-                    maxlength="250"
+                    max-file-name-input-length="250"
                     counter
                   />
                 </v-col>
@@ -34,7 +34,7 @@
                     v-model="addedItem.entry"
                     :label="entryLabel"
                     :rules="[entryRule]"
-                    maxlength="1500"
+                    max-file-name-input-length="1500"
                     counter
                   />
                 </v-col>
@@ -46,7 +46,11 @@
                     :rules="fileRules"
                     accept=".pdf,.doc,.docx,.odf"
                     placeholder="Datei auswählen"
-                  />
+                  >
+                    <template>
+                      <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                    </template>
+                  </v-file-input>
                 </v-col>
               </v-row>
             </v-form>
@@ -85,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref, onMounted } from "vue";
+import { defineComponent, watch, PropType, computed, ref, onMounted, getCurrentInstance } from "vue";
 import { TextItem } from "@/features/commons/types/Item";
 import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
 import { useCreateNewTextItem } from "../features/middelware/useTextItem";
@@ -97,8 +101,7 @@ export default defineComponent({
   name: "AddDialog",
   components: { ErrorHandler },
   data: () => ({
-    isFormValid: false,
-    csrfToken: null,
+    isFormValid: false
   }),
   props: {
     showDialog: {
@@ -116,7 +119,6 @@ export default defineComponent({
 
   },
   setup(props, { emit }) {
-    const csrfToken = ref<string | null>(null);
     const dialog = ref(false);
     const addedItem = ref({} as TextItem);
     const { isLoading, mutateAsync } = useCreateNewTextItem();
@@ -124,17 +126,8 @@ export default defineComponent({
     const router = useRouter();
     const isWriteError = ref(false);
     const errorMessage = ref('');
-
-
-    onMounted(async () => {
-      const response = await fetch("/api/kobit-backend-service/csrf");
-      const token = await response.text();
-
-      // Store the CSRF token in the component's data
-      csrfToken.value = token;
-
-    });
-
+    const instance = getCurrentInstance();
+    const root = instance?.proxy.$root || null;
 
     watch(
       () => props.showDialog,
@@ -180,6 +173,8 @@ export default defineComponent({
           return "Kopfzeile";
         case PageType.FAQ:
           return "Frage";
+        case PageType.DOWNLOADS:
+        return "Download Name";
         default:
           return "Kopfzeile";
       }
@@ -191,11 +186,12 @@ export default defineComponent({
           return "Definition";
         case PageType.FAQ:
           return "Antwort";
+          case PageType.DOWNLOADS:
+        return "Download Beschreibung";
         default:
           return "Definition";
       }
     });
-
 
     const snackbarMessage = computed(() => {
       switch (props.pageType) {
@@ -215,6 +211,18 @@ export default defineComponent({
 
     function cancelAdd() {
       closeDialog();
+      setTimeout(() => {
+        if (props.pageType == "GLOSSARY") {
+          router.push("/admin/erfahre-mehr/glossar");
+        } else if (props.pageType == "FAQ") {
+          router.push("/admin/erfahre-mehr/faq");
+        } else if (props.pageType == "DOWNLOADS") {
+          router.push("/admin/erfahre-mehr/downloads-und-links");
+        } else {
+          router.push("/admin/erfahre-mehr/");
+        }
+        router.go(0);
+      }, 1); // delay for 1 second
     }
 
     const error = (message: string) => {
@@ -224,11 +232,36 @@ export default defineComponent({
 
     const closeError = () => {
       isWriteError.value = false;
-    }
+    };
 
+    const customFileName = (fileName: string, maxFileNameInputLength: GLfloat) => {
+      if (!fileName) return '';
+      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
 
+      const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
+      return (
+        fileName.slice(0, halfLength) +
+        '...' +
+        fileName.slice(fileName.length - halfLength)
+      ).toUpperCase();
+    };
 
-
+    const maxFileNameInputLength = computed(() => {
+      switch (root?.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 25;
+        case 'sm':
+          return 40;
+        case 'md':
+          return 50;
+        case 'lg':
+          return 60;
+        case 'xl':
+          return 70;
+        default:
+          return 50;
+      }
+    });
 
     function saveAdd(file?: File | null) {
       addedItem.value.pageType = props.pageType;
@@ -292,8 +325,9 @@ export default defineComponent({
       closeDialog,
       error,
       closeError,
+      maxFileNameInputLength,
+      customFileName,
       isSnackbarActive,
-      csrfToken,
       isLoading,
       SNACKBAR_TIMEOUT: 3000, // in milliseconds
     };

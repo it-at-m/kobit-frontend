@@ -23,7 +23,7 @@
                     v-model="editedItem.header"
                     :label="headerLabel"
                     :rules="[headerRule]"
-                    maxlength="250"
+                    max-file-name-input-length="250"
                     counter
                   />
                 </v-col>
@@ -34,20 +34,24 @@
                     v-model="editedItem.entry"
                     :label="entryLabel"
                     :rules="[entryRule]"
-                    maxlength="1500"
+                    max-file-name-input-length="1500"
                     counter
                   />
                 </v-col>
               </v-row>
               <v-row v-if="props.pageType === 'DOWNLOADS'">
                 <v-col cols="12">
-                  <p>{{ editedItem.link }}</p>
+                  <p>Aktuelle Datei: {{ getFileNameFromLink(editedItem.link) }}</p>
                   <v-file-input
-                    v-model="editedItem.link"
+                    v-model="file"
                     :rules="fileRules"
                     accept=".pdf,.doc,.docx,.odf"
-                    placeholder="Datei auswählen"
-                  />
+                    placeholder="Neue Datei auswählen und ersetzen"
+                  >
+                    <template>
+                      <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                    </template>
+                  </v-file-input>
                 </v-col>
               </v-row>
             </v-form>
@@ -65,7 +69,7 @@
             color="success"
             :loading="isLoading"
             :disabled="!isFormValid || isLoading"
-            @click="saveEdit"
+            @click="saveEdit(file)"
           >
             <v-icon>mdi-content-save</v-icon> Speichern
           </v-btn>
@@ -86,9 +90,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref } from "vue";
+import { defineComponent, watch, PropType, computed, ref, getCurrentInstance } from "vue";
 import { TextItem } from "@/features/commons/types/Item";
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn } from "vuetify/lib";
+import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
 import { UseUpdateTextItem } from "../features/middelware/useTextItem";
 import { useRouter } from "vue-router/composables";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
@@ -123,6 +127,8 @@ export default defineComponent({
     const router = useRouter();
     const isWriteError = ref(false);
     const errorMessage = ref('');
+    const instance = getCurrentInstance();
+    const root = instance?.proxy.$root || null;
 
     watch(
       () => props.showDialog,
@@ -137,9 +143,10 @@ export default defineComponent({
     const file = ref<File | null>(null);
     const fileRules = computed(() => [
       (value: File | null) =>
-        !!value && ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type) ||
+        (value === null || ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type)) ||
         "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt."
     ]);
+
 
 
     const headerRule = (value: string) => {
@@ -168,6 +175,8 @@ export default defineComponent({
           return "Kopfzeile";
         case PageType.FAQ:
           return "Frage";
+        case PageType.DOWNLOADS:
+        return "Download Name";
         default:
           return "Kopfzeile";
       }
@@ -179,6 +188,8 @@ export default defineComponent({
           return "Definition";
         case PageType.FAQ:
           return "Antwort";
+          case PageType.DOWNLOADS:
+        return "Download Beschreibung";
         default:
           return "Definition";
       }
@@ -202,6 +213,18 @@ export default defineComponent({
 
     function cancelEdit() {
       closeDialog();
+      setTimeout(() => {
+        if (editedItem.value.pageType == "GLOSSARY") {
+          router.push("/admin/erfahre-mehr/glossar");
+        } else if (editedItem.value.pageType == "FAQ") {
+          router.push("/admin/erfahre-mehr/faq");
+        } else if (editedItem.value.pageType == "DOWNLOADS") {
+          router.push("/admin/erfahre-mehr/downloads-und-links");
+        } else {
+          router.push("/admin/erfahre-mehr/");
+        }
+        router.go(0);
+      }, 1); // delay for 1 second
     }
 
     const error = (message: string) => {
@@ -213,9 +236,44 @@ export default defineComponent({
       isWriteError.value = false;
     }
 
+    const getFileNameFromLink = (link: string) => {
+      const url = new URL(link);
+      return url.pathname.split('/').pop() || '';
+    };
 
-    function saveEdit() {
-      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link })
+
+
+    const customFileName = (fileName: string, maxFileNameInputLength: GLfloat) => {
+      if (!fileName) return '';
+      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+
+      const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
+      return (
+        fileName.slice(0, halfLength) +
+        '...' +
+        fileName.slice(fileName.length - halfLength)
+      ).toUpperCase();
+    };
+
+    const maxFileNameInputLength = computed(() => {
+      switch (root?.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 25;
+        case 'sm':
+          return 40;
+        case 'md':
+          return 50;
+        case 'lg':
+          return 60;
+        case 'xl':
+          return 70;
+        default:
+          return 50;
+      }
+    });
+
+    function saveEdit(file?: File | null) {
+      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link, file: file ? file : undefined, })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -256,6 +314,7 @@ export default defineComponent({
       isWriteError,
       headerLabel,
       entryLabel,
+      maxFileNameInputLength,
       cancelEdit,
       saveEdit,
       headerRule,
@@ -263,6 +322,8 @@ export default defineComponent({
       closeDialog,
       error,
       closeError,
+      customFileName,
+      getFileNameFromLink,
       isSnackbarActive,
       isLoading,
       snackbarMessage,
