@@ -66,9 +66,9 @@ export default defineComponent({
         .catch((error) => {
           const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.error || fallbackErrorMessage;
+          const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
 
-          emit("error", error.response?.data?.error);
+          emit("error", customErrorMessage);
 
         });
     };

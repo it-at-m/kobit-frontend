@@ -30,9 +30,14 @@ export const httpPostMultipart = async <T>(
 
   };
 
-export async function httpPostJson<T>(path: string, data: any): Promise<T> {
-    return configuredAxios.post(path, data).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-}
+  export async function httpPostJson<T>(path: string, data: any): Promise<T> {
+    return configuredAxios.post(path, data)
+      .then((res) => res ? res.data : Promise.resolve())
+      .catch((error) => {
+        console.log('Error Response:', error.response);
+        throw error;
+      }) as Promise<T>;
+  }
 
   export const httpPostDeleteFile = async <T>(
     url: string,
@@ -44,9 +49,16 @@ export async function httpPostJson<T>(path: string, data: any): Promise<T> {
   };
 
 
-export async function httpPutJson<T>(path: string, data: any): Promise<T> {
-    return configuredAxios.put(path, data).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-}
+  export async function httpPutJson<T>(path: string, data: any): Promise<T> {
+    return configuredAxios
+      .put(path, data)
+      .then((res) => (res ? res.data : Promise.resolve()))
+      .catch((error) => {
+        console.log("Error Response:", error.response);
+        throw error;
+      }) as Promise<T>;
+  }
+  
 
 
 
