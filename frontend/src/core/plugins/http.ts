@@ -34,7 +34,6 @@ export const httpPostMultipart = async <T>(
     return configuredAxios.post(path, data)
       .then((res) => res ? res.data : Promise.resolve())
       .catch((error) => {
-        console.log('Error Response:', error.response);
         throw error;
       }) as Promise<T>;
   }
@@ -54,7 +53,6 @@ export const httpPostMultipart = async <T>(
       .put(path, data)
       .then((res) => (res ? res.data : Promise.resolve()))
       .catch((error) => {
-        console.log("Error Response:", error.response);
         throw error;
       }) as Promise<T>;
   }
