@@ -43,10 +43,37 @@
                 <v-text-field
                   :value="writableContactPoint.shortCut"
                   label="Kurzbezeichnung der Anlaufstelle"
-                  :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.', v => /^[a-zA-ZäöüÄÖÜ\s]+$/.test(v) || 'Die Kurzbezeichnung darf nur Buchstaben und Umlaute enthalten']"
+                  :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
                   :counter="10"
                   @input="changeShortCut"
                 />
+              </v-col>
+              <v-col
+                  cols="12"
+                  sm="12"
+                  md="3"
+                  lg="3"
+                  xl="3"
+              >
+                <v-combobox
+                    :value="writableContactPoint.departments"
+                    @input="changeDepartment"
+                    :label="label.addDepartment"
+                    multiple
+                    persistent-hint
+                    small-chips
+                    :disabled="! isCentralAdmin"
+                >
+                  <template v-slot:no-data>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          {{ label.addDepartmentHint }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
+                </v-combobox>
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
@@ -246,6 +273,7 @@ import AddContactDialog from "@/features/admin/components/contactpoints/componen
 import MarkDownAlert from "@/features/admin/components/contactpoints/components/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/components/contactpoints/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
+import {useGetAdminUserInfo} from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -269,11 +297,20 @@ export default defineComponent({
     const router = useRouter();
     const writableContactPoint = ref<ContactPoint>();
     const errorMessage = ref('');
+    const {data: adminUserInfo} = useGetAdminUserInfo();
+    const isCentralAdmin = ref(false);
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
       }
-    })
+    });
+
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    });
+
     const openLinkDialog = () => {
       isLinkDialogOpen.value = true;
     }
@@ -323,6 +360,10 @@ export default defineComponent({
       isWriteError.value = true;
     };
 
+    const changeDepartment = (value: string[]) => {
+      writableContactPoint.value = {...writableContactPoint.value, departments: value} as ContactPoint;
+    }
+
     const closeError = () => {
       isWriteError.value = false;
     }
@@ -348,6 +389,7 @@ export default defineComponent({
       errorMessage,
       isReadError,
       isWriteError,
+      isCentralAdmin,
       openLinkDialog,
       openContactDialog,
       cancelForm,
@@ -357,6 +399,7 @@ export default defineComponent({
       changeName,
       changeShortCut,
       changeDescription,
+      changeDepartment,
       error,
       closeError,
       removeLink,

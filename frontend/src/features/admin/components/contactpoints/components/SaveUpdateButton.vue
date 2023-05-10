@@ -63,13 +63,8 @@ export default defineComponent({
             router.go(0);
           }, 1000); // delay for 1 second
         })
-        .catch((error) => {
-          const statusCode = error.response?.status;
-          const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.error || fallbackErrorMessage;
-
-          emit("error", error.response?.data?.error);
-
+        .catch(() => {
+          emit("error", "Es gab einen unerwarteten Fehler beim Speicher.");
         });
     };
 

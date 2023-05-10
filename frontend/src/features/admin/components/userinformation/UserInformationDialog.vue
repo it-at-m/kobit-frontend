@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import {useGetAdminUserInfo} from "@/features/admin/components/userinformation/middleware/useGetAdminUserInfo";
+import {useGetAdminUserInfoText} from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import {adminInformationLabels} from "@/features/admin/i18n";
 
@@ -50,7 +50,7 @@ export default defineComponent({
     }
   },
   setup() {
-    const {isLoading, isError, data: adminRole} = useGetAdminUserInfo();
+    const {isLoading, isError, data: adminRole} = useGetAdminUserInfoText();
     const labels = adminInformationLabels;
 
     return {

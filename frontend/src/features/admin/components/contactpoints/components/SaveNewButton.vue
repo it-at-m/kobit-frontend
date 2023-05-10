@@ -53,17 +53,15 @@ export default defineComponent({
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
-      try {
-        const result = await mutateAsync(props.contactPointToSave);
+      mutateAsync(props.contactPointToSave).then(() => {
         showSuccessSnackbar();
-          setTimeout(() => {
-            router.push("/admin/contactpoints/");
-            router.go(0);
-          }, 1000); // delay for 1 second
-      } catch (error) {
-        const typedError = error as any;
-        emit("error", typedError.response.data.error);
-      }
+        setTimeout(() => {
+          router.push("/admin/contactpoints/");
+          router.go(0);
+        }, 1000);
+      }).catch(() => {
+        emit("error", "Die Anlaufstelle konnte nicht gespeichert werden.")
+      })
     };
 
     return {

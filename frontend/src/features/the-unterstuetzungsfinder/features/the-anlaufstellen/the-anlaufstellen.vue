@@ -40,9 +40,6 @@
               <v-list-item-subtitle v-if="listItem.shortCut">
                 {{ listItem.shortCut }}
               </v-list-item-subtitle>
-              <v-list-item-subtitle v-if="listItem.department">
-                {{ listItem.department }}
-              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
