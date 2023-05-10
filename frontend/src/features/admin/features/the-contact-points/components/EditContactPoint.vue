@@ -49,20 +49,20 @@
                 />
               </v-col>
               <v-col
-                  cols="12"
-                  sm="12"
-                  md="3"
-                  lg="3"
-                  xl="3"
+                cols="12"
+                sm="12"
+                md="3"
+                lg="3"
+                xl="3"
               >
                 <v-combobox
-                    :value="writableContactPoint.departments"
-                    @input="changeDepartment"
-                    :label="label.addDepartment"
-                    multiple
-                    persistent-hint
-                    small-chips
-                    :disabled="! isCentralAdmin"
+                  :value="writableContactPoint.departments"
+                  :label="label.addDepartment"
+                  multiple
+                  persistent-hint
+                  small-chips
+                  :disabled="! isCentralAdmin"
+                  @input="changeDepartment"
                 >
                   <template v-slot:no-data>
                     <v-list-item>

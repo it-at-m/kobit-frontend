@@ -61,7 +61,9 @@
         "addFile": "Datei hinzufügen",
         "edit": "Bearbeiten Sie eine bestehende Anlaufstelle.",
         "cancel": "Abbrechen",
-        "save": "Speichern"
+        "save": "Speichern",
+        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: ",
+        "addDepartmentHint":"Um ein weiteres Referat hinzuzufügen geben Sie dies ein und drücken Sie bitte <kbd>enter</kbd>."
       }
     },
     "contentItems": {
@@ -75,8 +77,7 @@
         "cancel": "Abbrechen",
         "save": "Speichern",
         "delete": "Löschen",
-        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: ",
-        "addDepartmentHint":"Um ein weiteres Referat hinzuzufügen geben Sie dies ein und drücken Sie bitte <kbd>enter</kbd>."
+        "markdownHint": "Die Beschreibung kann mittels Markdown (Empfehlung) oder HTML designed werden. Das Ergebnis sehen Sie in dem Feld daneben. Über diesen Link können Sie sich die verschiedenen Möglichkeiten von Markdown ansehen: "
       }
     },
     "information": {
