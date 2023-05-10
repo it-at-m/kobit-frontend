@@ -14,7 +14,12 @@ const mapAdminInfoToText = (adminInfo: AdminUserInfo): AdminTextInfo => {
     return {department: adminInfo.department, infoText: labels.noAdmin};
 }
 
-export const useGetAdminUserInfo = () =>
+export const useGetAdminUserInfoText = () =>
     useQuery<AdminTextInfo>(['adminInfo'],
         () => getAdminUserInfo().then(mapAdminInfoToText)
+    );
+
+export const useGetAdminUserInfo = () =>
+    useQuery<AdminUserInfo>(['adminInfo'],
+        () => getAdminUserInfo()
     );

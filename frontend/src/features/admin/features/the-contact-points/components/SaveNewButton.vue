@@ -53,15 +53,14 @@ export default defineComponent({
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
-      try {
-        const result = await mutateAsync(props.contactPointToSave);
+      mutateAsync(props.contactPointToSave).then(() => {
         showSuccessSnackbar();
           setTimeout(() => {
             router.push("/admin/contactpoints/");
             router.go(0);
           }, 1000); // delay for 1 second
       } catch (error) {
-        
+
         const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
           const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
