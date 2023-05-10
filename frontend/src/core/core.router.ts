@@ -4,30 +4,47 @@ import Router from "vue-router";
 import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
 
 import {theMainRoutes} from "@/features/the-main/the-main.routes";
-import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import {erfahreMehrRoutes} from "@/features/the-experience-more/the-experience-more.routes";
 import {
     conflictPreventionRoutes
-} from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.routes";
-import {downloadsRoutes} from "@/features/the-erfahre-mehr/features/the-downloads/the-downloads.routes";
-import {faqRoutes} from "@/features/the-erfahre-mehr/features/the-faq/the-faq.routes";
-import {glossarRoutes} from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar.routes";
+} from "@/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+import {downloadsRoutes} from "@/features/the-experience-more/features/the-downloads/the-downloads.routes";
+import {faqRoutes} from "@/features/the-experience-more/features/the-faq/the-faq.routes";
+import {glossarRoutes} from "@/features/the-experience-more/features/the-glossar/the-glossar.routes";
 import {
     leadershipCooperationRoutes
-} from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.routes";
-import {dvFairRoutes} from "@/features/the-erfahre-mehr/features/the-dv-fair/the-dv-fair.routes";
+} from "@/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
+import {dvFairRoutes} from "@/features/the-experience-more/features/the-dv-fair/the-dv-fair.routes";
 import {
     escalationStepsRoutes
-} from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps.routes";
+} from "@/features/the-experience-more/features/the-escalation-steps/the-escalation-steps.routes";
 import {
     theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {adminRoutes} from "@/features/admin/adminRoutes";
-import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
 import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-details.routes";
+
+import {adminRoutes} from "@/features/admin/adminRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
+import {
+    adminConflictPreventionRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.routes";
+  import {
+    adminDownloadsRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-downloads/the-downloads.routes";
+  import {
+    adminFaqRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-faq/the-faq.routes";
+  import {
+    adminGlossarRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-glossar/the-glossar.routes";
+  import {
+    adminLeadershipCooperationRoutes
+  } from "@/features/admin/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 
 Vue.use(Router);
 
@@ -66,7 +83,13 @@ const router = new Router({
         theAnlaufstellenDetailsRoutes,
         theAngeboteRoutes,
         adminRoutes,
-        adminContactPointsRoutes
+        adminContactPointsRoutes,
+        adminExperienceMoreRoutes,
+        adminConflictPreventionRoutes,
+        adminDownloadsRoutes,
+        adminFaqRoutes,
+        adminGlossarRoutes,
+        adminLeadershipCooperationRoutes,
     ]
 });
 

@@ -1,7 +1,7 @@
 export interface AdminUserInfo{
-    readonly isCentralAdmin: boolean,
-    readonly isDepartmentAdmin: boolean,
-    readonly department: string
+    readonly isCentralAdmin: boolean;
+    readonly isDepartmentAdmin: boolean;
+    readonly department: string;
 }
 
 export interface AdminTextInfo {

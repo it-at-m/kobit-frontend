@@ -14,37 +14,37 @@ import {
     THE_CONFLICT_PREVENTION_MODULE_NAME,
     TheConflictPreventionModuleState,
     theConflictPreventionStoreModule
-} from "@/features/the-erfahre-mehr/features/the-conflict-prevention/the-conflict-prevention.store.module";
+} from "@/features/the-experience-more/features/the-conflict-prevention/the-conflict-prevention.store.module";
 import {
     THE_DOWNLOADS_MODULE_NAME,
     TheDownloadsModuleState,
     theDownloadsStoreModule
-} from "@/features/the-erfahre-mehr/features/the-downloads/the-downloads.store.module";
+} from "@/features/the-experience-more/features/the-downloads/the-downloads.store.module";
 import {
     THE_FAQ_MODULE_NAME,
     theFaqStoreModule,
     TheFaqStoreModuleState
-} from "@/features/the-erfahre-mehr/features/the-faq/the-faq-store.module";
+} from "@/features/the-experience-more/features/the-faq/the-faq-store.module";
 import {
     THE_GLOSSAR_MODULE_NAME,
     theGlossarStoreModule,
     TheGlossarStoreModuleState
-} from "@/features/the-erfahre-mehr/features/the-glossar/the-glossar-store.module";
+} from "@/features/the-experience-more/features/the-glossar/the-glossar-store.module";
 import {
     THE_LEADERSHIP_COOPERATION_MODULE_NAME,
     theLeadershipCooperationStoreModule,
     TheLeadershipCooperationStoreModuleState
-} from "@/features/the-erfahre-mehr/features/the-leadership-cooperation/the-leadership-cooperation.store.module";
+} from "@/features/the-experience-more/features/the-leadership-cooperation/the-leadership-cooperation.store.module";
 import {
     THE_DV_FAIR_MODULE_NAME,
     theDvFairStoreModule,
     TheDvFairStoreModuleState
-} from "@/features/the-erfahre-mehr/features/the-dv-fair/the-dv-fair-store.module";
+} from "@/features/the-experience-more/features/the-dv-fair/the-dv-fair-store.module";
 import {
     THE_ESCALATION_STEPS_MODULE_NAME,
     theEscalationStepsStoreModule,
     TheEscalationStepsStoreModuleState
-} from "@/features/the-erfahre-mehr/features/the-escalation-steps/the-escalation-steps-store.module";
+} from "@/features/the-experience-more/features/the-escalation-steps/the-escalation-steps-store.module";
 import {
     THE_ANLAUFSTELLEN_MODULE_NAME,
     theAnlaufstellenStoreModule,
@@ -54,7 +54,7 @@ import {
     THE_ERFAHRE_MEHR_MODULE_NAME,
     TheErfahreMehrModuleState,
     theErfahreMehrStoreModule
-} from "@/features/the-erfahre-mehr/the-erfahre-mehr-store.module";
+} from "@/features/the-experience-more/the-experience-more-store.module";
 import {
     THE_ANGEBOTE_MODULE_NAME,
     TheAngeboteModuleState,

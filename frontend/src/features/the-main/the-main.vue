@@ -47,7 +47,7 @@ import {
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
-import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import {erfahreMehrRoutes} from "@/features/the-experience-more/the-experience-more.routes";
 import {I18nLabel} from "@/core/core.translation";
 import {mainBaseHeadLineLabels} from "@/features/the-main/i18n";
 

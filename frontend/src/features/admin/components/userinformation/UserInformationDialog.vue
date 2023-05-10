@@ -1,12 +1,12 @@
 <template>
   <div class="text-center">
     <v-dialog
-        v-model="isDialogActive"
-        max-width="590"
-        class="ma-0 pa-0"
-        @click:outside="$emit('closeInfoDialog')"
+      v-model="isDialogActive"
+      max-width="590"
+      class="ma-0 pa-0"
+      @click:outside="$emit('closeInfoDialog')"
     >
-      <LoadingSpinner v-if="isLoading"/>
+      <LoadingSpinner v-if="isLoading" />
       <v-card v-else>
         <v-card-title class="text-h5 grey lighten-2">
           {{ labels.informationTitle }}
@@ -18,14 +18,14 @@
           {{ adminRole.infoText }}
         </v-card-text>
 
-        <v-divider></v-divider>
+        <v-divider />
 
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn
-              color="secondary"
-              text
-              @click="$emit('closeInfoDialog')"
+            color="secondary"
+            text
+            @click="$emit('closeInfoDialog')"
           >
             Schließen
           </v-btn>
