@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import {defineComponent} from "vue";
-import {PageType} from "@/features/the-experience-more/common/model/PageType";
-import {useGetAdditionalContent} from "@/features/the-experience-more/common/middleware/AdditionalPageService";
+import {PageType} from "@/features/the-additional/common/model/PageType";
+import {useGetAdditionalContent} from "@/features/the-additional/common/middleware/AdditionalPageService";
 
 
 export default defineComponent ({

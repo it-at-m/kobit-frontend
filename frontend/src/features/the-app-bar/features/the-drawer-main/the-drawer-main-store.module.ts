@@ -2,13 +2,13 @@ import { ListItem } from "@/features/the-app-bar/features/the-title-bar-main/lis
 import { theMainRoutes } from "@/features/the-main/the-main.routes";
 import {
     theAnlaufstellenRoutes
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
+} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import { erfahreMehrRoutes } from "@/features/the-experience-more/the-experience-more.routes";
+import { erfahreMehrRoutes } from "@/features/the-additional/the-additional.routes";
 
-import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/contactPointsRoutes";
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
-import { adminRoutes } from "@/features/admin/adminRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminRoutes } from "@/features/admin/the-admin-routes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";
 import { Commit } from "vuex/types/index";

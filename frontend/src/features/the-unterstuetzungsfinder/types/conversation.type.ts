@@ -1,4 +1,4 @@
-import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/types/anlaufstelle.type";
+import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-contact-points/types/anlaufstelle.type";
 import {Competence} from "@/features/commons/types/competence.type";
 
 
