@@ -1,4 +1,4 @@
-import { httpDeleteJson, httpPostJson, httpPutJson, httpPostMultipart, httpDeleteOldFile } from "@/core/plugins/http";
+import { httpDeleteJson, httpPostJson, httpPutJson, httpPostMultipart, httpDeleteS3File } from "@/core/plugins/http";
 import { TextItem } from "@/features/commons/types/Item";
 
 
@@ -10,7 +10,7 @@ export const postTextItem = async (pageType: string, textItem: TextItem, file?: 
         formData.append("file", file);
 
         const linkResponse = await httpPostMultipart<string>(
-            `/additional/file/${pageType}`,
+            `/s3/upload`,
             formData,
             headers
         );
@@ -41,11 +41,11 @@ export const putTextItem = async (id: string, pageType: string, textItem: TextIt
         formData.append("file", file);
         formData.append("link", textItem.link.toString())
 
-        const deleteOldFile = `/additional/${pageType}/delete-file/?link=${encodeURIComponent(textItem.link.toString())}`;
-        await httpDeleteOldFile(deleteOldFile);
+        const deleteOldFile = `/s3/delete?link=${encodeURIComponent(textItem.link.toString())}`;
+        await httpDeleteS3File(deleteOldFile);
 
         const newFileLink = await httpPostMultipart<string>(
-            `/additional/file/${pageType}`,
+            `/s3/upload`,
             formData,
             headers
         );
@@ -63,7 +63,9 @@ export const putTextItem = async (id: string, pageType: string, textItem: TextIt
 
 }
 
-export const deleteTextItem = (id: string, pageType: string, link: string) => {
+export const deleteTextItem = async (id: string, pageType: string, link: string) => {
+    const deleteOldFile = `/s3/delete?link=${encodeURIComponent(link.toString())}`;
+    await httpDeleteS3File(deleteOldFile);
     const url = `/additional/${pageType}/text-item/${id}?link=${encodeURIComponent(link)}`;
     return httpDeleteJson(url);
 }

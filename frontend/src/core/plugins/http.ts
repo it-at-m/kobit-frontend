@@ -38,15 +38,6 @@ export const httpPostMultipart = async <T>(
       }) as Promise<T>;
   }
 
-  export const httpPostDeleteFile = async <T>(
-    url: string,
-    link: string,
-  ): Promise<T> => {
-
-    return configuredAxios.post(url,link).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-
-  };
-
 
   export async function httpPutJson<T>(path: string, data: any): Promise<T> {
     return configuredAxios
@@ -60,7 +51,7 @@ export const httpPostMultipart = async <T>(
 
 
 
-export async function httpDeleteOldFile(path: string) {
+export async function httpDeleteS3File(path: string) {
     return configuredAxios.delete(path);
 }
 
