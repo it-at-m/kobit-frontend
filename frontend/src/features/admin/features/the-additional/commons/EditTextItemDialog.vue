@@ -45,7 +45,7 @@
                   <v-file-input
                     v-model="file"
                     :rules="fileRules"
-                    accept=".pdf,.doc,.docx,.odf"
+                    accept=".pdf,.doc,.docx,.odf,.PDF,.DOC,.DOCX,.ODF"
                     placeholder="Neue Datei auswählen und ersetzen"
                   >
                     <template v-slot:selection>
