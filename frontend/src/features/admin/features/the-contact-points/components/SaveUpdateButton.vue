@@ -4,7 +4,7 @@
       color="success"
       :loading="isLoading"
       :disabled="disabled || isLoading"
-      @click="save"
+      @click="() => saveAdd(file)"
     >
       <v-icon>mdi-content-save</v-icon> Speichern
     </v-btn>
@@ -39,43 +39,68 @@ export default defineComponent({
     disabled: {
       type: Boolean,
       default: false
+    },
+    file: {
+      type: File,
+      default: null
     }
   },
   setup(props, { emit }) {
     const { isLoading, mutateAsync } = useUpdateContactPoint();
     const router = useRouter();
     const showSnackbar = ref(false);
+    const isWriteError = ref(false);
+    const errorMessage = ref('');
+    const editedContactPoint = ref<ContactPoint | null>(null);
 
     const showSuccessSnackbar = () => {
       showSnackbar.value = true;
     };
 
-    const save = () => {
-      if (!props.contactPointToSave.contact || props.contactPointToSave.contact?.length === 0) {
+    function saveAdd(file?: File | null) {
+      if (!props.contactPointToSave?.contact || props.contactPointToSave.contact.length === 0) {
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
-      mutateAsync({ contactPoint: props.contactPointToSave, id: props.id })
-        .then(() => {
-          showSuccessSnackbar();
-          setTimeout(() => {
-            router.push("/admin/contactpoints/");
-            router.go(0);
-          }, 1000); // delay for 1 second
+      const headers = {
+        'Content-Type': 'multipart/form-data'
+      };
+
+      editedContactPoint.value = { ...props.contactPointToSave }; // Create a copy of contactPointToSave
+
+      if (editedContactPoint.value) {
+        mutateAsync({
+          contactPoint: editedContactPoint.value,
+          id: props.contactPointToSave.id,
+          file: file ? file : undefined,
+          image: editedContactPoint.value.image
         })
-        .catch((error) => {
-          const statusCode = error.response?.status;
-          const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
+          .then(() => {
+            showSuccessSnackbar();
+            setTimeout(() => {
+              router.push("/admin/contactpoints/");
+              router.go(0);
+            }, 1000); // delay for 1 second
 
-          emit("error", customErrorMessage);
+          })
+          .catch((error) => {
+            const statusCode = error.response?.status;
+            const fallbackErrorMessage = "An unexpected error occurred";
+            const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
+            errorMessage.value = customErrorMessage;
+            isWriteError.value = true;
+          });
+      } else {
+        // handle case where editedContactPoint.value is null
+        emit("error", "No contact point is available for editing.");
+      }
+    }
 
-        });
-    };
+
 
     return {
       isLoading,
-      save,
+      saveAdd,
       showSnackbar
     }
   }

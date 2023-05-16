@@ -18,6 +18,11 @@
               v-if="linksInDownLoads?.length > 0"
               :links="linksInDownLoads"
             />
+            <img
+              v-if="contactPoint?.image"
+              :src="contactPoint.image.toString()"
+              style="max-width: 400px;max-height:400px;"
+            >
           </v-card-text>
         </v-card>
       </v-col>

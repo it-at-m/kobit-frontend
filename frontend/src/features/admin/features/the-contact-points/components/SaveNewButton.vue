@@ -5,7 +5,7 @@
       color="success"
       :loading="isLoading"
       :disabled="disabled || isLoading"
-      @click="save"
+      @click="() => saveAdd(file)"
     >
       <v-icon>mdi-content-save</v-icon> Speichern
     </v-btn>
@@ -37,42 +37,56 @@ export default defineComponent({
     disabled: {
       type: Boolean,
       default: false
+    },
+    file: {
+      type: File,
+      default: null
     }
   },
   setup(props, { emit }) {
     const { isLoading, mutateAsync } = useCreateNewContactPoint();
     const router = useRouter();
     const showSnackbar = ref(false);
-
+    const isWriteError = ref(false);
+    const errorMessage = ref('');
     const showSuccessSnackbar = () => {
       showSnackbar.value = true;
     };
 
-    const save = async () => {
-      if (!props.contactPointToSave.contact || props.contactPointToSave.contact.length === 0) {
+    function saveAdd(file?: File | null) {
+      if (!props.contactPointToSave?.contact || props.contactPointToSave.contact.length === 0) {
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
-      try {
-        const result = await mutateAsync(props.contactPointToSave);
-        showSuccessSnackbar();
+      const headers = {
+        'Content-Type': 'multipart/form-data'
+      };
+
+      mutateAsync({
+        contactPoint: props.contactPointToSave,
+        file: file ? file : undefined,
+        image: props.contactPointToSave.image
+      })
+        .then(() => {
+          showSuccessSnackbar();
           setTimeout(() => {
             router.push("/admin/contactpoints/");
             router.go(0);
           }, 1000); // delay for 1 second
-      } catch (error) {
-        
-        const statusCode = error.response?.status;
+
+        })
+        .catch((error) => {
+          const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
           const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
-
-          emit("error", customErrorMessage);
-      }
-    };
+          errorMessage.value = customErrorMessage;
+          isWriteError.value = true;
+        });
+    }
 
     return {
       isLoading,
-      save,
+      saveAdd,
       showSnackbar
     };
   },

@@ -17,13 +17,13 @@ export const postTextItem = async (pageType: string, textItem: TextItem, file?: 
 
         // Update the text item with the link
         textItem.link = linkResponse;
+        
 
-        const textItemResponse = await httpPostJson<TextItem>(
+        return httpPostJson<TextItem>(
             `/additional/${pageType}`,
             textItem
         );
 
-        return textItemResponse;
     } else {
         return httpPostJson<TextItem>(
             `/additional/${pageType}`,
@@ -54,12 +54,10 @@ export const putTextItem = async (id: string, pageType: string, textItem: TextIt
 
     }
 
-    const textItemResponse = await httpPutJson<TextItem>(
+    return httpPutJson<TextItem>(
         "/additional/" + pageType + "/text-item/" + id,
         textItem
     );
-
-    return textItemResponse;
 
 }
 

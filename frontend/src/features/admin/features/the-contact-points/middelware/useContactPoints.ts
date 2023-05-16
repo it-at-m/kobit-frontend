@@ -1,26 +1,51 @@
-import {useMutation} from "@tanstack/vue-query";
+import { useMutation } from "@tanstack/vue-query";
 import {
     deleteContactPoint,
     postContactPoint,
     putContactPoint
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
-import {ContactPoint} from "@/features/commons/types/ContactPoint";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
 
-export const useCreateNewContactPoint = () =>
-    useMutation({
-        mutationFn: (newContactPoint: ContactPoint) =>
-            postContactPoint(newContactPoint),
-    });
+
+
 
 export const useUpdateContactPoint = () => useMutation({
-    mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+    mutationFn: async (useContactPoint: UseContactPoint) => {
+        if (useContactPoint.id) {
+            const headers = {
+                "Content-Type": "multipart/form-data",
+            };
+            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, headers);
+        }
+        throw new Error('ID is missing');
+    }
 });
 
 export const useDeleteContactPoint = () => useMutation({
-    mutationFn: (id: string) => deleteContactPoint(id)
-})
+    mutationFn: async (contactPointToDelete: ContactPoint) => {
+        if (contactPointToDelete.id) {
+            return deleteContactPoint(contactPointToDelete);
+        }
+        throw new Error('ID is missing');
+    }
+});
 
-export interface UpdateContactPoint {
+export const useCreateNewContactPoint = () =>
+    useMutation({
+        mutationFn: async (newContactPoint: UseContactPoint) => {
+            const headers = {
+                "Content-Type": "multipart/form-data",
+            };
+
+            await postContactPoint(newContactPoint.contactPoint, newContactPoint.file, headers);
+        },
+    });
+
+
+export interface UseContactPoint {
     contactPoint: ContactPoint;
-    id: string;
+    id?: string;
+    file?: File;
+    image: string;
+    headers?: { 'Content-Type': string | null };
 }

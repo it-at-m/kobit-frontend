@@ -61,7 +61,7 @@
                   multiple
                   persistent-hint
                   small-chips
-                  :disabled="! isCentralAdmin"
+                  :disabled="!isCentralAdmin"
                   @input="changeDepartment"
                 >
                   <template v-slot:no-data>
@@ -225,6 +225,42 @@
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <v-row>
+              <v-col
+                cols="12"
+                class="mb-0 pb-0"
+              >
+                <h3 class="pa-0">
+                  Foto
+                </h3>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <img
+                  v-if="writableContactPoint.image"
+                  :src="writableContactPoint.image.toString()"
+                  style="max-width: 300px;max-height:300px;"
+                >
+                <p v-if="writableContactPoint.image">
+                  Aktuelle Datei: {{
+                    writableContactPoint.image ?
+                      getFileNameFromLink(writableContactPoint.image.toString()) : ''
+                  }}
+                </p>
+                <v-file-input
+                  v-model="file"
+                  :rules="fileRules"
+                  accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
+                  placeholder="Neue Datei auswählen und ersetzen"
+                >
+                  <template v-slot:selection>
+                    <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                  </template>
+                </v-file-input>
+              </v-col>
+            </v-row>
+            <v-divider class="mt-3 mb-5" />
+            <v-row>
               <v-col cols="12">
                 <p>
                   Hinweis: Kompetenzen können nur über den Unterstützungsfinder eingepflegt werden.
@@ -240,6 +276,7 @@
           :id="listItem.id"
           :contact-point-to-save="writableContactPoint"
           :disabled="!isFormValid"
+          :file="file || undefined"
           @error="error"
         />
         <v-btn
@@ -250,7 +287,7 @@
           <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
         <DeleteButton
-          :id="listItem.id"
+          :current-item="listItem"
           class=""
           @error="error"
         />
@@ -260,7 +297,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import { Contact, ContactPoint, ContactPointListItem, Link } from "@/features/commons/types/ContactPoint";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
@@ -273,7 +310,7 @@ import AddContactDialog from "@/features/admin/features/the-contact-points/compo
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
-import {useGetAdminUserInfo} from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -283,6 +320,10 @@ export default defineComponent({
     },
     listItem: {
       type: Object as () => ContactPointListItem
+    },
+    file: {
+      type: File,
+      default: null
     }
   },
   data: () => ({
@@ -297,7 +338,7 @@ export default defineComponent({
     const router = useRouter();
     const writableContactPoint = ref<ContactPoint>();
     const errorMessage = ref('');
-    const {data: adminUserInfo} = useGetAdminUserInfo();
+    const { data: adminUserInfo } = useGetAdminUserInfo();
     const isCentralAdmin = ref(false);
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
@@ -320,7 +361,7 @@ export default defineComponent({
     const cancelForm = () => {
       router.push("/admin/contactpoints/");
       router.go(0);
-        
+
     }
     const cancel = () => {
       isLinkDialogOpen.value = false;
@@ -361,7 +402,7 @@ export default defineComponent({
     };
 
     const changeDepartment = (value: string[]) => {
-      writableContactPoint.value = {...writableContactPoint.value, departments: value} as ContactPoint;
+      writableContactPoint.value = { ...writableContactPoint.value, departments: value } as ContactPoint;
     }
 
     const closeError = () => {
@@ -380,6 +421,60 @@ export default defineComponent({
         writableContactPoint.value = { ...writableContactPoint.value, contact: contacts } as ContactPoint;
       }
     }
+
+    const instance = getCurrentInstance();
+    const root = instance?.proxy.$root || null;
+    const file = ref<File | null>(null);
+    const fileRules = computed(() => [
+      (value: File | null) => {
+        if (!value) return true;
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+        return allowedTypes.includes(value.type) || "Nur JPG, JPEG und PNG-Dateien sind erlaubt.";
+      }
+    ]);
+
+    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
+      if (!fileName) return '';
+      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+
+      const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
+      return (
+        fileName.slice(0, halfLength) +
+        '...' +
+        fileName.slice(fileName.length - halfLength)
+      ).toUpperCase();
+    };
+
+
+    const maxFileNameInputLength = computed(() => {
+      switch (root?.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 25;
+        case 'sm':
+          return 40;
+        case 'md':
+          return 50;
+        case 'lg':
+          return 60;
+        case 'xl':
+          return 70;
+        default:
+          return 50;
+      }
+    });
+
+    const getFileNameFromLink = (link: string) => {
+      if (!link) {
+        return '';
+      }
+      try {
+        const url = new URL(link);
+        return url.pathname.split('/').pop() || '';
+      } catch (error) {
+        console.error(`Invalid URL: ${link}`);
+        return '';
+      }
+    };
     return {
       isLoading,
       writableContactPoint,
@@ -390,6 +485,11 @@ export default defineComponent({
       isReadError,
       isWriteError,
       isCentralAdmin,
+      file,
+      customFileName,
+      getFileNameFromLink,
+      fileRules,
+      maxFileNameInputLength,
       openLinkDialog,
       openContactDialog,
       cancelForm,

@@ -267,7 +267,7 @@ export default defineComponent({
     });
 
     function saveEdit(file?: File | null) {
-      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link, file: file ? file : undefined, })
+      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link, file: file ? file : undefined })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {

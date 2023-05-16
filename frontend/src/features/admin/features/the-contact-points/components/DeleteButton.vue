@@ -52,15 +52,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, PropType } from "vue";
 import { useDeleteContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 import { useRouter } from "vue-router/composables";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
 
 export default defineComponent({
   name: "DeleteButton",
   props: {
-    id: {
-      type: String,
+    currentItem: {
+      type: Object as PropType<ContactPoint | null>,
+      default: null,
     },
   },
   setup(props, { emit }) {
@@ -74,8 +76,11 @@ export default defineComponent({
     };
 
     const deleteContactPoint = () => {
+      if (props.currentItem) {
+        emit("delete", props.currentItem);
+      }
       isDialogActive.value = false;
-      mutateAsync(props.id)
+      mutateAsync(props.currentItem)
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {

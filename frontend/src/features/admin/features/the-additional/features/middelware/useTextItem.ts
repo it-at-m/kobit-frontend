@@ -40,6 +40,7 @@ export const UseDeleteTextItem = () => useMutation({
         throw new Error('ID is missing');
     }
 });
+
 export interface UseTextItem {
     id?: string;
     pageType: PageType;
