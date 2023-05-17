@@ -6,7 +6,7 @@ export interface ContactPoint {
     name: string;
     shortCut: string;
     description: string;
-    department?: string;
+    departments?: string[];
     contact?: Contact[];
     competences?: Competence[];
     links?: Link[];
@@ -27,4 +27,5 @@ export interface ContactPointListItem {
     id?: string;
     name: string;
     shortCut: string;
+    departments: string[];
 }

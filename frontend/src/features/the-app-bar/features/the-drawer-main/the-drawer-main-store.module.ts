@@ -4,9 +4,10 @@ import {
     theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import { erfahreMehrRoutes } from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
+import { erfahreMehrRoutes } from "@/features/the-experience-more/the-experience-more.routes";
 
-import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
+import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/contactPointsRoutes";
+import {adminExperienceMoreRoutes} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
 import { adminRoutes } from "@/features/admin/adminRoutes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";
@@ -49,6 +50,7 @@ export const theDrawerMainModule = {
         listAdminItems: [
             adminRoutes,
             adminContactPointsRoutes,
+            adminExperienceMoreRoutes,
             theMainRoutes,
 
         ],

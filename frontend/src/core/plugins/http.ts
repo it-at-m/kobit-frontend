@@ -20,15 +20,49 @@ export async function httpGetJson<T>(path: string): Promise<T> {
       });
 }
 
-export async function httpPostJson<T>(path: string, data: any): Promise<T> {
-    return configuredAxios.post(path, data).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-}
+export const httpPostMultipart = async <T>(
+    url: string,
+    formData: FormData,
+    headers?: Record<string, string>
+  ): Promise<T> => {
 
-export async function httpPutJson<T>(path: string, data: any): Promise<T> {
-    return configuredAxios.put(path, data)
-        .then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-}
+    return configuredAxios.post(url,formData, {headers}).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
 
+  };
+
+  export async function httpPostJson<T>(path: string, data: any): Promise<T> {
+    return configuredAxios.post(path, data)
+      .then((res) => res ? res.data : Promise.resolve())
+      .catch((error) => {
+        throw error;
+      }) as Promise<T>;
+  }
+
+  export const httpPostDeleteFile = async <T>(
+    url: string,
+    link: string,
+  ): Promise<T> => {
+
+    return configuredAxios.post(url,link).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
+
+  };
+
+
+  export async function httpPutJson<T>(path: string, data: any): Promise<T> {
+    return configuredAxios
+      .put(path, data)
+      .then((res) => (res ? res.data : Promise.resolve()))
+      .catch((error) => {
+        throw error;
+      }) as Promise<T>;
+  }
+  
+
+
+
+export async function httpDeleteOldFile(path: string) {
+    return configuredAxios.delete(path);
+}
 
 export async function httpDeleteJson(path: string) {
     return configuredAxios.delete(path);
