@@ -1,16 +1,9 @@
 <template>
   <v-container fluid>
     <LoadingSpinner :is-loading="isLoading" />
-    <ErrorHandler
-      :is-error="isWriteError"
-      :message="errorMessage"
-      @closeError="closeError"
-    />
-    <v-card
-      flat
-      :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-      class="ma-0 pa-0"
-    >
+    <ErrorHandler :is-error="isWriteError" :message="errorMessage" @closeError="closeError" />
+    <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+      class="ma-0 pa-0">
       <v-card-title class="pa-0">
         Anlaufstelle - Bearbeiten <span class="mdi mdi-pencil  ml-auto" />
       </v-card-title>
@@ -18,52 +11,19 @@
         <div v-if="!isLoading && writableContactPoint">
           <v-form v-model="isFormValid">
             <v-row>
-              <v-col
-                cols="12"
-                sm="12"
-                md="6"
-                lg="6"
-                xl="6"
-              >
-                <v-text-field
-                  :value="writableContactPoint.name"
-                  label="Name der Anlaufstelle"
+              <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+                <v-text-field :value="writableContactPoint.name" label="Name der Anlaufstelle"
                   :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
-                  :counter="100"
-                  @input="changeName"
-                />
+                  :counter="100" @input="changeName" />
               </v-col>
-              <v-col
-                cols="12"
-                sm="12"
-                md="6"
-                lg="6"
-                xl="6"
-              >
-                <v-text-field
-                  :value="writableContactPoint.shortCut"
-                  label="Kurzbezeichnung der Anlaufstelle"
+              <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+                <v-text-field :value="writableContactPoint.shortCut" label="Kurzbezeichnung der Anlaufstelle"
                   :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
-                  :counter="10"
-                  @input="changeShortCut"
-                />
+                  :counter="10" @input="changeShortCut" />
               </v-col>
-              <v-col
-                cols="12"
-                sm="12"
-                md="3"
-                lg="3"
-                xl="3"
-              >
-                <v-combobox
-                  :value="writableContactPoint.departments"
-                  :label="label.addDepartment"
-                  multiple
-                  persistent-hint
-                  small-chips
-                  :disabled="!isCentralAdmin"
-                  @input="changeDepartment"
-                >
+              <v-col cols="12" sm="12" md="3" lg="3" xl="3">
+                <v-combobox :value="writableContactPoint.departments" :label="label.addDepartment" multiple
+                  persistent-hint small-chips :disabled="!isCentralAdmin" @input="changeDepartment">
                   <template v-slot:no-data>
                     <v-list-item>
                       <v-list-item-content>
@@ -80,56 +40,27 @@
             <MarkDownAlert :label="label" />
             <v-row class="ma-0 pa-0">
               <v-col cols="6">
-                <v-textarea
-                  :value="writableContactPoint.description"
-                  label="Beschreibung"
+                <v-textarea :value="writableContactPoint.description" label="Beschreibung"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                  :counter="2000"
-                  @input="changeDescription"
-                />
+                  :counter="2000" @input="changeDescription" />
               </v-col>
               <v-col cols="6">
-                <div
-                  style="border-bottom: 2px solid #eee"
-                  v-html="computeMarkdown"
-                />
+                <div style="border-bottom: 2px solid #eee" v-html="computeMarkdown" />
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <v-row>
-              <v-col
-                cols="12"
-                class="mb-0 pb-0"
-              >
+              <v-col cols="12" class="mb-0 pb-0">
                 <h3 class="pa-0">
                   Kontakte
                 </h3>
               </v-col>
             </v-row>
-            <v-row
-              v-for="contact in writableContactPoint.contact"
-              :key="contact.id"
-            >
-              <v-col
-                lg="10"
-                md="10"
-                sm="10"
-                cols="8"
-                class="mb-0 pb-0"
-              >
-                <v-text-field
-                  v-model="contact.email"
-                  label="E-Mail"
-                  readonly
-                />
+            <v-row v-for="contact in writableContactPoint.contact" :key="contact.id">
+              <v-col lg="10" md="10" sm="10" cols="8" class="mb-0 pb-0">
+                <v-text-field v-model="contact.email" label="E-Mail" readonly />
               </v-col>
-              <v-col
-                lg="2"
-                md="2"
-                sm="2"
-                cols="4"
-                class="mb-0 pb-0"
-              >
+              <v-col lg="2" md="2" sm="2" cols="4" class="text-right">
                 <v-btn @click="removeContact(contact)">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -137,68 +68,31 @@
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-btn
-                  depressed
-                  color="secondary"
-                  class="buttonText--text"
-                  @click="openContactDialog"
-                >
+                <v-btn depressed color="secondary" class="buttonText--text" @click="openContactDialog">
                   + {{ label.addContact }}
                 </v-btn>
               </v-col>
               <v-col cols="12">
-                <AddContactDialog
-                  :is-dialog-active="isContactDialogOpen"
-                  @cancel="cancel"
-                  @addNewContact="addNewContact"
-                />
+                <AddContactDialog :is-dialog-active="isContactDialogOpen" @cancel="cancel"
+                  @addNewContact="addNewContact" />
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <v-row>
-              <v-col
-                cols="12"
-                class="mb-0 pb-0"
-              >
+              <v-col cols="12" class="mb-0 pb-0">
                 <h3 class="pa-0">
                   Links
                 </h3>
               </v-col>
             </v-row>
-            <v-row
-              v-for="link in writableContactPoint.links"
-              :key="link.id"
-            >
-              <v-col
-                lg="5"
-                md="5"
-                sm="5"
-                cols="4"
-              >
-                <v-text-field
-                  v-model="link.name"
-                  label="Titel"
-                  readonly
-                />
+            <v-row v-for="link in writableContactPoint.links" :key="link.id">
+              <v-col lg="5" md="5" sm="5" cols="4">
+                <v-text-field v-model="link.name" label="Titel" readonly />
               </v-col>
-              <v-col
-                lg="5"
-                md="5"
-                sm="5"
-                cols="4"
-              >
-                <v-text-field
-                  v-model="link.url"
-                  label="URL"
-                  readonly
-                />
+              <v-col lg="5" md="5" sm="5" cols="4">
+                <v-text-field v-model="link.url" label="URL" readonly />
               </v-col>
-              <v-col
-                lg="2"
-                md="2"
-                sm="2"
-                cols="4"
-              >
+              <v-col lg="2" md="2" sm="2" cols="4"  class="text-right">
                 <v-btn @click="removeLink(link)">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -206,57 +100,43 @@
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-btn
-                  depressed
-                  color="secondary"
-                  class="buttonText--text"
-                  @click="openLinkDialog"
-                >
+                <v-btn depressed color="secondary" class="buttonText--text" @click="openLinkDialog">
                   + {{ label.addLink }}
                 </v-btn>
               </v-col>
               <v-col cols="12">
-                <AddLinkDialog
-                  :is-dialog-active="isLinkDialogOpen"
-                  @cancel="cancel"
-                  @addNewLink="addNewLink"
-                />
+                <AddLinkDialog :is-dialog-active="isLinkDialogOpen" @cancel="cancel" @addNewLink="addNewLink" />
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <v-row>
-              <v-col
-                cols="12"
-                class="mb-0 pb-0"
-              >
+              <v-col cols="12" class="mb-0 pb-0">
                 <h3 class="pa-0">
                   Foto
                 </h3>
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12">
-                <img
-                  v-if="writableContactPoint.image"
-                  :src="writableContactPoint.image.toString()"
-                  style="max-width: 300px;max-height:300px;"
-                >
+              <v-col lg="10" md="10" sm="10" cols="8">
+                <img v-if="writableContactPoint.image" :src="writableContactPoint.image.toString()"
+                  style="max-width: 300px; max-height: 300px;">
                 <p v-if="writableContactPoint.image">
                   Aktuelle Datei: {{
                     writableContactPoint.image ?
                       getFileNameFromLink(writableContactPoint.image.toString()) : ''
                   }}
                 </p>
-                <v-file-input
-                  v-model="file"
-                  :rules="fileRules"
-                  accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
-                  placeholder="Neue Datei auswählen und ersetzen"
-                >
+                <v-file-input v-model="file" :rules="fileRules" accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
+                  placeholder="Neue Datei auswählen und ersetzen">
                   <template v-slot:selection>
                     <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
                   </template>
                 </v-file-input>
+              </v-col>
+              <v-col lg="2" md="2" sm="2" cols="4" class="text-right"> <!-- Add the 'text-right' class here -->
+                <v-btn v-if="writableContactPoint.image" @click="removeImage()">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
@@ -272,25 +152,12 @@
         </div>
       </v-card-text>
       <v-card-actions class="ma-0 pa-0">
-        <SaveUpdate
-          :id="listItem.id"
-          :contact-point-to-save="writableContactPoint"
-          :disabled="!isFormValid"
-          :file="file || undefined"
-          @error="error"
-        />
-        <v-btn
-          class="ma-2"
-          color="error"
-          @click="cancelForm"
-        >
+        <SaveUpdate class="ml-4" :id="listItem.id" :contact-point-to-save="writableContactPoint" :disabled="!isFormValid"
+          :file="file || undefined" @error="error" />
+        <v-btn class="ma-2" color="error" @click="cancelForm">
           <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
-        <DeleteButton
-          :current-item="listItem"
-          class=""
-          @error="error"
-        />
+        <DeleteButton :current-item="listItem" class="" @error="error" />
       </v-card-actions>
     </v-card>
   </v-container>
@@ -422,6 +289,12 @@ export default defineComponent({
       }
     }
 
+    function removeImage() {
+      if (writableContactPoint.value) {
+        writableContactPoint.value = { ...writableContactPoint.value, image: undefined } as ContactPoint;
+      }
+    }
+
     const instance = getCurrentInstance();
     const root = instance?.proxy.$root || null;
     const file = ref<File | null>(null);
@@ -486,6 +359,7 @@ export default defineComponent({
       isWriteError,
       isCentralAdmin,
       file,
+      removeImage,
       customFileName,
       getFileNameFromLink,
       fileRules,
