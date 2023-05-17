@@ -11,7 +11,10 @@
           <v-card-text>
             <v-row>
               <v-col cols="12">
-                <span v-html="computeMarkdown" />
+                <span
+                  class="markdown-content"
+                  v-html="computeMarkdown"
+                />
               </v-col>
             </v-row>
             <v-row>

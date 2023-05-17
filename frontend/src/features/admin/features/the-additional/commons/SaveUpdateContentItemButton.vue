@@ -58,13 +58,12 @@ export default defineComponent({
         emit("error", "Textbereich darf nicht leer sein.");
         return;
       }
-      mutateAsync({id: props.id, pageType: props.pageType, contentItem: props.contentItemToSave })
+      mutateAsync({ id: props.id, pageType: props.pageType, contentItem: props.contentItemToSave })
         .then(() => {
           showSuccessSnackbar();
           setTimeout(() => {
-            router.push("/admin/erfahre-mehr/");
-            router.go(0);
-          }, 1000); // delay for 1 second
+            router.go(0); // Reload the current page
+          }, 1000); // Delay for 1 second
         })
         .catch((error) => {
           const statusCode = error.response?.status;

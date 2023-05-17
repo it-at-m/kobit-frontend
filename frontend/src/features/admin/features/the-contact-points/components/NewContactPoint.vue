@@ -98,12 +98,61 @@
               >
                 <v-icon>mdi-format-underline</v-icon>
               </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('ordered-list')"
+              >
+                <v-icon>mdi-format-list-numbered</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('unordered-list')"
+              >
+                <v-icon>mdi-format-list-bulleted</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('line-break')"
+              >
+                <v-icon>mdi-format-line-spacing</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('h1')"
+              >
+                <v-icon>mdi-format-header-1</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('h2')"
+              >
+                <v-icon>mdi-format-header-2</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('h3')"
+              >
+                <v-icon>mdi-format-header-3</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('h4')"
+              >
+                <v-icon>mdi-format-header-4</v-icon>
+              </v-btn>
+              <v-btn
+                icon
+                @click="applyFormatting('h5')"
+              >
+                <v-icon>mdi-format-header-5</v-icon>
+              </v-btn>
             </v-col>
           </v-row>
           <v-row class="ma-0 pa-0">
             <v-col cols="6">
               <v-textarea
-                :value="newContactPoint?.description"
+                id="description-textarea"
+                :value="newContactPoint.description"
                 label="Beschreibung"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                 :counter="2000"
@@ -114,6 +163,7 @@
             <v-col cols="6">
               <div
                 style="border-bottom: 2px solid #eee"
+                class="markdown-content"
                 v-html="computeMarkdown"
               />
             </v-col>
@@ -338,6 +388,12 @@ export default defineComponent({
     const isCentralAdmin = ref(false);
     const { data: adminUserInfo } = useGetAdminUserInfo();
 
+    watch(newContactPoint, (newValue) => {
+      if (!newContactPoint.value) {
+        newContactPoint.value = newValue;
+      }
+    });
+
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
         const department = newValue.department;
@@ -396,11 +452,6 @@ export default defineComponent({
 
     const changeDepartment = (value: string[]) => {
       newContactPoint.value = { ...newContactPoint.value, departments: value } as ContactPoint;
-    }
-
-
-    const changeDescription = (value: string) => {
-      newContactPoint.value = { ...newContactPoint.value, description: value } as ContactPoint;
     }
 
     const cancelForm = () => {
@@ -463,7 +514,74 @@ export default defineComponent({
       }
     });
 
+    const changeDescription = () => {
+      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement;
+      const value = textarea.value;
+      if (newContactPoint.value) {
+        newContactPoint.value = {
+          ...newContactPoint.value,
+          description: value
+        };
+      }
+    };
 
+
+    const applyFormatting = (format: string) => {
+      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement | null;
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = textarea.value.substring(start, end);
+
+      let newText = '';
+      switch (format) {
+        case 'bold':
+          newText = `<b>${selectedText}</b>`;
+          break;
+        case 'italic':
+          newText = `<i>${selectedText}</i>`;
+          break;
+        case 'underline':
+          newText = `<u>${selectedText}</u>`;
+          break;
+        case 'ordered-list':
+          newText = `\n<ol>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ol>\n`;
+          break;
+        case 'unordered-list':
+          newText = `\n<ul>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ul>\n`;
+          break;
+        case 'line-break':
+          newText = '<br />';
+          break;
+        case 'h1':
+          newText = `<h1>${selectedText}</h1>`;
+          break;
+        case 'h2':
+          newText = `<h2>${selectedText}</h2>`;
+          break;
+        case 'h3':
+          newText = `<h3>${selectedText}</h3>`;
+          break;
+        case 'h4':
+          newText = `<h4>${selectedText}</h4>`;
+          break;
+        case 'h5':
+          newText = `<h5>${selectedText}</h5>`;
+          break;
+        default:
+          newText = selectedText;
+          break;
+      }
+
+      const currentValue = newContactPoint.value?.description || '';
+      const newValue =
+        currentValue.substring(0, start) + newText + currentValue.substring(end);
+      newContactPoint.value = {
+        ...newContactPoint.value,
+        description: newValue
+      } as ContactPoint;
+    };
 
     return {
       newContactPoint,
@@ -476,6 +594,7 @@ export default defineComponent({
       file,
       fileRules,
       maxFileNameInputLength,
+      applyFormatting,
       customFileName,
       changeName,
       changeShortCut,
@@ -490,8 +609,7 @@ export default defineComponent({
       cancel,
       cancelForm,
       error,
-      closeError,
-
+      closeError
     }
   }
 }

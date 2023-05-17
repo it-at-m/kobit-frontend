@@ -89,4 +89,9 @@ export default class App extends Vue{
   }
 }
 
+
+.markdown-content a {
+  color: blue !important; /* Set your desired text color for anchors */
+}
+
 </style>

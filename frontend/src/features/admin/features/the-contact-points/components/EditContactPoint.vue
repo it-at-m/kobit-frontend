@@ -163,6 +163,7 @@
               <v-col cols="6">
                 <div
                   style="border-bottom: 2px solid #eee"
+                  class="markdown-content" 
                   v-html="computeMarkdown"
                 />
               </v-col>
@@ -430,10 +431,12 @@ export default defineComponent({
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
     const router = useRouter();
-    const writableContactPoint = ref<ContactPoint>();
+
     const errorMessage = ref('');
     const { data: adminUserInfo } = useGetAdminUserInfo();
     const isCentralAdmin = ref(false);
+
+    const writableContactPoint = ref<ContactPoint>();
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
