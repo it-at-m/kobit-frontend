@@ -3,7 +3,10 @@
     <LoadingSpinner :is-loading="isLoading" />
     <v-row>
       <v-col>
-        <v-card flat :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''">
+        <v-card
+          flat
+          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        >
           <v-card-title>{{ contactPoint?.name }}</v-card-title>
           <v-card-text>
             <v-row>
@@ -12,13 +15,34 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" sm="12" md="12" lg="6" xl="6">
-                <base-fields-contact v-if="contactPoint?.contact" :contact-point="contactPoint" />
-                <base-fields-additional-content v-if="linksInDownLoads?.length > 0" :links="linksInDownLoads" />
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+                lg="6"
+                xl="6"
+              >
+                <base-fields-contact
+                  v-if="contactPoint?.contact"
+                  :contact-point="contactPoint"
+                />
+                <base-fields-additional-content
+                  v-if="linksInDownLoads?.length > 0"
+                  :links="linksInDownLoads"
+                />
               </v-col>
-              <v-col cols="12" sm="12" md="12" lg="6" xl="6">
-                <img v-if="contactPoint?.image" :src="contactPoint.image.toString()"
-                  style="width: 100%; max-height:400px; object-fit: contain;">
+              <v-col
+                cols="12"
+                sm="12"
+                md="12"
+                lg="6"
+                xl="6"
+              >
+                <img
+                  v-if="contactPoint?.image"
+                  :src="contactPoint.image.toString()"
+                  style="width: 100%; max-height:400px; object-fit: contain;"
+                >
               </v-col>
             </v-row>
           </v-card-text>
