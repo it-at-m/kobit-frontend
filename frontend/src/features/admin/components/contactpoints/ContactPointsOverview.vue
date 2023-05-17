@@ -112,7 +112,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const {isLoading, isError, listItems, error} = useGetContactPointListItems();
+    const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
     const selectedItem = ref<ContactPointListItem>();
     const isAddNew = ref(false);
 

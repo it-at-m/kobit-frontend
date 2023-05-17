@@ -67,17 +67,18 @@ import {defineComponent, ref} from "vue";
 import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
 import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
-import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {erfahreMehrRoutes} from "@/features/the-erfahre-mehr/the-erfahre-mehr.routes";
 import {adminBaseHeadLineLabels, adminInformationLabels} from "@/features/admin/i18n";
 import {adminContactPointsRoutes} from "@/features/admin/components/contactpoints/contactPointsRoutes";
 import UserInformationDialog from "@/features/admin/components/userinformation/UserInformationDialog.vue";
+import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
 
 export default defineComponent({
   name: "AdminOverview",
   components: {UserInformationDialog, BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
   setup() {
     const isInfoDialogActive = ref(false);
+
     function closeInfoDialog() {
       isInfoDialogActive.value = false;
     }
@@ -92,7 +93,7 @@ export default defineComponent({
       isInfoDialogActive,
       labels: adminBaseHeadLineLabels,
       anlaufstellen: adminContactPointsRoutes,
-      unterstuetzungsfinder: theUnterstuetzungsfinderRoutes,
+      unterstuetzungsfinder: adminUFinderRoutes,
       erfahreMehr: erfahreMehrRoutes,
       infoLabels: adminInformationLabels
     }

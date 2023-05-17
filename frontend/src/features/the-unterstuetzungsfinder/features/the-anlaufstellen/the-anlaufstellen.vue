@@ -93,7 +93,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const selectedItemId = ref<string>();
-    const {isLoading, isError, listItems, error} = useGetContactPointListItems();
+    const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
 
     watch(() => route.params.id, (newId) => {
       selectedItemId.value = newId
@@ -125,31 +125,6 @@ export default defineComponent({
   }
 })
 
-/*@Component({
-  components: {
-    BackButton,
-    TheCardInitialAnlaufstellePage,
-    BaseCardAnlaufstelle,
-    BasePageContent
-  }
-})
-export default class TheAnlaufstellen extends Vue {
-
-  selectedAnlaufstelle: Anlaufstelle | null = null;
-
-  get loading(): boolean {
-    return this.apiState > Loading.LOADED;
-  }
-
-  get anlaufstellen(): Anlaufstelle[] {
-    return this.$store.getters[getAnlaufstellen()];
-  }
-
-  back() {
-    this.$router.push('/');
-  }
-
-}*/
 </script>
 
 <style scoped>

@@ -18,7 +18,7 @@ interface DecisionPoint {
 }
 
 export default interface Conversation {
-    readonly decisionPoint: DecisionPoint;
+    readonly decisionPoint?: DecisionPoint;
     readonly contactPoints: ContactPoint[]
 }
 

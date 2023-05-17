@@ -2,9 +2,10 @@ import {useMutation} from "@tanstack/vue-query";
 import {
     deleteContactPoint,
     postContactPoint,
-    putContactPoint
+    putContactPoint, updateCompetences
 } from "@/features/admin/components/contactpoints/api/ContactPointsManipulationClient";
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
+import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
 export const useCreateNewContactPoint = () =>
 useMutation({
@@ -13,8 +14,14 @@ useMutation({
   });
 
 export const useUpdateContactPoint = () => useMutation({
-    mutationFn: async (updateContactPoint: UpdateContactPoint) => 
-        await putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+    mutationFn: (updateContactPoint: UpdateContactPoint) =>
+         putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+});
+
+export const useUpdateCompetences = () => useMutation({
+    mutationFn: (itemsToUpdate: ListItemToCompetenceView[]) =>
+        updateCompetences(itemsToUpdate)
+
 });
 
 export const useDeleteContactPoint = () => useMutation({

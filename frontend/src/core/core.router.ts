@@ -28,6 +28,7 @@ import {adminContactPointsRoutes} from "@/features/admin/components/contactpoint
 import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-details.routes";
+import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
 
 Vue.use(Router);
 
@@ -66,7 +67,8 @@ const router = new Router({
         theAnlaufstellenDetailsRoutes,
         theAngeboteRoutes,
         adminRoutes,
-        adminContactPointsRoutes
+        adminContactPointsRoutes,
+        adminUFinderRoutes
     ]
 });
 
