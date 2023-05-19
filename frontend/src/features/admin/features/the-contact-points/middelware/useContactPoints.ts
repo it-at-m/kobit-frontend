@@ -15,8 +15,6 @@ export const useCreateNewContactPoint = () =>
 
 export const useUpdateContactPoint = () => useMutation({
     mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
-    mutationFn: (updateContactPoint: UpdateContactPoint) =>
-         putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
 });
 
 export const useUpdateCompetences = () => useMutation({
