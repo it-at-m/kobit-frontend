@@ -456,7 +456,7 @@ export default defineComponent({
       isContactDialogOpen.value = true;
     }
     const cancelForm = () => {
-      router.push("/admin/contactpoints/");
+      router.push("/admin/anlaufstellen/");
       router.go(0);
 
     }
@@ -686,28 +686,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-::-webkit-scrollbar {
-  width: 20px;
-}
 
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
-}
-
-.rich-textarea {
-  border: 1px solid #ccc;
-  padding: 10px;
-  min-height: 200px;
-}
 </style>

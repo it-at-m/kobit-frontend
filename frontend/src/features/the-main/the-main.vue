@@ -61,6 +61,7 @@ export default class Main extends Vue {
   }
 
   get anlaufstellen(): unknown {
+    theAnlaufstellenRoutes.path = "/anlaufstellen/"
     return theAnlaufstellenRoutes;
   }
 

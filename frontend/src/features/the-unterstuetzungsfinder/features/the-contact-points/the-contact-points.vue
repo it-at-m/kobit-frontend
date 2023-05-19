@@ -1,13 +1,37 @@
 <template>
-  <BasePageContent :icon="icon" :name="name" :info-text="infoText" :is-loading="false">
+  <BasePageContent
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="false"
+  >
     <BackButton :callback="back" />
     <v-row>
-      <v-col cols="12" sm="12" md="4" lg="4" xl="3">
-        <v-list v-if="listItems?.length > 0" dense
+      <v-col
+        cols="12"
+        sm="12"
+        md="4"
+        lg="4"
+        xl="3"
+      >
+        <v-list
+          v-if="listItems?.length > 0"
+          dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
-          style="overflow-y: scroll" class="custom-scrollbar" order-last order-sm-last order-md-first>
-          <v-list-item v-for="listItem in listItems" :key="listItem.id" three-line link
-            @click="setSelectedItem(listItem)">
+          style="overflow-y: scroll"
+          class="custom-scrollbar"
+          order-last
+          order-sm-last
+          order-md-first
+        >
+          <v-list-item
+            v-for="listItem in listItems"
+            :key="listItem.id"
+            three-line
+            link
+            :class="{ 'selected': listItem.id === selectedItemId }"
+            @click="setSelectedItem(listItem)"
+          >
             <v-list-item-content>
               <v-list-item-title>
                 {{ listItem.name }}
@@ -19,8 +43,20 @@
           </v-list-item>
         </v-list>
       </v-col>
-      <v-divider vertical class="mb-3 mt-2" />
-      <v-col cols="12" sm="12" md="8" lg="8" xl="9" order-first order-sm-first order-md-last>
+      <v-divider
+        vertical
+        class="mb-3 mt-2"
+      />
+      <v-col
+        cols="12"
+        sm="12"
+        md="8"
+        lg="8"
+        xl="9"
+        order-first
+        order-sm-first
+        order-md-last
+      >
         <the-card-initial-anlaufstelle-page v-if="selectedItemId === undefined" />
         <base-card-anlaufstelle v-else />
       </v-col>
@@ -131,5 +167,9 @@ export default defineComponent({
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
+}
+
+.selected {
+  background-color: #e6f0ff;
 }
 </style>

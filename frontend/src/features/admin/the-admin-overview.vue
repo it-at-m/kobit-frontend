@@ -91,12 +91,17 @@ export default defineComponent({
       isInfoDialogActive.value = true;
     }
 
+    const anlaufstellen = {
+    ...adminContactPointsRoutes,
+    path: adminContactPointsRoutes.path.replace('/:id?', '/')
+     };
+
     return {
       closeInfoDialog,
       openInfoDialog,
       isInfoDialogActive,
       labels: adminBaseHeadLineLabels,
-      anlaufstellen: adminContactPointsRoutes,
+      anlaufstellen,
       unterstuetzungsfinder: theUnterstuetzungsfinderRoutes,
       infoLabels: adminInformationLabels,
       erfahreMehr: adminExperienceMoreRoutes

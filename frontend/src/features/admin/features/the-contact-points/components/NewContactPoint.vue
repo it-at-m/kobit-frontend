@@ -154,6 +154,7 @@
                 id="description-textarea"
                 :value="newContactPoint.description"
                 label="Beschreibung"
+                rows="12"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                 :counter="2000"
                 prepend-inner-icon="mdi-format-align-left"
@@ -455,7 +456,7 @@ export default defineComponent({
     }
 
     const cancelForm = () => {
-      router.push("/admin/contactpoints/");
+      router.push("/admin/anlaufstellen/");
       router.go(0);
 
     }

@@ -78,7 +78,7 @@ export default defineComponent({
           .then(() => {
             showSuccessSnackbar();
             setTimeout(() => {
-              router.push("/admin/contactpoints/");
+              router.push("/admin/anlaufstellen/" + editedContactPoint.value?.id);
               router.go(0);
             }, 1000); // delay for 1 second
 

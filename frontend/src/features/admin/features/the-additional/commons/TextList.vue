@@ -20,7 +20,10 @@
           </v-list-item>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <v-row class="pt-5">
+          <v-row
+            v-if="item.link"
+            class="pt-5"
+          >
             <v-col
               cols="12"
               sm="12"
@@ -36,7 +39,7 @@
                   height="300px"
                 >
               </p>
-              <p v-else>
+              <p v-else-if="item.link">
                 No preview available
               </p>
             </v-col>

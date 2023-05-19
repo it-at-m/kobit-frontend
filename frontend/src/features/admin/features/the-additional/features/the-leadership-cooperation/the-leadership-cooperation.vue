@@ -306,30 +306,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-::-webkit-scrollbar {
+::v-deep textarea::-webkit-scrollbar {
   width: 20px;
 }
 
-::-webkit-scrollbar-track {
+::v-deep textarea::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+::v-deep textarea::-webkit-scrollbar-thumb {
   background-color: #d6dee1;
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
 }
 
-::-webkit-scrollbar-thumb:hover {
+::v-deep textarea::-webkit-scrollbar-thumb:hover {
   background-color: #a8bbbf;
-}
-
-.custom-textarea ::v-deep textarea {
-  font-size: 0.875rem !important;
-  font-weight: 400;
-  line-height: 1.375rem !important;
-  letter-spacing: 0.0071428571em !important;
-  max-height: 50% !important;
 }
 </style>

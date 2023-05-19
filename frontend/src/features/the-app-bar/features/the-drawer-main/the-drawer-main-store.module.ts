@@ -42,14 +42,20 @@ export const theDrawerMainModule = {
     state: {
         listItems: [
             theMainRoutes,
-            theAnlaufstellenRoutes,
+            {
+                ...theAnlaufstellenRoutes,
+                path: '/anlaufstellen/', // Override the path when id is undefined
+            },
             theUnterstuetzungsfinderRoutes,
             erfahreMehrRoutes,
             adminRoutes
         ],
         listAdminItems: [
             adminRoutes,
-            adminContactPointsRoutes,
+            {
+                ...adminContactPointsRoutes,
+                path: '/admin/anlaufstellen/', // Override the path when id is undefined
+            },
             adminExperienceMoreRoutes,
             theMainRoutes,
 
