@@ -11,8 +11,8 @@
         <v-card-title class="text-h5 grey lighten-2">
           {{ labels.informationTitle }}
         </v-card-title>
-        <v-card-subtitle>
-          {{ adminRole.department }}
+        <v-card-subtitle class="mt-1">
+          Servicebereich: {{ adminRole.department }}
         </v-card-subtitle>
         <v-card-text>
           {{ adminRole.infoText }}
