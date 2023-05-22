@@ -163,7 +163,7 @@
               <v-col cols="6">
                 <div
                   style="border-bottom: 2px solid #eee"
-                  class="markdown-content" 
+                  class="markdown-content"
                   v-html="computeMarkdown"
                 />
               </v-col>
@@ -365,14 +365,14 @@
           </v-form>
         </div>
       </v-card-text>
-      <v-card-actions class="ma-0 pa-0">
+      <v-card-actions>
         <SaveUpdate
           :id="listItem.id"
           class="ml-4"
           :contact-point-to-save="writableContactPoint"
           :disabled="!isFormValid"
           :file="file || undefined"
-          @error="error"
+          @error="error($event)"
         />
         <v-btn
           class="ma-2"
