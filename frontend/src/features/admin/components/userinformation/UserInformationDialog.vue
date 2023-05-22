@@ -12,10 +12,10 @@
           {{ labels.informationTitle }}
         </v-card-title>
         <v-card-subtitle class="mt-1">
-          Servicebereich: {{ adminRole.department }}
+          Servicebereich: {{ adminRole?.department }}
         </v-card-subtitle>
         <v-card-text>
-          {{ adminRole.infoText }}
+          {{ adminRole?.infoText }}
         </v-card-text>
 
         <v-divider />

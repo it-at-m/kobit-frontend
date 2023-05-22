@@ -320,12 +320,9 @@
                   :src="writableContactPoint.image.toString()"
                   style="max-width: 300px; max-height: 300px;"
                 >
-                <p v-if="writableContactPoint.image">
-                  Aktuelle Datei: {{
-                    writableContactPoint.image ?
-                      getFileNameFromLink(writableContactPoint.image.toString()) : ''
-                  }}
-                </p>
+
+                  <p v-if="writableContactPoint.image">Aktuelle Datei: <a style="color:blue;" target="_blank" :href="writableContactPoint.image.toString()">{{ writableContactPoint.image ? getFileNameFromLink(writableContactPoint.image.toString()) : '' }}</a></p>
+
                 <v-file-input
                   v-model="file"
                   :rules="fileRules"

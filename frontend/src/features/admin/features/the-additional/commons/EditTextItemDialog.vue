@@ -41,7 +41,7 @@
               </v-row>
               <v-row v-if="props.pageType === 'DOWNLOADS'">
                 <v-col cols="12">
-                  <p>Aktuelle Datei: {{ editedItem.link ? getFileNameFromLink(editedItem.link.toString()) : '' }}</p>
+                  <p>Aktuelle Datei: <a style="color:blue;" target="_blank" :href="editedItem.link.toString()">{{ editedItem.link ? getFileNameFromLink(editedItem.link.toString()) : '' }}</a></p>
                   <v-file-input
                     v-model="file"
                     :rules="fileRules"
