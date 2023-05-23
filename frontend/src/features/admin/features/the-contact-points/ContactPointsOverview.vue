@@ -98,7 +98,7 @@ import NewContactPoint from "@/features/admin/features/the-contact-points/compon
 import EditContactPoint from "@/features/admin/features/the-contact-points/components/EditContactPoint.vue";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
-import {useGetEditableContactPoints} from "@/features/commons/middleware/useGetContactPoints";
+import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 
 export default defineComponent({
   name: "ContactPointsOverview",

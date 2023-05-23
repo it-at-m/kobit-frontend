@@ -2,7 +2,7 @@ import {useMutation} from "@tanstack/vue-query";
 import {
     deleteContactPoint,
     postContactPoint,
-    putContactPoint
+    putContactPoint, updateCompetences
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
 import {ContactPoint} from "@/features/commons/types/ContactPoint";
 import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";

@@ -3,7 +3,6 @@ import {getContactPointById, getContactPoints} from "@/features/commons/api/Cont
 import {Ref} from "vue";
 import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
 import {getAdminUserInfo} from "@/features/admin/components/userinformation/api/AdminInfoClient";
-import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
 import {AdminUserInfo} from "@/features/admin/components/userinformation/model/AdminUserInfo";
 
 export const useGetContactPointListItems = () =>

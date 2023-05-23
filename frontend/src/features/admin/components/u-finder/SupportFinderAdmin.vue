@@ -232,7 +232,7 @@ export default defineComponent({
     const isFinished = computed(() => data.value?.decisionPoint === null);
 
     function back() {
-      router.push('/');
+      router.push('/admin');
     }
 
     function closeToolTips() {

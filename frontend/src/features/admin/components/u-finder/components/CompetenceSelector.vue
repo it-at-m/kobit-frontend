@@ -93,11 +93,10 @@ import Conversation from "@/features/the-unterstuetzungsfinder/types/conversatio
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
-import {
-  useUpdateCompetences
-} from "@/features/admin/components/contactpoints/middelware/useContactPoints";
+
 import {useRouter} from "vue-router/composables";
 import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
+import {useUpdateCompetences} from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 
 export default defineComponent({
       name: "CompetenceSelector",
