@@ -176,6 +176,7 @@ export default defineComponent({
 
         const cancel = () => {
           router.push("/admin/unterstuetzungsfinder");
+          router.go(0);
         }
 
         return {
