@@ -61,14 +61,17 @@
       <v-row>
         <v-col>
           <v-btn
-          @click="save">
-            Save
+          @click="save"
+          color="success">
+            <v-icon>mdi-content-save</v-icon> Speichern
           </v-btn>
         </v-col>
         <v-col>
           <v-btn
-          @click="cancel">
-            Cancel
+          @click="cancel"
+          class="ma-2"
+          color="error">
+            <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
         </v-col>
       </v-row>
