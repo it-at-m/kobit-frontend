@@ -98,7 +98,7 @@ import NewContactPoint from "@/features/admin/features/the-contact-points/compon
 import EditContactPoint from "@/features/admin/features/the-contact-points/components/EditContactPoint.vue";
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-card-initial-anlaufstelle-page.vue";
-import {useGetEditableContactPoints} from "@/features/commons/middleware/useGetContactPoints";
+import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 
 export default defineComponent({
   name: "ContactPointsOverview",
@@ -109,7 +109,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const {isLoading, isError, data: listItems, error} = useGetEditableContactPoints();
+    const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
     const selectedItem = ref<ContactPointListItem>();
     const isAddNew = ref(false);
 

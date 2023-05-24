@@ -33,11 +33,10 @@
             <v-divider class="mt-3 mb-5" />
             <v-row>
               <v-col>
-                <the-unterstuetzungsfinder-ergebnis
-                    :convo="conversation"
-                    :given-answers="givenAnswers"
-                    :restart="restart"
-                />
+                <CompetenceSelector
+                :given-answers="givenAnswers"
+                :convo="conversation"
+                :restart="restart"/>
               </v-col>
             </v-row>
           </template>
@@ -205,10 +204,12 @@ import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/Ques
 import {useMutation} from "@tanstack/vue-query";
 import {nextStep} from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
 import {useRouter} from "vue-router/composables";
+import CompetenceSelector from "@/features/admin/components/u-finder/components/CompetenceSelector.vue";
 
 export default defineComponent({
-  name: "TheUnterstuetzungsfinder",
+  name: "SupportFinderAdmin",
   components: {
+    CompetenceSelector,
     BackButton,
     BasePageContent,
     TheUnterstuetzungsfinderErgebnis,
@@ -231,7 +232,7 @@ export default defineComponent({
     const isFinished = computed(() => data.value?.decisionPoint === null);
 
     function back() {
-      router.push('/');
+      router.push('/admin');
     }
 
     function closeToolTips() {
