@@ -61,7 +61,7 @@ export default defineComponent({
       type: Array as PropType<Array<QuestionAndAnswer>>
     },
     convo: {
-      type: Conversation
+      type: Object as () => Conversation
     }
   }
 });

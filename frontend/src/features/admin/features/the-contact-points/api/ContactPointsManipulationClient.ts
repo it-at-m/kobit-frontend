@@ -1,5 +1,8 @@
 import { httpDeleteJson, httpPostJson, httpPutJson, httpPostMultipart, httpDeleteS3File } from "@/core/plugins/http";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import {httpDeleteJson, httpPostJson, httpPutJson} from "@/core/plugins/http";
+import {ContactPoint} from "@/features/commons/types/ContactPoint";
+import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
 
 
@@ -19,7 +22,6 @@ export const postContactPoint = async (contactPoint: ContactPoint, file?: File, 
     }
 
     return httpPostJson<ContactPoint>("/anlaufstellen-management/anlaufstellen", contactPoint);
-
 };
 
 
@@ -55,6 +57,12 @@ export const putContactPoint = async (id: string, contactPoint: ContactPoint, fi
 
 }
 
+export const updateCompetences = (itemsToUpdate: ListItemToCompetenceView[]) => {
+    return httpPutJson("/anlaufstellen-management/anlaufstellen/competences", itemsToUpdate)
+}
+
+export const deleteContactPoint = (id: string) => {
+    return httpDeleteJson("/anlaufstellen-management/anlaufstellen/" +id);
 export const deleteContactPoint = async (contactPoint: ContactPoint) => {
     if(contactPoint.image != null || contactPoint.image != undefined){
     const deleteOldFile = `/s3/delete?link=${encodeURIComponent(contactPoint.image.toString())}`;

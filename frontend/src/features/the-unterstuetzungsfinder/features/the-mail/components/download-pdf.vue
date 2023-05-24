@@ -28,7 +28,7 @@ export default defineComponent({
       type: Array,
     },
     convo: {
-      type: Conversation
+      type: Object as () => Conversation
     }
   },
   methods: {

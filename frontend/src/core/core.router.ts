@@ -26,6 +26,8 @@ import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfind
 import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points-details.routes";
+} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-details.routes";
+import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
 
 import {adminRoutes} from "@/features/admin/the-admin-routes";
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
@@ -90,6 +92,7 @@ const router = new Router({
         adminFaqRoutes,
         adminGlossarRoutes,
         adminLeadershipCooperationRoutes,
+        adminUFinderRoutes
     ]
 });
 

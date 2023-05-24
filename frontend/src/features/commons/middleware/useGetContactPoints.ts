@@ -1,17 +1,16 @@
 import {useQuery} from "@tanstack/vue-query";
 import {getContactPointById, getContactPoints} from "@/features/commons/api/ContactPointsGetClient";
 import {Ref} from "vue";
-import {getAdminUserInfo} from "@/features/admin/components/userinformation/api/AdminInfoClient";
 import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
+import {getAdminUserInfo} from "@/features/admin/components/userinformation/api/AdminInfoClient";
 import {AdminUserInfo} from "@/features/admin/components/userinformation/model/AdminUserInfo";
 
-export const useGetContactPointListItems = () => {
-    const {isLoading, isError, data, error} = useQuery(
+export const useGetContactPointListItems = () =>
+    useQuery<ContactPointListItem[]>(
         ['listItems'],
         () => getContactPoints()
     );
-    return {isLoading, isError, listItems: data, error};
-};
+
 
 const filterForEditableContactPoints = (listItems: ContactPointListItem[], adminUserInfo: AdminUserInfo) => {
     if (adminUserInfo.isCentralAdmin) {

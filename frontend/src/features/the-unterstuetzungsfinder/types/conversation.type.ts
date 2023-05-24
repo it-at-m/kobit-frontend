@@ -1,5 +1,6 @@
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-contact-points/types/anlaufstelle.type";
 import {Competence} from "@/features/commons/types/competence.type";
+import {ContactPoint} from "@/features/commons/types/ContactPoint";
 
 
 interface AnswerOption {
@@ -16,6 +17,12 @@ interface DecisionPoint {
 
 }
 
+export default interface Conversation {
+    readonly decisionPoint?: DecisionPoint;
+    readonly contactPoints: ContactPoint[]
+}
+
+/*
 export default class Conversation {
 
     decisionPoint: DecisionPoint;
@@ -46,4 +53,4 @@ export default class Conversation {
     static createEmptyConversation(): Conversation {
         return new Conversation();
     }
-}
+}*/

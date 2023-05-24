@@ -53,11 +53,21 @@ import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfind
 import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import {adminExperienceMoreRoutes} from "@/features/admin/features/the-experience-more/experienceMoreRoutes";
+import {adminBaseHeadLineLabels, adminInformationLabels} from "@/features/admin/i18n";
+import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/contactPointsRoutes";
+import UserInformationDialog from "@/features/admin/components/userinformation/UserInformationDialog.vue";
+import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
 
 export default defineComponent({
   name: "AdminOverview",
   components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
   setup() {
+    const isInfoDialogActive = ref(false);
+
+    function closeInfoDialog() {
+      isInfoDialogActive.value = false;
+    }
 
 
     const anlaufstellen = {
@@ -67,6 +77,9 @@ export default defineComponent({
 
     return {
       labels: adminBaseHeadLineLabels,
+      anlaufstellen: adminContactPointsRoutes,
+      unterstuetzungsfinder: adminUFinderRoutes,
+      infoLabels: adminInformationLabels,
       anlaufstellen,
       unterstuetzungsfinder: theUnterstuetzungsfinderRoutes,
       erfahreMehr: adminExperienceMoreRoutes

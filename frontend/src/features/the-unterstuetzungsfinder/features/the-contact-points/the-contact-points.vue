@@ -89,6 +89,8 @@ export default defineComponent({
     const route = useRoute();
     const selectedItemId = ref<string | undefined>(route.params.id);
     const { isLoading, isError, listItems, error } = useGetContactPointListItems();
+    const selectedItemId = ref<string>();
+    const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
 
     const handleIdChange = (newId: string | undefined) => {
       if (newId) {
@@ -145,6 +147,7 @@ export default defineComponent({
     }
   },
 })
+
 </script>
 
 
