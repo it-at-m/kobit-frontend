@@ -5,7 +5,6 @@ import {
     putContactPoint, updateCompetences
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
-import {ContactPoint} from "@/features/commons/types/ContactPoint";
 import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
 
@@ -17,7 +16,7 @@ export const useUpdateContactPoint = () => useMutation({
             const headers = {
                 "Content-Type": "multipart/form-data",
             };
-            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, headers);
+            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, useContactPoint.currentImage, headers);
         }
         throw new Error('ID is missing');
     }
@@ -55,5 +54,6 @@ export interface UseContactPoint {
     id?: string;
     file?: File;
     image: string;
+    currentImage?: string  | null;
     headers?: { 'Content-Type': string | null };
 }
