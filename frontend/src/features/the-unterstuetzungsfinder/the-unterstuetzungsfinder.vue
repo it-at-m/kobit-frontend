@@ -1,23 +1,23 @@
 <template>
   <BasePageContent
-      :icon="icon"
-      :name="name"
-      :info-text="infoText"
-      :is-loading="isLoading"
+    :icon="icon"
+    :name="name"
+    :info-text="infoText"
+    :is-loading="isLoading"
   >
     <v-container
-        id="id_chat_container"
-        style="max-width: 100%;"
-        class="justify-center mt-4 mr-1 ml-1"
+      id="id_chat_container"
+      style="max-width: 100%;"
+      class="justify-center mt-4 mr-1 ml-1"
     >
       <v-row>
         <v-col
-            v-if="isFinished"
-            cols="12"
-            sm="12"
-            :md="isGivenAnswersEmpty ? '0': '12'"
-            :lg="isGivenAnswersEmpty ? '0': '7'"
-            :xl="isGivenAnswersEmpty ? '0': '7'"
+          v-if="isFinished"
+          cols="12"
+          sm="12"
+          :md="isGivenAnswersEmpty ? '0': '12'"
+          :lg="isGivenAnswersEmpty ? '0': '7'"
+          :xl="isGivenAnswersEmpty ? '0': '7'"
         >
           <v-row v-if="conversation?.contactPoints.length === 0">
             <v-col>
@@ -34,27 +34,27 @@
             <v-row>
               <v-col>
                 <the-unterstuetzungsfinder-ergebnis
-                    :convo="conversation"
-                    :given-answers="givenAnswers"
-                    :restart="restart"
+                  :convo="conversation"
+                  :given-answers="givenAnswers"
+                  :restart="restart"
                 />
               </v-col>
             </v-row>
           </template>
         </v-col>
         <v-col
-            v-if="!isFinished && conversation?.decisionPoint !== null"
-            cols="12"
-            sm="12"
-            :md="isGivenAnswersEmpty ? '12': '12'"
-            :lg="isGivenAnswersEmpty ? '12': '7'"
-            :xl="isGivenAnswersEmpty ? '12': '7'"
+          v-if="!isFinished && conversation?.decisionPoint !== null"
+          cols="12"
+          sm="12"
+          :md="isGivenAnswersEmpty ? '12': '12'"
+          :lg="isGivenAnswersEmpty ? '12': '7'"
+          :xl="isGivenAnswersEmpty ? '12': '7'"
         >
           <v-row>
             <InfoText
-                :is-info-text-active="isInfoTextActive"
-                :labels="labels"
-                :close-info-text="closeInfoText"
+              :is-info-text-active="isInfoTextActive"
+              :labels="labels"
+              :close-info-text="closeInfoText"
             />
           </v-row>
           <v-row>
@@ -66,70 +66,70 @@
           <v-row no-gutters>
             <v-expansion-panels>
               <v-col
-                  v-for="(answer, answerIndex) in conversation?.decisionPoint.answerOptions"
-                  :key="answerIndex"
-                  class="pa-2"
-                  cols="12"
-                  sm="12"
-                  :md="isGivenAnswersEmpty ? '6': '12'"
-                  :lg="isGivenAnswersEmpty ? '4': '12'"
-                  :xl="isGivenAnswersEmpty ? '4': '12'"
+                v-for="(answer, answerIndex) in conversation?.decisionPoint.answerOptions"
+                :key="answerIndex"
+                class="pa-2"
+                cols="12"
+                sm="12"
+                :md="isGivenAnswersEmpty ? '6': '12'"
+                :lg="isGivenAnswersEmpty ? '4': '12'"
+                :xl="isGivenAnswersEmpty ? '4': '12'"
               >
                 <v-alert
-                    dense
-                    border="left"
-                    colored-border
-                    color="secondary"
-                    class="mb-1 finder-pointer"
-                    elevation="3"
-                    :aria-label="answer"
+                  dense
+                  border="left"
+                  colored-border
+                  color="secondary"
+                  class="mb-1 finder-pointer"
+                  elevation="3"
+                  :aria-label="answer"
                 >
                   <v-card-title class="text-body-1">
                     <v-row>
                       <v-col
-                          cols="11"
-                          sm="11"
-                          @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
+                        cols="11"
+                        sm="11"
+                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
                       >
                         <p style="font-size: 14px;">
                           {{ answer.germanDescription }}
                         </p>
                       </v-col>
                       <v-col
-                          cols="1"
-                          sm="1"
-                          class="pl-0 pr-0"
-                          @click="selectedToolTip !== answerIndex ? openToolTip(answerIndex) : closeToolTips()"
+                        cols="1"
+                        sm="1"
+                        class="pl-0 pr-0"
+                        @click="selectedToolTip !== answerIndex ? openToolTip(answerIndex) : closeToolTips()"
                       >
                         <v-row v-if="answer.shortDescription">
                           <v-col cols="12">
                             <p
-                                v-if="selectedToolTip !== answerIndex"
-                                style="text-align: right;"
+                              v-if="selectedToolTip !== answerIndex"
+                              style="text-align: right;"
                             >
                               <i class="mdi mdi-information secondary--text" />
                             </p>
                             <p
-                                v-if="selectedToolTip === answerIndex"
-                                style="text-align: right;"
+                              v-if="selectedToolTip === answerIndex"
+                              style="text-align: right;"
                             >
                               <i class="mdi mdi-close secondary--text" />
                             </p>
                           </v-col>
                           <v-col
-                              cols="12"
-                              class="mt-0 mb-0 pt-0 pb-0"
-                              style="height:0 !important;"
+                            cols="12"
+                            class="mt-0 mb-0 pt-0 pb-0"
+                            style="height:0 !important;"
                           >
                             <v-tooltip
-                                v-if="selectedToolTip === answerIndex"
-                                v-model="show"
-                                bottom
+                              v-if="selectedToolTip === answerIndex"
+                              v-model="show"
+                              bottom
                             >
                               <template v-slot:activator="{ on, attrs }">
                                 <span
-                                    v-bind="attrs"
-                                    v-on="on"
+                                  v-bind="attrs"
+                                  v-on="on"
                                 />
                               </template>
                               <p> {{ answer.shortDescription }}</p>
@@ -142,17 +142,17 @@
                   <v-card-actions class="pt-0 mt-0 pb-0 mb-0">
                     <v-row class="pt-0 mt-0 pb-0 mb-0">
                       <v-col
-                          class="pt-0 mt-0 pb-0 mb-0"
-                          offset="10"
-                          offset-sm="11"
-                          cols="2"
-                          sm="1"
-                          @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
+                        class="pt-0 mt-0 pb-0 mb-0"
+                        offset="10"
+                        offset-sm="11"
+                        cols="2"
+                        sm="1"
+                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
                       >
                         <v-row class="pt-0 mt-0 pb-0 mb-0">
                           <v-col
-                              class="pt-0 mt-0 pb-0 mb-0"
-                              cols="12"
+                            class="pt-0 mt-0 pb-0 mb-0"
+                            cols="12"
                           >
                             <p class="pt-0 mt-0 pb-0 mb-0">
                               <i class="mdi mdi-menu-right secondary--text" />
@@ -167,19 +167,19 @@
             </v-expansion-panels>
           </v-row>
           <BackButton
-              v-if="givenAnswers.length > 0"
-              :callback="getPreviousAnswer"
+            v-if="givenAnswers.length > 0"
+            :callback="getPreviousAnswer"
           />
           <BackButton
-              v-else
-              :callback="back"
+            v-else
+            :callback="back"
           />
         </v-col>
         <GivenAnswers
-            :is-given-answers-empty="isGivenAnswersEmpty"
-            :labels="labels"
-            :given-answers="givenAnswers"
-            :convo="conversation"
+          :is-given-answers-empty="isGivenAnswersEmpty"
+          :labels="labels"
+          :given-answers="givenAnswers"
+          :convo="conversation"
         />
       </v-row>
     </v-container>

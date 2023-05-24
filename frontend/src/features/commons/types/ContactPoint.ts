@@ -10,6 +10,7 @@ export interface ContactPoint {
     contact?: Contact[];
     competences?: Competence[];
     links?: Link[];
+    image: string;
 }
 
 export interface Contact {

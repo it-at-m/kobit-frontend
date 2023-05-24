@@ -1,30 +1,36 @@
 <template>
   <v-row>
     <v-col
-    offset="2">
+      offset="2"
+    >
       <v-row>
         <v-list subheader>
           <v-subheader>Verfügbare Anlaufstellen für diesen Pfad</v-subheader>
-            <v-list-item
-                v-for="item in availableContactPoints"
-                :key="item.id">
-              <v-list-item-content>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-list-item-title v-on="on" v-text="item.shortCut"></v-list-item-title>
-                  </template>
-                  <span v-text="item.name"></span>
-                </v-tooltip>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn
-                    depressed
-                    color="success"
-                    @click="handleAddContactPoint(item)">
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
+          <v-list-item
+            v-for="item in availableContactPoints"
+            :key="item.id"
+          >
+            <v-list-item-content>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                  <v-list-item-title
+                    v-on="on"
+                    v-text="item.shortCut"
+                  />
+                </template>
+                <span v-text="item.name" />
+              </v-tooltip>
+            </v-list-item-content>
+            <v-list-item-action>
+              <v-btn
+                depressed
+                color="success"
+                @click="handleAddContactPoint(item)"
+              >
+                <v-icon>mdi-plus</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </v-list-item>
         </v-list>
       </v-row>
     </v-col>
@@ -33,24 +39,30 @@
         <v-list subheader>
           <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
           <v-list-item-group
-              :v-model="selectedContactPoint"
-              color="primary">
+            :v-model="selectedContactPoint"
+            color="primary"
+          >
             <v-list-item
-                v-for="contactPoint in editableContactPointList"
-                :key="contactPoint.id">
+              v-for="contactPoint in editableContactPointList"
+              :key="contactPoint.id"
+            >
               <v-list-item-content>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
-                    <v-list-item-title v-on="on" v-text="contactPoint.shortCut"></v-list-item-title>
+                    <v-list-item-title
+                      v-on="on"
+                      v-text="contactPoint.shortCut"
+                    />
                   </template>
-                  <span v-text="contactPoint.name"></span>
+                  <span v-text="contactPoint.name" />
                 </v-tooltip>
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn
-                    depressed
-                    color="warning"
-                    @click="handleRemoveContactPoint(contactPoint)">
+                  depressed
+                  color="warning"
+                  @click="handleRemoveContactPoint(contactPoint)"
+                >
                   <v-icon>mdi-minus</v-icon>
                 </v-btn>
               </v-list-item-action>
@@ -61,30 +73,32 @@
       <v-row>
         <v-col>
           <v-btn
-          @click="save"
-          color="success">
+            color="success"
+            @click="save"
+          >
             <v-icon>mdi-content-save</v-icon> Speichern
           </v-btn>
         </v-col>
         <v-col>
           <v-btn
-          @click="cancel"
-          class="ma-2"
-          color="error">
+            class="ma-2"
+            color="error"
+            @click="cancel"
+          >
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
         </v-col>
       </v-row>
     </v-col>
     <v-snackbar
-        v-model="showSnackBar"
-        :color="snackBarColor"
-        :timeout="3000"
-        bottom
+      v-model="showSnackBar"
+      :color="snackBarColor"
+      :timeout="3000"
+      bottom
     >
       <p class="pa-0 ma-0">
         {{ snackBarText }}
-        <v-icon>{{snackBarIcon}}</v-icon>
+        <v-icon>{{ snackBarIcon }}</v-icon>
       </p>
     </v-snackbar>
   </v-row>

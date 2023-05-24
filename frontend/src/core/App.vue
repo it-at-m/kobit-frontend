@@ -20,7 +20,7 @@ import TheFooterMain from "@/features/the-footer-main/the-footer-main.vue";
 import TheAppBar from "@/features/the-app-bar/the-app-bar.vue";
 import {
   initAnlaufstellen
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen-store.module";
+} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points-store.module";
 import TheDisclaimer from "@/features/the-disclaimer/the-disclaimer.vue";
 
 import DownloadProvider from "@/core/services/downloads/download-provider.mixin.vue";
@@ -83,6 +83,11 @@ export default class App extends Vue{
   ::-webkit-scrollbar-thumb:hover {
     background-color: #a8bbbf;
   }
+}
+
+
+.markdown-content a {
+  color: blue !important; /* Set your desired text color for anchors */
 }
 
 </style>

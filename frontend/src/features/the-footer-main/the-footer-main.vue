@@ -7,13 +7,14 @@
   >
     <v-row>
       <v-col
-        cols="5"
-        sm="7"
-        md="8"
-        lg="9"
-        xl="10"
+        :cols="showAdminInfo() ? 4 : 5"
+        :sm="showAdminInfo() ? 6 : 7"
+        :md="showAdminInfo() ? 7 : 8"
+        :lg="showAdminInfo() ? 8 : 9"
+        :xl="showAdminInfo() ? 9 : 10"
         class="ma-0 pa-0"
       />
+
 
       <v-col
         cols="7"
@@ -25,29 +26,76 @@
       >
         <PrivacyPolicy />
       </v-col>
+      <v-col
+        v-if="showAdminInfo()"
+        cols="1"
+        class="ma-0 pa-0"
+      >
+        <v-tooltip top>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="mx-2"
+              color="secondary"
+              v-bind="attrs"
+              @click="openInfoDialog"
+              v-on="on"
+            >
+              <v-icon>mdi-information-outline</v-icon>
+            </v-btn>
+          </template>
+          <span>{{ infoLabels.informationTitle }}</span>
+        </v-tooltip>
+      </v-col>
     </v-row>
+    <UserInformationDialog
+      :is-dialog-active="isInfoDialogActive"
+      @closeInfoDialog="closeInfoDialog"
+    />
   </v-footer>
 </template>
 
 <script lang="ts">
-import {Component, Inject, Vue} from "vue-property-decorator";
-import {DOWNLOAD_DATENSCHUTZ, DownloadProviderService} from "@/core/services/downloads/download-provider.service";
-import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
+import { ref, inject } from 'vue';
+import { DOWNLOAD_DATENSCHUTZ } from '@/core/services/downloads/download-provider.service';
+import PrivacyPolicy from '@/core/services/downloads/privacypolicy.vue';
+import { adminInformationLabels } from '@/features/admin/i18n';
+import UserInformationDialog from "@/features/admin/components/userinformation/UserInformationDialog.vue";
+import { useRoute } from "vue-router/composables";
 
-@Component({
-  components: {PrivacyPolicy}
-})
-export default class TheFooterMain extends Vue {
+export default {
+  components: { PrivacyPolicy, UserInformationDialog },
 
-  @Inject(DOWNLOAD_DATENSCHUTZ)
-  download!: DownloadProviderService;
+  setup() {
+    const download = inject(DOWNLOAD_DATENSCHUTZ);
+    const isInfoDialogActive = ref(false);
+    const route = useRoute();
 
-}
+    function closeInfoDialog() {
+      isInfoDialogActive.value = false;
+    }
+
+    function openInfoDialog() {
+      isInfoDialogActive.value = true;
+    }
+
+    function showAdminInfo(): boolean {
+      return /^\/admin(\/|$)/.test(route.path);
+    }
+
+    return {
+      showAdminInfo,
+      closeInfoDialog,
+      openInfoDialog,
+      isInfoDialogActive,
+      infoLabels: adminInformationLabels,
+      download,
+    };
+  },
+};
 </script>
 
 <style scoped>
-.v-html ::v-deep a{
-  color:#333;
+.v-html ::v-deep a {
+  color: #333;
 }
-
 </style>

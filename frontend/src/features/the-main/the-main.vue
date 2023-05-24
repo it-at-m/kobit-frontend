@@ -44,10 +44,10 @@ import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import {
   theAnlaufstellenRoutes
-} from "@/features/the-unterstuetzungsfinder/features/the-anlaufstellen/the-anlaufstellen.routes";
+} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
-import {erfahreMehrRoutes} from "@/features/the-experience-more/the-experience-more.routes";
+import {erfahreMehrRoutes} from "@/features/the-additional/the-additional.routes";
 import {I18nLabel} from "@/core/core.translation";
 import {mainBaseHeadLineLabels} from "@/features/the-main/i18n";
 
@@ -61,6 +61,7 @@ export default class Main extends Vue {
   }
 
   get anlaufstellen(): unknown {
+    theAnlaufstellenRoutes.path = "/anlaufstellen/"
     return theAnlaufstellenRoutes;
   }
 

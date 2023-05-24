@@ -61,7 +61,7 @@
                   multiple
                   persistent-hint
                   small-chips
-                  :disabled="! isCentralAdmin"
+                  :disabled="!isCentralAdmin"
                   @input="changeDepartment"
                 >
                   <template v-slot:no-data>
@@ -78,12 +78,84 @@
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <MarkDownAlert :label="label" />
+            <v-row>
+              <v-col cols="12">
+                <v-btn
+                  icon
+                  @click="applyFormatting('bold')"
+                >
+                  <v-icon>mdi-format-bold</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('italic')"
+                >
+                  <v-icon>mdi-format-italic</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('underline')"
+                >
+                  <v-icon>mdi-format-underline</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('ordered-list')"
+                >
+                  <v-icon>mdi-format-list-numbered</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('unordered-list')"
+                >
+                  <v-icon>mdi-format-list-bulleted</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('line-break')"
+                >
+                  <v-icon>mdi-format-line-spacing</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('h1')"
+                >
+                  <v-icon>mdi-format-header-1</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('h2')"
+                >
+                  <v-icon>mdi-format-header-2</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('h3')"
+                >
+                  <v-icon>mdi-format-header-3</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('h4')"
+                >
+                  <v-icon>mdi-format-header-4</v-icon>
+                </v-btn>
+                <v-btn
+                  icon
+                  @click="applyFormatting('h5')"
+                >
+                  <v-icon>mdi-format-header-5</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
             <v-row class="ma-0 pa-0">
               <v-col cols="6">
                 <v-textarea
-                  :value="writableContactPoint.description"
-                  label="Beschreibung"
+                  id="description-textarea"
+                  v-model="writableContactPoint.description"
+                  rows="12"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                  label="Beschreibung"
                   :counter="2000"
                   @input="changeDescription"
                 />
@@ -91,6 +163,7 @@
               <v-col cols="6">
                 <div
                   style="border-bottom: 2px solid #eee"
+                  class="markdown-content"
                   v-html="computeMarkdown"
                 />
               </v-col>
@@ -128,7 +201,7 @@
                 md="2"
                 sm="2"
                 cols="4"
-                class="mb-0 pb-0"
+                class="text-right"
               >
                 <v-btn @click="removeContact(contact)">
                   <v-icon>mdi-close</v-icon>
@@ -198,6 +271,7 @@
                 md="2"
                 sm="2"
                 cols="4"
+                class="text-right"
               >
                 <v-btn @click="removeLink(link)">
                   <v-icon>mdi-close</v-icon>
@@ -225,6 +299,65 @@
             </v-row>
             <v-divider class="mt-3 mb-5" />
             <v-row>
+              <v-col
+                cols="12"
+                class="mb-0 pb-0"
+              >
+                <h3 class="pa-0">
+                  Foto
+                </h3>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                lg="10"
+                md="10"
+                sm="10"
+                cols="8"
+              >
+                <img
+                  v-if="writableContactPoint.image"
+                  :src="writableContactPoint.image.toString()"
+                  style="max-width: 300px; max-height: 300px;"
+                >
+
+                <p v-if="writableContactPoint.image">
+                  Aktuelle Datei: <a
+                    style="color:blue;"
+                    target="_blank"
+                    :href="writableContactPoint.image.toString()"
+                  >{{ writableContactPoint.image ? getFileNameFromLink(writableContactPoint.image.toString()) : '' }}</a>
+                </p>
+
+                <v-file-input
+                  v-model="file"
+                  :rules="fileRules"
+                  accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG"
+                  placeholder="Neue Datei auswählen und ersetzen"
+                >
+                  <template v-slot:selection>
+                    <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                  </template>
+                </v-file-input>
+              </v-col>
+              <v-col
+                lg="2"
+                md="2"
+                sm="2"
+                cols="4"
+                class="text-right"
+              >
+                <!-- Add the 'text-right' class here -->
+                <v-btn
+                  v-if="writableContactPoint.image"
+                  @click="removeImage()"
+                >
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-divider class="mt-3 mb-5" />
+            <v-row>
               <v-col cols="12">
                 <p>
                   Hinweis: Kompetenzen können nur über den Unterstützungsfinder eingepflegt werden.
@@ -235,12 +368,14 @@
           </v-form>
         </div>
       </v-card-text>
-      <v-card-actions class="ma-0 pa-0">
+      <v-card-actions>
         <SaveUpdate
           :id="listItem.id"
+          class="ml-4"
           :contact-point-to-save="writableContactPoint"
           :disabled="!isFormValid"
-          @error="error"
+          :file="file || undefined"
+          @error="error($event)"
         />
         <v-btn
           class="ma-2"
@@ -250,7 +385,7 @@
           <v-icon>mdi-cancel</v-icon> Abbruch
         </v-btn>
         <DeleteButton
-          :id="listItem.id"
+          :current-item="listItem"
           class=""
           @error="error"
         />
@@ -260,7 +395,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import { Contact, ContactPoint, ContactPointListItem, Link } from "@/features/commons/types/ContactPoint";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
@@ -273,7 +408,7 @@ import AddContactDialog from "@/features/admin/features/the-contact-points/compo
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
-import {useGetAdminUserInfo} from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -283,6 +418,10 @@ export default defineComponent({
     },
     listItem: {
       type: Object as () => ContactPointListItem
+    },
+    file: {
+      type: File,
+      default: null
     }
   },
   data: () => ({
@@ -295,10 +434,12 @@ export default defineComponent({
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
     const router = useRouter();
-    const writableContactPoint = ref<ContactPoint>();
+
     const errorMessage = ref('');
-    const {data: adminUserInfo} = useGetAdminUserInfo();
+    const { data: adminUserInfo } = useGetAdminUserInfo();
     const isCentralAdmin = ref(false);
+
+    const writableContactPoint = ref<ContactPoint>();
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
@@ -318,9 +459,9 @@ export default defineComponent({
       isContactDialogOpen.value = true;
     }
     const cancelForm = () => {
-      router.push("/admin/contactpoints/");
+      router.push("/admin/anlaufstellen/");
       router.go(0);
-        
+
     }
     const cancel = () => {
       isLinkDialogOpen.value = false;
@@ -351,17 +492,16 @@ export default defineComponent({
     } as ContactPoint;
     const changeShortCut = (value: string) =>
       writableContactPoint.value = { ...writableContactPoint.value, shortCut: value } as ContactPoint;
-    const changeDescription = (value: string) => writableContactPoint.value = {
-      ...writableContactPoint.value,
-      description: value
-    } as ContactPoint;
+
+
+
     const error = (message: string) => {
       errorMessage.value = message;
       isWriteError.value = true;
     };
 
     const changeDepartment = (value: string[]) => {
-      writableContactPoint.value = {...writableContactPoint.value, departments: value} as ContactPoint;
+      writableContactPoint.value = { ...writableContactPoint.value, departments: value } as ContactPoint;
     }
 
     const closeError = () => {
@@ -380,6 +520,138 @@ export default defineComponent({
         writableContactPoint.value = { ...writableContactPoint.value, contact: contacts } as ContactPoint;
       }
     }
+
+    function removeImage() {
+      if (writableContactPoint.value) {
+        writableContactPoint.value = { ...writableContactPoint.value, image: undefined as string | undefined } as ContactPoint;
+      }
+    }
+
+
+    const instance = getCurrentInstance();
+    const root = instance?.proxy.$root || null;
+    const file = ref<File | null>(null);
+    const fileRules = computed(() => [
+      (value: File | null) => {
+        if (!value) return true;
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+        return allowedTypes.includes(value.type) || "Nur JPG, JPEG und PNG-Dateien sind erlaubt.";
+      }
+    ]);
+
+    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
+      if (!fileName) return '';
+      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+
+      const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
+      return (
+        fileName.slice(0, halfLength) +
+        '...' +
+        fileName.slice(fileName.length - halfLength)
+      ).toUpperCase();
+    };
+
+
+    const maxFileNameInputLength = computed(() => {
+      switch (root?.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 25;
+        case 'sm':
+          return 40;
+        case 'md':
+          return 50;
+        case 'lg':
+          return 60;
+        case 'xl':
+          return 70;
+        default:
+          return 50;
+      }
+    });
+
+
+    const getFileNameFromLink = (link: string) => {
+      if (!link) {
+        return '';
+      }
+      try {
+        const url = new URL(link);
+        return url.pathname.split('/').pop() || '';
+      } catch (error) {
+        console.error(`Invalid URL: ${link}`);
+        return '';
+      }
+    }
+
+
+    const changeDescription = () => {
+      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement;
+      const value = textarea.value;
+      if (writableContactPoint.value) {
+        writableContactPoint.value = {
+          ...writableContactPoint.value,
+          description: value
+        };
+      }
+    };
+
+
+    const applyFormatting = (format: string) => {
+      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement | null;
+      if (!textarea) return;
+
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selectedText = textarea.value.substring(start, end);
+
+      let newText = '';
+      switch (format) {
+        case 'bold':
+          newText = `<b>${selectedText}</b>`;
+          break;
+        case 'italic':
+          newText = `<i>${selectedText}</i>`;
+          break;
+        case 'underline':
+          newText = `<u>${selectedText}</u>`;
+          break;
+        case 'ordered-list':
+          newText = `\n<ol>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ol>\n`;
+          break;
+        case 'unordered-list':
+          newText = `\n<ul>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ul>\n`;
+          break;
+        case 'line-break':
+          newText = '<br />';
+          break;
+        case 'h1':
+          newText = `<h1>${selectedText}</h1>`;
+          break;
+        case 'h2':
+          newText = `<h2>${selectedText}</h2>`;
+          break;
+        case 'h3':
+          newText = `<h3>${selectedText}</h3>`;
+          break;
+        case 'h4':
+          newText = `<h4>${selectedText}</h4>`;
+          break;
+        case 'h5':
+          newText = `<h5>${selectedText}</h5>`;
+          break;
+        default:
+          newText = selectedText;
+          break;
+      }
+
+      const currentValue = writableContactPoint.value?.description || '';
+      const newValue =
+        currentValue.substring(0, start) + newText + currentValue.substring(end);
+      writableContactPoint.value = {
+        ...writableContactPoint.value,
+        description: newValue
+      } as ContactPoint;
+    };
     return {
       isLoading,
       writableContactPoint,
@@ -390,6 +662,13 @@ export default defineComponent({
       isReadError,
       isWriteError,
       isCentralAdmin,
+      file,
+      applyFormatting,
+      removeImage,
+      customFileName,
+      getFileNameFromLink,
+      fileRules,
+      maxFileNameInputLength,
       openLinkDialog,
       openContactDialog,
       cancelForm,
@@ -410,22 +689,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-::-webkit-scrollbar {
-  width: 20px;
-}
 
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
-}
 </style>

@@ -1,20 +1,25 @@
-import {useMutation} from "@tanstack/vue-query";
+import { useMutation } from "@tanstack/vue-query";
 import {
     deleteContactPoint,
     postContactPoint,
     putContactPoint, updateCompetences
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
-import {ContactPoint} from "@/features/commons/types/ContactPoint";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
 import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
-export const useCreateNewContactPoint = () =>
-    useMutation({
-        mutationFn: (newContactPoint: ContactPoint) =>
-            postContactPoint(newContactPoint),
-    });
+
+
 
 export const useUpdateContactPoint = () => useMutation({
-    mutationFn: (updateContactPoint: UpdateContactPoint) => putContactPoint(updateContactPoint.contactPoint, updateContactPoint.id)
+    mutationFn: async (useContactPoint: UseContactPoint) => {
+        if (useContactPoint.id) {
+            const headers = {
+                "Content-Type": "multipart/form-data",
+            };
+            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, useContactPoint.currentImage, headers);
+        }
+        throw new Error('ID is missing');
+    }
 });
 
 export const useUpdateCompetences = () => useMutation({
@@ -24,10 +29,31 @@ export const useUpdateCompetences = () => useMutation({
 });
 
 export const useDeleteContactPoint = () => useMutation({
-    mutationFn: (id: string) => deleteContactPoint(id)
-})
+    mutationFn: async (contactPointToDelete: ContactPoint) => {
+        if (contactPointToDelete.id) {
+            return deleteContactPoint(contactPointToDelete);
+        }
+        throw new Error('ID is missing');
+    }
+});
 
-export interface UpdateContactPoint {
+export const useCreateNewContactPoint = () =>
+    useMutation({
+        mutationFn: async (newContactPoint: UseContactPoint) => {
+            const headers = {
+                "Content-Type": "multipart/form-data",
+            };
+
+            await postContactPoint(newContactPoint.contactPoint, newContactPoint.file, headers);
+        },
+    });
+
+
+export interface UseContactPoint {
     contactPoint: ContactPoint;
-    id: string;
+    id?: string;
+    file?: File;
+    image: string;
+    currentImage?: string  | null;
+    headers?: { 'Content-Type': string | null };
 }
