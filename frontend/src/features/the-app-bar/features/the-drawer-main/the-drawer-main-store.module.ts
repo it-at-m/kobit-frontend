@@ -5,6 +5,7 @@ import {
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import { erfahreMehrRoutes } from "@/features/the-additional/the-additional.routes";
+import {theOfferRoutes} from "@/features/the-angebote/the-offers.routes";
 
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
 import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
@@ -48,6 +49,10 @@ export const theDrawerMainModule = {
             },
             theUnterstuetzungsfinderRoutes,
             erfahreMehrRoutes,
+            {
+                ...theOfferRoutes,
+                path: '/angebot/', // Override the path when id is undefined
+            },
             adminRoutes
         ],
         listAdminItems: [

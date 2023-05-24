@@ -21,7 +21,7 @@ import {
 import {
     theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
-import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
+import {theOfferRoutes} from "@/features/the-angebote/the-offers.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {
     theAnlaufstellenDetailsRoutes
@@ -81,7 +81,7 @@ const router = new Router({
         escalationStepsRoutes,
         theAnlaufstellenRoutes,
         theAnlaufstellenDetailsRoutes,
-        theAngeboteRoutes,
+        theOfferRoutes,
         adminRoutes,
         adminContactPointsRoutes,
         adminExperienceMoreRoutes,
