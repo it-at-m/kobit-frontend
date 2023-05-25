@@ -10,7 +10,8 @@
               cols="12"
               sm="12"
               md="6"
-              lg="3"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="anlaufstellen" />
             </v-col>
@@ -18,7 +19,8 @@
               cols="12"
               sm="12"
               md="6"
-              lg="3"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="unterstuetzungsfinder" />
             </v-col>
@@ -26,7 +28,8 @@
               cols="12"
               sm="12"
               md="6"
-              lg="3"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="erfahreMehr" />
             </v-col>
@@ -34,7 +37,8 @@
               cols="12"
               sm="12"
               md="6"
-              lg="3"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="angebote" />
             </v-col>

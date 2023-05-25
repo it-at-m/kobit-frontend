@@ -40,7 +40,7 @@
                 </div>
               </div>
               <v-card-title>{{ item.title }}</v-card-title>
-              <v-card-subtitle>{{ formatDate(item.startDate) }} - {{ formatDate(item.endDate) }}</v-card-subtitle>
+              <v-card-subtitle>{{ item.startDate }} - {{ item.endDate }}</v-card-subtitle>
             </v-card>
           </router-link>
         </v-col>
@@ -57,7 +57,7 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRoute, useRouter } from "vue-router/composables";
-import { useGetOfferListItems, useGetOffer } from "@/features/commons/middleware/useGetOffer";
+import { useGetOfferListItems, useGetOffer } from "@/features/commons/middleware/useGetOffers";
 import TheOffer from "@/features/the-angebote/the-offer.vue";
 
 import {
@@ -73,16 +73,12 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const selectedItemId = ref<string | undefined>(route.params.id);
-    const { isLoading, isError, listItems, error } = useGetOfferListItems();
+    const { isLoading, isError, data: listItems, error } = useGetOfferListItems();
 
     const back = () => {
       router.push("/");
     }
 
-    const formatDate = (date: Date) => {
-      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-      return new Date(date).toLocaleDateString(undefined, options);
-    };
 
     watch(() => route.params.id, (newId) => {
       selectedItemId.value = newId;
@@ -97,7 +93,7 @@ export default defineComponent({
       listItems,
       error,
       selectedItemId,
-      formatDate,
+
       back,
     };
   },

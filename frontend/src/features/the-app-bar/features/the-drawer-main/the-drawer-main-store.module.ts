@@ -13,6 +13,8 @@ import { adminRoutes } from "@/features/admin/the-admin-routes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";
 import { Commit } from "vuex/types/index";
+import { adminOffersRoutes } from "@/features/admin/features/the-offers/the-offers.routes";
+import { adminUFinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
 
 export const THE_DRAWER_MAIN_MODULE = 'theDrawerMainStoreModule';
 export const GET_LIST_ITEMS = 'listItems';
@@ -61,7 +63,12 @@ export const theDrawerMainModule = {
                 ...adminContactPointsRoutes,
                 path: '/admin/anlaufstellen/', // Override the path when id is undefined
             },
+            adminUFinderRoutes,
             adminExperienceMoreRoutes,
+            {
+                ...adminOffersRoutes,
+                path: '/admin/angebote/', // Override the path when id is undefined
+            },
             theMainRoutes,
 
         ],

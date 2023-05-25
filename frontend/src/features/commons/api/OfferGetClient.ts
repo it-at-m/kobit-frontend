@@ -1,8 +1,8 @@
 import {httpGetJson} from "@/core/plugins/http";
-import {Offer} from "@/features/commons/types/Offer";
+import {Offer, OfferListItem} from "@/features/commons/types/Offer";
 
 export const getOffers = () => {
-    return httpGetJson<Offer[]>("/offers");
+    return httpGetJson<OfferListItem[]>("/offers");
 };
 
 export const getOfferById = (id: string) => {

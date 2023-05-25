@@ -19,8 +19,8 @@
               xl="6"
             >
               <v-card-text>
-                Von {{ formatDate(offer.startDate) }} bis {{
-                  formatDate(offer.endDate)
+                Von {{ offer.startDate }} bis {{
+                  offer.endDate
                 }}
               </v-card-text>
               <v-card-text>{{ offer.description }}</v-card-text>
@@ -57,7 +57,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRoute, useRouter } from "vue-router/composables";
-import { useGetOffer } from "@/features/commons/middleware/useGetOffer";
+import { useGetOffer } from "@/features/commons/middleware/useGetOffers";
 
 
 export default defineComponent({
@@ -73,10 +73,6 @@ export default defineComponent({
             router.push("/angebot");
         };
 
-        const formatDate = (date: Date) => {
-            const options = { day: "2-digit", month: "2-digit", year: "numeric" };
-            return new Date(date).toLocaleDateString(undefined, options);
-        };
 
         // Fetch the offer data when the component is mounted
         onMounted(() => {
@@ -94,7 +90,6 @@ export default defineComponent({
             offer,
             error,
             back,
-            formatDate,
         };
     },
 });
