@@ -29,7 +29,6 @@
               lg="3"
             >
               <base-link-card :item="erfahreMehr" />
-
             </v-col>
             <v-col
               cols="12"
@@ -38,7 +37,6 @@
               lg="3"
             >
               <base-link-card :item="angebote" />
-
             </v-col>
           </v-row>
         </v-container>

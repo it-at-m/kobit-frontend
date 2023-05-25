@@ -27,7 +27,6 @@ import {
     theAnlaufstellenDetailsRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points-details.routes";
 import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
-} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points-details.routes";
 
 import {adminRoutes} from "@/features/admin/the-admin-routes";
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";

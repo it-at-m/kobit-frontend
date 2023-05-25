@@ -1,17 +1,20 @@
 <template>
-  <the-offer :id="selectedItemId" v-if="selectedItemId" />
+  <the-offer
+    v-if="selectedItemId"
+    :id="selectedItemId"
+  />
   <BasePageContent
+    v-else
     :icon="icon"
     :name="name"
     :info-text="infoText"
     :is-loading="isLoading"
-    v-else
   >
     <v-card-text>
       <BackButton :callback="back" />
       <v-row
-        justify="start"
         v-if="listItems && listItems.length > 0"
+        justify="start"
       >
         <v-col
           v-for="(item, itemIndex) in listItems"
@@ -23,10 +26,17 @@
           xl="3"
         >
           <router-link :to="'/angebot/' + item.id">
-            <v-card flat outlined>
+            <v-card
+              flat
+              outlined
+            >
               <div class="image-container">
                 <div class="image-wrapper">
-                  <img :src="item.imageLink" class="cropped-image" contain />
+                  <img
+                    :src="item.imageLink"
+                    class="cropped-image"
+                    contain
+                  >
                 </div>
               </div>
               <v-card-title>{{ item.title }}</v-card-title>
@@ -75,7 +85,6 @@ export default defineComponent({
     };
 
     watch(() => route.params.id, (newId) => {
-      console.log( route.params.id)
       selectedItemId.value = newId;
     });
 

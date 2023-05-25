@@ -24,7 +24,6 @@ import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfind
 export default class TheCardInitialUnterstuetzungsfinderResult extends Vue {
 
   get unterstuezungsfinder(): unknown {
-    console.log(theUnterstuetzungsfinderRoutes);
     return theUnterstuetzungsfinderRoutes;
   }
 }
