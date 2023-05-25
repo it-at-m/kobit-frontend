@@ -41,8 +41,6 @@
     </v-card-text>
   </BasePageContent>
 </template>
-
-
 <script lang="ts">
 import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";

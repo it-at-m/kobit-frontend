@@ -1,6 +1,6 @@
 import TheOffers from "@/features/the-angebote/the-offers.vue";
 
-export const THE_OFFER_ROUTE_NAME = "Angebot";
+export const THE_OFFER_ROUTE_NAME = "Angebote";
 export const THE_OFFER_ROUTE_PATH = "/angebot/:id?"; // Add ":id" as a dynamic route parameter
 export const THE_OFFER_ROUTE_META_ICON = "mdi-ballot-outline";
 export const THE_OFFER_ROUTE_META_INFO_TEXT = "Hier finden Sie Angebote für Ihr Anliegen.";

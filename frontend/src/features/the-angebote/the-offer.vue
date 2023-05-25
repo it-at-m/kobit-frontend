@@ -4,14 +4,23 @@
         <v-card-text v-if="offer">
             <v-card>
                 <v-card-title>{{ offer.title }}</v-card-title>
-                <v-card-text>{{ offer.description }}</v-card-text>
-                <v-card-text>Start Date: {{ formatDate(offer.startDate) }}</v-card-text>
-                <v-card-text>End Date: {{ formatDate(offer.endDate) }}</v-card-text>
-                <div class="image-container">
-                    <div class="image-wrapper">
-                        <img :src="offer.imageLink" class="cropped-image" contain />
-                    </div>
-                </div>
+                <v-card-content>
+                    <v-row>
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+                            <v-card-text>Von {{ formatDate(offer.startDate) }} bis {{
+                                formatDate(offer.endDate)
+                            }}</v-card-text>
+                            <v-card-text>{{ offer.description }}</v-card-text>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="6" lg="6" xl="6">
+                            <div class="image-container">
+                                <div class="image-wrapper">
+                                    <img :src="offer.imageLink" class="cropped-image" contain />
+                                </div>
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-card-content>
             </v-card>
         </v-card-text>
         <div v-else>
@@ -55,9 +64,9 @@ export default defineComponent({
         });
 
         return {
-            name: "Offer",
+            name: "Angebot",
             icon: "mdi-ballot-outline",
-            infoText: "Offer details",
+            infoText: "Hier finden Sie Details zum Angebot.",
             isLoading,
             offer,
             error,
