@@ -102,6 +102,7 @@ import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
 import { useGetEditableContactPoints } from "@/features/commons/middleware/useGetContactPoints";
 
+
 export default defineComponent({
   name: "ContactPointsOverview",
   components: {

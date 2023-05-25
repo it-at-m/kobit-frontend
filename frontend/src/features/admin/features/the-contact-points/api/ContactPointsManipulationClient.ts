@@ -1,5 +1,6 @@
 import { httpDeleteJson, httpPostJson, httpPutJson, httpPostMultipart, httpDeleteS3File } from "@/core/plugins/http";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
 
 
@@ -19,11 +20,10 @@ export const postContactPoint = async (contactPoint: ContactPoint, file?: File, 
     }
 
     return httpPostJson<ContactPoint>("/anlaufstellen-management/anlaufstellen", contactPoint);
-
 };
 
 
-export const putContactPoint = async (id: string, contactPoint: ContactPoint, file?: File, headers?: Record<string, string>) => {
+export const putContactPoint = async (id: string, contactPoint: ContactPoint, file?: File, currentImage?: string | null, headers?: Record<string, string>) => {
 
     if (file) {
         const formData = new FormData();
@@ -47,12 +47,19 @@ export const putContactPoint = async (id: string, contactPoint: ContactPoint, fi
 
         return httpPutJson<ContactPoint>("/anlaufstellen-management/anlaufstellen/" + id, contactPoint);
 
-    } else {
-
+    }  else if(!contactPoint.image && currentImage){
+        const deleteOldFile = `/s3/delete?link=${encodeURIComponent(currentImage.toString())}`;
+        await httpDeleteS3File(deleteOldFile);
         return httpPutJson<ContactPoint>("/anlaufstellen-management/anlaufstellen/" + id, contactPoint);
-
+    }
+    else {
+        return httpPutJson<ContactPoint>("/anlaufstellen-management/anlaufstellen/" + id, contactPoint);
     }
 
+}
+
+export const updateCompetences = (itemsToUpdate: ListItemToCompetenceView[]) => {
+    return httpPutJson("/anlaufstellen-management/anlaufstellen/competences", itemsToUpdate)
 }
 
 export const deleteContactPoint = async (contactPoint: ContactPoint) => {

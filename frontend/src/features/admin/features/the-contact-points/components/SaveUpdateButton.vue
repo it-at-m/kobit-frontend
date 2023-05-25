@@ -22,10 +22,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
 import { useUpdateContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 import { useRouter } from "vue-router/composables";
+import { VBtn, VIcon, VSnackbar } from "vuetify/lib";
 
 export default defineComponent({
   name: "SaveUpdate",
@@ -52,6 +53,14 @@ export default defineComponent({
     const isWriteError = ref(false);
     const errorMessage = ref('');
     const editedContactPoint = ref<ContactPoint | null>(null);
+    const currentImageURL = ref<string | null>(null);
+
+    watch(() => props.contactPointToSave, (newVal) => {
+      if (newVal && newVal.image && currentImageURL.value === null) {
+        currentImageURL.value = newVal.image;
+      }
+    }, { immediate: true });
+
 
     const showSuccessSnackbar = () => {
       showSnackbar.value = true;
@@ -67,13 +76,13 @@ export default defineComponent({
       };
 
       editedContactPoint.value = { ...props.contactPointToSave }; // Create a copy of contactPointToSave
-
       if (editedContactPoint.value) {
         mutateAsync({
           contactPoint: editedContactPoint.value,
           id: props.contactPointToSave.id,
           file: file ? file : undefined,
-          image: editedContactPoint.value.image
+          image: editedContactPoint.value.image,
+          currentImage: currentImageURL.value
         })
           .then(() => {
             showSuccessSnackbar();

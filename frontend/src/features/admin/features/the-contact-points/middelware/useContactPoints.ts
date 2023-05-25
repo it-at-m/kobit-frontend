@@ -2,9 +2,13 @@ import { useMutation } from "@tanstack/vue-query";
 import {
     deleteContactPoint,
     postContactPoint,
-    putContactPoint
+    putContactPoint, updateCompetences
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
+
+
 
 
 
@@ -19,6 +23,21 @@ export const useUpdateContactPoint = () => useMutation({
         }
         throw new Error('ID is missing');
     }
+    mutationFn: async (useContactPoint: UseContactPoint) => {
+        if (useContactPoint.id) {
+            const headers = {
+                "Content-Type": "multipart/form-data",
+            };
+            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, useContactPoint.currentImage, headers);
+        }
+        throw new Error('ID is missing');
+    }
+});
+
+export const useUpdateCompetences = () => useMutation({
+    mutationFn: (itemsToUpdate: ListItemToCompetenceView[]) =>
+        updateCompetences(itemsToUpdate)
+
 });
 
 export const useDeleteContactPoint = () => useMutation({
@@ -47,5 +66,6 @@ export interface UseContactPoint {
     id?: string;
     file?: File;
     image: string;
+    currentImage?: string  | null;
     headers?: { 'Content-Type': string | null };
 }
