@@ -15,7 +15,6 @@
         xl="3"
       >
         <v-list
-          v-if="!isLoading && listItems.length > 0"
           dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
           style="overflow-y: scroll"
@@ -24,29 +23,33 @@
           order-sm-last
           order-md-first
         >
-          <NewOfferListItem
-            :label="label"
-            :set-is-add-new="setIsAddNew"
-            :disabled="selectedItem !== undefined || isAddNew"
-          />
-          <v-list-item
-            v-for="item in listItems"
-            :key="item.id"
-            three-line
-            link
-            :disabled="selectedItem !== undefined || isAddNew"
-            :class="{ 'selected': item === selectedItem }"
-            @click="setSelectedItem(item)"
-          >
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.title }}
-              </v-list-item-title>
-              <v-list-item-subtitle v-if="item.startDate && item.endDate">
-                {{ item.startDate }} - {{ item.endDate }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list>
+            <NewOfferListItem
+              :label="label"
+              :set-is-add-new="setIsAddNew"
+              :disabled="selectedItem !== undefined || isAddNew"
+            />
+          </v-list>
+          <v-list v-if="!isLoading && listItems.length > 0">
+            <v-list-item
+              v-for="item in listItems"
+              :key="item.id"
+              three-line
+              link
+              :disabled="selectedItem !== undefined || isAddNew"
+              :class="{ 'selected': item === selectedItem }"
+              @click="setSelectedItem(item)"
+            >
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ item.title }}
+                </v-list-item-title>
+                <v-list-item-subtitle v-if="item.startDate && item.endDate">
+                  {{ item.startDate }} - {{ item.endDate }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-list>
       </v-col>
       <v-divider
