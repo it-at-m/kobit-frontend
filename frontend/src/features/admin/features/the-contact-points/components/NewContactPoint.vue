@@ -24,6 +24,7 @@
               xl="6"
             >
               <v-text-field
+                color="secondary"
                 :value="newContactPoint?.name"
                 label="Name der Anlaufstelle"
                 :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
@@ -40,6 +41,7 @@
               xl="3"
             >
               <v-text-field
+                color="secondary"
                 :value="newContactPoint?.shortCut"
                 label="Kurzbezeichnung der Anlaufstelle"
                 :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
@@ -152,6 +154,7 @@
             <v-col cols="6">
               <v-textarea
                 id="description-textarea"
+                color="secondary"
                 :value="newContactPoint.description"
                 label="Beschreibung"
                 rows="12"
@@ -193,6 +196,7 @@
             >
               <v-text-field
                 v-model="contact.email"
+                color="secondary"
                 label="E-Mail"
                 readonly
               />
@@ -252,6 +256,7 @@
             >
               <v-text-field
                 v-model="link.name"
+                color="secondary"
                 label="Titel"
                 readonly
               />
@@ -264,6 +269,7 @@
             >
               <v-text-field
                 v-model="link.url"
+                color="secondary"
                 label="URL"
                 readonly
               />

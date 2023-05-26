@@ -1,4 +1,4 @@
-import TheOffers from "@/features/the-angebote/the-offers.vue";
+import TheOffers from "@/features/the-offers/the-offers.vue";
 
 export const THE_OFFER_ROUTE_NAME = "Angebote";
 export const THE_OFFER_ROUTE_PATH = "/angebot/:id?"; // Add ":id" as a dynamic route parameter

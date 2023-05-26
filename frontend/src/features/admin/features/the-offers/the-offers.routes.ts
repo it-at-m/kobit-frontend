@@ -4,7 +4,7 @@ import OffersOverview from "@/features/admin/features/the-offers/the-offers-over
 export const ADMIN_OFFERS_PATH = "/admin/angebote/:id?";
 export const ADMIN_OFFERS_ROUTE_NAME = "Angebote bearbeiten";
 export const ADMIN_OFFERS_ICON = "mdi-ballot-outline";
-export const ADMIN_OFFERS_INFO_TEXT = "Hier können Anlaufstellen angelegt und verändert werden.";
+export const ADMIN_OFFERS_INFO_TEXT = "Hier können Angebote angelegt und verändert werden.";
 
 export const adminOffersRoutes = {
   name: ADMIN_OFFERS_ROUTE_NAME,

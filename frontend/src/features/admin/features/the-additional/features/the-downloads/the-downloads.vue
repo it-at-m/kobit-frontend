@@ -13,6 +13,7 @@
             <v-text-field
               id="id_downloads_search"
               v-model="searchText"
+              color="secondary"
               label="Downloads durchsuchen"
               placeholder="Eingabe"
               outlined

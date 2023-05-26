@@ -5,10 +5,10 @@ import {
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import { erfahreMehrRoutes } from "@/features/the-additional/the-additional.routes";
-import {theOfferRoutes} from "@/features/the-angebote/the-offers.routes";
+import {theOfferRoutes} from "@/features/the-offers/the-offers.routes";
 
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import {adminAdditionalRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import { adminRoutes } from "@/features/admin/the-admin-routes";
 import { Route } from 'vue-router';
 import router from "@/core/core.router";
@@ -64,7 +64,7 @@ export const theDrawerMainModule = {
                 path: '/admin/anlaufstellen/', // Override the path when id is undefined
             },
             adminUFinderRoutes,
-            adminExperienceMoreRoutes,
+            adminAdditionalRoutes,
             {
                 ...adminOffersRoutes,
                 path: '/admin/angebote/', // Override the path when id is undefined

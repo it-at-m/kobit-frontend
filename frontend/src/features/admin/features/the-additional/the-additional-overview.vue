@@ -90,9 +90,9 @@ import { useRouter } from "vue-router/composables";
 import BackButton from "@/features/commons/components/BackButton.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 import {
-  ADMIN_EXPERIENCEMORE_ICON,
-  ADMIN_EXPERIENCEMORE_INFO_TEXT,
-  ADMIN_EXPERIENCEMORE_ROUTE_NAME
+  ADMIN_ADDITIONAL_ICON,
+  ADMIN_ADDITIONAL_INFO_TEXT,
+  ADMIN_ADDITIONAL_ROUTE_NAME
 } from "@/features/admin/features/the-additional/the-additional-overview-routes";
 
 import {
@@ -112,7 +112,7 @@ import {
   } from "@/features/admin/features/the-additional/features/the-leadership-cooperation/the-leadership-cooperation.routes";
 
 export default defineComponent({
-  name: "ExperienceMoreOverview",
+  name: "AdditionalOverview",
   components: {
     BackButton,
     BaseLinkCard,
@@ -161,9 +161,9 @@ export default defineComponent({
     return {
       back,
       links,
-      icon: ADMIN_EXPERIENCEMORE_ICON,
-      name: ADMIN_EXPERIENCEMORE_ROUTE_NAME,
-      infoText: ADMIN_EXPERIENCEMORE_INFO_TEXT
+      icon: ADMIN_ADDITIONAL_ICON,
+      name: ADMIN_ADDITIONAL_ROUTE_NAME,
+      infoText: ADMIN_ADDITIONAL_INFO_TEXT
     };
   },
 });

@@ -31,7 +31,7 @@
               lg="6"
               xl="3"
             >
-              <base-link-card :item="erfahreMehr" />
+              <base-link-card :item="angebote" />
             </v-col>
             <v-col
               cols="12"
@@ -40,7 +40,7 @@
               lg="6"
               xl="3"
             >
-              <base-link-card :item="angebote" />
+              <base-link-card :item="erfahreMehr" />
             </v-col>
           </v-row>
         </v-container>
@@ -58,7 +58,7 @@ import {
   theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {theOfferRoutes} from "@/features/the-angebote/the-offers.routes";
+import {theOfferRoutes} from "@/features/the-offers/the-offers.routes";
 import {erfahreMehrRoutes} from "@/features/the-additional/the-additional.routes";
 import {I18nLabel} from "@/core/core.translation";
 import {mainBaseHeadLineLabels} from "@/features/the-main/i18n";

@@ -21,6 +21,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="addedItem.header"
+                    color="secondary"
                     :label="headerLabel"
                     :rules="[headerRule]"
                     max-file-name-input-length="250"
@@ -32,6 +33,7 @@
                 <v-col cols="12">
                   <v-textarea
                     v-model="addedItem.entry"
+                    color="secondary"
                     :label="entryLabel"
                     :rules="[entryRule]"
                     max-file-name-input-length="1500"

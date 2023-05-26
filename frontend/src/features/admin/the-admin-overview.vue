@@ -38,7 +38,7 @@
               lg="6"
               xl="3"
             >
-              <base-link-card :item="erfahreMehr" />
+              <base-link-card :item="angebote" />
             </v-col>
             <v-col
               cols="12"
@@ -47,7 +47,7 @@
               lg="6"
               xl="3"
             >
-              <base-link-card :item="angebote" />
+              <base-link-card :item="erfahreMehr" />
             </v-col>
           </v-row>
         </v-container>
@@ -62,7 +62,7 @@ import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.
 import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import {adminAdditionalRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
 
@@ -99,7 +99,7 @@ export default class AdminOverview extends Vue {
   }
 
   get erfahreMehr(): unknown {
-    return adminExperienceMoreRoutes;
+    return adminAdditionalRoutes;
   }
 }
 </script>

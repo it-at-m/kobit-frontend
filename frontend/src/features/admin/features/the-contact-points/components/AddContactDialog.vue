@@ -14,6 +14,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="newContact.email"
+              color="secondary"
               label="E-Mail"
               :rules="[rule]"
               prepend-inner-icon="mdi-email"

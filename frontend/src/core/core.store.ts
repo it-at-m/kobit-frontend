@@ -59,7 +59,7 @@ import {
     THE_OFFERS_MODULE_NAME,
     TheOffersModuleState,
     theOffersStoreModule
-} from "@/features/the-angebote/the-offers-store.module";
+} from "@/features/the-offers/the-offers-store.module";
 import {
     THE_DISCLAIMER_MODULE_NAME,
     theDisclaimerStoreModule,

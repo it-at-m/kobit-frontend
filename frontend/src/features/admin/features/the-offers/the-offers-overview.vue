@@ -42,7 +42,7 @@
               <v-list-item-title>
                 {{ item.title }}
               </v-list-item-title>
-              <v-list-item-subtitle>
+              <v-list-item-subtitle v-if="item.startDate && item.endDate">
                 {{ item.startDate }} - {{ item.endDate }}
               </v-list-item-subtitle>
             </v-list-item-content>

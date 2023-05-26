@@ -13,6 +13,7 @@
             <v-text-field
               id="id_faq_search"
               v-model="searchText"
+              color="secondary"
               label="Faq durchsuchen"
               placeholder="Eingabe"
               outlined

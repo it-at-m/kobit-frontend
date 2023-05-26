@@ -1,57 +1,41 @@
 <template>
-  <v-footer
-    min-height="75px"
-    padless
-    color="transparent"
-    class="align-center justify-center"
-  >
-    <v-row>
-      <v-col
-        :cols="showAdminInfo() ? 4 : 5"
-        :sm="showAdminInfo() ? 6 : 7"
-        :md="showAdminInfo() ? 7 : 8"
-        :lg="showAdminInfo() ? 8 : 9"
-        :xl="showAdminInfo() ? 9 : 10"
-        class="ma-0 pa-0"
-      />
+  <v-container>
+    <v-footer
+      min-height="75px"
+      padless
+      color="transparent"
+      class="align-center justify-right"
+    >
+      <v-row>
+        <v-col cols="12">
+          <div class="d-flex align-center justify-end">
+            <div>
+              <PrivacyPolicy />
+            </div>
 
-
-      <v-col
-        cols="7"
-        sm="5"
-        md="4"
-        lg="3"
-        xl="2"
-        class="ma-0 pa-0"
-      >
-        <PrivacyPolicy />
-      </v-col>
-      <v-col
-        v-if="showAdminInfo()"
-        cols="1"
-        class="ma-0 pa-0"
-      >
-        <v-tooltip top>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="mx-2"
-              color="secondary"
-              v-bind="attrs"
-              @click="openInfoDialog"
-              v-on="on"
+            <div
+              v-if="showAdminInfo()"
+              class="ml-2 d-flex align-center justify-end"
             >
-              <v-icon>mdi-information-outline</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ infoLabels.informationTitle }}</span>
-        </v-tooltip>
-      </v-col>
-    </v-row>
-    <UserInformationDialog
-      :is-dialog-active="isInfoDialogActive"
-      @closeInfoDialog="closeInfoDialog"
-    />
-  </v-footer>
+              <v-btn
+                class="mx-2 pt-0 mt-0"
+                color="secondary"
+                v-bind="attrs"
+                @click="openInfoDialog"
+                v-on="on"
+              >
+                <v-icon>mdi-information-outline</v-icon> {{ infoLabels.informationTitle }}
+              </v-btn>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+      <UserInformationDialog
+        :is-dialog-active="isInfoDialogActive"
+        @closeInfoDialog="closeInfoDialog"
+      />
+    </v-footer>
+  </v-container>
 </template>
 
 <script lang="ts">
@@ -98,4 +82,6 @@ export default {
 .v-html ::v-deep a {
   color: #333;
 }
+
+
 </style>

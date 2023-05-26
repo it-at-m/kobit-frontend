@@ -21,7 +21,7 @@ import {
 import {
     theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
-import { theOfferRoutes } from "@/features/the-angebote/the-offers.routes";
+import { theOfferRoutes } from "@/features/the-offers/the-offers.routes";
 import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {
     theAnlaufstellenDetailsRoutes
@@ -30,7 +30,7 @@ import { adminUFinderRoutes } from "@/features/admin/components/u-finder/u-finde
 
 import { adminRoutes } from "@/features/admin/the-admin-routes";
 import { adminContactPointsRoutes } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
-import { adminExperienceMoreRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminAdditionalRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import {
     adminConflictPreventionRoutes
 } from "@/features/admin/features/the-additional/features/the-conflict-prevention/the-conflict-prevention.routes";
@@ -90,7 +90,7 @@ const router = new Router({
         theOfferRoutes,
         adminRoutes,
         adminContactPointsRoutes,
-        adminExperienceMoreRoutes,
+        adminAdditionalRoutes,
         adminConflictPreventionRoutes,
         adminDownloadsRoutes,
         adminFaqRoutes,

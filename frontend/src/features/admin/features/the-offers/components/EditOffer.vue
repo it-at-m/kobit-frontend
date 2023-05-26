@@ -26,9 +26,10 @@
                 xl="12"
               >
                 <v-text-field
+                  color="secondary"
                   :value="writableOffer.title"
                   label="Angebotname"
-                  :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
+                  :rules="[v => !!v || 'Title ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Title muss 5 bis 100 Zeichen lang sein.']"
                   :counter="100"
                   @input="changeName"
                 />
@@ -37,10 +38,20 @@
             <v-row>
               <v-col
                 cols="12"
+                class="pb-0 mb-0"
+              >
+                <p>
+                  Hinweise: Wenn kein Datum eingetragen ist, erscheinen die Angebote unter Selbstlernangebote und wenn
+                  ein Datum eingetragen ist, erscheinen sie unter Termingebundene Angebote.
+                </p>
+              </v-col>
+              <v-col
+                cols="12"
                 sm="12"
                 md="6"
                 lg="6"
                 xl="6"
+                class="pt-0 mt-0"
               >
                 <v-menu
                   v-model="menuStartDate"
@@ -52,17 +63,19 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="displayStartDate"
+                      v-model="writableOffer.startDate"
+                      color="secondary"
                       label="Startdatum"
-                      :rules="[v => !!v || 'Startdatum ist erforderlich']"
+                      :rules="[validateDateRange.startDate, validateDateFields]"
                       prepend-icon="mdi-calendar"
-                      readonly
+                      clearable
                       v-bind="attrs"
                       v-on="on"
                     />
                   </template>
                   <v-date-picker
                     v-model="writableOffer.startDate"
+                    color="secondary"
                     locale="de"
                     @input="changeStartDate"
                   />
@@ -74,6 +87,7 @@
                 md="6"
                 lg="6"
                 xl="6"
+                class="pt-0 mt-0"
               >
                 <v-menu
                   v-model="menuEndDate"
@@ -85,49 +99,23 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="displayEndDate"
+                      v-model="writableOffer.endDate"
+                      color="secondary"
                       label="Enddatum"
-                      :rules="[v => !!v || 'Enddatum ist erforderlich']"
+                      :rules="[validateDateRange.endDate, validateDateFields]"
                       prepend-icon="mdi-calendar"
-                      readonly
+                      clearable
                       v-bind="attrs"
                       v-on="on"
                     />
                   </template>
                   <v-date-picker
                     v-model="writableOffer.endDate"
+                    color="secondary"
                     locale="de"
                     @input="changeEndDate"
                   />
                 </v-menu>
-              </v-col>
-
-              <v-col
-                cols="12"
-                sm="12"
-                md="3"
-                lg="3"
-                xl="3"
-              >
-                <v-combobox
-                  :value="writableOffer.departments"
-                  :label="label.addDepartment"
-                  multiple
-                  persistent-hint
-                  small-chips
-                  :disabled="!isCentralAdmin"
-                  @input="changeDepartment"
-                >
-                  <template v-slot:no-data>
-                    <v-list-item>
-                      <v-list-item-content>
-                        <v-list-item-title>
-                          {{ label.addDepartmentHint }}
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </template>
-                </v-combobox>
               </v-col>
             </v-row>
             <v-divider class="mt-3 mb-5" />
@@ -207,10 +195,11 @@
                 <v-textarea
                   id="description-textarea"
                   v-model="writableOffer.description"
+                  color="secondary"
                   rows="12"
-                  :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                  :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2500) || 'Die Beschreibung muss weniger als 2500 Zeichen umfassen']"
                   label="Beschreibung"
-                  :counter="2000"
+                  :counter="2500"
                   @input="changeDescription"
                 />
               </v-col>
@@ -377,8 +366,8 @@ export default defineComponent({
         writableOffer.value = newValue;
         // Add these lines to update displayStartDate and displayEndDate
         if (newValue) {
-          displayStartDate.value = formatDateForDisplay(newValue.startDate);
-          displayEndDate.value = formatDateForDisplay(newValue.endDate);
+          displayStartDate.value = newValue.startDate ? formatDateForDisplay(newValue.startDate) : '';
+          displayEndDate.value = newValue.endDate ? formatDateForDisplay(newValue.endDate) : '';
         }
       }
     });
@@ -398,6 +387,52 @@ export default defineComponent({
       // As the date is already in "yyyy-mm-dd" format from backend, just return it
       return date;
     };
+
+
+    const formatDateString = (dateString: string) => {
+      const parts = dateString.split('.');
+      return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    };
+
+    const validateDateRange = computed(() => {
+      const startDate = writableOffer.value?.startDate;
+      const endDate = writableOffer.value?.endDate;
+
+      if (startDate && endDate) {
+        const formattedStartDate = formatDateString(startDate);
+        const formattedEndDate = formatDateString(endDate);
+
+        const startDateObj = new Date(formattedStartDate);
+        const endDateObj = new Date(formattedEndDate);
+
+        if (startDateObj > endDateObj) {
+          return {
+            startDate: 'Startdatum kann nicht größer sein als Enddatum',
+            endDate: 'Enddatum kann nicht kleiner als Startdatum sein',
+          };
+        }
+      }
+
+      return true;
+    });
+
+
+    const validateDateFields = computed(() => {
+      const startDate = writableOffer.value?.startDate;
+      const endDate = writableOffer.value?.endDate;
+
+      if ((startDate && !endDate) || (!startDate && endDate)) {
+        return 'Beide Felder müssen ausgefüllt werden, oder beide können gelöscht werden';
+      }
+
+      return true;
+    });
+
+
+
+
+
+
     const cancelForm = () => {
       router.push("/admin/angebote/");
       router.go(0);
@@ -419,10 +454,6 @@ export default defineComponent({
       errorMessage.value = message;
       isWriteError.value = true;
     };
-
-    const changeDepartment = (value: string[]) => {
-      writableOffer.value = { ...writableOffer.value, departments: value } as Offer;
-    }
 
     const closeError = () => {
       isWriteError.value = false;
@@ -581,11 +612,11 @@ export default defineComponent({
       formatDateForPicker,
       menuStartDate,
       menuEndDate,
+      validateDateRange,
+      validateDateFields,
       changeDescription,
-      changeDepartment,
       error,
       closeError,
-
     }
   }
 })

@@ -103,6 +103,7 @@
                 >
                   <v-textarea
                     id="description-textarea"
+                    color="secondary"
                     class="custom-textarea"
                     :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
                     label="Beschreibung"

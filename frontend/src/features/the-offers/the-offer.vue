@@ -18,7 +18,7 @@
               lg="6"
               xl="6"
             >
-              <v-card-text>
+              <v-card-text v-if="offer.startDate && offer.endDate">
                 Von {{ offer.startDate }} bis {{
                   offer.endDate
                 }}
