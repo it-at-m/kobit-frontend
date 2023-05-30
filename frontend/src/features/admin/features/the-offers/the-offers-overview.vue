@@ -6,7 +6,7 @@
     :icon="icon"
   >
     <BackButton :callback="back" />
-    <v-row>
+    <v-row v-if="isCentralAdmin">
       <v-col
         cols="12"
         sm="12"
@@ -82,9 +82,20 @@
         </p>
       </v-col>
     </v-row>
+    <v-row v-else>
+      <v-col cols="12">
+        <v-alert
+          dense
+          type="info"
+          color="secondary"
+          class="ml-4 mr-4"
+        >
+          <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
+        </v-alert>
+      </v-col>
+    </v-row>
   </BasePageContent>
 </template>
-
 <script lang="ts">
 import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
@@ -102,11 +113,9 @@ import NewOfferListItem from "@/features/admin/features/the-offers/components/Ne
 import { adminOfferLabels } from "@/features/admin/features/the-offers/i18n";
 import NewOfferView from "@/features/admin/features/the-offers/components/NewOffer.vue";
 import NewOffer from "@/features/admin/features/the-offers/components/NewOffer.vue";
-
 import EditOffer from "@/features/admin/features/the-offers/components/EditOffer.vue";
-
 import { useGetEditableOffers } from "@/features/commons/middleware/useGetOffers";
-
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 
 export default defineComponent({
   name: "OffersOverview",
@@ -172,6 +181,14 @@ export default defineComponent({
       }
     }
 
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin = ref(false);
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    });
+
     const unselectItem = () => {
       selectedItem.value = undefined;
       router.push({ name: ADMIN_OFFERS_ROUTE_NAME });
@@ -200,6 +217,7 @@ export default defineComponent({
       setIsAddNew,
       unselectItem,
       cancelNew,
+      isCentralAdmin,
       isAddNew,
       isLoading,
       isError,
