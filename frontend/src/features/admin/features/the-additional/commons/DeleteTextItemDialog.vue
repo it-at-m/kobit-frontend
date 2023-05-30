@@ -22,7 +22,7 @@
             <v-icon>mdi-cancel</v-icon> Abbruch
           </v-btn>
           <v-btn
-            color="green darken-1 white--text"
+            color="error"
             @click="deleteItem"
           >
             <v-icon>mdi-delete</v-icon> Löschen
@@ -33,7 +33,7 @@
     <v-snackbar
       v-model="isSnackbarActive"
       :timeout="SNACKBAR_TIMEOUT"
-      color="green darken-1"
+      color="error"
       bottom
     >
       <p class="pa-0 ma-0">

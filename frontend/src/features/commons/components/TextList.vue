@@ -8,11 +8,7 @@
     >
       <v-list-item-content>
         <v-list-item-title><b>{{ item.header }}</b></v-list-item-title>
-        <v-list-item-subtitle>
-          <p class="item-entry">
-            {{ item.entry }}
-          </p>
-        </v-list-item-subtitle>
+        <v-list-item-subtitle><p class="item-entry">{{ item.entry }}</p></v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -52,5 +48,6 @@ export default defineComponent({
   overflow-wrap: break-word;
   white-space: pre-wrap;
   max-width: 100%;
+  text-indent: 0em !important;
 }
 </style>

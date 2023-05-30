@@ -50,11 +50,11 @@ export const theDrawerMainModule = {
                 path: '/anlaufstellen/', // Override the path when id is undefined
             },
             theUnterstuetzungsfinderRoutes,
-            erfahreMehrRoutes,
             {
                 ...theOfferRoutes,
                 path: '/angebot/', // Override the path when id is undefined
             },
+            erfahreMehrRoutes,
             adminRoutes
         ],
         listAdminItems: [
@@ -64,11 +64,11 @@ export const theDrawerMainModule = {
                 path: '/admin/anlaufstellen/', // Override the path when id is undefined
             },
             adminUFinderRoutes,
-            adminAdditionalRoutes,
             {
                 ...adminOffersRoutes,
                 path: '/admin/angebote/', // Override the path when id is undefined
             },
+            adminAdditionalRoutes,
             theMainRoutes,
 
         ],
