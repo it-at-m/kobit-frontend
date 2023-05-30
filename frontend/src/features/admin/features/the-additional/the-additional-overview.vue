@@ -5,11 +5,11 @@
     :name="name"
     :icon="icon"
   >
-    <v-container fluid>
-      <BackButton
+    <BackButton
         :text="'Zurück'"
         :callback="back"
-      />
+    />
+    <v-container fluid>
       <v-row>
         <v-col>
           <v-row>
