@@ -7,6 +7,7 @@
       :info-text="infoText"
       :is-loading="isLoading"
     >
+    <v-row v-if="isCentralAdmin">
       <v-card-text class="pb-10">
         <v-row>
           <v-col>
@@ -48,8 +49,16 @@
           </v-col>
         </v-row>
       </v-card-text>
+    </v-row>
+    <v-row v-else>
+        <v-col cols="12">
+          <v-alert dense type="info" color="secondary" class="ml-4 mr-4">
+            <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
+          </v-alert>
+        </v-col>
+      </v-row>
     </base-page-content>
-    <BackButton :callback="back" />
+    <BackButton v-if="isCentralAdmin" :callback="back" />
     <AddDialog
       :page-type="pageType"
       :show-dialog.sync="addDialog"
@@ -60,7 +69,7 @@
 
 <script lang="ts">
 
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import TextList from "@/features/admin/features/the-additional/commons/TextList.vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
@@ -73,6 +82,7 @@ import {
 import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRouter } from "vue-router/composables";
 import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 
 export default defineComponent({
   name: "TheFaq",
@@ -83,6 +93,16 @@ export default defineComponent({
     const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.FAQ);
     const router = useRouter();
     const addDialog = ref(false);
+
+
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
+
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    }, { immediate: true });
 
     function openAddDialog() {
       addDialog.value = true;
@@ -124,6 +144,7 @@ export default defineComponent({
       error,
       pageType,
       addDialog,
+      isCentralAdmin,
       icon: ADMIN_FAQ_ROUTE_META_ICON,
       infoText: ADMIN_FAQ_ROUTE_META_INFO_TEXT,
       name: ADMIN_FAQ_ROUTE_NAME,

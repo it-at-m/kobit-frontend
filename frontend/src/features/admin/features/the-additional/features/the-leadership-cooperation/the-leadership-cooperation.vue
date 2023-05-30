@@ -6,6 +6,8 @@
       :name="name"
       :icon="icon"
     >
+    <BackButton :callback="back" />
+    <v-row v-if="isCentralAdmin">
       <LoadingSpinner :is-loading="isLoading" />
       <ErrorHandler
         :is-error="isWriteError"
@@ -148,12 +150,20 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+      </v-row>
+      <v-row v-else>
+        <v-col cols="12">
+          <v-alert dense type="info" color="secondary" class="ml-4 mr-4">
+            <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
+          </v-alert>
+        </v-col>
+      </v-row>
     </BasePageContent>
   </v-container>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
@@ -172,10 +182,12 @@ import { I18nLabel } from "@/core/core.translation";
 import { adminContentItemLabels } from "@/features/admin/features/the-additional/i18n";
 import SaveUpdateContentItem from "@/features/admin/features/the-additional/commons/SaveUpdateContentItemButton.vue";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
+  components: { BasePageContent, BackButton,  MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -192,6 +204,15 @@ export default defineComponent({
     const router = useRouter();
 
     const writableContentItem = ref<ItemWrapper>();
+
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
+
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    }, { immediate: true });
 
     watch(itemWrapper, (newValue) => {
       if (!writableContentItem.value) {
@@ -290,6 +311,7 @@ export default defineComponent({
       isWriteError,
       computeMarkdown,
       itemWrapper,
+      isCentralAdmin,
       icon: LEADERSHIP_COOPERATION_ROUTE_META_ICON,
       infoText: LEADERSHIP_COOPERATION_ROUTE_META_INFO_TEXT,
       name: LEADERSHIP_COOPERATION_ROUTE_NAME,

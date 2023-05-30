@@ -15,7 +15,7 @@
         xl="3"
       >
         <v-list
-          v-if="listItems?.length > 0"
+        v-if="listItems && listItems.length > 0"
           dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
           style="overflow-y: scroll"

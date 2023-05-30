@@ -30,7 +30,7 @@
               :disabled="selectedItem !== undefined || isAddNew"
             />
           </v-list>
-          <v-list v-if="!isLoading && listItems.length > 0">
+          <v-list v-if="listItems && listItems.length > 0">
             <v-list-item
               v-for="item in listItems"
               :key="item.id"
@@ -145,15 +145,6 @@ export default defineComponent({
       }
     }
 
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin: Ref<boolean | null> = ref(null);
-
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        isCentralAdmin.value = newValue.isCentralAdmin;
-      }
-    }, { immediate: true });
-
     watch(isLoading, (current, previous) => {
       if (previous === true && current === false) {
         handleIdChange(route.params.id);
@@ -205,7 +196,6 @@ export default defineComponent({
       setIsAddNew,
       unselectItem,
       cancelNew,
-      isCentralAdmin,
       isAddNew,
       isLoading,
       isError,
