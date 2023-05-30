@@ -26,7 +26,6 @@ export const useGetEditableContactPoints = () =>
         () => getContactPoints()
             .then((listItems) => {
                 return getAdminUserInfo().then(adminInfo => {
-                    console.log(adminInfo)
                     return filterForEditableContactPoints(listItems, adminInfo)
                 })
             })
