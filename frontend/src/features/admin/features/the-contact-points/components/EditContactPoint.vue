@@ -401,7 +401,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import { Contact, ContactPoint, ContactPointListItem, Link } from "@/features/commons/types/ContactPoint";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
@@ -415,6 +415,8 @@ import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { error } from "console";
+import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VCombobox, VListItem, VListItemContent, VListItemTitle, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -440,23 +442,24 @@ export default defineComponent({
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
     const router = useRouter();
-
     const errorMessage = ref('');
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin = ref(false);
-
     const writableContactPoint = ref<ContactPoint>();
+
+    
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
       }
-    });
+    }, { immediate: true });
+
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
 
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    });
+    }, { immediate: true });
 
     const openLinkDialog = () => {
       isLinkDialogOpen.value = true;
@@ -466,7 +469,6 @@ export default defineComponent({
     }
     const cancelForm = () => {
       router.push("/admin/anlaufstellen/");
-      router.go(0);
 
     }
     const cancel = () => {

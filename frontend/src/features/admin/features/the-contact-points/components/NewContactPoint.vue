@@ -155,7 +155,7 @@
               <v-textarea
                 id="description-textarea"
                 color="secondary"
-                :value="newContactPoint.description"
+                :value="newContactPoint?.description"
                 label="Beschreibung"
                 rows="12"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"

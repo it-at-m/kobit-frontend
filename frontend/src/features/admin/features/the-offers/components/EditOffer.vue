@@ -296,7 +296,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import { Offer, OfferListItem } from "@/features/commons/types/Offer";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
@@ -308,6 +308,8 @@ import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-offers/components/DeleteButton.vue";
 import { useGetOffer } from "@/features/commons/middleware/useGetOffers";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { error } from "console";
+import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VMenu, VDatePicker, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 export default defineComponent({
   name: "EditOffer",
   components: { DeleteButton, MarkDownAlert, ErrorHandler, SaveUpdate, LoadingSpinner },
@@ -333,27 +335,22 @@ export default defineComponent({
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
     const router = useRouter();
-
     const errorMessage = ref('');
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin = ref(false);
-
     const displayStartDate = ref('');
     const displayEndDate = ref('');
-
     const menuStartDate = ref(false);
     const menuEndDate = ref(false);
-
-
-
     const writableOffer = ref<Offer>();
 
+
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
 
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    });
+    }, { immediate: true });
 
 
     const formatDateForDisplay = (date: string) => {
@@ -370,7 +367,7 @@ export default defineComponent({
           displayEndDate.value = newValue.endDate ? formatDateForDisplay(newValue.endDate) : '';
         }
       }
-    });
+    }, { immediate: true });
 
     const changeStartDate = (value: string) => {
       writableOffer.value = { ...writableOffer.value, startDate: value } as Offer;
@@ -428,14 +425,8 @@ export default defineComponent({
       return true;
     });
 
-
-
-
-
-
     const cancelForm = () => {
       router.push("/admin/angebote/");
-      router.go(0);
 
     }
     const cancel = () => {

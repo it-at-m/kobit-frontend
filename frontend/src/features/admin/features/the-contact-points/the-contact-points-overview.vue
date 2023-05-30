@@ -97,7 +97,7 @@
   </BasePageContent>
 </template>
 <script lang="ts">
-import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
+import { defineComponent, ref, watch, onBeforeUnmount, Ref } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
   ADMIN_CONTACTPOINTS_ICON,
@@ -116,6 +116,7 @@ import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
 import { useGetEditableContactPoints } from "@/features/commons/middleware/useGetContactPoints";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { VRow, VCol, VList, VListItem, VListItemContent, VListItemTitle, VListItemSubtitle, VDivider, VAlert } from "vuetify/lib";
 
 export default defineComponent({
   name: "ContactPointsOverview",
@@ -155,6 +156,15 @@ export default defineComponent({
       }
     }
 
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
+
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    }, { immediate: true });
+
     watch(isLoading, (current, previous) => {
       if (previous === true && current === false) {
         handleIdChange(route.params.id);
@@ -174,20 +184,10 @@ export default defineComponent({
     const back = () => {
       if (selectedItem.value || isAddNew.value) {
         router.push({ path: "/admin/anlaufstellen/" });
-        router.go(0);
       } else {
         router.push("/admin");
-        router.go(0);
       }
     }
-
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin = ref(false);
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        isCentralAdmin.value = newValue.isCentralAdmin;
-      }
-    });
 
     const unselectItem = () => {
       selectedItem.value = undefined;
@@ -202,7 +202,6 @@ export default defineComponent({
     const setIsAddNew = () => {
       isAddNew.value = true;
       router.push({ path: "/admin/anlaufstellen/hinzufuegen" });
-      router.go(0);
     }
 
 

@@ -61,7 +61,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="newOffer.startDate"
+                      :value="newOffer?.startDate"
                       color="secondary"
                       label="Startdatum"
                       :rules="[validateDateRange.startDate, validateDateFields]"
@@ -72,7 +72,7 @@
                     />
                   </template>
                   <v-date-picker
-                    v-model="newOffer.startDate"
+                    :value="newOffer?.startDate"
                     color="secondary"
                     locale="de"
                     @input="changeStartDate"
@@ -97,7 +97,7 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="newOffer.endDate"
+                      :value="newOffer?.endDate"
                       color="secondary"
                       label="Enddatum"
                       :rules="[validateDateRange.endDate, validateDateFields]"
@@ -108,7 +108,7 @@
                     />
                   </template>
                   <v-date-picker
-                    v-model="newOffer.endDate"
+                    :value="newOffer?.endDate"
                     color="secondary"
                     locale="de"
                     @input="changeEndDate"
@@ -194,7 +194,7 @@
               <v-textarea
                 id="description-textarea"
                 color="secondary"
-                :value="newOffer.description"
+                :value="newOffer?.description"
                 label="Beschreibung"
                 rows="12"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2500) || 'Die Beschreibung muss weniger als 2500 Zeichen umfassen']"
@@ -269,7 +269,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
@@ -278,6 +278,8 @@ import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { marked } from "marked";
 import SaveNewButton from "@/features/admin/features/the-offers/components/SaveNewButton.vue";
 import { useRouter } from "vue-router/composables";
+import { error } from "console";
+import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VMenu, VDatePicker, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 
 export default defineComponent({
   name: "NewOffer",
@@ -297,8 +299,6 @@ export default defineComponent({
     const isWriteError = ref(false);
     const errorMessage = ref('');
     const router = useRouter();
-    const isCentralAdmin = ref(false);
-    const { data: adminUserInfo } = useGetAdminUserInfo();
 
     const displayStartDate = ref('');
     const displayEndDate = ref('');
@@ -380,12 +380,14 @@ export default defineComponent({
     });
 
 
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
+
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
-        newOffer.value = { ...newOffer.value } as Offer;
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    })
+    }, { immediate: true });
 
     const computeMarkdown = computed(() => marked.parse(newOffer.value?.description || ""));
 

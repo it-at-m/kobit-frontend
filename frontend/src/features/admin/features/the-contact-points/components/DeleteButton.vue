@@ -90,7 +90,6 @@ export default defineComponent({
           isSnackbarActive.value = true;
           setTimeout(() => {
             router.push("/admin/anlaufstellen/");
-            router.go(0);
           }, 1000); // delay for 1 second
         })
         .catch(() => emit("error"));
