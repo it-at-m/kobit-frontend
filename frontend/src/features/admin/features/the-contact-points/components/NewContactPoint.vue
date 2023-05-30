@@ -407,7 +407,7 @@ export default defineComponent({
         newContactPoint.value = { ...newContactPoint.value, departments: [department] } as ContactPoint;
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    })
+    }, { immediate: true })
 
     const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
 
