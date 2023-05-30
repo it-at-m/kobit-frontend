@@ -6,7 +6,7 @@
     :icon="icon"
   >
     <BackButton :callback="back" />
-    <v-row v-if="isCentralAdmin">
+    <v-row>
       <v-col
         cols="12"
         sm="12"
@@ -56,6 +56,7 @@
         vertical
         class="mb-3 mt-2"
       />
+
       <v-col
         cols="12"
         sm="12"
@@ -80,18 +81,6 @@
         <p v-else>
           Klicken Sie auf eine Anlaufstelle, um sie zu bearbeiten oder fügen Sie eine neue Anlaufstelle hinzu.
         </p>
-      </v-col>
-    </v-row>
-    <v-row v-else>
-      <v-col cols="12">
-        <v-alert
-          dense
-          type="info"
-          color="secondary"
-          class="ml-4 mr-4"
-        >
-          <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
-        </v-alert>
       </v-col>
     </v-row>
   </BasePageContent>
