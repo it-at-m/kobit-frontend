@@ -13,7 +13,7 @@ export const useGetContactPointListItems = () =>
 
 
 const filterForEditableContactPoints = (listItems: ContactPointListItem[], adminUserInfo: AdminUserInfo) => {
-    if (adminUserInfo.isCentralAdmin || adminUserInfo.isDepartmentAdmin) {
+    if (adminUserInfo.isCentralAdmin) {
         return listItems
     } else {
         return listItems.filter(it => it.departments.includes(adminUserInfo.department));
