@@ -16,18 +16,16 @@ export const postOffer = async (offer: Offer, file?: File, headers?: Record<stri
 
         offer.imageLink = linkResponse;
 
-        return httpPostJson<Offer>("/offers", offer);
 
-    }else {
-        return httpPostJson<Offer>("/offers", offer);
+
     }
 
+    return httpPostJson<Offer>("/offers", offer);
 
 };
 
 
 export const putOffer = async (id: string, offer: Offer, file?: File, headers?: Record<string, string>) => {
-
 
     if (file) {
         const formData = new FormData();
@@ -49,12 +47,9 @@ export const putOffer = async (id: string, offer: Offer, file?: File, headers?: 
 
         offer.imageLink = newFileLink;
 
-        return httpPutJson<Offer>("/offers/" + id, offer);
-
     }
-    else {
-        return httpPutJson<Offer>("/offers/" + id, offer);
-    }
+    
+    return httpPutJson<Offer>("/offers/" + id, offer);
 
 }
 

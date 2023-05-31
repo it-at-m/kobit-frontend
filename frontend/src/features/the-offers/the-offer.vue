@@ -73,15 +73,6 @@ export default defineComponent({
             router.push("/angebot");
         };
 
-
-        // Fetch the offer data when the component is mounted
-        onMounted(() => {
-            if (offerId.value) {
-                // Call the API or perform the necessary logic to fetch the offer data based on the offerId
-                // Assign the fetched offer data to the 'offer' ref
-            }
-        });
-
         return {
             name: "Angebot",
             icon: "mdi-ballot-outline",

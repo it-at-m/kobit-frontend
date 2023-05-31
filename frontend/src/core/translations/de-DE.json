@@ -69,7 +69,7 @@
     "offers": {
       "texts": {
         "addNewTitle": "Hinzufügen",
-        "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
+        "addNewDescription": "Fügen Sie eine neues Angebot hinzu.",
         "addDepartment": "Referat",
         "addContact": "Kontakt hinzufügen",
         "addLink": "Link hinzufügen",
@@ -84,7 +84,7 @@
     "contentItems": {
       "texts": {
         "addNewTitle": "Hinzufügen",
-        "addNewDescription": "Fügen Sie eine neue Anlaufstelle hinzu.",
+        "addNewDescription": "Fügen Sie eine neuen Artikel hinzu.",
         "addContact": "Kontakt hinzufügen",
         "addLink": "Link hinzufügen",
         "addFile": "Datei hinzufügen",

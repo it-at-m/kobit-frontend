@@ -272,7 +272,6 @@
 import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
-import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 import { Offer } from "@/features/commons/types/Offer";
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { marked } from "marked";
@@ -379,15 +378,6 @@ export default defineComponent({
       return true;
     });
 
-
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin: Ref<boolean | null> = ref(null);
-
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        isCentralAdmin.value = newValue.isCentralAdmin;
-      }
-    }, { immediate: true });
 
     const computeMarkdown = computed(() => marked.parse(newOffer.value?.description || ""));
 
@@ -536,7 +526,6 @@ export default defineComponent({
       isLinkDialogOpen,
       isWriteError,
       errorMessage,
-      isCentralAdmin,
       file,
       fileRules,
       maxFileNameInputLength,

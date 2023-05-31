@@ -160,6 +160,7 @@ export default defineComponent({
     const isCentralAdmin: Ref<boolean | null> = ref(null);
 
     watch(adminUserInfo, (newValue) => {
+      console.log("adminUserInfo: ", adminUserInfo);
       if (newValue) {
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
@@ -170,13 +171,13 @@ export default defineComponent({
       if (previous === true && current === false) {
         handleIdChange(route.params.id);
       }
-    });
+    }, { immediate: true });
 
     const unwatch = watch(() => route.params.id, newId => {
       if (!isLoading.value) {
         handleIdChange(newId);
       }
-    });
+    }, { immediate: true });
 
     onBeforeUnmount(() => {
       unwatch();

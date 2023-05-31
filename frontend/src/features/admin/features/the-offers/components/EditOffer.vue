@@ -307,7 +307,6 @@ import { useRouter } from "vue-router/composables";
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-offers/components/DeleteButton.vue";
 import { useGetOffer } from "@/features/commons/middleware/useGetOffers";
-import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 import { error } from "console";
 import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VMenu, VDatePicker, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 export default defineComponent({
@@ -341,16 +340,6 @@ export default defineComponent({
     const menuStartDate = ref(false);
     const menuEndDate = ref(false);
     const writableOffer = ref<Offer>();
-
-
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin: Ref<boolean | null> = ref(null);
-
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        isCentralAdmin.value = newValue.isCentralAdmin;
-      }
-    }, { immediate: true });
 
 
     const formatDateForDisplay = (date: string) => {
@@ -585,7 +574,6 @@ export default defineComponent({
       errorMessage,
       isReadError,
       isWriteError,
-      isCentralAdmin,
       file,
       applyFormatting,
       customFileName,
