@@ -57,7 +57,7 @@
                 <v-icon>mdi-pencil</v-icon> Bearbeiten
               </v-btn>
               <v-btn
-                color="error"
+                color="error ml-2"
                 @click="openDeleteDialog(item)"
               >
                 <v-icon>mdi-delete</v-icon> Löschen

@@ -7,7 +7,7 @@
       :info-text="infoText"
       :is-loading="isLoading"
     >
-    <v-row v-if="isCentralAdmin">
+    <v-row>
       <v-card-text class="pb-10">
         <v-row>
           <v-col>
@@ -50,16 +50,8 @@
         </v-row>
       </v-card-text>
       </v-row>
-      <v-row v-else>
-        <v-col cols="12">
-          <v-alert dense type="info" color="secondary" class="ml-4 mr-4">
-            <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
-          </v-alert>
-        </v-col>
-      </v-row>
-
     </base-page-content>
-    <BackButton v-if="isCentralAdmin" :callback="back" />
+    <BackButton :callback="back" class="mt-1" />
     <AddDialog
       :page-type="pageType"
       :show-dialog.sync="addDialog"
@@ -83,7 +75,6 @@ import {
 import BackButton from "@/features/commons/components/BackButton.vue";
 import { useRouter } from "vue-router/composables";
 import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
-import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 import { VContainer, VRow, VCardText, VCol, VTextField, VBtn, VIcon, VAlert } from "vuetify/lib";
 
 export default defineComponent({
@@ -96,14 +87,6 @@ export default defineComponent({
     const router = useRouter();
     const addDialog = ref(false);
 
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin: Ref<boolean | null> = ref(null);
-
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        isCentralAdmin.value = newValue.isCentralAdmin;
-      }
-    }, { immediate: true });
 
     function openAddDialog() {
       addDialog.value = true;
@@ -145,7 +128,6 @@ export default defineComponent({
       error,
       pageType,
       addDialog,
-      isCentralAdmin,
       icon: ADMIN_DOWNLOADS_ROUTE_META_ICON,
       infoText: ADMIN_DOWNLOADS_ROUTE_META_INFO_TEXT,
       name: ADMIN_DOWNLOADS_ROUTE_NAME,
