@@ -160,7 +160,6 @@ export default defineComponent({
     const isCentralAdmin: Ref<boolean | null> = ref(null);
 
     watch(adminUserInfo, (newValue) => {
-      console.log("adminUserInfo: ", adminUserInfo);
       if (newValue) {
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
