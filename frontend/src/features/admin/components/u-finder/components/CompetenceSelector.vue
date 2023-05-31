@@ -185,7 +185,10 @@ export default defineComponent({
             snackBarText.value = "Beim Speichern gab es ein Problem. Versuchen Sie es bitte erneut oder wenden Sie sich an die Betreiber der Anwendung.";
             snackBarColor.value = "error";
             snackBarIcon.value = "mdi-cross";
-          }).finally(() => router.push("/admin/unterstuetzungsfinder"));
+          }).finally(() => {
+            router.push("/admin/unterstuetzungsfinder");
+            router.go(0);
+          })
         }
 
         const cancel = () => {
