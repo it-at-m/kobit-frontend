@@ -12,7 +12,7 @@ export const theAnlaufstellenRoutes = {
     props: true, // Pass route.params to props
     meta: {
         icon: THE_ANLAUFSTELLEN_ROUTE_META_ICON,
-        infoText: `Hier finden Sie eine Übersicht über die Anlaufstellen, die Sie in schwierigen Situationen und Konflikten unterstützen. Diese sind in alphabetischer Reihenfolge angeordnet.`,
+        infoText: `Sie finden hier einen Überblick über die Anlaufstellen für die Unterstützung in schwierigen Situationen und bei Konflikten. Diese sind in alphabetischer Reihenfolge angeordnet. Sie können sich sofort und direkt via E-Mail oder telefonisch mit der entsprechenden Anlaufstelle Ihrer Wahl in Verbindung setzen.`,
     },
 
 };
