@@ -37,12 +37,13 @@
     <v-col>
       <v-row>
         <v-list subheader>
-          <draggable v-model="selectedContactPoint">
-            <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-            <v-list-item-group
-                :v-model="selectedContactPoint"
-                color="primary"
-            >
+
+          <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
+          <v-list-item-group
+              :v-model="selectedContactPoint"
+              color="primary"
+          >
+            <draggable v-model="selectedContactPoint">
               <v-list-item
                   v-for="contactPoint in editableContactPointList"
                   :key="contactPoint.id"
@@ -68,39 +69,40 @@
                   </v-btn>
                 </v-list-item-action>
               </v-list-item>
-            </v-list-item-group>
-          </draggable>
-<!--          <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-          <v-list-item-group
-              :v-model="selectedContactPoint"
-              color="primary"
-          >
-            <v-list-item
-                v-for="contactPoint in editableContactPointList"
-                :key="contactPoint.id"
-            >
-              <v-list-item-content>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on }">
-                    <v-list-item-title
-                        v-on="on"
-                        v-text="contactPoint.shortCut"
-                    />
-                  </template>
-                  <span v-text="contactPoint.name"/>
-                </v-tooltip>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-btn
-                    depressed
-                    color="warning"
-                    @click="handleRemoveContactPoint(contactPoint)"
-                >
-                  <v-icon>mdi-minus</v-icon>
-                </v-btn>
-              </v-list-item-action>
-            </v-list-item>
-          </v-list-item-group>-->
+            </draggable>
+          </v-list-item-group>
+
+          <!--          <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
+                    <v-list-item-group
+                        :v-model="selectedContactPoint"
+                        color="primary"
+                    >
+                      <v-list-item
+                          v-for="contactPoint in editableContactPointList"
+                          :key="contactPoint.id"
+                      >
+                        <v-list-item-content>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on }">
+                              <v-list-item-title
+                                  v-on="on"
+                                  v-text="contactPoint.shortCut"
+                              />
+                            </template>
+                            <span v-text="contactPoint.name"/>
+                          </v-tooltip>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-btn
+                              depressed
+                              color="warning"
+                              @click="handleRemoveContactPoint(contactPoint)"
+                          >
+                            <v-icon>mdi-minus</v-icon>
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-list-item-group>-->
         </v-list>
       </v-row>
       <v-row>
