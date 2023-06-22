@@ -39,11 +39,7 @@
         <v-list subheader>
 
           <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-          <v-list-item-group
-              :v-model="selectedContactPoint"
-              color="primary"
-          >
-            <draggable v-model="selectedContactPoint">
+            <draggable :list="editableContactPointList" class="list-group" handle=".handle">
               <v-list-item
                   v-for="contactPoint in editableContactPointList"
                   :key="contactPoint.id"
@@ -70,7 +66,6 @@
                 </v-list-item-action>
               </v-list-item>
             </draggable>
-          </v-list-item-group>
 
           <!--          <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
                     <v-list-item-group
@@ -206,6 +201,10 @@ export default defineComponent({
           availableContactPoints.value = availableContactPoints.value.filter(it => it.id !== contactPoint.id);
         }
 
+     /*   const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItem) => {
+          
+        }*/
+
         const save = () => {
           const pathCompetences = props.givenAnswers.map((x: QuestionAndAnswer) => x.answerCompetence);
           const competenceList: ListItemToCompetenceView[] = editableContactPointList.value.map((it: ContactPointListItem) => {
@@ -256,3 +255,11 @@ export default defineComponent({
     }
 )
 </script>
+
+<style scoped>
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+</style>
