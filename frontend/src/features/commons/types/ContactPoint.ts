@@ -11,6 +11,7 @@ export interface ContactPoint {
     competences?: Competence[];
     links?: Link[];
     image: string;
+    position: number;
 }
 
 export interface Contact {
@@ -29,4 +30,12 @@ export interface ContactPointListItem {
     name: string;
     shortCut: string;
     departments: string[];
+}
+
+export interface ContactPointListItemWithPosition {
+    id?: string;
+    name: string;
+    shortCut: string;
+    departments: string[];
+    position:number
 }

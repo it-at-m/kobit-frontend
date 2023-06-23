@@ -37,67 +37,47 @@
     <v-col>
       <v-row>
         <v-list subheader>
-
           <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-            <draggable :list="editableContactPointList" class="list-group" handle=".handle">
-              <v-list-item
-                  v-for="contactPoint in editableContactPointList"
-                  :key="contactPoint.id"
-              >
-                <v-list-item-content>
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-list-item-title
-                          v-on="on"
-                          v-text="contactPoint.shortCut"
-                      />
-                    </template>
-                    <span v-text="contactPoint.name"/>
-                  </v-tooltip>
-                </v-list-item-content>
-                <v-list-item-action>
-                  <v-btn
-                      depressed
-                      color="warning"
-                      @click="handleRemoveContactPoint(contactPoint)"
-                  >
-                    <v-icon>mdi-minus</v-icon>
-                  </v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </draggable>
-
-          <!--          <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-                    <v-list-item-group
-                        :v-model="selectedContactPoint"
-                        color="primary"
-                    >
-                      <v-list-item
-                          v-for="contactPoint in editableContactPointList"
-                          :key="contactPoint.id"
-                      >
-                        <v-list-item-content>
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                              <v-list-item-title
-                                  v-on="on"
-                                  v-text="contactPoint.shortCut"
-                              />
-                            </template>
-                            <span v-text="contactPoint.name"/>
-                          </v-tooltip>
-                        </v-list-item-content>
-                        <v-list-item-action>
-                          <v-btn
-                              depressed
-                              color="warning"
-                              @click="handleRemoveContactPoint(contactPoint)"
-                          >
-                            <v-icon>mdi-minus</v-icon>
-                          </v-btn>
-                        </v-list-item-action>
-                      </v-list-item>
-                    </v-list-item-group>-->
+          <v-list-item-group
+              :v-model="selectedContactPoint"
+              color="primary"
+          >
+            <v-list-item
+                v-for="contactPoint in editableContactPointList"
+                :key="contactPoint.id"
+            >
+              <v-list-item-content>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-list-item-title
+                        v-on="on"
+                        v-text="contactPoint.shortCut"
+                    />
+                  </template>
+                  <span v-text="contactPoint.name"/>
+                </v-tooltip>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-btn
+                depressed
+                @click="handlePositionChange(contactPoint.position+1, contactPoint.position, contactPoint)">
+                  <v-icon>mdi-menu-up</v-icon>
+                </v-btn>
+                <v-btn
+                    depressed
+                    @click="handlePositionChange(contactPoint.position-1, contactPoint.position, contactPoint)">
+                  <v-icon>mdi-menu-down</v-icon>
+                </v-btn>
+                <v-btn
+                    depressed
+                    color="warning"
+                    @click="handleRemoveContactPoint(contactPoint)"
+                >
+                  <v-icon>mdi-minus</v-icon>
+                </v-btn>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-row>
       <v-row>
@@ -141,7 +121,10 @@ import {defineComponent, onMounted, ref, watch} from "vue";
 import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
-import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
+import {
+  ContactPointListItem,
+  ContactPointListItemWithPosition
+} from "@/features/commons/types/ContactPoint";
 import draggable from "vuedraggable";
 
 import {useRouter} from "vue-router/composables";
@@ -166,8 +149,8 @@ export default defineComponent({
       },
       setup(props) {
         const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
-        const editableContactPointList = ref<ContactPointListItem[]>([]);
-        const selectedContactPoint = ref<ContactPointListItem>();
+        const editableContactPointList = ref<ContactPointListItemWithPosition[]>([]);
+        const selectedContactPoint = ref<ContactPointListItemWithPosition>();
         const availableContactPoints = ref<ContactPointListItem[]>([]);
         const {isSuccess, mutateAsync} = useUpdateCompetences();
         const router = useRouter();
@@ -178,6 +161,7 @@ export default defineComponent({
 
         onMounted(() => {
           editableContactPointList.value = props.convo.contactPoints
+          editableContactPointList.value = editableContactPointList.value.sort((cp1, cp2) => cp1?.position - cp2?.position)
         });
 
         watch(listItems, (newValue) => {
@@ -196,14 +180,20 @@ export default defineComponent({
 
         const handleAddContactPoint = (contactPoint: ContactPointListItem) => {
           const tempList = editableContactPointList.value;
-          tempList.push(contactPoint);
+          tempList.push({...contactPoint, position: tempList.length+1});
           editableContactPointList.value = tempList;
           availableContactPoints.value = availableContactPoints.value.filter(it => it.id !== contactPoint.id);
         }
 
-     /*   const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItem) => {
-          
-        }*/
+         const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItemWithPosition) => {
+          const elementToChange = editableContactPointList.value[newIndex];
+          const temp = editableContactPointList.value;
+          temp.filter(it => (it.position != newIndex || it.position != oldIndex));
+          const higherElement = {...element, position: newIndex};
+          const lowerElement = {...elementToChange, position: oldIndex};
+          temp.push(higherElement);
+          temp.push(lowerElement);
+         }
 
         const save = () => {
           const pathCompetences = props.givenAnswers.map((x: QuestionAndAnswer) => x.answerCompetence);
@@ -249,17 +239,10 @@ export default defineComponent({
           save,
           cancel,
           handleRemoveContactPoint,
-          handleAddContactPoint
+          handleAddContactPoint,
+          handlePositionChange
         }
       }
     }
 )
 </script>
-
-<style scoped>
-.handle {
-  float: left;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-</style>
