@@ -60,12 +60,14 @@
               <v-list-item-action>
                 <v-btn
                 depressed
-                @click="handlePositionChange(contactPoint.position+1, contactPoint.position, contactPoint)">
+                @click="handlePositionChange(contactPoint.position+1, contactPoint.position, contactPoint)"
+                :disabled="editableContactPointList.length < 2">
                   <v-icon>mdi-menu-up</v-icon>
                 </v-btn>
                 <v-btn
                     depressed
-                    @click="handlePositionChange(contactPoint.position-1, contactPoint.position, contactPoint)">
+                    @click="handlePositionChange(contactPoint.position-1, contactPoint.position, contactPoint)"
+                    :disabled="editableContactPointList.length < 2">
                   <v-icon>mdi-menu-down</v-icon>
                 </v-btn>
                 <v-btn
@@ -188,11 +190,12 @@ export default defineComponent({
          const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItemWithPosition) => {
           const elementToChange = editableContactPointList.value[newIndex];
           const temp = editableContactPointList.value;
-          temp.filter(it => (it.position != newIndex || it.position != oldIndex));
+          const orderedList = temp.filter(it => (it.position == newIndex || it.position == oldIndex));
           const higherElement = {...element, position: newIndex};
           const lowerElement = {...elementToChange, position: oldIndex};
-          temp.push(higherElement);
-          temp.push(lowerElement);
+          orderedList.push(higherElement);
+          orderedList.push(lowerElement);
+          editableContactPointList.value = orderedList;
          }
 
         const save = () => {
