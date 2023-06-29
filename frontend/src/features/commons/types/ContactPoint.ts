@@ -11,7 +11,7 @@ export interface ContactPoint {
     competences?: Competence[];
     links?: Link[];
     image: string;
-    position: number;
+    position?: number;
 }
 
 export interface Contact {

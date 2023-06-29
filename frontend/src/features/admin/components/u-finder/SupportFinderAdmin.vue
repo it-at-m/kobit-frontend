@@ -19,12 +19,7 @@
           :lg="isGivenAnswersEmpty ? '0': '7'"
           :xl="isGivenAnswersEmpty ? '0': '7'"
         >
-          <v-row v-if="conversation?.contactPoints.length === 0">
-            <v-col>
-              <base-head-line :text="labels.noResults" />
-            </v-col>
-          </v-row>
-          <template v-else>
+          <template>
             <v-row>
               <v-col>
                 <base-head-line :text="labels.pointOfContacts" />

@@ -38,12 +38,8 @@
       <v-row>
         <v-list subheader>
           <v-subheader>Anlaufstellen als Antworten auf diesen Pfad</v-subheader>
-          <v-list-item-group
-              :v-model="selectedContactPoint"
-              color="primary"
-          >
             <v-list-item
-                v-for="contactPoint in editableContactPointList"
+                v-for="(contactPoint, index) in editableContactPointList"
                 :key="contactPoint.id"
             >
               <v-list-item-content>
@@ -59,14 +55,21 @@
               </v-list-item-content>
               <v-list-item-action>
                 <v-btn
-                depressed
-                @click="handlePositionChange(contactPoint.position+1, contactPoint.position, contactPoint)"
-                :disabled="editableContactPointList.length < 2">
+                    depressed
+                    @click="handlePositionChange(
+                        contactPoint.position ? contactPoint.position-1 : index,
+                        contactPoint.position ? contactPoint.position : index+1,
+                        contactPoint
+                        )"
+                    :disabled="editableContactPointList.length < 2">
                   <v-icon>mdi-menu-up</v-icon>
                 </v-btn>
                 <v-btn
                     depressed
-                    @click="handlePositionChange(contactPoint.position-1, contactPoint.position, contactPoint)"
+                    @click="handlePositionChange(
+                        contactPoint.position ? contactPoint.position+1 : index,
+                        contactPoint.position ? contactPoint.position : index - 1,
+                        contactPoint)"
                     :disabled="editableContactPointList.length < 2">
                   <v-icon>mdi-menu-down</v-icon>
                 </v-btn>
@@ -79,7 +82,6 @@
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
-          </v-list-item-group>
         </v-list>
       </v-row>
       <v-row>
@@ -107,7 +109,7 @@
     <v-snackbar
         v-model="showSnackBar"
         :color="snackBarColor"
-        :timeout="3000"
+        :timeout="30000"
         bottom
     >
       <p class="pa-0 ma-0">
@@ -124,6 +126,7 @@ import Conversation from "@/features/the-unterstuetzungsfinder/types/conversatio
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import {useGetContactPointListItems} from "@/features/commons/middleware/useGetContactPoints";
 import {
+  ContactPoint,
   ContactPointListItem,
   ContactPointListItemWithPosition
 } from "@/features/commons/types/ContactPoint";
@@ -162,7 +165,16 @@ export default defineComponent({
         const snackBarIcon = ref<string>("")
 
         onMounted(() => {
-          editableContactPointList.value = props.convo.contactPoints
+          editableContactPointList.value = props.convo.contactPoints.map((it: ContactPoint) => {
+            return {
+              id: it.id,
+              name: it.name,
+              image: it.image,
+              departments: it.departments,
+              shortCut: it.shortCut,
+              position: it.position
+            } as ContactPointListItemWithPosition
+          });
           editableContactPointList.value = editableContactPointList.value.sort((cp1, cp2) => cp1?.position - cp2?.position)
         });
 
@@ -182,26 +194,27 @@ export default defineComponent({
 
         const handleAddContactPoint = (contactPoint: ContactPointListItem) => {
           const tempList = editableContactPointList.value;
-          tempList.push({...contactPoint, position: tempList.length+1});
+          tempList.push({...contactPoint, position: tempList.length + 1});
           editableContactPointList.value = tempList;
           availableContactPoints.value = availableContactPoints.value.filter(it => it.id !== contactPoint.id);
         }
 
-         const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItemWithPosition) => {
-          const elementToChange = editableContactPointList.value[newIndex];
-          const temp = editableContactPointList.value;
-          const orderedList = temp.filter(it => (it.position == newIndex || it.position == oldIndex));
-          const higherElement = {...element, position: newIndex};
-          const lowerElement = {...elementToChange, position: oldIndex};
-          orderedList.push(higherElement);
-          orderedList.push(lowerElement);
-          editableContactPointList.value = orderedList;
-         }
+        const handlePositionChange = (newIndex: number, oldIndex: number, element: ContactPointListItemWithPosition) =>{
+          const elementToMove = {...editableContactPointList.value[newIndex-1], position: oldIndex};
+          const elementTriggered = {...element, position: newIndex};
+          //needed to lose the reference
+          const temp = [...editableContactPointList.value];
+          const a = temp.filter(it => (it.id !== elementToMove.id && it.id !== elementTriggered.id))
+          a.push(elementToMove);
+          a.push(elementTriggered);
+          a.sort((e1, e2) => e1.position - e2.position);
+          editableContactPointList.value = a;
+        }
 
         const save = () => {
           const pathCompetences = props.givenAnswers.map((x: QuestionAndAnswer) => x.answerCompetence);
-          const competenceList: ListItemToCompetenceView[] = editableContactPointList.value.map((it: ContactPointListItem) => {
-            return {listItem: it, competences: pathCompetences} as ListItemToCompetenceView
+          const competenceList: ListItemToCompetenceView[] = editableContactPointList.value.map((it: ContactPointListItemWithPosition) => {
+            return {listItem: it, competences: pathCompetences, position: it.position} as ListItemToCompetenceView
           });
           mutateAsync(competenceList)
               .then(() => {
