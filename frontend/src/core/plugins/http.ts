@@ -25,9 +25,7 @@ export const httpPostMultipart = async <T>(
     formData: FormData,
     headers?: Record<string, string>
   ): Promise<T> => {
-
     return configuredAxios.post(url,formData, {headers}).then((res) => res ? res.data : Promise.resolve()) as Promise<T>;
-
   };
 
   export async function httpPostJson<T>(path: string, data: any): Promise<T> {
