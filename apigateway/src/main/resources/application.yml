@@ -64,7 +64,7 @@ spring:
               - roles
 
   http:
-    log-request-details: ${LOG_REQUEST}
+    log-request-details: true
 server:
   port: 8080
   error:
