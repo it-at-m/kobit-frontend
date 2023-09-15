@@ -21,7 +21,8 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import reactor.core.publisher.Mono;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -34,6 +35,8 @@ public class SecurityConfiguration {
     private static final String LOGOUT_URL = "/logout";
 
     private static final String LOGOUT_SUCCESS_URL = "/loggedout.html";
+
+    private static final Logger logger = LoggerFactory.getLogger(LoggingWebFilter.class);
 
     /**
      * Same lifetime as SSO Session (e.g. 10 hours).
@@ -62,12 +65,13 @@ public class SecurityConfiguration {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange,
                                                               Authentication authentication) {
+                        logger.info("************************AuthenticationSuccess************************");
                         // Log token length if authentication is of type DefaultOidcUser
                         if (authentication instanceof DefaultOidcUser) {
                             DefaultOidcUser oidcUser = (DefaultOidcUser) authentication;
                             String token = oidcUser.getIdToken().getTokenValue();
                             if (token != null) {
-                                log.info("Token length: {}", token.length());
+                                logger.info("Token length: {}", token.length());
                             }
                         }
                         webFilterExchange.getExchange().getSession().subscribe(
