@@ -21,10 +21,12 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import reactor.core.publisher.Mono;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 
 
+@Slf4j
 @Configuration
 @Profile("!no-security")
 public class SecurityConfiguration {
@@ -65,7 +67,7 @@ public class SecurityConfiguration {
                             DefaultOidcUser oidcUser = (DefaultOidcUser) authentication;
                             String token = oidcUser.getIdToken().getTokenValue();
                             if (token != null) {
-                                System.out.println("Token length: " + token.length());
+                                log.info("Token length: {}", token.length());
                             }
                         }
                         webFilterExchange.getExchange().getSession().subscribe(
