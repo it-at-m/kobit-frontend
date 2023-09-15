@@ -63,12 +63,11 @@ public class SecurityConfiguration {
                         // Log token length if authentication is of type DefaultOidcUser
                         if (authentication instanceof DefaultOidcUser) {
                             DefaultOidcUser oidcUser = (DefaultOidcUser) authentication;
-                            OAuth2AccessToken token = oidcUser.getIdToken().getTokenValue();
+                            String token = oidcUser.getIdToken().getTokenValue();
                             if (token != null) {
                                 System.out.println("Token length: " + token.length());
                             }
                         }
-                        
                         webFilterExchange.getExchange().getSession().subscribe(
                             webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
                         return super.onAuthenticationSuccess(webFilterExchange, authentication);
