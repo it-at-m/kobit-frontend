@@ -53,15 +53,22 @@ public class SecurityConfiguration {
                  * The necessary subscription for csrf token attachment to {@link ServerHttpResponse}
                  * is done in class {@link CsrfTokenAppendingHelperFilter}.
                  */.csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()).and().cors().and()
-                .oauth2Login()
-                /**
-                 * Set security session timeout.
-                 */.authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
+                .oauth2Login().oauth2Login()
+                .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange,
                                                               Authentication authentication) {
+                        // Log token length if authentication is of type DefaultOidcUser
+                        if (authentication instanceof DefaultOidcUser) {
+                            DefaultOidcUser oidcUser = (DefaultOidcUser) authentication;
+                            OAuth2AccessToken token = oidcUser.getIdToken().getTokenValue();
+                            if (token != null) {
+                                System.out.println("Token length: " + token.length());
+                            }
+                        }
+                        
                         webFilterExchange.getExchange().getSession().subscribe(
-                                webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
+                            webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
                         return super.onAuthenticationSuccess(webFilterExchange, authentication);
                     }
                 });
