@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                  * The necessary subscription for csrf token attachment to {@link ServerHttpResponse}
                  * is done in class {@link CsrfTokenAppendingHelperFilter}.
                  */.csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()).and().cors().and()
-                .oauth2Login().oauth2Login()
+                .oauth2Login()
                 .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange,
