@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import java.time.Duration;
 
 
-@Slf4j
 @Configuration
 @Profile("!no-security")
 public class SecurityConfiguration {
