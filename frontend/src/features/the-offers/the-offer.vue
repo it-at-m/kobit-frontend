@@ -26,7 +26,7 @@
               <v-card-text
                 v-html="computeMarkdown"
               >
-                {{ offer.description }}
+              <span v-html="offer.description" />
               </v-card-text>
             </v-col>
             <v-col
