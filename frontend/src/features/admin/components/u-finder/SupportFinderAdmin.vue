@@ -19,12 +19,7 @@
           :lg="isGivenAnswersEmpty ? '0': '7'"
           :xl="isGivenAnswersEmpty ? '0': '7'"
         >
-          <v-row v-if="conversation?.contactPoints.length === 0">
-            <v-col>
-              <base-head-line :text="labels.noResults" />
-            </v-col>
-          </v-row>
-          <template v-else>
+          <template>
             <v-row>
               <v-col>
                 <base-head-line :text="labels.pointOfContacts" />
@@ -202,10 +197,9 @@ import {
 import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
 import BackButton from "@/features/commons/components/BackButton.vue";
 import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
-import {useMutation} from "@tanstack/vue-query";
-import {nextStep} from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
 import {useRouter} from "vue-router/composables";
 import CompetenceSelector from "@/features/admin/components/u-finder/components/CompetenceSelector.vue";
+import {useNextStep} from "@/features/admin/components/u-finder/middleware/useNextStep";
 
 export default defineComponent({
   name: "SupportFinderAdmin",
@@ -225,11 +219,7 @@ export default defineComponent({
     const selectedToolTip = ref(-1);
     const show = ref(false);
     const router = useRouter();
-    const {isLoading, isError, mutate, data} = useMutation({
-      mutationFn: () => {
-        return nextStep(givenAnswers.value.map(it => it.answerCompetence));
-      }
-    });
+    const {isLoading, isError, mutate, data} =  useNextStep();
     const isFinished = computed(() => data.value?.decisionPoint === null);
 
     function back() {
@@ -256,22 +246,22 @@ export default defineComponent({
         answerCompetence: answerCompetence,
         answerValue: answerValue,
       });
-      mutate();
+      mutate(givenAnswers.value);
     }
 
     function getPreviousAnswer() {
       if (givenAnswers.value.length > 0) {
         givenAnswers.value?.pop();
-        mutate();
+        mutate(givenAnswers.value);
       }
     }
 
     function restart() {
       givenAnswers.value = [];
-      mutate();
+      mutate(givenAnswers.value);
     }
 
-    mutate();
+    mutate(givenAnswers.value);
 
     return {
       isFinished,

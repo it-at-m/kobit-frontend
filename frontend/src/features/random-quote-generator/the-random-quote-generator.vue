@@ -64,10 +64,6 @@ export default class TheRandomQuoteGenerator extends Vue {
             autor: "Erich Kästner"
         },
         {
-            text: "Wer auf Rache aus ist, der grabe zwei Gräber.",
-            autor: "Konfuzius"
-        },
-        {
             text: "Jenseits von richtig und falsch da liegt ein Raum. Dort treffen wir uns.",
             autor: "Dschalal-Ad-Din-Al Rumi"
         },
@@ -86,10 +82,6 @@ export default class TheRandomQuoteGenerator extends Vue {
         {
             text: "Konflikte sind wie Regen.",
             autor: "Costantino/Merchant"
-        },
-        {
-            text: "Einer muss den Frieden beginnen, wie den Krieg.",
-            autor: "Stefan Zweig"
         },
         {
             text: "In Konflikten manifestieren sich unsere Werte.",
