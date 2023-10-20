@@ -23,7 +23,11 @@
                   offer.endDate
                 }}
               </v-card-text>
-              <v-card-text>{{ offer.description }}</v-card-text>
+              <v-card-text
+                v-html="computeMarkdown"
+              >
+                {{ offer.description }}
+              </v-card-text>
             </v-col>
             <v-col
               cols="12"
