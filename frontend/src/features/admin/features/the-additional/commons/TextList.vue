@@ -12,7 +12,9 @@
                 <b>{{ item.header }}</b>
               </v-list-item-title>
               <v-list-item-subtitle>
-                <p class="item-entry">{{ item.entry }}</p>
+                <p class="item-entry">
+                  {{ item.entry }}
+                </p>
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>

@@ -70,7 +70,9 @@
           v-if="isAddNew"
           :label="label"
           @cancel="cancelNew"
-        >test</NewOffer>
+        >
+          test
+        </NewOffer>
         <EditOffer
           v-else-if="selectedItem"
           :label="label"
