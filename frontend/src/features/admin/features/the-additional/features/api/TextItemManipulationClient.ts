@@ -62,8 +62,12 @@ export const putTextItem = async (id: string, pageType: string, textItem: TextIt
 }
 
 export const deleteTextItem = async (id: string, pageType: string, link: string) => {
-    const deleteOldFile = `/s3/delete?link=${encodeURIComponent(link.toString())}`;
-    await httpDeleteS3File(deleteOldFile);
-    const url = `/additional/${pageType}/text-item/${id}?link=${encodeURIComponent(link)}`;
+
+    if(link){
+        const deleteOldFile = `/s3/delete?link=${encodeURIComponent(link.toString())}`;
+        await httpDeleteS3File(deleteOldFile);
+    }
+
+    const url = `/additional/${pageType}/text-item/${id}`;
     return httpDeleteJson(url);
 }

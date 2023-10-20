@@ -11,7 +11,7 @@
       class="ma-0 pa-0"
     >
       <v-card-title class="pa-0">
-        Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document  ml-auto" />
+        Neues Angebot Anlegen <span class="mdi mdi-file-document  ml-auto" />
       </v-card-title>
       <v-card-text>
         <v-form v-model="isFormValid">
@@ -19,64 +19,103 @@
             <v-col
               cols="12"
               sm="12"
-              md="6"
-              lg="6"
-              xl="6"
+              md="12"
+              lg="12"
+              xl="12"
             >
               <v-text-field
                 color="secondary"
-                :value="newContactPoint?.name"
-                label="Name der Anlaufstelle"
-                :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
+                :value="newOffer?.title"
+                label="Angebotname"
+                :rules="[v => !!v || 'Title ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Title muss 5 bis 100 Zeichen lang sein.']"
                 :counter="100"
                 prepend-inner-icon="mdi-format-letter-case"
                 @input="changeName"
               />
             </v-col>
-            <v-col
-              cols="12"
-              sm="12"
-              md="3"
-              lg="3"
-              xl="3"
-            >
-              <v-text-field
-                color="secondary"
-                :value="newContactPoint?.shortCut"
-                label="Kurzbezeichnung der Anlaufstelle"
-                :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
-                :counter="10"
-                prepend-inner-icon="mdi-format-font-size-decrease"
-                @input="changeShortCut"
-              />
-            </v-col>
-            <v-col
-              cols="12"
-              sm="12"
-              md="3"
-              lg="3"
-              xl="3"
-            >
-              <v-combobox
-                :value="newContactPoint?.departments"
-                :label="label.addDepartment"
-                multiple
-                persistent-hint
-                small-chips
-                :disabled="!isCentralAdmin"
-                @input="changeDepartment"
+            <v-row>
+              <v-col
+                cols="12"
+                class="pb-0 mb-0"
               >
-                <template v-slot:no-data>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title>
-                        {{ label.addDepartmentHint }}
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </template>
-              </v-combobox>
-            </v-col>
+                <p>
+                  Hinweise: Wenn kein Datum eingetragen ist, erscheinen die Angebote unter Selbstlernangebote und wenn
+                  ein Datum eingetragen ist, erscheinen sie unter Termingebundene Angebote.
+                </p>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="12"
+                md="6"
+                lg="6"
+                xl="6"
+                class="pt-0 mt-0"
+              >
+                <v-menu
+                  v-model="menuStartDate"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      :value="newOffer?.startDate"
+                      color="secondary"
+                      label="Startdatum"
+                      :rules="[validateDateRange.startDate, validateDateFields]"
+                      prepend-icon="mdi-calendar"
+                      clearable
+                      v-bind="attrs"
+                      v-on="on"
+                    />
+                  </template>
+                  <v-date-picker
+                    :value="newOffer?.startDate"
+                    color="secondary"
+                    locale="de"
+                    @input="changeStartDate"
+                  />
+                </v-menu>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="12"
+                md="6"
+                lg="6"
+                xl="6"
+                class="pt-0 mt-0"
+              >
+                <v-menu
+                  v-model="menuEndDate"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      :value="newOffer?.endDate"
+                      color="secondary"
+                      label="Enddatum"
+                      :rules="[validateDateRange.endDate, validateDateFields]"
+                      prepend-icon="mdi-calendar"
+                      clearable
+                      v-bind="attrs"
+                      v-on="on"
+                    />
+                  </template>
+                  <v-date-picker
+                    :value="newOffer?.endDate"
+                    color="secondary"
+                    locale="de"
+                    @input="changeEndDate"
+                  />
+                </v-menu>
+              </v-col>
+            </v-row>
           </v-row>
           <v-divider class="mt-3 mb-5" />
           <MarkDownAlert :label="label" />
@@ -155,11 +194,11 @@
               <v-textarea
                 id="description-textarea"
                 color="secondary"
-                :value="newContactPoint?.description"
+                :value="newOffer?.description"
                 label="Beschreibung"
                 rows="12"
-                :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
-                :counter="2000"
+                :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2500) || 'Die Beschreibung muss weniger als 2500 Zeichen umfassen']"
+                :counter="2500"
                 prepend-inner-icon="mdi-format-align-left"
                 @input="changeDescription"
               />
@@ -169,138 +208,6 @@
                 style="border-bottom: 2px solid #eee"
                 class="markdown-content"
                 v-html="computeMarkdown"
-              />
-            </v-col>
-          </v-row>
-          <v-divider class="mt-3 mb-5" />
-          <v-row>
-            <v-col
-              cols="12"
-              class="mb-0 pb-0"
-            >
-              <h3 class="pa-0">
-                Kontakte
-              </h3>
-            </v-col>
-          </v-row>
-          <v-row
-            v-for="contact in newContactPoint?.contact"
-            :key="contact.id"
-          >
-            <v-col
-              lg="10"
-              md="10"
-              sm="10"
-              cols="8"
-              class="mb-0 pb-0"
-            >
-              <v-text-field
-                v-model="contact.email"
-                color="secondary"
-                label="E-Mail"
-                readonly
-              />
-            </v-col>
-            <v-col
-              lg="2"
-              md="2"
-              sm="2"
-              cols="4"
-              class="mb-0 pb-0"
-            >
-              <v-btn @click="removeContact(contact)">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-btn
-                depressed
-                color="secondary"
-                class="ml-4 buttonText--text"
-                @click="openContactDialog"
-              >
-                + {{ label.addContact }}
-              </v-btn>
-            </v-col>
-            <v-col cols="12">
-              <AddContactDialog
-                :is-dialog-active="isContactDialogOpen"
-                @cancel="cancel"
-                @addNewContact="addNewContact"
-              />
-            </v-col>
-          </v-row>
-          <v-divider class="mt-3 mb-5" />
-
-          <v-row>
-            <v-col
-              cols="12"
-              class="mb-0 pb-0"
-            >
-              <h3 class="pa-0">
-                Links
-              </h3>
-            </v-col>
-          </v-row>
-          <v-row
-            v-for="link in newContactPoint?.links"
-            :key="link.id"
-          >
-            <v-col
-              lg="5"
-              md="5"
-              sm="5"
-              cols="4"
-            >
-              <v-text-field
-                v-model="link.name"
-                color="secondary"
-                label="Titel"
-                readonly
-              />
-            </v-col>
-            <v-col
-              lg="5"
-              md="5"
-              sm="5"
-              cols="4"
-            >
-              <v-text-field
-                v-model="link.url"
-                color="secondary"
-                label="URL"
-                readonly
-              />
-            </v-col>
-            <v-col
-              lg="2"
-              md="2"
-              sm="2"
-              cols="4"
-            >
-              <v-btn @click="removeLink(link)">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12">
-              <v-btn
-                depressed
-                color="secondary"
-                class="ml-4 buttonText--text"
-                @click="openLinkDialog"
-              >
-                + {{ label.addLink }}
-              </v-btn>
-            </v-col>
-            <v-col cols="12">
-              <AddLinkDialog
-                :is-dialog-active="isLinkDialogOpen"
-                @cancel="cancel"
-                @addNewLink="addNewLink"
               />
             </v-col>
           </v-row>
@@ -343,7 +250,7 @@
       <v-card-actions class="ma-0 pa-0">
         <SaveNewButton
           class="ml-2"
-          :contact-point-to-save="newContactPoint"
+          :offer-to-save="newOffer"
           :disabled="!isFormValid"
           :file="file || undefined"
           @error="error"
@@ -362,21 +269,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
-import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
-import { Contact, ContactPoint, Link } from "@/features/commons/types/ContactPoint";
+import { Offer } from "@/features/commons/types/Offer";
 import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { marked } from "marked";
-import AddContactDialog from "@/features/admin/features/the-contact-points/components/AddContactDialog.vue";
-import AddLinkDialog from "@/features/admin/features/the-contact-points/components/AddLinkDialog.vue";
-import SaveNewButton from "@/features/admin/features/the-contact-points/components/SaveNewButton.vue";
+import SaveNewButton from "@/features/admin/features/the-offers/components/SaveNewButton.vue";
 import { useRouter } from "vue-router/composables";
+import { error } from "console";
+import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VMenu, VDatePicker, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 
 export default defineComponent({
-  name: "NewContactPoint",
-  components: { SaveNewButton, AddLinkDialog, AddContactDialog, MarkDownAlert, ErrorHandler },
+  name: "NewOffer",
+  components: { SaveNewButton, MarkDownAlert, ErrorHandler },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -386,83 +292,105 @@ export default defineComponent({
     isFormValid: false,
   }),
   setup() {
-    const newContactPoint = ref<ContactPoint>();
+    const newOffer = ref<Offer>();
     const isContactDialogOpen = ref(false);
     const isLinkDialogOpen = ref(false);
     const isWriteError = ref(false);
     const errorMessage = ref('');
     const router = useRouter();
-    const isCentralAdmin = ref(false);
-    const { data: adminUserInfo } = useGetAdminUserInfo();
 
-    watch(newContactPoint, (newValue) => {
-      if (!newContactPoint.value) {
-        newContactPoint.value = newValue;
+    const displayStartDate = ref('');
+    const displayEndDate = ref('');
+
+    const menuStartDate = ref(false);
+    const menuEndDate = ref(false);
+
+
+
+    const formatDateForDisplay = (date: string) => {
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      return new Date(date).toLocaleDateString(undefined, options);
+    };
+
+    watch(newOffer, (newValue) => {
+      if (!newOffer.value) {
+        newOffer.value = newValue;
+        // Add these lines to update displayStartDate and displayEndDate
+        if (newValue) {
+          displayStartDate.value = newValue.startDate ? formatDateForDisplay(newValue.startDate) : '';
+          displayEndDate.value = newValue.endDate ? formatDateForDisplay(newValue.endDate) : '';
+        }
       }
     });
 
-    watch(adminUserInfo, (newValue) => {
-      if (newValue) {
-        const department = newValue.department;
-        newContactPoint.value = { ...newContactPoint.value, departments: [department] } as ContactPoint;
-        isCentralAdmin.value = newValue.isCentralAdmin;
+    const changeStartDate = (value: string) => {
+      newOffer.value = { ...newOffer.value, startDate: value } as Offer;
+      displayStartDate.value = formatDateForDisplay(value);
+    };
+
+    const changeEndDate = (value: string) => {
+      newOffer.value = { ...newOffer.value, endDate: value } as Offer;
+      displayEndDate.value = formatDateForDisplay(value);
+    };
+
+
+    const formatDateForPicker = (date: string) => {
+      // As the date is already in "yyyy-mm-dd" format from backend, just return it
+      return date;
+    };
+
+    const formatDateString = (dateString: string) => {
+      const parts = dateString.split('.');
+      return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    };
+
+    const validateDateRange = computed(() => {
+      const startDate = newOffer.value?.startDate;
+      const endDate = newOffer.value?.endDate;
+
+      if (startDate && endDate) {
+        const formattedStartDate = formatDateString(startDate);
+        const formattedEndDate = formatDateString(endDate);
+
+        const startDateObj = new Date(formattedStartDate);
+        const endDateObj = new Date(formattedEndDate);
+
+        if (startDateObj > endDateObj) {
+          return {
+            startDate: 'Startdatum kann nicht größer sein als Enddatum',
+            endDate: 'Enddatum kann nicht kleiner als Startdatum sein',
+          };
+        }
       }
-    }, { immediate: true })
 
-    const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
+      return true;
+    });
 
-    const addNewContact = (value: Contact) => {
-      if (newContactPoint.value?.contact) {
-        newContactPoint.value.contact.push(value);
-      } else {
-        newContactPoint.value = { ...newContactPoint.value, contact: [value] } as ContactPoint;
+
+    const validateDateFields = computed(() => {
+      const startDate = newOffer.value?.startDate;
+      const endDate = newOffer.value?.endDate;
+
+      if ((startDate && !endDate) || (!startDate && endDate)) {
+        return 'Beide Felder müssen ausgefüllt werden, oder beide können gelöscht werden';
       }
-      isContactDialogOpen.value = false;
-    }
 
-    function removeContact(contact: Contact) {
-      if (newContactPoint.value?.contact) {
-        newContactPoint.value.contact = newContactPoint.value.contact.filter(it => it !== contact);
-      }
-    }
+      return true;
+    });
 
-    const openContactDialog = () => {
-      isContactDialogOpen.value = true;
-    }
 
-    const addNewLink = (value: Link) => {
-      if (newContactPoint.value?.links) {
-        newContactPoint.value.links.push(value);
-      } else {
-        newContactPoint.value = { ...newContactPoint.value, links: [value] } as ContactPoint;
-      }
-      isLinkDialogOpen.value = false;
-    }
+    const computeMarkdown = computed(() => marked.parse(newOffer.value?.description || ""));
 
-    function removeLink(item: Link) {
-      if (newContactPoint.value?.links) {
-        newContactPoint.value.links = newContactPoint.value.links.filter(it => it !== item);
-      }
-    }
 
-    const openLinkDialog = () => {
-      isLinkDialogOpen.value = true;
-    }
+
 
     const changeName = (value: string) => {
-      newContactPoint.value = { ...newContactPoint.value, name: value } as ContactPoint;
+      newOffer.value = { ...newOffer.value, title: value } as Offer;
     }
 
-    const changeShortCut = (value: string) => {
-      newContactPoint.value = { ...newContactPoint.value, shortCut: value } as ContactPoint;
-    }
-
-    const changeDepartment = (value: string[]) => {
-      newContactPoint.value = { ...newContactPoint.value, departments: value } as ContactPoint;
-    }
 
     const cancelForm = () => {
-      router.push("/admin/anlaufstellen/");
+      router.push("/admin/angebote/");
       router.go(0);
 
     }
@@ -484,6 +412,7 @@ export default defineComponent({
     const root = instance?.proxy.$root || null;
     const file = ref<File | null>(null);
     const fileRules = computed(() => [
+      (value: File | null) => !!value || "Ein Bild muss ausgewählt werden.",
       (value: File | null) => {
         if (!value) return true;
         const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -524,9 +453,9 @@ export default defineComponent({
     const changeDescription = () => {
       const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement;
       const value = textarea.value;
-      if (newContactPoint.value) {
-        newContactPoint.value = {
-          ...newContactPoint.value,
+      if (newOffer.value) {
+        newOffer.value = {
+          ...newOffer.value,
           description: value
         };
       }
@@ -581,38 +510,39 @@ export default defineComponent({
           break;
       }
 
-      const currentValue = newContactPoint.value?.description || '';
+      const currentValue = newOffer.value?.description || '';
       const newValue =
         currentValue.substring(0, start) + newText + currentValue.substring(end);
-      newContactPoint.value = {
-        ...newContactPoint.value,
+      newOffer.value = {
+        ...newOffer.value,
         description: newValue
-      } as ContactPoint;
+      } as Offer;
     };
 
     return {
-      newContactPoint,
+      newOffer,
       computeMarkdown,
       isContactDialogOpen,
       isLinkDialogOpen,
       isWriteError,
       errorMessage,
-      isCentralAdmin,
       file,
       fileRules,
       maxFileNameInputLength,
       applyFormatting,
       customFileName,
       changeName,
-      changeShortCut,
-      changeDepartment,
+      changeStartDate,
+      changeEndDate,
+      displayStartDate,
+      displayEndDate,
+      formatDateForDisplay,
+      formatDateForPicker,
+      menuStartDate,
+      menuEndDate,
+      validateDateRange,
+      validateDateFields,
       changeDescription,
-      openContactDialog,
-      addNewContact,
-      removeContact,
-      openLinkDialog,
-      addNewLink,
-      removeLink,
       cancel,
       cancelForm,
       error,

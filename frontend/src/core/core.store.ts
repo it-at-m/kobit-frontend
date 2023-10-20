@@ -56,11 +56,6 @@ import {
     theErfahreMehrStoreModule
 } from "@/features/the-additional/the-additional-store.module";
 import {
-    THE_ANGEBOTE_MODULE_NAME,
-    TheAngeboteModuleState,
-    theAngeboteStoreModule
-} from "@/features/the-angebote/the-angebote-store.module";
-import {
     THE_DISCLAIMER_MODULE_NAME,
     theDisclaimerStoreModule,
     TheDisclaimerStoreState
@@ -81,7 +76,6 @@ export interface RootState {
     theDvFairStoreModuleState: TheDvFairStoreModuleState;
     theEscalationStepsStoreModuleState: TheEscalationStepsStoreModuleState;
     theAnlaufstellenStoreState: TheAnlaufstellenStoreState;
-    theAngeboteModuleState: TheAngeboteModuleState;
     theDisclaimerStoreState: TheDisclaimerStoreState;
 }
 
@@ -98,7 +92,6 @@ export default new Vuex.Store<RootState>({
         [THE_CONFLICT_PREVENTION_MODULE_NAME]: theConflictPreventionStoreModule,
         [THE_DOWNLOADS_MODULE_NAME]: theDownloadsStoreModule,
         [THE_ANLAUFSTELLEN_MODULE_NAME]: theAnlaufstellenStoreModule,
-        [THE_ANGEBOTE_MODULE_NAME]: theAngeboteStoreModule,
         [THE_DISCLAIMER_MODULE_NAME]: theDisclaimerStoreModule
     },
     strict: notOnProduction

@@ -138,12 +138,12 @@
         >
           <v-text-field
             v-model="email.subject"
+            color="secondary"
             outlined
             prepend-inner-icon="mdi-email-edit"
             :label="labels.mailTopic"
             :rules="[v => !!v || 'Betreff erforderlich.']"
             validate
-            color="secondary"
             @focus="showPrivacyDisclaimer"
           />
         </v-col>
@@ -157,12 +157,12 @@
           xl="6"
         >
           <v-text-field
+            color="secondary"
             :value="mailAddress.emailAddress"
             outlined
             prepend-inner-icon="mdi-email-outline"
             :label="labels.mailFrom"
             disabled
-            color="secondary"
           />
         </v-col>
         <v-row>

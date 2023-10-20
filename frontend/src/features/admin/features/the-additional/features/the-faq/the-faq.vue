@@ -7,48 +7,54 @@
       :info-text="infoText"
       :is-loading="isLoading"
     >
-      <v-card-text class="pb-10">
-        <v-row>
-          <v-col>
-            <v-text-field
-              id="id_faq_search"
-              v-model="searchText"
-              label="Faq durchsuchen"
-              placeholder="Eingabe"
-              outlined
-              append-icon="mdi-magnify"
-              single-line
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            cols="12"
-            sm="12"
-            md="12"
-            lg="12"
-            xl="12"
-            class="d-flex justify-end"
-          >
-            <v-btn
-              color="success"
-              @click="openAddDialog"
+      <v-row>
+        <v-card-text class="pb-10">
+          <v-row>
+            <v-col>
+              <v-text-field
+                id="id_faq_search"
+                v-model="searchText"
+                color="secondary"
+                label="Faq durchsuchen"
+                placeholder="Eingabe"
+                outlined
+                append-icon="mdi-magnify"
+                single-line
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col
+              cols="12"
+              sm="12"
+              md="12"
+              lg="12"
+              xl="12"
+              class="d-flex justify-end"
             >
-              <v-icon>mdi mdi-plus</v-icon> Hinzufügen
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <TextList
-              :page-type="pageType"
-              :items="filteredFaqy"
-            />
-          </v-col>
-        </v-row>
-      </v-card-text>
+              <v-btn
+                color="success"
+                @click="openAddDialog"
+              >
+                <v-icon>mdi mdi-plus</v-icon> Hinzufügen
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <TextList
+                :page-type="pageType"
+                :items="filteredFaqy"
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-row>
     </base-page-content>
-    <BackButton :callback="back" />
+    <BackButton
+      :callback="back"
+      class="mt-1"
+    />
     <AddDialog
       :page-type="pageType"
       :show-dialog.sync="addDialog"
@@ -59,7 +65,7 @@
 
 <script lang="ts">
 
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import TextList from "@/features/admin/features/the-additional/commons/TextList.vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";

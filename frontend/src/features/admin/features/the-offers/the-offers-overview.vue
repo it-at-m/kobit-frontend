@@ -6,7 +6,7 @@
     :icon="icon"
   >
     <BackButton :callback="back" />
-    <v-row>
+    <v-row v-if="isCentralAdmin">
       <v-col
         cols="12"
         sm="12"
@@ -24,13 +24,13 @@
           order-md-first
         >
           <v-list>
-            <NewContactPointListItem
+            <NewOfferListItem
               :label="label"
               :set-is-add-new="setIsAddNew"
               :disabled="selectedItem !== undefined || isAddNew"
             />
           </v-list>
-          <v-list v-if="listItems && listItems.length > 0">
+          <v-list v-if="!isLoading && listItems.length > 0">
             <v-list-item
               v-for="item in listItems"
               :key="item.id"
@@ -42,10 +42,10 @@
             >
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ item.name }}
+                  {{ item.title }}
                 </v-list-item-title>
-                <v-list-item-subtitle v-if="item.shortCut">
-                  {{ item.shortCut }}
+                <v-list-item-subtitle v-if="item.startDate && item.endDate">
+                  {{ item.startDate }} - {{ item.endDate }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -56,7 +56,6 @@
         vertical
         class="mb-3 mt-2"
       />
-
       <v-col
         cols="12"
         sm="12"
@@ -67,20 +66,34 @@
         order-sm-first
         order-md-last
       >
-        <NewContactPoint
+        <NewOffer
           v-if="isAddNew"
           :label="label"
           @cancel="cancelNew"
-        />
-        <EditContactPoint
+        >
+          test
+        </NewOffer>
+        <EditOffer
           v-else-if="selectedItem"
           :label="label"
           :list-item="selectedItem"
           @unselectItem="unselectItem"
         />
         <p v-else>
-          Klicken Sie auf eine Anlaufstelle, um sie zu bearbeiten oder fügen Sie eine neue Anlaufstelle hinzu.
+          Klicken Sie auf ein Angebot, um es zu bearbeiten oder fügen Sie eine neues Angebot hinzu.
         </p>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col cols="12">
+        <v-alert
+          dense
+          type="info"
+          color="secondary"
+          class="ml-4 mr-4"
+        >
+          <p>Hinweis: Nur ein*e zentrale*r Administrator*in kann diesen Bereich bearbeiten.</p>
+        </v-alert>
       </v-col>
     </v-row>
   </BasePageContent>
@@ -88,37 +101,37 @@
 <script lang="ts">
 import { defineComponent, ref, watch, onBeforeUnmount, Ref } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+
 import {
-  ADMIN_CONTACTPOINTS_ICON,
-  ADMIN_CONTACTPOINTS_INFO_TEXT,
-  ADMIN_CONTACTPOINTS_ROUTE_NAME
-} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
-import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
+  ADMIN_OFFERS_ICON,
+  ADMIN_OFFERS_INFO_TEXT,
+  ADMIN_OFFERS_ROUTE_NAME
+} from "@/features/admin/features/the-offers/the-offers.routes";
+
+import { OfferListItem } from "@/features/commons/types/Offer";
 import { useRouter, useRoute } from "vue-router/composables";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import NewContactPointListItem from "@/features/admin/features/the-contact-points/components/NewContactPointListItem.vue";
-import { adminContactPointLabels } from "@/features/admin/features/the-contact-points/i18n";
-import NewContactPointView from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
-import NewContactPoint from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
-import EditContactPoint from "@/features/admin/features/the-contact-points/components/EditContactPoint.vue";
-import TheCardInitialAnlaufstellePage
-  from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
-import { useGetEditableContactPoints } from "@/features/commons/middleware/useGetContactPoints";
+import NewOfferListItem from "@/features/admin/features/the-offers/components/NewOfferListItem.vue";
+import { adminOfferLabels } from "@/features/admin/features/the-offers/i18n";
+import NewOfferView from "@/features/admin/features/the-offers/components/NewOffer.vue";
+import NewOffer from "@/features/admin/features/the-offers/components/NewOffer.vue";
+import EditOffer from "@/features/admin/features/the-offers/components/EditOffer.vue";
+import { useGetEditableOffers } from "@/features/commons/middleware/useGetOffers";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
 import { VRow, VCol, VList, VListItem, VListItemContent, VListItemTitle, VListItemSubtitle, VDivider, VAlert } from "vuetify/lib";
 
 export default defineComponent({
-  name: "ContactPointsOverview",
+  name: "OffersOverview",
   components: {
-    TheCardInitialAnlaufstellePage,
-    EditContactPoint,
-    NewContactPoint, NewContactPointView, NewContactPointListItem, BackButton, BasePageContent
+
+    EditOffer,
+    NewOffer, NewOfferView, NewOfferListItem, BackButton, BasePageContent
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const { isLoading, isError, data: listItems, error } = useGetEditableContactPoints();
-    const selectedItem = ref<ContactPointListItem | undefined>();
+    const { isLoading, isError, data: listItems, error } = useGetEditableOffers();
+    const selectedItem = ref<OfferListItem | undefined>();
     const isAddNew = ref(false);
     const selectedId = ref<string | undefined>(route.params.id);
 
@@ -131,7 +144,7 @@ export default defineComponent({
           if (listItems.value) {
             const item = listItems.value.find(item => item.id === newId);
             if (!item && !item == undefined && item == null) {
-              router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
+              router.push({ name: ADMIN_OFFERS_ROUTE_NAME });
               router.go(0);
             } else {
               selectedItem.value = item;
@@ -145,17 +158,27 @@ export default defineComponent({
       }
     }
 
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
+
+    watch(adminUserInfo, (newValue) => {
+      if (newValue) {
+        isCentralAdmin.value = newValue.isCentralAdmin;
+      }
+    }, { immediate: true });
+
+
     watch(isLoading, (current, previous) => {
       if (previous === true && current === false) {
         handleIdChange(route.params.id);
       }
-    });
+    }, { immediate: true });
 
     const unwatch = watch(() => route.params.id, newId => {
       if (!isLoading.value) {
         handleIdChange(newId);
       }
-    });
+    }, { immediate: true });
 
     onBeforeUnmount(() => {
       unwatch();
@@ -163,7 +186,7 @@ export default defineComponent({
 
     const back = () => {
       if (selectedItem.value || isAddNew.value) {
-        router.push({ path: "/admin/anlaufstellen/" });
+        router.push({ path: "/admin/angebote/" });
       } else {
         router.push("/admin");
       }
@@ -171,23 +194,23 @@ export default defineComponent({
 
     const unselectItem = () => {
       selectedItem.value = undefined;
-      router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
+      router.push({ name: ADMIN_OFFERS_ROUTE_NAME });
     }
 
-    const setSelectedItem = (item: ContactPointListItem) => {
+    const setSelectedItem = (item: OfferListItem) => {
       selectedItem.value = item;
-      router.push({ path: "/admin/anlaufstellen/" + selectedItem.value.id });
+      router.push({ path: "/admin/angebote/" + selectedItem.value.id });
     }
 
     const setIsAddNew = () => {
       isAddNew.value = true;
-      router.push({ path: "/admin/anlaufstellen/hinzufuegen" });
+      router.push({ path: "/admin/angebote/hinzufuegen" });
     }
 
 
     const cancelNew = () => {
       isAddNew.value = false;
-      router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
+      router.push({ name: ADMIN_OFFERS_ROUTE_NAME });
     }
 
     return {
@@ -196,16 +219,17 @@ export default defineComponent({
       setIsAddNew,
       unselectItem,
       cancelNew,
+      isCentralAdmin,
       isAddNew,
       isLoading,
       isError,
       listItems,
       error,
       selectedItem,
-      icon: ADMIN_CONTACTPOINTS_ICON,
-      name: ADMIN_CONTACTPOINTS_ROUTE_NAME,
-      infoText: ADMIN_CONTACTPOINTS_INFO_TEXT,
-      label: adminContactPointLabels
+      icon: ADMIN_OFFERS_ICON,
+      name: ADMIN_OFFERS_ROUTE_NAME,
+      infoText: ADMIN_OFFERS_INFO_TEXT,
+      label: adminOfferLabels
     }
   }
 

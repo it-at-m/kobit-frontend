@@ -1,11 +1,12 @@
 <template>
-  <p>
+  <p class="pt-0 mt-4">
     <v-btn
       v-if="item !== undefined"
       plain
       :href="item.textItemView[0].link"
       :download="item.textItemView[0].header"
       :loading="isLoading"
+      class="pt-0 mt-0"
     >
       Datenschutzhinweis <v-icon>mdi-download</v-icon>
     </v-btn>
