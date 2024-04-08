@@ -37,5 +37,5 @@ export interface ContactPointListItemWithPosition {
     name: string;
     shortCut: string;
     departments: string[];
-    position:number
+    position: number;
 }
