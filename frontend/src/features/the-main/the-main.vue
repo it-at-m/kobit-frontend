@@ -9,24 +9,36 @@
             <v-col
               cols="12"
               sm="12"
-              md="12"
-              lg="4"
+              md="6"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="anlaufstellen" />
             </v-col>
             <v-col
               cols="12"
               sm="12"
-              md="12"
-              lg="4"
+              md="6"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="unterstuetzungsfinder" />
             </v-col>
             <v-col
               cols="12"
               sm="12"
-              md="12"
-              lg="4"
+              md="6"
+              lg="6"
+              xl="3"
+            >
+              <base-link-card :item="angebote" />
+            </v-col>
+            <v-col
+              cols="12"
+              sm="12"
+              md="6"
+              lg="6"
+              xl="3"
             >
               <base-link-card :item="erfahreMehr" />
             </v-col>
@@ -46,7 +58,7 @@ import {
   theAnlaufstellenRoutes
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 import {theUnterstuetzungsfinderRoutes} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {theAngeboteRoutes} from "@/features/the-angebote/the-angebote.routes";
+import {theOfferRoutes} from "@/features/the-offers/the-offers.routes";
 import {erfahreMehrRoutes} from "@/features/the-additional/the-additional.routes";
 import {I18nLabel} from "@/core/core.translation";
 import {mainBaseHeadLineLabels} from "@/features/the-main/i18n";
@@ -70,7 +82,8 @@ export default class Main extends Vue {
   }
 
   get angebote(): unknown {
-    return theAngeboteRoutes;
+    theOfferRoutes.path = "/angebot/"
+    return theOfferRoutes;
   }
 
   get erfahreMehr(): unknown {

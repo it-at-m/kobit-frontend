@@ -18,10 +18,10 @@
         max-width="590"
       >
         <v-card>
-          <v-card>Soll die Anlaufstelle wirklich gelöscht werden?</v-card>
+          <v-card>Soll das Angebote wirklich gelöscht werden?</v-card>
           <v-card-text>
-            Das Löschen der Anlaufstelle kann nicht rückgängig gemacht werden. Eine Löschung kann nur durch das
-            erneute Anlegen der Anlaufstelle bereinigt werden.
+            Das Löschen der Angebote kann nicht rückgängig gemacht werden. Eine Löschung kann nur durch das
+            erneute Anlegen der Angebote bereinigt werden.
           </v-card-text>
           <v-card-actions>
             <v-spacer />
@@ -35,7 +35,7 @@
             <v-btn
               color="error"
               text
-              @click="deleteContactPoint"
+              @click="deleteOffer"
             >
               <v-icon>mdi-delete</v-icon> Löschen
             </v-btn>
@@ -49,7 +49,7 @@
         bottom
       >
         <p class="pa-0 ma-0">
-          Anlaufstelle erfolgreich gelöscht! <v-icon>mdi-check</v-icon>
+          Angebote erfolgreich gelöscht! <v-icon>mdi-check</v-icon>
         </p>
       </v-snackbar>
     </v-col>
@@ -58,21 +58,21 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from "vue";
-import { useDeleteContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
+import { useDeleteOffer } from "@/features/admin/features/the-offers/middelware/useOffers";
 import { useRouter } from "vue-router/composables";
-import { ContactPoint } from "@/features/commons/types/ContactPoint";
+import { Offer } from "@/features/commons/types/Offer";
 
 export default defineComponent({
   name: "DeleteButton",
   props: {
     currentItem: {
-      type: Object as PropType<ContactPoint | null>,
+      type: Object as PropType<Offer | null>,
       default: null,
     },
   },
   setup(props, { emit }) {
     const router = useRouter();
-    const { isLoading, mutateAsync } = useDeleteContactPoint();
+    const { isLoading, mutateAsync } = useDeleteOffer();
     const isDialogActive = ref(false);
     const isSnackbarActive = ref(false);
 
@@ -80,7 +80,7 @@ export default defineComponent({
       isDialogActive.value = true;
     };
 
-    const deleteContactPoint = () => {
+    const deleteOffer = () => {
       if (props.currentItem) {
         emit("delete", props.currentItem);
       }
@@ -89,7 +89,8 @@ export default defineComponent({
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
-            router.push("/admin/anlaufstellen/");
+            router.push("/admin/angebote/");
+            router.go(0);
           }, 1000); // delay for 1 second
         })
         .catch(() => emit("error"));
@@ -101,7 +102,7 @@ export default defineComponent({
       isDialogActive,
       isSnackbarActive,
       openDialog,
-      deleteContactPoint,
+      deleteOffer,
       SNACKBAR_TIMEOUT: 3000, // in milliseconds
     };
   },

@@ -5,7 +5,7 @@ export default{
         startingCharUpperCase(text: string): string {
             return text ? text.toLowerCase().replace(/^\w/, c => c.toUpperCase()): "";
         },
-        formatDate(date: Date): string {
+        formatDate(date: string): string {
             return date ? moment(date).format('L'): "";
         }
     }

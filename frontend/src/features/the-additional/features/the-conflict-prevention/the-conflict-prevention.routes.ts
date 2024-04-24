@@ -1,6 +1,6 @@
 import TheConflictPrevention from "@/features/the-additional/features/the-conflict-prevention/the-conflict-prevention.vue";
 
-export const CONFLICT_PREVENTION_ROUTE_LINK = "/erfahre-mehr/konfliktpreavention";
+export const CONFLICT_PREVENTION_ROUTE_LINK = "/erfahre-mehr/konfliktpraevention";
 export const CONFLICT_PREVENTION_ROUTE_NAME = "Konfliktprävention";
 export const CONFLICT_PREVENTION_ROUTE_META_ICON = "mdi-close-octagon";
 export const CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT = "Hier finden Sie Informationen, wie Sie Konflikten vorbeugen und sie zeitnah ansprechen können.";

@@ -15,7 +15,7 @@
         xl="3"
       >
         <v-list
-          v-if="listItems?.length > 0"
+          v-if="listItems && listItems.length > 0"
           dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
           style="overflow-y: scroll"
@@ -69,9 +69,8 @@ import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
 import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
 import { useGetContactPointListItems } from "@/features/commons/middleware/useGetContactPoints";
 import {
-  THE_ANLAUFSTELLEN_ROUTE_NAME
+  THE_ANLAUFSTELLEN_ROUTE_NAME, THE_ANLAUFSTELLEN_ROUTE_META_ICON
 } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
-import { THE_ANGEBOTE_ROUTE_META_ICON } from "@/features/the-angebote/the-angebote.routes";
 import { THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT } from "@/features/the-additional/the-additional.routes";
 import { useRoute, useRouter } from "vue-router/composables";
 import TheCardInitialAnlaufstellePage
@@ -133,7 +132,7 @@ export default defineComponent({
 
     return {
       name: THE_ANLAUFSTELLEN_ROUTE_NAME,
-      icon: THE_ANGEBOTE_ROUTE_META_ICON,
+      icon: THE_ANLAUFSTELLEN_ROUTE_META_ICON,
       infoText: THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT,
       isLoading,
       isError,

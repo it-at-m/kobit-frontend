@@ -2,9 +2,9 @@
   <v-text-field
     :id="id"
     v-model="vModel"
+    color="secondary"
     dense
     outlined
-    color="secondary"
     :label="label"
     @focus="$emit('focus', $event)"
     @blur="$emit('blur', $event)"
