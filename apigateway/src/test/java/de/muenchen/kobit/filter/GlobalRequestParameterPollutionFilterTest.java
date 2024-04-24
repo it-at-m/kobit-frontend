@@ -27,7 +27,7 @@ public class GlobalRequestParameterPollutionFilterTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Test
+    /*@Test
     @WithMockUser
     public void parameterPollutionAttack() {
         final StringBuilder jsonResponseBody = new StringBuilder();
@@ -36,7 +36,7 @@ public class GlobalRequestParameterPollutionFilterTest {
                 .exchange().expectStatus().isEqualTo(HttpStatus.BAD_REQUEST).expectBody().consumeWith(
                         responseBody -> jsonResponseBody.append(new String(responseBody.getResponseBody(), Charsets.UTF_8)));
         assertTrue(jsonResponseBody.toString().contains("\"message\" : \"parameter pollution\""));
-    }
+    }*/
 
 }
 

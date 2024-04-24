@@ -19,10 +19,6 @@ import org.springframework.security.web.server.authentication.RedirectServerAuth
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
@@ -34,8 +30,6 @@ public class SecurityConfiguration {
     private static final String LOGOUT_URL = "/logout";
 
     private static final String LOGOUT_SUCCESS_URL = "/loggedout.html";
-
-    private static final Logger logger = LoggerFactory.getLogger(LoggingWebFilter.class);
 
     /**
      * Same lifetime as SSO Session (e.g. 10 hours).
@@ -60,21 +54,14 @@ public class SecurityConfiguration {
                  * is done in class {@link CsrfTokenAppendingHelperFilter}.
                  */.csrf().csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()).and().cors().and()
                 .oauth2Login()
-                .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
+                /**
+                 * Set security session timeout.
+                 */.authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler() {
                     @Override
                     public Mono<Void> onAuthenticationSuccess(WebFilterExchange webFilterExchange,
                                                               Authentication authentication) {
-                        logger.info("************************AuthenticationSuccess************************");
-                        // Log token length if authentication is of type DefaultOidcUser
-                        if (authentication instanceof DefaultOidcUser) {
-                            DefaultOidcUser oidcUser = (DefaultOidcUser) authentication;
-                            String token = oidcUser.getIdToken().getTokenValue();
-                            if (token != null) {
-                                logger.info("Token length: {}", token.length());
-                            }
-                        }
                         webFilterExchange.getExchange().getSession().subscribe(
-                            webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
+                                webSession -> webSession.setMaxIdleTime(Duration.ofSeconds(springSessionTimeoutSeconds)));
                         return super.onAuthenticationSuccess(webFilterExchange, authentication);
                     }
                 });

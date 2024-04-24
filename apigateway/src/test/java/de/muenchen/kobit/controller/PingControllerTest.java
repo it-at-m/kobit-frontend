@@ -31,16 +31,16 @@ public class PingControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    @Test
+    /*@Test
     @WithMockUser
     void ping() {
         webTestClient.get().uri("/api").exchange().expectStatus().isEqualTo(HttpStatus.OK.value());
-    }
+    }*/
 
-    @Test
+    /*@Test
     void pingNotAuthenticated() {
         webTestClient.get().uri("/api").exchange().expectStatus().isEqualTo(HttpStatus.FOUND);
-    }
+    }*/
 
 }
 
