@@ -30,6 +30,6 @@ jobs:
         uses: advanced-security/policy-as-code@v2.4.1
         with:
           policy: it-at-m/policy-as-code
-          policy-path: policies/default.yaml
+          policy-path: default.yaml
           token: ${{ secrets.ACCESS_TOKEN }}
           argvs: "--disable-dependabot --disable-secret-scanning --disable-code-scanning --display"
