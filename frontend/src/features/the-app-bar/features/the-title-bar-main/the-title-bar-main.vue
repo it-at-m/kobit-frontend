@@ -8,7 +8,7 @@
       <a
         style="color:#111;text-decoration: none;"
         href="/"
-      >KoBIT. Digital. Erleben.</a>
+      >UFO. Digital. Erleben.</a>
     </v-toolbar-title>
     <v-spacer />
     <a
