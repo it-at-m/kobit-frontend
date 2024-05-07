@@ -39,7 +39,7 @@ Prerequisite digital accessibility and mobile-first
 
 **Zusammenfassung**
 
-Unterstützungsfinder online Web Application für staatliche Organisationen und Unternehmen
+Unterstützungs Finder Online Web Application für staatliche Organisationen und Unternehmen
 
 Die KoBITApp hilft dem Nutzer, der ein Problem/Konflikt hat, indem sie eine Übersicht über die Anlaufstellen gibt,
 Unterstützung der richtigen Anlaufstellen in der jeweiligen Situation bietet und zentral Informationen und
