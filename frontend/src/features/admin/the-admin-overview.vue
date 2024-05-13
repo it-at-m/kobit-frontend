@@ -55,7 +55,7 @@ import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
 
 
-import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
+import {adminUnterstuetzungsfinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
 
 export default defineComponent({
   name: "AdminOverview",
@@ -76,7 +76,7 @@ export default defineComponent({
     return {
       labels: adminBaseHeadLineLabels,
       anlaufstellen: adminContactPointsRoutes,
-      unterstuetzungsfinder: adminUFinderRoutes,
+      unterstuetzungsfinder: adminUnterstuetzungsfinderRoutes,
       erfahreMehr: adminExperienceMoreRoutes
     }
   }
