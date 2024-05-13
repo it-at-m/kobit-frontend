@@ -22,6 +22,18 @@ Vue.use(VueQueryPlugin);
 
 moment.locale(window.navigator.language);
 
+// Set up the navigation guard before creating the Vue instance
+router.beforeEach((to, _, next) => {
+  if (to.path === "/admin" || to.path.startsWith("/admin/")) {
+    vuetify.framework.theme.themes.light = adminTheme.themes.light;
+    vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
+  } else {
+    vuetify.framework.theme.themes.light = kobitTheme.themes.light;
+    vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
+  }
+  next();
+});
+
 new Vue({
   i18n,
   router,
