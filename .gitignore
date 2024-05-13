@@ -29,4 +29,7 @@ dist/
 nbdist/
 .nb-gradle/
 
+# Intellij
+.run/kobit-frontend.run.xml
+
 
