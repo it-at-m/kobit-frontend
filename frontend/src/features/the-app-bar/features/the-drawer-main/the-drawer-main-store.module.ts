@@ -7,6 +7,7 @@ import { theUnterstuetzungsfinderRoutes } from "@/features/the-unterstuetzungsfi
 import { erfahreMehrRoutes } from "@/features/the-additional/the-additional.routes";
 
 import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminUnterstuetzungsfinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
 import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import { adminRoutes } from "@/features/admin/the-admin-routes";
 import { Route } from 'vue-router';
@@ -56,6 +57,7 @@ export const theDrawerMainModule = {
                 ...adminContactPointsRoutes,
                 path: '/admin/anlaufstellen/', // Override the path when id is undefined
             },
+            adminUnterstuetzungsfinderRoutes,
             adminExperienceMoreRoutes,
             theMainRoutes,
 
