@@ -1,5 +1,5 @@
-import Vue, { VueConstructor } from 'vue';
-import Router, { RouteConfig } from 'vue-router';
+import Vue from 'vue';
+import Router from 'vue-router';
 import vuetify, { adminTheme, kobitTheme } from '@/core/plugins/vuetify';
 
 import { theMainRoutes } from '@/features/the-main/the-main.routes';
@@ -31,73 +31,79 @@ import { getAdminUserInfo } from '@/features/admin/components/userinformation/ap
 Vue.use(Router);
 
 const baseRoutes = [
-  theMainRoutes,
-  theUnterstuetzungsfinderRoutes,
-  erfahreMehrRoutes,
-  conflictPreventionRoutes,
-  downloadsRoutes,
-  faqRoutes,
-  glossarRoutes,
-  leadershipCooperationRoutes,
-  dvFairRoutes,
-  escalationStepsRoutes,
-  theAnlaufstellenRoutes,
-  theAnlaufstellenDetailsRoutes,
-  theAngeboteRoutes
+    theMainRoutes,
+    theUnterstuetzungsfinderRoutes,
+    erfahreMehrRoutes,
+    conflictPreventionRoutes,
+    downloadsRoutes,
+    faqRoutes,
+    glossarRoutes,
+    leadershipCooperationRoutes,
+    dvFairRoutes,
+    escalationStepsRoutes,
+    theAnlaufstellenRoutes,
+    theAnlaufstellenDetailsRoutes,
+    theAngeboteRoutes
 ];
 
 const router = new Router({
-  base: process.env.BASE_URL,
-  routes: baseRoutes
+    base: process.env.BASE_URL,
+    routes: baseRoutes
 });
 
 let adminRoutesAdded = false;
 
 router.beforeEach(async (to, from, next) => {
-  if (to.path.startsWith('/admin')) {
-    try {
-      const adminUserInfo = await getAdminUserInfo();
+    if (!adminRoutesAdded && to.path.startsWith('/admin')) {
+        try {
+            const adminUserInfo = await getAdminUserInfo();
 
-      if (adminUserInfo.isCentralAdmin || adminUserInfo.isDepartmentAdmin) {
-        if (!adminRoutesAdded) {
-          let adminRoutesToAdd: RouteConfig[] | { name: string; path: string; component: VueConstructor<Vue<Record<string, any>, Record<string, any>, never, never, (event: string, ...args: any[]) => Vue<Record<string, any>, Record<string, any>, never, never, any>>>; meta: { icon: string; infoText: string; }; }[] = [];
-          if (adminUserInfo.isCentralAdmin) {
-            adminRoutesToAdd = [
-              adminRoutes,
-              adminContactPointsRoutes,
-              adminExperienceMoreRoutes,
-              adminConflictPreventionRoutes,
-              adminDownloadsRoutes,
-              adminFaqRoutes,
-              adminGlossarRoutes,
-              adminLeadershipCooperationRoutes,
-              adminUFinderRoutes
-            ];
-          } else if (adminUserInfo.isDepartmentAdmin) {
-            adminRoutesToAdd = [
-              adminRoutes,
-              adminContactPointsRoutes
-            ];
-          }
-          router.addRoutes(adminRoutesToAdd);
-          adminRoutesAdded = true;
+            let adminRoutesToAdd: string | any[] = [];
+
+            if (adminUserInfo.isCentralAdmin) {
+                adminRoutesToAdd = [
+                    ...adminRoutesToAdd,
+                    adminRoutes,
+                    adminContactPointsRoutes,
+                    adminExperienceMoreRoutes,
+                    adminConflictPreventionRoutes,
+                    adminDownloadsRoutes,
+                    adminFaqRoutes,
+                    adminGlossarRoutes,
+                    adminLeadershipCooperationRoutes,
+                    adminUFinderRoutes
+                ];
+            } else if (adminUserInfo.isDepartmentAdmin) {
+                adminRoutesToAdd = [
+                    ...adminRoutesToAdd,
+                    adminRoutes,
+                    adminContactPointsRoutes
+                ];
+            }
+
+            if (adminRoutesToAdd.length > 0) {
+                router.addRoutes(adminRoutesToAdd);
+                adminRoutesAdded = true;
+
+                vuetify.framework.theme.themes.light = adminTheme.themes.light;
+                vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
+
+                next({ path: to.path, query: to.query, replace: true });
+            } else {
+                vuetify.framework.theme.themes.light = adminTheme.themes.light;
+                next({ path: '/' });
+            }
+            vuetify.framework.theme.themes.light = adminTheme.themes.light;
+            vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
+        } catch (error) {
+            vuetify.framework.theme.themes.light = adminTheme.themes.light;
+            next({ path: '/' });
         }
-        vuetify.framework.theme.themes.light = adminTheme.themes.light;
-        vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
+    } else {
+        vuetify.framework.theme.themes.light = kobitTheme.themes.light;
+        vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
         next();
-      } else {
-        next({ path: '/' });
-      }
-    } catch (error) {
-      next({ path: '/' });
     }
-  } else {
-    if (!to.path.startsWith('/admin')) {
-      vuetify.framework.theme.themes.light = kobitTheme.themes.light;
-      vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
-    }
-    next();
-  }
 });
 
 export default router;
