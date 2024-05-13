@@ -24,7 +24,7 @@ import { adminDownloadsRoutes } from '@/features/admin/features/the-additional/f
 import { adminFaqRoutes } from '@/features/admin/features/the-additional/features/the-faq/the-faq.routes';
 import { adminGlossarRoutes } from '@/features/admin/features/the-additional/features/the-glossar/the-glossar.routes';
 import { adminLeadershipCooperationRoutes } from '@/features/admin/features/the-additional/features/the-leadership-cooperation/the-leadership-cooperation.routes';
-import { adminUFinderRoutes } from '@/features/admin/components/u-finder/u-finder.routes';
+import { adminUnterstuetzungsfinderRoutes } from '@/features/admin/components/u-finder/u-finder.routes';
 
 import { getAdminUserInfo } from '@/features/admin/components/userinformation/api/AdminInfoClient';
 
@@ -71,7 +71,7 @@ router.beforeEach(async (to, from, next) => {
                     adminFaqRoutes,
                     adminGlossarRoutes,
                     adminLeadershipCooperationRoutes,
-                    adminUFinderRoutes
+                    adminUnterstuetzungsfinderRoutes
                 ];
             } else if (adminUserInfo.isDepartmentAdmin) {
                 adminRoutesToAdd = [
