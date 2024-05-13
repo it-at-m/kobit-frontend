@@ -22,6 +22,7 @@
               <base-link-card :item="anlaufstellen" />
             </v-col>
             <v-col
+              v-if="isCentralAdmin"
               cols="12"
               sm="12"
               md="12"
@@ -30,6 +31,7 @@
               <base-link-card :item="unterstuetzungsfinder" />
             </v-col>
             <v-col
+              v-if="isCentralAdmin"
               cols="12"
               sm="12"
               md="12"
@@ -45,21 +47,21 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import { defineComponent, ref, computed } from "vue";
 import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
 import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
-import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
-import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminExperienceMoreRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminBaseHeadLineLabels } from "@/features/admin/i18n";
+import { adminContactPointsRoutes } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminUnterstuetzungsfinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
 
-
-import {adminUnterstuetzungsfinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
+import { getAdminUserInfo } from "@/features/admin/components/userinformation/api/AdminInfoClient";
 
 export default defineComponent({
   name: "AdminOverview",
-  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
+  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain },
   setup() {
     const isInfoDialogActive = ref(false);
 
@@ -67,23 +69,27 @@ export default defineComponent({
       isInfoDialogActive.value = false;
     }
 
+    const isCentralAdmin = ref(false);
+
+    getAdminUserInfo().then((info) => {
+      isCentralAdmin.value = info.isCentralAdmin;
+    });
 
     const anlaufstellen = {
-    ...adminContactPointsRoutes,
-    path: adminContactPointsRoutes.path.replace('/:id?', '/')
-     };
+      ...adminContactPointsRoutes,
+      path: adminContactPointsRoutes.path.replace('/:id?', '/')
+    };
 
     return {
       labels: adminBaseHeadLineLabels,
-      anlaufstellen: adminContactPointsRoutes,
+      anlaufstellen,
       unterstuetzungsfinder: adminUnterstuetzungsfinderRoutes,
-      erfahreMehr: adminExperienceMoreRoutes
-    }
+      erfahreMehr: adminExperienceMoreRoutes,
+      isCentralAdmin
+    };
   }
-})
+});
 </script>
 
 <style scoped>
-
-
 </style>
