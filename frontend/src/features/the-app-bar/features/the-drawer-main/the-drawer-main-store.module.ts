@@ -93,6 +93,7 @@ export const theDrawerMainModule = {
                             ...adminContactPointsRoutes,
                             path: '/admin/anlaufstellen/',
                         },
+                        adminUnterstuetzungsfinderRoutes,
                         theMainRoutes
                     ];
 
