@@ -26,14 +26,15 @@ export interface TheMainDrawerModuleState {
 export const theDrawerMainModule = {
     namespaced: true,
     actions: {
-        async updateListItems({ commit, state }: { commit: Commit, state: TheMainDrawerModuleState }) {
+        async updateListItems(
+            { commit }: { commit: Commit }
+        ) {
             const adminUserInfo = await getAdminUserInfo();
             const isAdminPage = /^\/admin($|\/)/.test(router.currentRoute.path);
-
             commit('setIsAdminPage', isAdminPage);
             commit('setAdminInfo', adminUserInfo.isCentralAdmin);
         },
-    },
+    }, 
     mutations: {
         setIsAdminPage(state: TheMainDrawerModuleState, isAdminPage: boolean) {
             state.isAdminPage = isAdminPage;
@@ -71,21 +72,31 @@ export const theDrawerMainModule = {
                 theMainRoutes.name = "Adminbereich Verlassen";
                 theMainRoutes.meta.icon = "mdi-logout";
 
-                let dynamicAdminItems = [
-                    adminRoutes,
-                    {
-                        ...adminContactPointsRoutes,
-                        path: '/admin/anlaufstellen/',
-                    }
-                ];
+                let dynamicAdminItems = [];
 
                 if (state.isCentralAdmin) {
-                    dynamicAdminItems.push(adminUnterstuetzungsfinderRoutes);
-                    dynamicAdminItems.push(adminExperienceMoreRoutes);
+                    dynamicAdminItems = [
+                        adminRoutes,
+                        {
+                            ...adminContactPointsRoutes,
+                            path: '/admin/anlaufstellen/',
+                        },
+                        adminUnterstuetzungsfinderRoutes,
+                        adminExperienceMoreRoutes,
+                        theMainRoutes
+                    ];
+
+                } else {
+                    dynamicAdminItems = [
+                        adminRoutes,
+                        {
+                            ...adminContactPointsRoutes,
+                            path: '/admin/anlaufstellen/',
+                        },
+                        theMainRoutes
+                    ];
+
                 }
-
-                dynamicAdminItems.push(theMainRoutes);
-
                 return dynamicAdminItems;
             } else {
                 adminRoutes.name = "Admin";
