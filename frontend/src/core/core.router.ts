@@ -18,7 +18,7 @@ import { theAnlaufstellenDetailsRoutes } from '@/features/the-unterstuetzungsfin
 
 import { adminRoutes } from '@/features/admin/the-admin-routes';
 import { adminContactPointsRoutes } from '@/features/admin/features/the-contact-points/the-contact-points-routes';
-import { adminExperienceMoreRoutes } from '@/features/admin/features/the-additional/the-additional-overview-routes';
+import { adminAdditionalRoutes } from '@/features/admin/features/the-additional/the-additional-overview-routes';
 import { adminConflictPreventionRoutes } from '@/features/admin/features/the-additional/features/the-conflict-prevention/the-conflict-prevention.routes';
 import { adminDownloadsRoutes } from '@/features/admin/features/the-additional/features/the-downloads/the-downloads.routes';
 import { adminFaqRoutes } from '@/features/admin/features/the-additional/features/the-faq/the-faq.routes';
@@ -65,7 +65,7 @@ router.beforeEach(async (to, from, next) => {
                     ...adminRoutesToAdd,
                     adminRoutes,
                     adminContactPointsRoutes,
-                    adminExperienceMoreRoutes,
+                    adminAdditionalRoutes,
                     adminConflictPreventionRoutes,
                     adminDownloadsRoutes,
                     adminFaqRoutes,
@@ -77,7 +77,8 @@ router.beforeEach(async (to, from, next) => {
                 adminRoutesToAdd = [
                     ...adminRoutesToAdd,
                     adminRoutes,
-                    adminContactPointsRoutes
+                    adminContactPointsRoutes,
+                    adminUnterstuetzungsfinderRoutes
                 ];
             }
 

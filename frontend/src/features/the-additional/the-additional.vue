@@ -5,11 +5,11 @@
     :info-text="infoText"
     :is-loading="false"
   >
-    <v-container fluid>
-      <BackButton
+    <BackButton
         :text="'Zurück'"
         :callback="back"
-      />
+    />
+    <v-container fluid>
       <v-row>
         <v-col>
           <v-row>

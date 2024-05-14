@@ -12,6 +12,7 @@
           <v-col>
             <v-text-field
               id="id_faq_search"
+              color="secondary"
               v-model="searchText"
               label="FAQs durchsuchen"
               placeholder="Eingabe"

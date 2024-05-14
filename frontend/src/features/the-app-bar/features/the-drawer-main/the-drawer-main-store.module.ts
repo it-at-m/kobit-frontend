@@ -6,7 +6,7 @@ import { erfahreMehrRoutes } from "@/features/the-additional/the-additional.rout
 
 import { adminContactPointsRoutes } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
 import { adminUnterstuetzungsfinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
-import { adminExperienceMoreRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminAdditionalRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
 import { adminRoutes } from "@/features/admin/the-admin-routes";
 
 import { getAdminUserInfo } from "@/features/admin/components/userinformation/api/AdminInfoClient";
@@ -82,7 +82,7 @@ export const theDrawerMainModule = {
                             path: '/admin/anlaufstellen/',
                         },
                         adminUnterstuetzungsfinderRoutes,
-                        adminExperienceMoreRoutes,
+                        adminAdditionalRoutes,
                         theMainRoutes
                     ];
 
