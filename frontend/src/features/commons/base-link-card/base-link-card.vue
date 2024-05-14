@@ -28,7 +28,9 @@
             color="secondary"
             link
           >
-            <v-card-title class="title">{{ item.name }}</v-card-title>
+            <v-card-title class="title">
+              {{ item.name }}
+            </v-card-title>
             <v-card-text class="text--text">
               {{ item.meta.infoText }}
             </v-card-text>
