@@ -31,9 +31,9 @@ const lhmTheme = {
 const kobitTheme = {
     themes: {
         light: {
-            primary: "#FFE400",
+            primary: "#FECC00",
             text: "#404040",
-            secondary: "#1B98D5",
+            secondary: "#005A9F",
             accent: "#004376",
             error: "#984447",
             info: "#2196F3",

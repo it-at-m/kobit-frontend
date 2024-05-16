@@ -1,8 +1,5 @@
 <template>
-  <v-img
-    src="@/assets/background-ufo2.svg"
-    class="background"
-  />
+  <img src="@/assets/background-ufo2.svg" style="position: absolute; right: 0;bottom: 0;"/>
 </template>
 
 <script lang="ts">
