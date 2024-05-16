@@ -1,6 +1,6 @@
 <template>
   <v-img
-    src="@/assets/background-hex2.svg"
+    src="@/assets/background-ufo2.svg"
     class="background"
   />
 </template>
