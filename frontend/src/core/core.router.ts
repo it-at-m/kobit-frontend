@@ -91,13 +91,13 @@ router.beforeEach(async (to, from, next) => {
 
                 next({ path: to.path, query: to.query, replace: true });
             } else {
-                vuetify.framework.theme.themes.light = adminTheme.themes.light;
+                vuetify.framework.theme.themes.light = kobitTheme.themes.light;
+                vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
                 next({ path: '/' });
             }
-            vuetify.framework.theme.themes.light = adminTheme.themes.light;
-            vuetify.framework.theme.themes.dark = adminTheme.themes.dark;
         } catch (error) {
-            vuetify.framework.theme.themes.light = adminTheme.themes.light;
+            vuetify.framework.theme.themes.light = kobitTheme.themes.light;
+            vuetify.framework.theme.themes.dark = kobitTheme.themes.dark;
             next({ path: '/' });
         }
     } else {
