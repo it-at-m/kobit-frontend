@@ -2,6 +2,7 @@
   <div
     v-if="isLoading"
     class="v-progress-linear"
+    style="position: absolute; left: 50%; top: 30%; z-index: 1000"
   >
     <v-progress-circular
       :size="150"

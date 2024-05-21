@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/background-ufo2.svg" style="position: absolute; right: 0;bottom: 0;"/>
+  <img src="@/assets/background-ufo.svg" style="position: absolute; left: 0;bottom: 0;"/>
 </template>
 
 <script lang="ts">
@@ -11,12 +11,5 @@ export default class TheBackGround extends Vue {
 </script>
 
 <style scoped>
-.background {
-  background-size: cover;
-  background-position-x: 70%;
-  background-position-y: 50%;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
+
 </style>
