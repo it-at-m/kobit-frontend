@@ -14,6 +14,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="newLink.name"
+              color="secondary"
               label="Titel"
               :rules="[nameRule]"
               prepend-inner-icon="mdi-web"
@@ -23,6 +24,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="newLink.url"
+              color="secondary"
               label="URL"
               :rules="[linkRule]"
               prepend-inner-icon="mdi-link"

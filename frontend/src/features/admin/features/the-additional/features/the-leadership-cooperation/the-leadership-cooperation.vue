@@ -6,153 +6,163 @@
       :name="name"
       :icon="icon"
     >
-      <LoadingSpinner :is-loading="isLoading" />
-      <ErrorHandler
-        :is-error="isWriteError"
-        :message="errorMessage"
-        @closeError="closeError"
-      />
-      <v-card
-        flat
-        :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
-        class="ma-0 pa-0"
-      >
-        <v-card-title class="pa-0" />
-        <v-card-text>
-          <div v-if="!isLoading && writableContentItem">
-            <v-divider class="mt-3 mb-5" />
-            <MarkDownAlert :label="label" />
-            <v-form v-model="isFormValid">
-              <v-row>
-                <v-col cols="12">
-                  <v-btn
-                    icon
-                    @click="applyFormatting('bold')"
-                  >
-                    <v-icon>mdi-format-bold</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('italic')"
-                  >
-                    <v-icon>mdi-format-italic</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('underline')"
-                  >
-                    <v-icon>mdi-format-underline</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('ordered-list')"
-                  >
-                    <v-icon>mdi-format-list-numbered</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('unordered-list')"
-                  >
-                    <v-icon>mdi-format-list-bulleted</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('line-break')"
-                  >
-                    <v-icon>mdi-format-line-spacing</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('h1')"
-                  >
-                    <v-icon>mdi-format-header-1</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('h2')"
-                  >
-                    <v-icon>mdi-format-header-2</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('h3')"
-                  >
-                    <v-icon>mdi-format-header-3</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('h4')"
-                  >
-                    <v-icon>mdi-format-header-4</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="applyFormatting('h5')"
-                  >
-                    <v-icon>mdi-format-header-5</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-row>
-              <v-row class="ma-0 pa-0">
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="12"
-                  lg="6"
-                  xl="6"
-                >
-                  <v-textarea
-                    id="description-textarea"
-                    class="custom-textarea"
-                    :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
-                    label="Beschreibung"
-                    rows="20"
-                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 5000 Zeichen umfassen']"
-                    :counter="5000"
-                    @input="changeContent"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="12"
-                  md="12"
-                  lg="6"
-                  xl="6"
-                >
-                  <div
-                    style="border-bottom: 2px solid #eee"
-                    class="markdown-content"
-                    v-html="computeMarkdown"
-                  />
-                </v-col>
-              </v-row>
-            </v-form>
-          </div>
-        </v-card-text>
-        <v-card-actions>
-          <SaveUpdateContentItem
-            :id="writableContentItem?.contentItemView[0].id"
-            :page-type="writableContentItem?.contentItemView[0].pageType"
-            :content-item-to-save="writableContentItem?.contentItemView[0]"
-            :disabled="!isFormValid"
-            class="ml-2"
-            @error="error"
+      <BackButton :callback="back" />
+      <v-row>
+        <v-col cols="12">
+          <LoadingSpinner :is-loading="isLoading" />
+          <ErrorHandler
+            :is-error="isWriteError"
+            :message="errorMessage"
+            @closeError="closeError"
           />
-          <v-btn
-            class="ma-2"
-            color="error"
-            @click="cancelForm"
+          <v-card
+            flat
+            :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+            class="ma-0 pa-0"
           >
-            <v-icon>mdi-cancel</v-icon> Abbruch
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+            <v-card-title class="pa-0" />
+            <v-card-text>
+              <div v-if="!isLoading && writableContentItem">
+                <v-divider class="mt-3 mb-5" />
+                <MarkDownAlert :label="label" />
+                <v-form v-model="isFormValid">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-btn
+                        icon
+                        @click="applyFormatting('bold')"
+                      >
+                        <v-icon>mdi-format-bold</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('italic')"
+                      >
+                        <v-icon>mdi-format-italic</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('underline')"
+                      >
+                        <v-icon>mdi-format-underline</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('ordered-list')"
+                      >
+                        <v-icon>mdi-format-list-numbered</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('unordered-list')"
+                      >
+                        <v-icon>mdi-format-list-bulleted</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('line-break')"
+                      >
+                        <v-icon>mdi-format-line-spacing</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('h1')"
+                      >
+                        <v-icon>mdi-format-header-1</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('h2')"
+                      >
+                        <v-icon>mdi-format-header-2</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('h3')"
+                      >
+                        <v-icon>mdi-format-header-3</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('h4')"
+                      >
+                        <v-icon>mdi-format-header-4</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="applyFormatting('h5')"
+                      >
+                        <v-icon>mdi-format-header-5</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-row class="ma-0 pa-0">
+                    <v-col
+                      cols="12"
+                      sm="12"
+                      md="12"
+                      lg="6"
+                      xl="6"
+                    >
+                      <v-textarea
+                        id="description-textarea"
+                        color="secondary"
+                        class="custom-textarea"
+                        :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
+                        label="Beschreibung"
+                        rows="20"
+                        :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 5000 Zeichen umfassen']"
+                        :counter="5000"
+                        @input="changeContent"
+                      />
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      sm="12"
+                      md="12"
+                      lg="6"
+                      xl="6"
+                    >
+                      <div
+                        style="border-bottom: 2px solid #eee"
+                        class="markdown-content"
+                        v-html="computeMarkdown"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <SaveUpdateContentItem
+                :id="writableContentItem?.contentItemView[0].id"
+                :page-type="writableContentItem?.contentItemView[0].pageType"
+                :content-item-to-save="writableContentItem?.contentItemView[0]"
+                :disabled="!isFormValid"
+                class="ml-2"
+                @error="error"
+              />
+              <v-btn
+                class="ma-2"
+                color="error"
+                @click="cancelForm"
+              >
+                <v-icon>mdi-cancel</v-icon> Abbruch
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </BasePageContent>
+    <BackButton
+      :callback="back"
+      class="mt-1"
+    />
   </v-container>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
+import { computed, defineComponent, Ref, ref, watch } from "vue";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
@@ -171,10 +181,11 @@ import { I18nLabel } from "@/core/core.translation";
 import { adminContentItemLabels } from "@/features/admin/features/the-additional/i18n";
 import SaveUpdateContentItem from "@/features/admin/features/the-additional/commons/SaveUpdateContentItemButton.vue";
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
+  components: { BasePageContent, BackButton,  MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
   props: {
     label: {
       type: Object as () => I18nLabel
@@ -192,11 +203,12 @@ export default defineComponent({
 
     const writableContentItem = ref<ItemWrapper>();
 
+
     watch(itemWrapper, (newValue) => {
       if (!writableContentItem.value) {
         writableContentItem.value = newValue;
       }
-    })
+    }, { immediate: true })
     const computeMarkdown = computed(() => marked.parse(writableContentItem.value?.contentItemView?.[0]?.content || ""));
 
     const changeContent = (value: string) => {

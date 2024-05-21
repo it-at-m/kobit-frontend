@@ -5,7 +5,7 @@
       class="mr-4"
     >
       <v-btn
-        color="warning"
+        color="error"
         :loading="isLoading"
         :disabled="isLoading"
         @click="openDialog"
@@ -26,14 +26,14 @@
           <v-card-actions>
             <v-spacer />
             <v-btn
-              color="green darken-1"
+              color="error"
               text
               @click="isDialogActive = false"
             >
               Abbruch
             </v-btn>
             <v-btn
-              color="green darken-1"
+              color="error"
               text
               @click="deleteContactPoint"
             >
@@ -45,7 +45,7 @@
       <v-snackbar
         v-model="isSnackbarActive"
         :timeout="SNACKBAR_TIMEOUT"
-        color="green darken-1"
+        color="error"
         bottom
       >
         <p class="pa-0 ma-0">
@@ -90,7 +90,6 @@ export default defineComponent({
           isSnackbarActive.value = true;
           setTimeout(() => {
             router.push("/admin/anlaufstellen/");
-            router.go(0);
           }, 1000); // delay for 1 second
         })
         .catch(() => emit("error"));

@@ -18,9 +18,6 @@ import Vue from "vue";
 import TheBackground from "@/features/the-background/the-background.vue";
 import TheFooterMain from "@/features/the-footer-main/the-footer-main.vue";
 import TheAppBar from "@/features/the-app-bar/the-app-bar.vue";
-import {
-  initAnlaufstellen
-} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points-store.module";
 import TheDisclaimer from "@/features/the-disclaimer/the-disclaimer.vue";
 
 import DownloadProvider from "@/core/services/downloads/download-provider.mixin.vue";
