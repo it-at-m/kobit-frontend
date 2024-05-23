@@ -26,6 +26,7 @@
                 xl="6"
               >
                 <v-text-field
+                  color="secondary"
                   :value="writableContactPoint.name"
                   label="Name der Anlaufstelle"
                   :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
@@ -41,6 +42,7 @@
                 xl="6"
               >
                 <v-text-field
+                  color="secondary"
                   :value="writableContactPoint.shortCut"
                   label="Kurzbezeichnung der Anlaufstelle"
                   :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
@@ -153,6 +155,7 @@
                 <v-textarea
                   id="description-textarea"
                   v-model="writableContactPoint.description"
+                  color="secondary"
                   rows="12"
                   :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
                   label="Beschreibung"
@@ -192,6 +195,7 @@
               >
                 <v-text-field
                   v-model="contact.email"
+                  color="secondary"
                   label="E-Mail"
                   readonly
                 />
@@ -250,6 +254,7 @@
               >
                 <v-text-field
                   v-model="link.name"
+                  color="secondary"
                   label="Titel"
                   readonly
                 />
@@ -262,6 +267,7 @@
               >
                 <v-text-field
                   v-model="link.url"
+                  color="secondary"
                   label="URL"
                   readonly
                 />
@@ -395,7 +401,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
+import { computed, defineComponent, ref, watch, getCurrentInstance, Ref } from "vue";
 import { I18nLabel } from "@/core/core.translation";
 import { Contact, ContactPoint, ContactPointListItem, Link } from "@/features/commons/types/ContactPoint";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
@@ -409,6 +415,8 @@ import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import DeleteButton from "@/features/admin/features/the-contact-points/components/DeleteButton.vue";
 import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
 import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { error } from "console";
+import { VContainer, VCard, VCardTitle, VCardText, VForm, VRow, VCol, VTextField, VCombobox, VListItem, VListItemContent, VListItemTitle, VDivider, VBtn, VIcon, VTextarea, VFileInput, VCardActions } from "vuetify/lib";
 export default defineComponent({
   name: "EditContactPoint",
   components: { DeleteButton, MarkDownAlert, AddContactDialog, ErrorHandler, SaveUpdate, AddLinkDialog, LoadingSpinner },
@@ -434,23 +442,24 @@ export default defineComponent({
     const isLinkDialogOpen = ref(false);
     const isContactDialogOpen = ref(false);
     const router = useRouter();
-
     const errorMessage = ref('');
-    const { data: adminUserInfo } = useGetAdminUserInfo();
-    const isCentralAdmin = ref(false);
-
     const writableContactPoint = ref<ContactPoint>();
+
+    
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
       }
-    });
+    }, { immediate: true });
+
+    const { data: adminUserInfo } = useGetAdminUserInfo();
+    const isCentralAdmin: Ref<boolean | null> = ref(null);
 
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    });
+    }, { immediate: true });
 
     const openLinkDialog = () => {
       isLinkDialogOpen.value = true;
@@ -460,7 +469,6 @@ export default defineComponent({
     }
     const cancelForm = () => {
       router.push("/admin/anlaufstellen/");
-      router.go(0);
 
     }
     const cancel = () => {

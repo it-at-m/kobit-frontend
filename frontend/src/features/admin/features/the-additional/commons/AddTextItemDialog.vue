@@ -21,6 +21,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="addedItem.header"
+                    color="secondary"
                     :label="headerLabel"
                     :rules="[headerRule]"
                     max-file-name-input-length="250"
@@ -32,6 +33,7 @@
                 <v-col cols="12">
                   <v-textarea
                     v-model="addedItem.entry"
+                    color="secondary"
                     :label="entryLabel"
                     :rules="[entryRule]"
                     max-file-name-input-length="1500"
@@ -89,7 +91,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref, onMounted, getCurrentInstance } from "vue";
+import { defineComponent, watch, PropType, computed, ref, getCurrentInstance } from "vue";
 import { TextItem } from "@/features/commons/types/Item";
 import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
 import { useCreateNewTextItem } from "../features/middelware/useTextItem";

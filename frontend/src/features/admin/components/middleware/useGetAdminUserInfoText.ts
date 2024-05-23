@@ -15,7 +15,7 @@ const mapAdminInfoToText = (adminInfo: AdminUserInfo): AdminTextInfo => {
 }
 
 export const useGetAdminUserInfoText = () =>
-    useQuery<AdminTextInfo>(['adminInfo'],
+    useQuery<AdminTextInfo>(['adminInfoText'],
         () => getAdminUserInfo().then(mapAdminInfoToText)
     );
 

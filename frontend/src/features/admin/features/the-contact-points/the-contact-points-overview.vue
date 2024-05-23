@@ -15,7 +15,6 @@
         xl="3"
       >
         <v-list
-          v-if="!isLoading && listItems.length > 0"
           dense
           :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
           style="overflow-y: scroll"
@@ -24,35 +23,40 @@
           order-sm-last
           order-md-first
         >
-          <NewContactPointListItem
-            :label="label"
-            :set-is-add-new="setIsAddNew"
-            :disabled="selectedItem !== undefined || isAddNew"
-          />
-          <v-list-item
-            v-for="item in listItems"
-            :key="item.id"
-            three-line
-            link
-            :disabled="selectedItem !== undefined || isAddNew"
-            :class="{ 'selected': item === selectedItem }"
-            @click="setSelectedItem(item)"
-          >
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.name }}
-              </v-list-item-title>
-              <v-list-item-subtitle v-if="item.shortCut">
-                {{ item.shortCut }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+          <v-list>
+            <NewContactPointListItem
+              :label="label"
+              :set-is-add-new="setIsAddNew"
+              :disabled="selectedItem !== undefined || isAddNew"
+            />
+          </v-list>
+          <v-list v-if="listItems && listItems.length > 0">
+            <v-list-item
+              v-for="item in listItems"
+              :key="item.id"
+              three-line
+              link
+              :disabled="selectedItem !== undefined || isAddNew"
+              :class="{ 'selected': item === selectedItem }"
+              @click="setSelectedItem(item)"
+            >
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ item.name }}
+                </v-list-item-title>
+                <v-list-item-subtitle v-if="item.shortCut">
+                  {{ item.shortCut }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </v-list>
       </v-col>
       <v-divider
         vertical
         class="mb-3 mt-2"
       />
+
       <v-col
         cols="12"
         sm="12"
@@ -81,9 +85,8 @@
     </v-row>
   </BasePageContent>
 </template>
-
 <script lang="ts">
-import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
+import { defineComponent, ref, watch, onBeforeUnmount, Ref } from "vue";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import {
   ADMIN_CONTACTPOINTS_ICON,
@@ -101,7 +104,8 @@ import EditContactPoint from "@/features/admin/features/the-contact-points/compo
 import TheCardInitialAnlaufstellePage
   from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
 import { useGetEditableContactPoints } from "@/features/commons/middleware/useGetContactPoints";
-
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { VRow, VCol, VList, VListItem, VListItemContent, VListItemTitle, VListItemSubtitle, VDivider, VAlert } from "vuetify/lib";
 
 export default defineComponent({
   name: "ContactPointsOverview",
@@ -114,8 +118,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const { isLoading, isError, data: listItems, error } = useGetEditableContactPoints();
-
-    const selectedItem = ref<ContactPointListItem>();
+    const selectedItem = ref<ContactPointListItem | undefined>();
     const isAddNew = ref(false);
     const selectedId = ref<string | undefined>(route.params.id);
 
@@ -161,10 +164,8 @@ export default defineComponent({
     const back = () => {
       if (selectedItem.value || isAddNew.value) {
         router.push({ path: "/admin/anlaufstellen/" });
-        router.go(0);
       } else {
         router.push("/admin");
-        router.go(0);
       }
     }
 
@@ -181,7 +182,6 @@ export default defineComponent({
     const setIsAddNew = () => {
       isAddNew.value = true;
       router.push({ path: "/admin/anlaufstellen/hinzufuegen" });
-      router.go(0);
     }
 
 
