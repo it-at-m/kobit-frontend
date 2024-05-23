@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 // Add this import at the top of core.router.ts
 import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
-
+import {theTestRoutes} from "@/features/test/the-test.routes"
 import {theMainRoutes} from "@/features/the-main/the-main.routes";
 import {erfahreMehrRoutes} from "@/features/the-additional/the-additional.routes";
 import {
@@ -70,6 +70,7 @@ routerMethods.forEach((method: string) => {
 const router = new Router({
     base: process.env.BASE_URL,
     routes: [
+        theTestRoutes,
         theMainRoutes,
         theUnterstuetzungsfinderRoutes,
         erfahreMehrRoutes,
