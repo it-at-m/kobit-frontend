@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/background-ufo.svg" style="position: absolute; right: 0;bottom: 0;"/>
+  <img src="@/assets/background-ufo-transparent.svg" style="position: absolute; right: 0;bottom: 0; width: 100%"/>
 </template>
 
 <script lang="ts">
