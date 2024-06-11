@@ -25,7 +25,7 @@
             :icon="item.meta.icon"
             border="left"
             colored-border
-            color="primary"
+            color="secondary"
             link
           >
             <v-card-title class="title">
