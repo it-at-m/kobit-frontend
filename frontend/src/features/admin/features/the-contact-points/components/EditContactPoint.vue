@@ -64,6 +64,7 @@
                   persistent-hint
                   small-chips
                   :disabled="!isCentralAdmin"
+                  :items="referatItems"
                   @input="changeDepartment"
                 >
                   <template v-slot:no-data>
@@ -434,6 +435,9 @@ export default defineComponent({
   },
   data: () => ({
     isFormValid: false,
+    referatItems: [
+        "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KULT", "MOR", "POR", "RAW", "RBS", "RKU", "PLAN", "SOZ", "SKA"
+    ]
   }),
   setup(props) {
     const id = ref(props.listItem?.id);
