@@ -214,9 +214,8 @@
           xl="2"
         >
           <v-btn
-            color="secondary"
-            text
             outlined
+            tonal
             :aria-label="finderLabel.restartFinder"
             @click="restart"
           >
@@ -233,7 +232,8 @@
           offset-xl="1"
         >
           <v-btn
-            class="justify-end"
+              color="secondary"
+            class="justify-end black--text"
             :disabled="recipients.length === 0 || !email.subject || !email.message"
             @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
           >
