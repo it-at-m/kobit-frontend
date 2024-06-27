@@ -179,7 +179,7 @@
               dismissible
               class="black--text"
               type="info"
-              color="orange"
+              color="#eabc00"
             >
               {{ labels.textFieldAlert }}
             </v-alert>
