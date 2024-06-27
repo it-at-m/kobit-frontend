@@ -1,5 +1,8 @@
-spring:
+logging:
+  level:
+    root: warn
 
+spring:
   # Define the local keycloak realm here
   realm: ${REALM}
 
