@@ -15,6 +15,9 @@
             v-if="convo.contactPoints.length !== 0"
             vertical
             color="secondary"
+            class="black--text"
+            active-class="active-tab-class"
+            background-color="#f1f1f1"
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
@@ -36,8 +39,7 @@
                       :key="contact.contactPointId"
                     >
                       <v-btn
-                        text
-                        color="secondary"
+                        flat
                         @click="addAddress(contact, anlaufstelle.shortCut)"
                       >
                         + {{ contact.email }}
@@ -379,5 +381,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.active-tab-class {
+  color: black;
+  font-weight: 500;
+}
 </style>
