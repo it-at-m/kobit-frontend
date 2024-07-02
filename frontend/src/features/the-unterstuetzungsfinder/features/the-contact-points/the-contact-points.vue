@@ -171,6 +171,6 @@ export default defineComponent({
 }
 
 .selected {
-  background-color: #e6f0ff;
+  background-color: #fff9e0;
 }
 </style>
