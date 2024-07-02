@@ -15,7 +15,7 @@ export const theEscalationStepsStoreModule = {
         {
           name: "Ebene 1" + "\n Win - Win",
           description: "In den ersten drei Stufen können Konflikte noch gut selbst gelöst werden. Bereiten Sie sich in Ruhe auf ein Gespräch vor, fragen Sie nach der Sichtweise des Gegenübers und tauschen Sie sich darüber aus. Treffen Sie gemeinsam Vereinbarungen. Dadurch können beide Konfliktparteien zufrieden aus dem Konflikt hervorgehen.",
-          color:"#F0D567",
+          color:"#f0de94",
           steps: [
             {
               name: "Verhärtung",
@@ -67,7 +67,7 @@ export const theEscalationStepsStoreModule = {
         {
           name: "Ebene 2" + "\n Win - Lose",
           description: "Wenn Sie sich keine professionelle Hilfe von außen holen, wird es in den Stufen vier bis sechs in der Regel nur die Kategorie Gewinner*in/Verlierer*in geben. Um in diesen Stufen den Konflikt noch konstruktiv zu lösen („win-win“), braucht es eine Vermittlung von einer unparteiischen dritten Person.",
-          color:"#F0C567",
+          color:"#f0d7a2",
           steps: [
             {
               name: "Koalitionen und Polemik",
@@ -116,7 +116,7 @@ export const theEscalationStepsStoreModule = {
         {
           name: "Ebene 3" + "\n Lose - Lose",
           description: "In den Stufen sieben bis neun gibt es keine Gewinner*innen mehr. Konflikte können nur noch mit Macht durch eine höhere Stelle entschieden werden. Eine kooperative Konfliktlösung ist nicht mehr möglich.",
-          color:"#F0B367",
+          color:"#f0c897",
           steps: [
             {
               name: "Begrenzte Vernichtungsschläge",
