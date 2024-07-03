@@ -72,12 +72,13 @@
               <v-btn
                 class="mr-0"
                 width="100%"
+                elevation="3"
                 tile
                 dark
                 color="green dark-3"
                 @click="setIsFinished"
               >
-                Klärung
+                <b>Klärung</b>
               </v-btn>
             </v-col>
             <v-col
@@ -90,12 +91,13 @@
               <v-btn
                 v-if="step.hasNext"
                 width="100%"
+                elevation="3"
                 color="red darke-3"
                 dark
                 tile
                 @click="nextStep"
               >
-                Keine Klärung
+                <b>Keine Klärung</b>
               </v-btn>
             </v-col>
           </v-row>
