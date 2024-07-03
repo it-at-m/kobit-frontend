@@ -59,7 +59,7 @@
             class="black--text"
             elevation="4"
             type="warning"
-            color="orange"
+            color="#eabc00"
           >
             {{ multiRecipientsDisclaimer }}
           </v-alert>
@@ -71,7 +71,7 @@
             v-if="isPrivacyDisclaimerAlertActive"
             elevation="4"
             type="warning"
-            color="orange"
+            color="#eabc00"
             class="black--text"
           >
             <v-row>
