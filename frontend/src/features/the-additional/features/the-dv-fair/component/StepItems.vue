@@ -9,6 +9,8 @@
       <v-card-text>
         <v-tabs
           color="secondary"
+          class="black--text"
+          active-class="active-tab-class"
           show-arrows
           center-active
         >
@@ -69,3 +71,10 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.active-tab-class {
+  color: black;
+  font-weight: 500;
+}
+</style>
