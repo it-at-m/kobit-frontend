@@ -11,6 +11,7 @@
         <StepperHeader
           v-if="step !== undefined"
           :step="step"
+          color="secondary"
           :current-step="currentStep"
           :next-step="nextStep"
           :set-is-finished="setIsFinished"
