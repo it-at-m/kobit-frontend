@@ -306,7 +306,8 @@ export default defineComponent({
       if (recipients.value.find(it => it.contact.email === value.email)) {
         //do nothing because contact already added
       } else {
-        recipients.value.push({contact: value, shortCut: shortCut});
+        // recipients.value.push({contact: value, shortCut: shortCut});
+        recipients.value = [{contact: value, shortCut: shortCut}]
       }
     }
 
