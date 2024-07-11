@@ -55,6 +55,19 @@
       <v-row>
         <v-col>
           <v-alert
+              v-if="isMoreThenOneRecipient"
+              class="black--text"
+              elevation="4"
+              type="warning"
+              color="#eabc00"
+          >
+            {{ multiRecipientsDisclaimer }}
+          </v-alert>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-alert
             v-if="isPrivacyDisclaimerAlertActive"
             elevation="4"
             type="warning"
@@ -274,7 +287,7 @@ export default defineComponent({
     const isPrivacyDisclaimerAlertActive = ref(false);
     const needToSendMail = ref(false)
     const recipients = ref<Recipient[]>([]);
-    const isMoreThenOneRecipient = computed(() => recipients.value.length > 1);
+    const isMoreThenOneRecipient = ref<boolean>(false);
     const multipleRecipientsDialog = ref(false);
     const email = ref<Email>({});
 
@@ -293,6 +306,9 @@ export default defineComponent({
       if (recipients.value.find(it => it.contact.email === value.email)) {
         //do nothing because contact already added
       } else {
+        if (recipients.value.length > 0) {
+          isMoreThenOneRecipient.value = true
+        }
         // recipients.value.push({contact: value, shortCut: shortCut});
         recipients.value = [{contact: value, shortCut: shortCut}]
       }
