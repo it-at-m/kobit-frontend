@@ -55,19 +55,6 @@
       <v-row>
         <v-col>
           <v-alert
-            v-if="isMoreThenOneRecipient"
-            class="black--text"
-            elevation="4"
-            type="warning"
-            color="#eabc00"
-          >
-            {{ multiRecipientsDisclaimer }}
-          </v-alert>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-alert
             v-if="isPrivacyDisclaimerAlertActive"
             elevation="4"
             type="warning"
