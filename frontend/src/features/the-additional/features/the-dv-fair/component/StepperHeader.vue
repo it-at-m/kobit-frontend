@@ -75,7 +75,7 @@
                 elevation="3"
                 tile
                 dark
-                color="green dark-3"
+                color="green darken-1"
                 @click="setIsFinished"
               >
                 <b>Klärung</b>
@@ -92,7 +92,7 @@
                 v-if="step.hasNext"
                 width="100%"
                 elevation="3"
-                color="red darke-3"
+                color="red darken-1"
                 dark
                 tile
                 @click="nextStep"
@@ -132,7 +132,7 @@ export default defineComponent({
     const {isLoading, isError, data} = useGetLastStep();
 
     function stepColor(stepCount: number) {
-      return props.currentStep === stepCount ? 'secondary' : 'red darke-3';
+      return props.currentStep === stepCount ? 'secondary darken-2' : 'red darken-3';
     }
 
     return {
@@ -153,10 +153,10 @@ export default defineComponent({
 }
 
 .active {
-  background: aliceblue !important;
+  background: #fff9e0 !important;
 }
 
 .v-stepper__step__step.primary {
-  background-color: aliceblue !important;
+  background-color: black !important;
 }
 </style>
