@@ -44,7 +44,7 @@
                   :key="solutionIndex"
                 >
                   <p><b>{{ solution.header }}</b></p>
-                  <p>{{ solution.text }}</p>
+                  <p v-html="solution.text"></p>
                 </div>
               </v-card-text>
             </v-card>
