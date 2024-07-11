@@ -2,7 +2,7 @@
   <BasePageContent
     :icon="icon"
     :name="name"
-    :info-text="infoText"
+    :info-text="infoTextComplete"
     :is-loading="isLoading"
   >
     <v-container
@@ -197,7 +197,8 @@ import BasePageContent from "@/features/commons/base-page-content/base-page-cont
 import {
   THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
   THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT,
-  THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME
+  THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
+    THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT_COMPLETE
 } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
 import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
 import BackButton from "@/features/commons/components/BackButton.vue";
@@ -291,7 +292,8 @@ export default defineComponent({
       labels: finderLabels,
       icon: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
       name: THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
-      infoText: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT
+      infoText: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT,
+      infoTextComplete: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT_COMPLETE
     };
   }
 });
