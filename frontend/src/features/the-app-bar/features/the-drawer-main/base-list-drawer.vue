@@ -1,13 +1,14 @@
 <template>
   <v-list
-    dense
     tile
   >
     <v-list-item
       v-for="(item, itemIndex) in listItems"
       :key="itemIndex"
       :to="item.path"
-      color="secondary"
+      class="black--text"
+      active-class="active-tab-class"
+      background-color="#f1f1f1"
     >
       <v-list-item-icon v-if="item.meta.icon">
         <v-icon color="secondary">
@@ -33,5 +34,8 @@ export default class BaseListDrawer extends Vue {
 </script>
 
 <style scoped>
-
+.active-tab-class {
+  color: black !important;
+  font-weight: 500 !important;
+}
 </style>
