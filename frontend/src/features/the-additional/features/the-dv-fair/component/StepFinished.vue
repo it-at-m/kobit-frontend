@@ -21,8 +21,7 @@
               <v-card-actions class="justify-center">
                 <v-btn
                   outlined
-                  tile
-                  color="blue lighten-2"
+                  tonal
                   @click="restartProcess"
                 >
                   Neues Verfahren
