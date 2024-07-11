@@ -13,6 +13,7 @@ export interface TheDvFairStoreModuleState {
     steps: DvFair[];
 
 }
+// IS NOT USED - LOOK IT UP IN DB!!
 
 export const theDvFairStoreModule = {
     namespaced: true,
@@ -95,7 +96,7 @@ export const theDvFairStoreModule = {
             },
             {
                 name: 'Schritt 3',
-                text: 'Gemeinsames Gespräch mit allen Betroffenen',
+                text: 'Gemeinsames Gespräch mit allen Beteiligten',
                 optionalOption: {
                     text:
                         'Bei Bedarf: Zentrale Stelle für Mediation und Konfliktmanagement',
@@ -196,7 +197,7 @@ export const theDvFairStoreModule = {
                             'Voraussetzung: Vorlage einer formlosen Entbindung von der Schweigepflicht der betroffenen Person\n' +
                             'Ziel: gemeinsame Lösung und konkrete Maßnahmen\n' +
                             'Unterstützung: durch Moderator_in möglich\n\n' +
-                            'Mögliche Teilnehmer_innen\n' +
+                            'Mögliche Teilnehmer_innen:\n' +
                             '- unmittelbare nächsthöhere nicht beteiligte FK\n' +
                             '- eine Vertrauensperson Ihrer Wahl\n' +
                             '- Vertretung der eingebundenen Anlaufstellen\n' +
