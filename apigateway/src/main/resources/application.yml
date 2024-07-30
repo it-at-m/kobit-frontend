@@ -56,7 +56,7 @@ spring:
             issuer-uri: ${KEYCLOAK_URI}
         registration:
           keycloak:
-            client-id: kobit
+            client-id: ${client-id:ufo}
             client-secret: ${client-secret}
             scope:
               - LHM
