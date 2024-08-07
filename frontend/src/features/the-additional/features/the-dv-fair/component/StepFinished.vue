@@ -37,19 +37,17 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'StepFinished',
+  name: "StepFinished",
   props: {
     restartProcess: {
       type: Function,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

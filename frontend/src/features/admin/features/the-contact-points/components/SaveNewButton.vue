@@ -24,48 +24,52 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { ContactPoint } from "@/features/commons/types/ContactPoint";
-import { useCreateNewContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 import { useRouter } from "vue-router/composables";
+
+import { useCreateNewContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
 
 export default defineComponent({
   name: "SaveNewButton",
   props: {
     contactPointToSave: {
-      type: Object as () => ContactPoint
+      type: Object as () => ContactPoint,
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     file: {
       type: File,
-      default: null
-    }
+      default: null,
+    },
   },
   setup(props, { emit }) {
     const { isLoading, mutateAsync } = useCreateNewContactPoint();
     const router = useRouter();
     const showSnackbar = ref(false);
     const isWriteError = ref(false);
-    const errorMessage = ref('');
+    const errorMessage = ref("");
     const showSuccessSnackbar = () => {
       showSnackbar.value = true;
     };
 
     function saveAdd(file?: File | null) {
-      if (!props.contactPointToSave?.contact || props.contactPointToSave.contact.length === 0) {
+      if (
+        !props.contactPointToSave?.contact ||
+        props.contactPointToSave.contact.length === 0
+      ) {
         emit("error", "Mindestens ein Kontakt ist erforderlich.");
         return;
       }
       const headers = {
-        'Content-Type': 'multipart/form-data'
+        "Content-Type": "multipart/form-data",
       };
 
       mutateAsync({
         contactPoint: props.contactPointToSave,
         file: file ? file : undefined,
-        image: props.contactPointToSave.image
+        image: props.contactPointToSave.image,
       })
         .then(() => {
           showSuccessSnackbar();
@@ -73,28 +77,26 @@ export default defineComponent({
             router.push("/admin/anlaufstellen/");
             router.go(0);
           }, 1000); // delay for 1 second
-
         })
         .catch((error) => {
-            const fallbackErrorMessage = "An unexpected error occurred";
-            const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
-            errorMessage.value = customErrorMessage;
-            isWriteError.value = true;
+          const fallbackErrorMessage = "An unexpected error occurred";
+          const customErrorMessage =
+            error.response?.data?.message || fallbackErrorMessage;
+          errorMessage.value = customErrorMessage;
+          isWriteError.value = true;
 
-            // Emit the error event to the parent component
-            emit("error", customErrorMessage);
-          });
+          // Emit the error event to the parent component
+          emit("error", customErrorMessage);
+        });
     }
 
     return {
       isLoading,
       saveAdd,
-      showSnackbar
+      showSnackbar,
     };
   },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

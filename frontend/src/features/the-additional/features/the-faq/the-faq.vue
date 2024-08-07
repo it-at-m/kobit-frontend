@@ -29,41 +29,43 @@
 </template>
 
 <script lang="ts">
-
 import { computed, defineComponent, ref } from "vue";
-import {
-  FAQ_ROUTE_META_ICON,
-  FAQ_ROUTE_META_INFO_TEXT,
-  FAQ_ROUTE_NAME
-} from "@/features/the-additional/features/the-faq/the-faq.routes";
+import { useRouter } from "vue-router/composables";
+
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 import TextList from "@/features/commons/components/TextList.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import { useRouter } from "vue-router/composables";
+import {
+  FAQ_ROUTE_META_ICON,
+  FAQ_ROUTE_META_INFO_TEXT,
+  FAQ_ROUTE_NAME,
+} from "@/features/the-additional/features/the-faq/the-faq.routes";
 
 export default defineComponent({
   name: "TheFaq",
   components: { TextList, BasePageContent, BackButton },
   setup() {
     const searchText = ref<string>("");
-    const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.FAQ);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.FAQ
+    );
     const router = useRouter();
     function back() {
-      router.push('/erfahre-mehr');
+      router.push("/erfahre-mehr");
     }
 
-
     const filteredFaqs = computed(() => {
-      return data.value?.textItemView?.filter((item) => {
-        return (
-          item.header
-            .toLowerCase()
-            .indexOf(searchText.value.toLowerCase()) != -1);
-      }) ?? [];
+      return (
+        data.value?.textItemView?.filter((item) => {
+          return (
+            item.header.toLowerCase().indexOf(searchText.value.toLowerCase()) !=
+            -1
+          );
+        }) ?? []
+      );
     });
-
 
     return {
       isLoading,
@@ -74,9 +76,9 @@ export default defineComponent({
       icon: FAQ_ROUTE_META_ICON,
       infoText: FAQ_ROUTE_META_INFO_TEXT,
       name: FAQ_ROUTE_NAME,
-      back
+      back,
     };
-  }
+  },
 });
 </script>
 

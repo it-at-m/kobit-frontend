@@ -23,25 +23,23 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "InfoText",
   props: {
     isInfoTextActive: {
-      type: Boolean
+      type: Boolean,
     },
     labels: {
       //typeof I18nLabel
-      type: undefined
+      type: undefined,
     },
     closeInfoText: {
-      type: Function
-    }
-  }
+      type: Function,
+    },
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 export enum Loading {
-    INIT,
-    LOADING,
-    ERROR,
-    LOADED,
+  INIT,
+  LOADING,
+  ERROR,
+  LOADED,
 }

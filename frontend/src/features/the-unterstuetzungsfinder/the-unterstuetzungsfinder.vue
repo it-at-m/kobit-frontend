@@ -7,7 +7,7 @@
   >
     <v-container
       id="id_chat_container"
-      style="max-width: 100%;"
+      style="max-width: 100%"
       class="justify-center mt-4 mr-1 ml-1"
     >
       <v-row>
@@ -15,9 +15,9 @@
           v-if="isFinished"
           cols="12"
           sm="12"
-          :md="isGivenAnswersEmpty ? '0': '12'"
-          :lg="isGivenAnswersEmpty ? '0': '7'"
-          :xl="isGivenAnswersEmpty ? '0': '7'"
+          :md="isGivenAnswersEmpty ? '0' : '12'"
+          :lg="isGivenAnswersEmpty ? '0' : '7'"
+          :xl="isGivenAnswersEmpty ? '0' : '7'"
         >
           <v-row v-if="conversation?.contactPoints.length === 0">
             <v-col>
@@ -46,9 +46,9 @@
           v-if="!isFinished && conversation?.decisionPoint !== null"
           cols="12"
           sm="12"
-          :md="isGivenAnswersEmpty ? '12': '12'"
-          :lg="isGivenAnswersEmpty ? '12': '7'"
-          :xl="isGivenAnswersEmpty ? '12': '7'"
+          :md="isGivenAnswersEmpty ? '12' : '12'"
+          :lg="isGivenAnswersEmpty ? '12' : '7'"
+          :xl="isGivenAnswersEmpty ? '12' : '7'"
         >
           <v-row>
             <InfoText
@@ -66,14 +66,15 @@
           <v-row no-gutters>
             <v-expansion-panels>
               <v-col
-                v-for="(answer, answerIndex) in conversation?.decisionPoint.answerOptions"
+                v-for="(answer, answerIndex) in conversation?.decisionPoint
+                  .answerOptions"
                 :key="answerIndex"
                 class="pa-2"
                 cols="12"
                 sm="12"
-                :md="isGivenAnswersEmpty ? '6': '12'"
-                :lg="isGivenAnswersEmpty ? '4': '12'"
-                :xl="isGivenAnswersEmpty ? '4': '12'"
+                :md="isGivenAnswersEmpty ? '6' : '12'"
+                :lg="isGivenAnswersEmpty ? '4' : '12'"
+                :xl="isGivenAnswersEmpty ? '4' : '12'"
               >
                 <v-alert
                   dense
@@ -89,9 +90,15 @@
                       <v-col
                         cols="11"
                         sm="11"
-                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
+                        @click="
+                          updateGivenAnswers(
+                            answer.competence,
+                            answer.germanDescription,
+                            conversation?.decisionPoint.question
+                          )
+                        "
                       >
-                        <p style="font-size: 14px;">
+                        <p style="font-size: 14px">
                           {{ answer.germanDescription }}
                         </p>
                       </v-col>
@@ -99,19 +106,23 @@
                         cols="1"
                         sm="1"
                         class="pl-0 pr-0"
-                        @click="selectedToolTip !== answerIndex ? openToolTip(answerIndex) : closeToolTips()"
+                        @click="
+                          selectedToolTip !== answerIndex
+                            ? openToolTip(answerIndex)
+                            : closeToolTips()
+                        "
                       >
                         <v-row v-if="answer.shortDescription">
                           <v-col cols="12">
                             <p
                               v-if="selectedToolTip !== answerIndex"
-                              style="text-align: right;"
+                              style="text-align: right"
                             >
                               <i class="mdi mdi-information secondary--text" />
                             </p>
                             <p
                               v-if="selectedToolTip === answerIndex"
-                              style="text-align: right;"
+                              style="text-align: right"
                             >
                               <i class="mdi mdi-close secondary--text" />
                             </p>
@@ -119,7 +130,7 @@
                           <v-col
                             cols="12"
                             class="mt-0 mb-0 pt-0 pb-0"
-                            style="height:0 !important;"
+                            style="height: 0 !important"
                           >
                             <v-tooltip
                               v-if="selectedToolTip === answerIndex"
@@ -132,7 +143,7 @@
                                   v-on="on"
                                 />
                               </template>
-                              <p> {{ answer.shortDescription }}</p>
+                              <p>{{ answer.shortDescription }}</p>
                             </v-tooltip>
                           </v-col>
                         </v-row>
@@ -147,7 +158,13 @@
                         offset-sm="11"
                         cols="2"
                         sm="1"
-                        @click="updateGivenAnswers(answer.competence, answer.germanDescription, conversation?.decisionPoint.question)"
+                        @click="
+                          updateGivenAnswers(
+                            answer.competence,
+                            answer.germanDescription,
+                            conversation?.decisionPoint.question
+                          )
+                        "
                       >
                         <v-row class="pt-0 mt-0 pb-0 mb-0">
                           <v-col
@@ -187,24 +204,24 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, ref} from "vue";
-import GivenAnswers from "@/features/the-unterstuetzungsfinder/components/GivenAnswers.vue";
-import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
-import InfoText from "@/features/the-unterstuetzungsfinder/components/InfoText.vue";
-import TheUnterstuetzungsfinderErgebnis
-  from "@/features/the-unterstuetzungsfinder/features/the-mail/the-unterstuetzungsfinder-ergebnis.vue";
+import { useMutation } from "@tanstack/vue-query";
+import { computed, defineComponent, ref } from "vue";
+import { useRouter } from "vue-router/composables";
+
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import { nextStep } from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
+import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
+import GivenAnswers from "@/features/the-unterstuetzungsfinder/components/GivenAnswers.vue";
+import InfoText from "@/features/the-unterstuetzungsfinder/components/InfoText.vue";
+import TheUnterstuetzungsfinderErgebnis from "@/features/the-unterstuetzungsfinder/features/the-mail/the-unterstuetzungsfinder-ergebnis.vue";
 import {
   THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
   THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT,
-  THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME
+  THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
 } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.routes";
-import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
-import {useMutation} from "@tanstack/vue-query";
-import {nextStep} from "@/features/the-unterstuetzungsfinder/api/UnterstuetzungsfinderClient";
-import {useRouter} from "vue-router/composables";
+import { finderLabels } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
+import { QuestionAndAnswer } from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 export default defineComponent({
   name: "TheUnterstuetzungsfinder",
@@ -214,7 +231,7 @@ export default defineComponent({
     TheUnterstuetzungsfinderErgebnis,
     InfoText,
     BaseHeadLine,
-    GivenAnswers
+    GivenAnswers,
   },
   setup() {
     const isInfoTextActive = ref<boolean>(true);
@@ -223,15 +240,15 @@ export default defineComponent({
     const selectedToolTip = ref(-1);
     const show = ref(false);
     const router = useRouter();
-    const {isLoading, isError, mutate, data} = useMutation({
+    const { isLoading, isError, mutate, data } = useMutation({
       mutationFn: () => {
-        return nextStep(givenAnswers.value.map(it => it.answerCompetence));
-      }
+        return nextStep(givenAnswers.value.map((it) => it.answerCompetence));
+      },
     });
     const isFinished = computed(() => data.value?.decisionPoint === null);
 
     function back() {
-      router.push('/');
+      router.push("/");
     }
 
     function closeToolTips() {
@@ -248,7 +265,11 @@ export default defineComponent({
       isInfoTextActive.value = false;
     }
 
-    function updateGivenAnswers(answerCompetence: string, answerValue: string, questionAnswered: string) {
+    function updateGivenAnswers(
+      answerCompetence: string,
+      answerValue: string,
+      questionAnswered: string
+    ) {
       givenAnswers.value.push({
         questionAnswered: questionAnswered,
         answerCompetence: answerCompetence,
@@ -291,22 +312,19 @@ export default defineComponent({
       labels: finderLabels,
       icon: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_ICON,
       name: THE_UNTERSTUETZUNGSFINDER_ROUTE_NAME,
-      infoText: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT
+      infoText: THE_UNTERSTUETZUNGSFINDER_ROUTE_META_INFO_TEXT,
     };
-  }
+  },
 });
-
 </script>
 
 <style lang="scss" scoped>
-
 h5 {
   white-space: pre-wrap !important;
   text-indent: 0em !important;
   word-break: keep-all;
   line-height: normal;
 }
-
 
 @import "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.style.scss";
 </style>

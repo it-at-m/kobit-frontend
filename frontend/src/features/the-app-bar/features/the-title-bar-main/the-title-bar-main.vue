@@ -6,9 +6,10 @@
     <v-app-bar-nav-icon @click.stop="changeDrawer" />
     <v-toolbar-title>
       <a
-        style="color:#111;text-decoration: none;"
+        style="color: #111; text-decoration: none"
         href="/"
-      >KoBIT. Digital. Erleben.</a>
+        >KoBIT. Digital. Erleben.</a
+      >
     </v-toolbar-title>
     <v-spacer />
     <a
@@ -17,31 +18,28 @@
     >
       <img
         class="float-right"
-        style="width:220px !important; height:56px !important;"
+        style="width: 220px !important; height: 56px !important"
         src="/images/logo-lhm.svg"
         alt="Logo der Stadt München mit Link auf die offizielle Homepage"
-      >
+      />
     </a>
   </v-app-bar>
 </template>
 
 <script lang="ts">
-
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "TheTitleBarMain",
   props: {
     drawer: {
-      type: Boolean
+      type: Boolean,
     },
     changeDrawer: {
-      type: Function
-    }
-  }
-})
+      type: Function,
+    },
+  },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

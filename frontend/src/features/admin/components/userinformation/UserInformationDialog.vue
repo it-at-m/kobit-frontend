@@ -36,33 +36,32 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {useGetAdminUserInfoText} from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { defineComponent } from "vue";
+
+import { useGetAdminUserInfoText } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import { adminInformationLabels } from "@/features/admin/i18n";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
-import {adminInformationLabels} from "@/features/admin/i18n";
 
 export default defineComponent({
   name: "UserInformationDialog",
-      components: {LoadingSpinner},
+  components: { LoadingSpinner },
   props: {
     isDialogActive: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   setup() {
-    const {isLoading, isError, data: adminRole} = useGetAdminUserInfoText();
+    const { isLoading, isError, data: adminRole } = useGetAdminUserInfoText();
     const labels = adminInformationLabels;
 
     return {
       isLoading,
       isError,
       adminRole,
-      labels
-    }
-  }
-}
-)</script>
+      labels,
+    };
+  },
+});
+</script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

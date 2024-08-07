@@ -34,25 +34,25 @@ import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 
 export default {
   name: "BasePageContent",
-  components: {LoadingSpinner},
+  components: { LoadingSpinner },
   props: {
     isLoading: {
       type: Boolean,
-      default: false
-    }, 
+      default: false,
+    },
     icon: {
       type: String,
-      default: ""
-    }, 
+      default: "",
+    },
     infoText: {
       type: String,
-      default: ""
-    }, 
+      default: "",
+    },
     name: {
       type: String,
-      default: ""
-    }
-  }
+      default: "",
+    },
+  },
 };
 </script>
 

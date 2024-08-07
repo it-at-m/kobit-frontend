@@ -1,4 +1,4 @@
-<template>  
+<template>
   <v-container fluid>
     <BackButton :callback="back" />
     <BasePageContent
@@ -14,28 +14,30 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router/composables";
 
-import {defineComponent} from "vue";
-import {useGetAdditionalContent} from "@/features/the-additional/common/middleware/AdditionalPageService";
-import {PageType} from "@/features/the-additional/common/model/PageType";
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import ContentList from "@/features/commons/components/ContentList.vue";
+import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
+import { PageType } from "@/features/the-additional/common/model/PageType";
 import {
   CONFLICT_PREVENTION_ROUTE_META_ICON,
   CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
-  CONFLICT_PREVENTION_ROUTE_NAME
+  CONFLICT_PREVENTION_ROUTE_NAME,
 } from "@/features/the-additional/features/the-conflict-prevention/the-conflict-prevention.routes";
-import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
-import ContentList from "@/features/commons/components/ContentList.vue";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
   name: "TheConflictPrevention",
-  components: {BasePageContent, ContentList, BackButton},
+  components: { BasePageContent, ContentList, BackButton },
   setup() {
-    const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PREVENTION);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.PREVENTION
+    );
     const router = useRouter();
     function back() {
-      router.push('/erfahre-mehr');
+      router.push("/erfahre-mehr");
     }
 
     return {
@@ -46,11 +48,10 @@ export default defineComponent({
       icon: CONFLICT_PREVENTION_ROUTE_META_ICON,
       infoText: CONFLICT_PREVENTION_ROUTE_META_INFO_TEXT,
       name: CONFLICT_PREVENTION_ROUTE_NAME,
-      back
+      back,
     };
-  }
+  },
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

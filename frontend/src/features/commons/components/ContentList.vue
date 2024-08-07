@@ -25,8 +25,7 @@
 </template>
 
 <script lang="ts">
-
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "ContentList",
@@ -34,9 +33,9 @@ export default defineComponent({
     items: {
       //type of ContentItem
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 });
 </script>
 
@@ -57,5 +56,4 @@ p {
 .v-html ::v-deep a {
   color: #1b98d5;
 }
-
 </style>

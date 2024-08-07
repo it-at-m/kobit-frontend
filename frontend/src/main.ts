@@ -1,14 +1,17 @@
 import Vue, { provide, VNode } from "vue";
+
 import "babel-polyfill";
-import Vuetify from "./core/plugins/vuetify";
-import store from "./core/core.store";
-import App from "./core/App.vue";
-import router from "./core/core.router";
+
+import { VueQueryPlugin } from "@tanstack/vue-query";
 import moment from "moment";
 import Toast from "vue-toastification";
+
 import i18n from "@/core/plugins/i18n";
-import { VueQueryPlugin } from "@tanstack/vue-query";
 import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
+import App from "./core/App.vue";
+import router from "./core/core.router";
+import store from "./core/core.store";
+import Vuetify from "./core/plugins/vuetify";
 
 Vue.config.productionTip = false;
 

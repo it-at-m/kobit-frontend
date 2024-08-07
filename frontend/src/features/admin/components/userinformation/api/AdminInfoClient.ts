@@ -1,6 +1,6 @@
-import {httpGetJson} from "@/core/plugins/http";
-import {AdminUserInfo} from "@/features/admin/components/userinformation/model/AdminUserInfo";
+import { httpGetJson } from "@/core/plugins/http";
+import { AdminUserInfo } from "@/features/admin/components/userinformation/model/AdminUserInfo";
 
 export const getAdminUserInfo = () => {
-    return httpGetJson<AdminUserInfo>("/admin/info")
-}
+  return httpGetJson<AdminUserInfo>("/admin/info");
+};

@@ -14,7 +14,11 @@
       />
       <v-card
         flat
-        :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+        :style="
+          $vuetify.breakpoint.xs || $vuetify.breakpoint.sm
+            ? 'border-top:1px solid #eee;'
+            : ''
+        "
         class="ma-0 pa-0"
       >
         <v-card-title class="pa-0" />
@@ -104,10 +108,17 @@
                   <v-textarea
                     id="description-textarea"
                     class="custom-textarea"
-                    :value="writableContentItem.contentItemView?.[0]?.content ?? ''"
+                    :value="
+                      writableContentItem.contentItemView?.[0]?.content ?? ''
+                    "
                     label="Beschreibung"
                     rows="20"
-                    :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 4000) || 'Die Beschreibung muss weniger als 5000 Zeichen umfassen']"
+                    :rules="[
+                      (v) => !!v || 'Beschreibung ist erforderlich',
+                      (v) =>
+                        (v && v.length <= 4000) ||
+                        'Die Beschreibung muss weniger als 5000 Zeichen umfassen',
+                    ]"
                     :counter="5000"
                     @input="changeContent"
                   />
@@ -152,42 +163,54 @@
 </template>
 
 <script lang="ts">
+import { marked } from "marked";
 import { computed, defineComponent, ref, watch } from "vue";
+import { useRouter } from "vue-router/composables";
+
+import { I18nLabel } from "@/core/core.translation";
+import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
+import SaveUpdateContentItem from "@/features/admin/features/the-additional/commons/SaveUpdateContentItemButton.vue";
+import { adminContentItemLabels } from "@/features/admin/features/the-additional/i18n";
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import ContentList from "@/features/commons/components/ContentList.vue";
+import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import { ItemWrapper } from "@/features/commons/types/Item";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
 import {
   LEADERSHIP_COOPERATION_ROUTE_META_ICON,
   LEADERSHIP_COOPERATION_ROUTE_META_INFO_TEXT,
-  LEADERSHIP_COOPERATION_ROUTE_NAME
+  LEADERSHIP_COOPERATION_ROUTE_NAME,
 } from "@/features/the-additional/features/the-leadership-cooperation/the-leadership-cooperation.routes";
-import { marked } from "marked";
-import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
-import ContentList from "@/features/commons/components/ContentList.vue";
-import { useRouter } from "vue-router/composables";
-import { ItemWrapper } from "@/features/commons/types/Item";
-import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
-import { I18nLabel } from "@/core/core.translation";
-import { adminContentItemLabels } from "@/features/admin/features/the-additional/i18n";
-import SaveUpdateContentItem from "@/features/admin/features/the-additional/commons/SaveUpdateContentItemButton.vue";
-import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
 
 export default defineComponent({
   name: "TheLeadershipCooperation",
-  components: { BasePageContent, MarkDownAlert, ContentList, LoadingSpinner, ErrorHandler, SaveUpdateContentItem },
+  components: {
+    BasePageContent,
+    MarkDownAlert,
+    ContentList,
+    LoadingSpinner,
+    ErrorHandler,
+    SaveUpdateContentItem,
+  },
   props: {
     label: {
-      type: Object as () => I18nLabel
+      type: Object as () => I18nLabel,
     },
   },
   data: () => ({
     isFormValid: false,
   }),
   setup() {
-
-    const errorMessage = ref('');
+    const errorMessage = ref("");
     const isWriteError = ref(false);
-    const { isLoading, isError, data: itemWrapper, isError: isReadError, } = useGetAdditionalContent(PageType.LEADERSHIP);
+    const {
+      isLoading,
+      isError,
+      data: itemWrapper,
+      isError: isReadError,
+    } = useGetAdditionalContent(PageType.LEADERSHIP);
     const router = useRouter();
 
     const writableContentItem = ref<ItemWrapper>();
@@ -196,8 +219,12 @@ export default defineComponent({
       if (!writableContentItem.value) {
         writableContentItem.value = newValue;
       }
-    })
-    const computeMarkdown = computed(() => marked.parse(writableContentItem.value?.contentItemView?.[0]?.content || ""));
+    });
+    const computeMarkdown = computed(() =>
+      marked.parse(
+        writableContentItem.value?.contentItemView?.[0]?.content || ""
+      )
+    );
 
     const changeContent = (value: string) => {
       if (writableContentItem.value?.contentItemView?.[0]) {
@@ -206,46 +233,48 @@ export default defineComponent({
     };
 
     const applyFormatting = (format: string) => {
-      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement | null;
+      const textarea = document.querySelector(
+        "#description-textarea"
+      ) as HTMLTextAreaElement | null;
       if (!textarea) return;
 
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const selectedText = textarea.value.substring(start, end);
 
-      let newText = '';
+      let newText = "";
       switch (format) {
-        case 'bold':
+        case "bold":
           newText = `<b>${selectedText}</b>`;
           break;
-        case 'italic':
+        case "italic":
           newText = `<i>${selectedText}</i>`;
           break;
-        case 'underline':
+        case "underline":
           newText = `<u>${selectedText}</u>`;
           break;
-        case 'ordered-list':
+        case "ordered-list":
           newText = `\n<ol>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ol>\n`;
           break;
-        case 'unordered-list':
+        case "unordered-list":
           newText = `\n<ul>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ul>\n`;
           break;
-        case 'line-break':
-          newText = '<br />';
+        case "line-break":
+          newText = "<br />";
           break;
-        case 'h1':
+        case "h1":
           newText = `<h1>${selectedText}</h1>`;
           break;
-        case 'h2':
+        case "h2":
           newText = `<h2>${selectedText}</h2>`;
           break;
-        case 'h3':
+        case "h3":
           newText = `<h3>${selectedText}</h3>`;
           break;
-        case 'h4':
+        case "h4":
           newText = `<h4>${selectedText}</h4>`;
           break;
-        case 'h5':
+        case "h5":
           newText = `<h5>${selectedText}</h5>`;
           break;
         default:
@@ -253,22 +282,24 @@ export default defineComponent({
           break;
       }
       if (writableContentItem.value?.contentItemView?.[0]) {
-        const currentValue = writableContentItem.value?.contentItemView[0].content || '';
+        const currentValue =
+          writableContentItem.value?.contentItemView[0].content || "";
         const newValue =
-          currentValue.substring(0, start) + newText + currentValue.substring(end);
+          currentValue.substring(0, start) +
+          newText +
+          currentValue.substring(end);
 
         writableContentItem.value.contentItemView[0].content = newValue;
       }
     };
 
     function back() {
-      router.push('/admin/erfahre-mehr');
+      router.push("/admin/erfahre-mehr");
     }
     const cancelForm = () => {
       router.push("/admin/erfahre-mehr/");
       router.go(0);
-
-    }
+    };
     const error = (message: string) => {
       errorMessage.value = message;
       isWriteError.value = true;
@@ -276,8 +307,7 @@ export default defineComponent({
 
     const closeError = () => {
       isWriteError.value = false;
-    }
-
+    };
 
     return {
       label: adminContentItemLabels,
@@ -297,11 +327,9 @@ export default defineComponent({
       error,
       closeError,
       changeContent,
-      applyFormatting
+      applyFormatting,
     };
-  }
-
-
+  },
 });
 </script>
 

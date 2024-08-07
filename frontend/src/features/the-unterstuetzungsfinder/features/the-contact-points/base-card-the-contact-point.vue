@@ -5,7 +5,11 @@
       <v-col>
         <v-card
           flat
-          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+          :style="
+            $vuetify.breakpoint.xs || $vuetify.breakpoint.sm
+              ? 'border-top:1px solid #eee;'
+              : ''
+          "
         >
           <v-card-title>{{ contactPoint?.name }}</v-card-title>
           <v-card-text>
@@ -44,8 +48,8 @@
                 <img
                   v-if="contactPoint?.image"
                   :src="contactPoint.image.toString()"
-                  style="width: 100%; max-height:400px; object-fit: contain;"
-                >
+                  style="width: 100%; max-height: 400px; object-fit: contain"
+                />
               </v-col>
             </v-row>
           </v-card-text>
@@ -55,45 +59,67 @@
   </v-container>
 </template>
 <script lang="ts">
-import { computed, defineComponent, ref, watch } from "vue";
-import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
-import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
 import { marked } from "marked";
-import BaseFieldsContact from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-fields-contact.vue";
-import BaseFieldsAdditionalContent
-  from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-fields-additional-content.vue";
+import { computed, defineComponent, ref, watch } from "vue";
 import { useRoute } from "vue-router/composables";
+
+import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import { useGetContactPoint } from "@/features/commons/middleware/useGetContactPoints";
 import { Link } from "@/features/commons/types/ContactPoint";
+import BaseFieldsAdditionalContent from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-fields-additional-content.vue";
+import BaseFieldsContact from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-fields-contact.vue";
 
 export default defineComponent({
   name: "BaseCardAnlaufstelle",
-  components: { BaseFieldsAdditionalContent, BaseFieldsContact, LoadingSpinner },
+  components: {
+    BaseFieldsAdditionalContent,
+    BaseFieldsContact,
+    LoadingSpinner,
+  },
   setup() {
     const route = useRoute();
     const pageId = ref<string>(route.params.id);
-    const { isLoading, isError, data: contactPoint, error, refetch } = useGetContactPoint(pageId);
+    const {
+      isLoading,
+      isError,
+      data: contactPoint,
+      error,
+      refetch,
+    } = useGetContactPoint(pageId);
     const linksInDownLoads = ref<Link[]>();
-    watch(() => route.params.id, (newId) => {
-      pageId.value = newId;
-      refetch();
-    });
+    watch(
+      () => route.params.id,
+      (newId) => {
+        pageId.value = newId;
+        refetch();
+      }
+    );
 
-    computed(() => linksInDownLoads.value = contactPoint.value?.links?.filter(it => it.inDownloads))
-    const computeMarkdown = computed(() => marked.parse(contactPoint.value?.description || ""));
+    computed(
+      () =>
+        (linksInDownLoads.value = contactPoint.value?.links?.filter(
+          (it) => it.inDownloads
+        ))
+    );
+    const computeMarkdown = computed(() =>
+      marked.parse(contactPoint.value?.description || "")
+    );
     return {
       isLoading,
       isError,
       contactPoint,
       error,
       computeMarkdown,
-      linksInDownLoads
-    }
-  }
-})
+      linksInDownLoads,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+.theme--light.v-list-item:not(.v-list-item--active):not(
+    .v-list-item--disabled
+  ) {
   color: #00000099 !important;
   padding: 0;
 }

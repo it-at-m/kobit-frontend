@@ -42,11 +42,17 @@
               <v-row v-if="props.pageType === 'DOWNLOADS'">
                 <v-col cols="12">
                   <p>
-                    Aktuelle Datei: <a
-                      style="color:blue;"
+                    Aktuelle Datei:
+                    <a
+                      style="color: blue"
                       target="_blank"
                       :href="editedItem.link.toString()"
-                    >{{ editedItem.link ? getFileNameFromLink(editedItem.link.toString()) : '' }}</a>
+                      >{{
+                        editedItem.link
+                          ? getFileNameFromLink(editedItem.link.toString())
+                          : ""
+                      }}</a
+                    >
                   </p>
                   <v-file-input
                     v-model="file"
@@ -55,7 +61,12 @@
                     placeholder="Neue Datei auswählen und ersetzen"
                   >
                     <template v-slot:selection>
-                      <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                      <span>{{
+                        customFileName(
+                          file ? file.name : "",
+                          maxFileNameInputLength
+                        )
+                      }}</span>
                     </template>
                   </v-file-input>
                 </v-col>
@@ -88,21 +99,44 @@
       color="success"
       bottom
     >
-      <p class="pa-0 ma-0">
-        {{ snackbarMessage }} <v-icon>mdi-check</v-icon>
-      </p>
+      <p class="pa-0 ma-0">{{ snackbarMessage }} <v-icon>mdi-check</v-icon></p>
     </v-snackbar>
   </v-row>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref, getCurrentInstance } from "vue";
-import { TextItem } from "@/features/commons/types/Item";
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
-import { UseUpdateTextItem } from "../features/middelware/useTextItem";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  PropType,
+  ref,
+  watch,
+} from "vue";
 import { useRouter } from "vue-router/composables";
+import {
+  VBtn,
+  VCard,
+  VCardActions,
+  VCardText,
+  VCardTitle,
+  VCol,
+  VContainer,
+  VDialog,
+  VFileInput,
+  VForm,
+  VIcon,
+  VRow,
+  VSnackbar,
+  VSpacer,
+  VTextarea,
+  VTextField,
+} from "vuetify/lib";
+
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
+import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-additional/common/model/PageType";
+import { UseUpdateTextItem } from "../features/middelware/useTextItem";
 
 export default defineComponent({
   name: "EditDialog",
@@ -113,17 +147,16 @@ export default defineComponent({
   props: {
     showDialog: {
       type: Boolean,
-      default: false
+      default: false,
     },
     currentItem: {
       type: Object as () => TextItem | null,
-      default: () => null
+      default: () => null,
     },
     pageType: {
       type: String as PropType<PageType>,
-      default: PageType.GLOSSARY
-    }
-
+      default: PageType.GLOSSARY,
+    },
   },
   setup(props, { emit }) {
     const dialog = ref(false);
@@ -132,7 +165,7 @@ export default defineComponent({
     const isSnackbarActive = ref(false);
     const router = useRouter();
     const isWriteError = ref(false);
-    const errorMessage = ref('');
+    const errorMessage = ref("");
     const instance = getCurrentInstance();
     const root = instance?.proxy.$root || null;
 
@@ -149,11 +182,15 @@ export default defineComponent({
     const file = ref<File | null>(null);
     const fileRules = computed(() => [
       (value: File | null) =>
-        (value === null || ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type)) ||
-        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt."
+        value === null ||
+        [
+          "application/pdf",
+          "application/msword",
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "application/vnd.oasis.opendocument.text",
+        ].includes(value.type) ||
+        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt.",
     ]);
-
-
 
     const headerRule = (value: string) => {
       if (!value || value.length < 3) {
@@ -228,44 +265,48 @@ export default defineComponent({
 
     const closeError = () => {
       isWriteError.value = false;
-    }
+    };
 
     const getFileNameFromLink = (link: string) => {
       if (!link) {
-        return '';
+        return "";
       }
       try {
         const url = new URL(link);
-        return url.pathname.split('/').pop() || '';
+        return url.pathname.split("/").pop() || "";
       } catch (error) {
         console.error(`Invalid URL: ${link}`);
-        return '';
+        return "";
       }
     };
 
-    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
-      if (!fileName) return '';
-      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+    const customFileName = (
+      fileName: string,
+      maxFileNameInputLength: number
+    ) => {
+      if (!fileName) return "";
+      if (fileName.length <= maxFileNameInputLength)
+        return fileName.toUpperCase();
 
       const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
       return (
         fileName.slice(0, halfLength) +
-        '...' +
+        "..." +
         fileName.slice(fileName.length - halfLength)
       ).toUpperCase();
     };
 
     const maxFileNameInputLength = computed(() => {
       switch (root?.$vuetify.breakpoint.name) {
-        case 'xs':
+        case "xs":
           return 25;
-        case 'sm':
+        case "sm":
           return 40;
-        case 'md':
+        case "md":
           return 50;
-        case 'lg':
+        case "lg":
           return 60;
-        case 'xl':
+        case "xl":
           return 70;
         default:
           return 50;
@@ -273,7 +314,13 @@ export default defineComponent({
     });
 
     function saveEdit(file?: File | null) {
-      mutateAsync({ id: editedItem.value.id, pageType: editedItem.value.pageType as PageType, textItem: editedItem.value, link: editedItem.value.link, file: file ? file : undefined })
+      mutateAsync({
+        id: editedItem.value.id,
+        pageType: editedItem.value.pageType as PageType,
+        textItem: editedItem.value,
+        link: editedItem.value.link,
+        file: file ? file : undefined,
+      })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -296,12 +343,12 @@ export default defineComponent({
         .catch((error) => {
           const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
+          const customErrorMessage =
+            error.response?.data?.message || fallbackErrorMessage;
           errorMessage.value = customErrorMessage;
           isWriteError.value = true;
         });
     }
-
 
     return {
       props,
@@ -328,10 +375,8 @@ export default defineComponent({
       snackbarMessage,
       SNACKBAR_TIMEOUT: 3000, // in milliseconds
     };
-  }
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

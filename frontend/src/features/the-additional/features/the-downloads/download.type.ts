@@ -1,6 +1,5 @@
 export interface Download {
-    name: string;
-    description: string;
-    filename: string;
-
+  name: string;
+  description: string;
+  filename: string;
 }

@@ -15,47 +15,46 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
-import {useSendMail} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
-import {I18nLabel} from "@/core/core.translation";
+import { defineComponent } from "vue";
+
+import { I18nLabel } from "@/core/core.translation";
+import { useSendMail } from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
+import { Email } from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
 
 export default defineComponent({
   name: "MailSendOverview",
   props: {
     email: {
-      type: Object as () => Email
+      type: Object as () => Email,
     },
     lables: {
-      type: Object as () => I18nLabel
+      type: Object as () => I18nLabel,
     },
     needToSendMail: {
-      type: Boolean
+      type: Boolean,
     },
     afterMailSend: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   setup(props) {
     //work around because hooks are only allowed to be called inside setup
-    if(props.needToSendMail) {
-      const {isLoading, isError, isSuccess} = useSendMail(props.email);
+    if (props.needToSendMail) {
+      const { isLoading, isError, isSuccess } = useSendMail(props.email);
       props.afterMailSend();
       return {
         isLoading,
         isError,
-        isSuccess
-      }
+        isSuccess,
+      };
     }
     return {
       isLoading: true,
       isError: false,
-      isSuccess: false
-    }
-  }
-})
+      isSuccess: false,
+    };
+  },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

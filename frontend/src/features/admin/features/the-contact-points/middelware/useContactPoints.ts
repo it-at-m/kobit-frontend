@@ -1,59 +1,69 @@
 import { useMutation } from "@tanstack/vue-query";
+
+import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 import {
-    deleteContactPoint,
-    postContactPoint,
-    putContactPoint, updateCompetences
+  deleteContactPoint,
+  postContactPoint,
+  putContactPoint,
+  updateCompetences,
 } from "@/features/admin/features/the-contact-points/api/ContactPointsManipulationClient";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
-import ListItemToCompetenceView from "@/features/admin/components/u-finder/model/ListItemToCompetenceView";
 
-
-
-
-export const useUpdateContactPoint = () => useMutation({
+export const useUpdateContactPoint = () =>
+  useMutation({
     mutationFn: async (useContactPoint: UseContactPoint) => {
-        if (useContactPoint.id) {
-            const headers = {
-                "Content-Type": "multipart/form-data",
-            };
-            return await putContactPoint(useContactPoint.id, useContactPoint.contactPoint, useContactPoint.file, useContactPoint.currentImage, headers);
-        }
-        throw new Error('ID is missing');
-    }
-});
+      if (useContactPoint.id) {
+        const headers = {
+          "Content-Type": "multipart/form-data",
+        };
+        return await putContactPoint(
+          useContactPoint.id,
+          useContactPoint.contactPoint,
+          useContactPoint.file,
+          useContactPoint.currentImage,
+          headers
+        );
+      }
+      throw new Error("ID is missing");
+    },
+  });
 
-export const useUpdateCompetences = () => useMutation({
+export const useUpdateCompetences = () =>
+  useMutation({
     mutationFn: (itemsToUpdate: ListItemToCompetenceView[]) =>
-        updateCompetences(itemsToUpdate)
+      updateCompetences(itemsToUpdate),
+  });
 
-});
-
-export const useDeleteContactPoint = () => useMutation({
+export const useDeleteContactPoint = () =>
+  useMutation({
     mutationFn: async (contactPointToDelete: ContactPoint) => {
-        if (contactPointToDelete.id) {
-            return deleteContactPoint(contactPointToDelete);
-        }
-        throw new Error('ID is missing');
-    }
-});
+      if (contactPointToDelete.id) {
+        return deleteContactPoint(contactPointToDelete);
+      }
+      throw new Error("ID is missing");
+    },
+  });
 
 export const useCreateNewContactPoint = () =>
-    useMutation({
-        mutationFn: async (newContactPoint: UseContactPoint) => {
-            const headers = {
-                "Content-Type": "multipart/form-data",
-            };
+  useMutation({
+    mutationFn: async (newContactPoint: UseContactPoint) => {
+      const headers = {
+        "Content-Type": "multipart/form-data",
+      };
 
-            await postContactPoint(newContactPoint.contactPoint, newContactPoint.file, headers);
-        },
-    });
-
+      await postContactPoint(
+        newContactPoint.contactPoint,
+        newContactPoint.file,
+        headers
+      );
+    },
+  });
 
 export interface UseContactPoint {
-    contactPoint: ContactPoint;
-    id?: string;
-    file?: File;
-    image: string;
-    currentImage?: string  | null;
-    headers?: { 'Content-Type': string | null };
+  contactPoint: ContactPoint;
+  id?: string;
+  file?: File;
+  image: string;
+  currentImage?: string | null;
+  headers?: { "Content-Type": string | null };
 }

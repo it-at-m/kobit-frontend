@@ -1,19 +1,17 @@
-import {LinkModel} from "@/features/commons/types/link-model.type";
+import { LinkModel } from "@/features/commons/types/link-model.type";
+
 export const THE_ANGEBOTE_MODULE_NAME = "theAngeboteStoreModule";
 
-
 export interface TheAngeboteModuleState {
-    angeboteLinkModel: LinkModel;
+  angeboteLinkModel: LinkModel;
 }
 
 export const theAngeboteStoreModule = {
-    namespaced: true,
-    state: {
-    } as TheAngeboteModuleState,
-    getters: {
-    }
+  namespaced: true,
+  state: {} as TheAngeboteModuleState,
+  getters: {},
 };
 
 function namespaced(toAddNamespace: string): string {
-    return THE_ANGEBOTE_MODULE_NAME + '/' + toAddNamespace;
+  return THE_ANGEBOTE_MODULE_NAME + "/" + toAddNamespace;
 }

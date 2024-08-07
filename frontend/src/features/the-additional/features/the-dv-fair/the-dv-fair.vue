@@ -7,7 +7,7 @@
       :info-text="infoText"
       :is-loading="isLoading"
     >
-      <div v-if="! isFinished">
+      <div v-if="!isFinished">
         <StepperHeader
           v-if="step !== undefined"
           :step="step"
@@ -15,15 +15,13 @@
           :next-step="nextStep"
           :set-is-finished="setIsFinished"
         />
-        <StepItems 
+        <StepItems
           :step="step"
           :current-step="currentStep"
         />
       </div>
       <div v-if="isFinished">
-        <StepFinished
-          :restart-process="restartProcess"
-        />
+        <StepFinished :restart-process="restartProcess" />
       </div>
     </BasePageContent>
     <BackButton :callback="back" />
@@ -31,34 +29,40 @@
 </template>
 
 <script lang="ts">
+import { useMutation } from "@tanstack/vue-query";
+import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router/composables";
 
-import {defineComponent, ref} from 'vue';
-import StepperHeader from '@/features/the-additional/features/the-dv-fair/component/StepperHeader.vue';
-import StepItems from '@/features/the-additional/features/the-dv-fair/component/StepItems.vue';
-import StepFinished from '@/features/the-additional/features/the-dv-fair/component/StepFinished.vue';
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import { getStepByPosition } from "@/features/the-additional/features/the-dv-fair/api/DVStepClient";
+import StepFinished from "@/features/the-additional/features/the-dv-fair/component/StepFinished.vue";
+import StepItems from "@/features/the-additional/features/the-dv-fair/component/StepItems.vue";
+import StepperHeader from "@/features/the-additional/features/the-dv-fair/component/StepperHeader.vue";
 import {
   DV_FAIR_ROUTE_META_ICON,
   DV_FAIR_ROUTE_META_INFO_TEXT,
-  DV_FAIR_ROUTE_NAME
-} from '@/features/the-additional/features/the-dv-fair/the-dv-fair.routes';
-import BasePageContent from '@/features/commons/base-page-content/base-page-content.vue';
-import {useMutation} from '@tanstack/vue-query';
-import {getStepByPosition} from '@/features/the-additional/features/the-dv-fair/api/DVStepClient';
-import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
+  DV_FAIR_ROUTE_NAME,
+} from "@/features/the-additional/features/the-dv-fair/the-dv-fair.routes";
 
-export default defineComponent ({
-  name: 'the-dv-fair',
-  components: {BasePageContent, StepFinished, StepItems, StepperHeader, BackButton},
+export default defineComponent({
+  name: "the-dv-fair",
+  components: {
+    BasePageContent,
+    StepFinished,
+    StepItems,
+    StepperHeader,
+    BackButton,
+  },
   setup() {
     const currentStep = ref(1);
     const isFinished = ref<boolean>(false);
-    const { isLoading, isError, mutate, data} = useMutation({
+    const { isLoading, isError, mutate, data } = useMutation({
       mutationFn: (newStep: number) => getStepByPosition(newStep),
     });
     const router = useRouter();
     function back() {
-      router.push('/erfahre-mehr');
+      router.push("/erfahre-mehr");
     }
 
     function setIsFinished() {
@@ -90,10 +94,8 @@ export default defineComponent ({
       restartProcess,
       setIsFinished,
       nextStep,
-      back
+      back,
     };
-
-  }
+  },
 });
-
 </script>

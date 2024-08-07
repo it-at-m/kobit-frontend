@@ -13,27 +13,26 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {PageType} from "@/features/the-additional/common/model/PageType";
-import {useGetAdditionalContent} from "@/features/the-additional/common/middleware/AdditionalPageService";
+import { defineComponent } from "vue";
 
+import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
+import { PageType } from "@/features/the-additional/common/model/PageType";
 
-export default defineComponent ({
+export default defineComponent({
   name: "PrivacyPolicy",
   setup() {
-    const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.PRIVACY_POLICY);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.PRIVACY_POLICY
+    );
 
     return {
       isLoading,
       isError,
       item: data,
-      error
+      error,
     };
-  }
+  },
 });
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

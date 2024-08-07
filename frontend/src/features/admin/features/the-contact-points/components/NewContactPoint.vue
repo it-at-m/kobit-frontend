@@ -7,11 +7,15 @@
     />
     <v-card
       flat
-      :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'border-top:1px solid #eee;' : ''"
+      :style="
+        $vuetify.breakpoint.xs || $vuetify.breakpoint.sm
+          ? 'border-top:1px solid #eee;'
+          : ''
+      "
       class="ma-0 pa-0"
     >
       <v-card-title class="pa-0">
-        Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document  ml-auto" />
+        Neue Anlaufstelle Anlegen <span class="mdi mdi-file-document ml-auto" />
       </v-card-title>
       <v-card-text>
         <v-form v-model="isFormValid">
@@ -26,7 +30,12 @@
               <v-text-field
                 :value="newContactPoint?.name"
                 label="Name der Anlaufstelle"
-                :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
+                :rules="[
+                  (v) => !!v || 'Name ist erforderlich',
+                  (v) =>
+                    (v && v.length >= 5 && v.length <= 100) ||
+                    'Der Name muss 5 bis 100 Zeichen lang sein.',
+                ]"
                 :counter="100"
                 prepend-inner-icon="mdi-format-letter-case"
                 @input="changeName"
@@ -42,7 +51,12 @@
               <v-text-field
                 :value="newContactPoint?.shortCut"
                 label="Kurzbezeichnung der Anlaufstelle"
-                :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
+                :rules="[
+                  (v) => !!v || 'Kurzbezeichnung ist erforderlich',
+                  (v) =>
+                    (v && v.length >= 3 && v.length <= 10) ||
+                    'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.',
+                ]"
                 :counter="10"
                 prepend-inner-icon="mdi-format-font-size-decrease"
                 @input="changeShortCut"
@@ -155,7 +169,12 @@
                 :value="newContactPoint.description"
                 label="Beschreibung"
                 rows="12"
-                :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
+                :rules="[
+                  (v) => !!v || 'Beschreibung ist erforderlich',
+                  (v) =>
+                    (v && v.length <= 2000) ||
+                    'Die Beschreibung muss weniger als 2000 Zeichen umfassen',
+                ]"
                 :counter="2000"
                 prepend-inner-icon="mdi-format-align-left"
                 @input="changeDescription"
@@ -175,9 +194,7 @@
               cols="12"
               class="mb-0 pb-0"
             >
-              <h3 class="pa-0">
-                Kontakte
-              </h3>
+              <h3 class="pa-0">Kontakte</h3>
             </v-col>
           </v-row>
           <v-row
@@ -235,9 +252,7 @@
               cols="12"
               class="mb-0 pb-0"
             >
-              <h3 class="pa-0">
-                Links
-              </h3>
+              <h3 class="pa-0">Links</h3>
             </v-col>
           </v-row>
           <v-row
@@ -304,9 +319,7 @@
               cols="12"
               class="mb-0 pb-0"
             >
-              <h3 class="pa-0">
-                Foto
-              </h3>
+              <h3 class="pa-0">Foto</h3>
             </v-col>
           </v-row>
           <v-row>
@@ -318,7 +331,12 @@
                 placeholder="Datei auswählen"
               >
                 <template v-slot:selection>
-                  <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                  <span>{{
+                    customFileName(
+                      file ? file.name : "",
+                      maxFileNameInputLength
+                    )
+                  }}</span>
                 </template>
               </v-file-input>
             </v-col>
@@ -327,7 +345,8 @@
           <v-row>
             <v-col cols="12">
               <p>
-                Hinweis: Kompetenzen können nur über den Unterstützungsfinder eingepflegt werden.
+                Hinweis: Kompetenzen können nur über den Unterstützungsfinder
+                eingepflegt werden.
               </p>
             </v-col>
           </v-row>
@@ -356,25 +375,36 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, watch, getCurrentInstance } from "vue";
-import { I18nLabel } from "@/core/core.translation";
-import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
-import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
-import { Contact, ContactPoint, Link } from "@/features/commons/types/ContactPoint";
-import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import { marked } from "marked";
+import { computed, defineComponent, getCurrentInstance, ref, watch } from "vue";
+import { useRouter } from "vue-router/composables";
+
+import { I18nLabel } from "@/core/core.translation";
+import { useGetAdminUserInfo } from "@/features/admin/components/middleware/useGetAdminUserInfoText";
+import MarkDownAlert from "@/features/admin/features/commons/MarkDownAlert.vue";
 import AddContactDialog from "@/features/admin/features/the-contact-points/components/AddContactDialog.vue";
 import AddLinkDialog from "@/features/admin/features/the-contact-points/components/AddLinkDialog.vue";
 import SaveNewButton from "@/features/admin/features/the-contact-points/components/SaveNewButton.vue";
-import { useRouter } from "vue-router/composables";
+import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
+import {
+  Contact,
+  ContactPoint,
+  Link,
+} from "@/features/commons/types/ContactPoint";
 
 export default defineComponent({
   name: "NewContactPoint",
-  components: { SaveNewButton, AddLinkDialog, AddContactDialog, MarkDownAlert, ErrorHandler },
+  components: {
+    SaveNewButton,
+    AddLinkDialog,
+    AddContactDialog,
+    MarkDownAlert,
+    ErrorHandler,
+  },
   props: {
     label: {
-      type: Object as () => I18nLabel
-    }
+      type: Object as () => I18nLabel,
+    },
   },
   data: () => ({
     isFormValid: false,
@@ -384,7 +414,7 @@ export default defineComponent({
     const isContactDialogOpen = ref(false);
     const isLinkDialogOpen = ref(false);
     const isWriteError = ref(false);
-    const errorMessage = ref('');
+    const errorMessage = ref("");
     const router = useRouter();
     const isCentralAdmin = ref(false);
     const { data: adminUserInfo } = useGetAdminUserInfo();
@@ -398,81 +428,104 @@ export default defineComponent({
     watch(adminUserInfo, (newValue) => {
       if (newValue) {
         const department = newValue.department;
-        newContactPoint.value = { ...newContactPoint.value, departments: [department] } as ContactPoint;
+        newContactPoint.value = {
+          ...newContactPoint.value,
+          departments: [department],
+        } as ContactPoint;
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    })
+    });
 
-    const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
+    const computeMarkdown = computed(() =>
+      marked.parse(newContactPoint.value?.description || "")
+    );
 
     const addNewContact = (value: Contact) => {
       if (newContactPoint.value?.contact) {
         newContactPoint.value.contact.push(value);
       } else {
-        newContactPoint.value = { ...newContactPoint.value, contact: [value] } as ContactPoint;
+        newContactPoint.value = {
+          ...newContactPoint.value,
+          contact: [value],
+        } as ContactPoint;
       }
       isContactDialogOpen.value = false;
-    }
+    };
 
     function removeContact(contact: Contact) {
       if (newContactPoint.value?.contact) {
-        newContactPoint.value.contact = newContactPoint.value.contact.filter(it => it !== contact);
+        newContactPoint.value.contact = newContactPoint.value.contact.filter(
+          (it) => it !== contact
+        );
       }
     }
 
     const openContactDialog = () => {
       isContactDialogOpen.value = true;
-    }
+    };
 
     const addNewLink = (value: Link) => {
       if (newContactPoint.value?.links) {
         newContactPoint.value.links.push(value);
       } else {
-        newContactPoint.value = { ...newContactPoint.value, links: [value] } as ContactPoint;
+        newContactPoint.value = {
+          ...newContactPoint.value,
+          links: [value],
+        } as ContactPoint;
       }
       isLinkDialogOpen.value = false;
-    }
+    };
 
     function removeLink(item: Link) {
       if (newContactPoint.value?.links) {
-        newContactPoint.value.links = newContactPoint.value.links.filter(it => it !== item);
+        newContactPoint.value.links = newContactPoint.value.links.filter(
+          (it) => it !== item
+        );
       }
     }
 
     const openLinkDialog = () => {
       isLinkDialogOpen.value = true;
-    }
+    };
 
     const changeName = (value: string) => {
-      newContactPoint.value = { ...newContactPoint.value, name: value } as ContactPoint;
-    }
+      newContactPoint.value = {
+        ...newContactPoint.value,
+        name: value,
+      } as ContactPoint;
+    };
 
     const changeShortCut = (value: string) => {
-      newContactPoint.value = { ...newContactPoint.value, shortCut: value } as ContactPoint;
-    }
+      newContactPoint.value = {
+        ...newContactPoint.value,
+        shortCut: value,
+      } as ContactPoint;
+    };
 
     const changeDepartment = (value: string[]) => {
-      newContactPoint.value = { ...newContactPoint.value, departments: value } as ContactPoint;
-    }
+      newContactPoint.value = {
+        ...newContactPoint.value,
+        departments: value,
+      } as ContactPoint;
+    };
 
     const cancelForm = () => {
       router.push("/admin/anlaufstellen/");
       router.go(0);
-
-    }
+    };
 
     const cancel = () => {
       isLinkDialogOpen.value = false;
       isContactDialogOpen.value = false;
-    }
+    };
 
     const error = (message: string) => {
       errorMessage.value = message;
       isWriteError.value = true;
-    }
+    };
     const closeError = () => {
       isWriteError.value = false;
-    }
+    };
 
     const instance = getCurrentInstance();
     const root = instance?.proxy.$root || null;
@@ -481,34 +534,40 @@ export default defineComponent({
       (value: File | null) => {
         if (!value) return true;
         const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-        return allowedTypes.includes(value.type) || "Nur JPG, JPEG und PNG-Dateien sind erlaubt.";
-      }
+        return (
+          allowedTypes.includes(value.type) ||
+          "Nur JPG, JPEG und PNG-Dateien sind erlaubt."
+        );
+      },
     ]);
 
-    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
-      if (!fileName) return '';
-      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+    const customFileName = (
+      fileName: string,
+      maxFileNameInputLength: number
+    ) => {
+      if (!fileName) return "";
+      if (fileName.length <= maxFileNameInputLength)
+        return fileName.toUpperCase();
 
       const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
       return (
         fileName.slice(0, halfLength) +
-        '...' +
+        "..." +
         fileName.slice(fileName.length - halfLength)
       ).toUpperCase();
     };
 
-
     const maxFileNameInputLength = computed(() => {
       switch (root?.$vuetify.breakpoint.name) {
-        case 'xs':
+        case "xs":
           return 25;
-        case 'sm':
+        case "sm":
           return 40;
-        case 'md':
+        case "md":
           return 50;
-        case 'lg':
+        case "lg":
           return 60;
-        case 'xl':
+        case "xl":
           return 70;
         default:
           return 50;
@@ -516,58 +575,61 @@ export default defineComponent({
     });
 
     const changeDescription = () => {
-      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement;
+      const textarea = document.querySelector(
+        "#description-textarea"
+      ) as HTMLTextAreaElement;
       const value = textarea.value;
       if (newContactPoint.value) {
         newContactPoint.value = {
           ...newContactPoint.value,
-          description: value
+          description: value,
         };
       }
     };
 
-
     const applyFormatting = (format: string) => {
-      const textarea = document.querySelector('#description-textarea') as HTMLTextAreaElement | null;
+      const textarea = document.querySelector(
+        "#description-textarea"
+      ) as HTMLTextAreaElement | null;
       if (!textarea) return;
 
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
       const selectedText = textarea.value.substring(start, end);
 
-      let newText = '';
+      let newText = "";
       switch (format) {
-        case 'bold':
+        case "bold":
           newText = `<b>${selectedText}</b>`;
           break;
-        case 'italic':
+        case "italic":
           newText = `<i>${selectedText}</i>`;
           break;
-        case 'underline':
+        case "underline":
           newText = `<u>${selectedText}</u>`;
           break;
-        case 'ordered-list':
+        case "ordered-list":
           newText = `\n<ol>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ol>\n`;
           break;
-        case 'unordered-list':
+        case "unordered-list":
           newText = `\n<ul>\n<li>${selectedText}</li>\n<li></li>\n<li></li>\n</ul>\n`;
           break;
-        case 'line-break':
-          newText = '<br />';
+        case "line-break":
+          newText = "<br />";
           break;
-        case 'h1':
+        case "h1":
           newText = `<h1>${selectedText}</h1>`;
           break;
-        case 'h2':
+        case "h2":
           newText = `<h2>${selectedText}</h2>`;
           break;
-        case 'h3':
+        case "h3":
           newText = `<h3>${selectedText}</h3>`;
           break;
-        case 'h4':
+        case "h4":
           newText = `<h4>${selectedText}</h4>`;
           break;
-        case 'h5':
+        case "h5":
           newText = `<h5>${selectedText}</h5>`;
           break;
         default:
@@ -575,12 +637,14 @@ export default defineComponent({
           break;
       }
 
-      const currentValue = newContactPoint.value?.description || '';
+      const currentValue = newContactPoint.value?.description || "";
       const newValue =
-        currentValue.substring(0, start) + newText + currentValue.substring(end);
+        currentValue.substring(0, start) +
+        newText +
+        currentValue.substring(end);
       newContactPoint.value = {
         ...newContactPoint.value,
-        description: newValue
+        description: newValue,
       } as ContactPoint;
     };
 
@@ -610,12 +674,10 @@ export default defineComponent({
       cancel,
       cancelForm,
       error,
-      closeError
-    }
-  }
-}
-)</script>
+      closeError,
+    };
+  },
+});
+</script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

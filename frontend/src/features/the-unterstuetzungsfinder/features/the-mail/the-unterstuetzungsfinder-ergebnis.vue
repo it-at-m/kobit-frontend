@@ -108,7 +108,7 @@
             color="secondary"
             disable-lookup
             full-width
-            :rules="[v => v.length !== 0 || 'An erforderlich.']"
+            :rules="[(v) => v.length !== 0 || 'An erforderlich.']"
             validate
             class="pa-0 ma-0"
             :label="labels.mailTo"
@@ -141,7 +141,7 @@
             outlined
             prepend-inner-icon="mdi-email-edit"
             :label="labels.mailTopic"
-            :rules="[v => !!v || 'Betreff erforderlich.']"
+            :rules="[(v) => !!v || 'Betreff erforderlich.']"
             validate
             color="secondary"
             @focus="showPrivacyDisclaimer"
@@ -188,7 +188,7 @@
               prepend-inner-icon="mdi-text-box-multiple-outline"
               color="secondary"
               :label="labels.mailContent"
-              :rules="[v => !!v || 'Inhalt erforderlich.']"
+              :rules="[(v) => !!v || 'Inhalt erforderlich.']"
               validate
               @focus="showPrivacyDisclaimer"
             />
@@ -196,9 +196,7 @@
         </v-row>
       </v-row>
       <v-row>
-        <v-col
-          offset-xl="6"
-        >
+        <v-col offset-xl="6">
           <v-checkbox
             v-if="isMoreThenOneRecipient"
             v-model="email.releasedFromConfidentiality"
@@ -234,8 +232,16 @@
         >
           <v-btn
             class="justify-end"
-            :disabled="recipients.length === 0 || !email.subject || !email.message"
-            @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
+            :disabled="
+              recipients.length === 0 || !email.subject || !email.message
+            "
+            @click="
+              sendMail({
+                from: mailAddress.emailAddress,
+                to: recipients.map((it) => it.contact.email),
+                ...email,
+              })
+            "
           >
             {{ labels.mailSend }}
           </v-btn>
@@ -246,65 +252,70 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, onMounted, ref } from "vue";
 
-import {computed, defineComponent, onMounted, ref} from "vue";
-import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
+import { commonLabels } from "@/core/core.translation";
 import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
-import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
-import {useGetMailAddress} from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
-import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
+import { Contact } from "@/features/commons/types/ContactPoint";
+import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
+import MailSendOverview from "@/features/the-unterstuetzungsfinder/features/the-mail/components/MailSendOverview.vue";
+import { useGetMailAddress } from "@/features/the-unterstuetzungsfinder/features/the-mail/middleware/EmailService";
 import {
   DISCLAIMER_MESSAGE_MULTI_RECIPIENTS,
-  DISCLAIMER_MESSAGE_PRIVACY
+  DISCLAIMER_MESSAGE_PRIVACY,
 } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail-constants";
-import {theMailLabels} from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
-import {Email} from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
-import {commonLabels} from "@/core/core.translation";
-import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
-import MailSendOverview from "@/features/the-unterstuetzungsfinder/features/the-mail/components/MailSendOverview.vue";
-import {finderLabels} from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
-import {Contact} from "@/features/commons/types/ContactPoint";
+import { theMailLabels } from "@/features/the-unterstuetzungsfinder/features/the-mail/the-mail.translation";
+import { Email } from "@/features/the-unterstuetzungsfinder/features/the-mail/types/Email";
+import Recipient from "@/features/the-unterstuetzungsfinder/features/the-mail/types/recipient.type";
+import { finderLabels } from "@/features/the-unterstuetzungsfinder/the-unterstuetzungsfinder.translation";
+import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
+import { QuestionAndAnswer } from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 export default defineComponent({
   name: "TheUnterstuetzungsfinderErgebnis",
-  components: {MailSendOverview, PrivacyPolicy, DownloadPDF},
+  components: { MailSendOverview, PrivacyPolicy, DownloadPDF },
   props: {
     convo: {
-      type: Object as () => Conversation
+      type: Object as () => Conversation,
     },
     givenAnswers: {
-      type: Array as () => QuestionAndAnswer[]
+      type: Array as () => QuestionAndAnswer[],
     },
     restart: {
-      type: Function
-    }
+      type: Function,
+    },
   },
   setup(props) {
     const isActive = ref(true);
     const isDialog = ref(false);
     const isPrivacyDisclaimerAlertActive = ref(false);
-    const needToSendMail = ref(false)
+    const needToSendMail = ref(false);
     const recipients = ref<Recipient[]>([]);
     const isMoreThenOneRecipient = computed(() => recipients.value.length > 1);
     const multipleRecipientsDialog = ref(false);
     const email = ref<Email>({});
 
-    const {isLoading, isError, data, error} = useGetMailAddress();
+    const { isLoading, isError, data, error } = useGetMailAddress();
 
     onMounted(() => {
-      let message = "Automatisch eingefügte Antworten des Unterstützungsfinders:\n";
+      let message =
+        "Automatisch eingefügte Antworten des Unterstützungsfinders:\n";
       for (let i = 0; i < props.givenAnswers?.length; i++) {
-        message = message + (i + 1 + ". Frage: " + props.givenAnswers[i].questionAnswered + " ");
-        message = message + ("Ihre Antwort: " + props.givenAnswers[i].answerValue + "\n");
+        message =
+          message +
+          (i + 1 + ". Frage: " + props.givenAnswers[i].questionAnswered + " ");
+        message =
+          message +
+          ("Ihre Antwort: " + props.givenAnswers[i].answerValue + "\n");
       }
-      email.value = {message: message, ...email.value};
+      email.value = { message: message, ...email.value };
     });
 
     function addAddress(value: Contact, shortCut: string): void {
-      if (recipients.value.find(it => it.contact.email === value.email)) {
+      if (recipients.value.find((it) => it.contact.email === value.email)) {
         //do nothing because contact already added
       } else {
-        recipients.value.push({contact: value, shortCut: shortCut});
+        recipients.value.push({ contact: value, shortCut: shortCut });
       }
     }
 
@@ -317,27 +328,33 @@ export default defineComponent({
     }
 
     function unselect(itemNeedToRemove: Recipient): void {
-      recipients.value = recipients.value.filter(it => it.shortCut !== itemNeedToRemove.shortCut);
+      recipients.value = recipients.value.filter(
+        (it) => it.shortCut !== itemNeedToRemove.shortCut
+      );
     }
 
     function agree() {
-      email.value = {releasedFromConfidentiality: true, ...email.value};
+      email.value = { releasedFromConfidentiality: true, ...email.value };
       multipleRecipientsDialog.value = false;
     }
 
     function disagree(): void {
-      email.value = {releasedFromConfidentiality: true, ...email.value};
+      email.value = { releasedFromConfidentiality: true, ...email.value };
       multipleRecipientsDialog.value = false;
     }
 
     function sendMail(mail: Email) {
-      if ((isMoreThenOneRecipient && mail.releasedFromConfidentiality) || recipients.value.length == 1) {
+      if (
+        (isMoreThenOneRecipient && mail.releasedFromConfidentiality) ||
+        recipients.value.length == 1
+      ) {
         email.value = mail;
         isActive.value = false;
         isDialog.value = false;
         needToSendMail.value = true;
       } else {
-        isDialog.value = isMoreThenOneRecipient && !mail.releasedFromConfidentiality;
+        isDialog.value =
+          isMoreThenOneRecipient && !mail.releasedFromConfidentiality;
       }
     }
 
@@ -371,13 +388,10 @@ export default defineComponent({
       disagree,
       agree,
       unselect,
-      sendMail
+      sendMail,
     };
-  }
+  },
 });
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

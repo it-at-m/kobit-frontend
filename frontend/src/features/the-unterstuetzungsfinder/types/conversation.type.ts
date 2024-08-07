@@ -1,25 +1,22 @@
+import { Competence } from "@/features/commons/types/competence.type";
+import { ContactPoint } from "@/features/commons/types/ContactPoint";
 import Anlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-contact-points/types/anlaufstelle.type";
-import {Competence} from "@/features/commons/types/competence.type";
-import {ContactPoint} from "@/features/commons/types/ContactPoint";
-
 
 interface AnswerOption {
-    competence: string;
-    germanDescription: Competence;
-    shortDescription: string;
-
+  competence: string;
+  germanDescription: Competence;
+  shortDescription: string;
 }
 
 interface DecisionPoint {
-    competence: string;
-    question: string | undefined;
-    answerOptions: AnswerOption[];
-
+  competence: string;
+  question: string | undefined;
+  answerOptions: AnswerOption[];
 }
 
 export default interface Conversation {
-    readonly decisionPoint?: DecisionPoint;
-    readonly contactPoints: ContactPoint[];
+  readonly decisionPoint?: DecisionPoint;
+  readonly contactPoints: ContactPoint[];
 }
 
 /*

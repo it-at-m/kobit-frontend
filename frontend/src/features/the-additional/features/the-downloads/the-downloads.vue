@@ -20,28 +20,30 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router/composables";
+
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
+import TextList from "@/features/commons/components/TextList.vue";
+import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
+import { PageType } from "@/features/the-additional/common/model/PageType";
 import {
   DOWNLOADS_ROUTE_META_ICON,
   DOWNLOADS_ROUTE_META_INFO_TEXT,
-  DOWNLOADS_ROUTE_NAME
+  DOWNLOADS_ROUTE_NAME,
 } from "@/features/the-additional/features/the-downloads/the-downloads.routes";
-import {PageType} from "@/features/the-additional/common/model/PageType";
-import TextList from "@/features/commons/components/TextList.vue";
-import {defineComponent} from 'vue';
-import {useGetAdditionalContent} from "@/features/the-additional/common/middleware/AdditionalPageService";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import {useRouter} from "vue-router/composables";
 
 export default defineComponent({
-  name: 'TheDownloads',
-  components: {TextList, BasePageContent, BackButton},
+  name: "TheDownloads",
+  components: { TextList, BasePageContent, BackButton },
   setup() {
-
-    const {isLoading, isError, data, error} = useGetAdditionalContent(PageType.DOWNLOADS);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.DOWNLOADS
+    );
     const router = useRouter();
     function back() {
-      router.push('/erfahre-mehr');
+      router.push("/erfahre-mehr");
     }
 
     return {
@@ -52,12 +54,10 @@ export default defineComponent({
       icon: DOWNLOADS_ROUTE_META_ICON,
       infoText: DOWNLOADS_ROUTE_META_INFO_TEXT,
       name: DOWNLOADS_ROUTE_NAME,
-      back
+      back,
     };
   },
 });
-
-
 </script>
 
 <style scoped>

@@ -10,19 +10,18 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {I18nLabel} from "@/core/core.translation";
+import { defineComponent } from "vue";
+
+import { I18nLabel } from "@/core/core.translation";
 
 export default defineComponent({
   name: "BaseHeadlineMain",
   props: {
     labels: {
-      type: Object as () => I18nLabel
-    }
-  }
-})
+      type: Object as () => I18nLabel,
+    },
+  },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

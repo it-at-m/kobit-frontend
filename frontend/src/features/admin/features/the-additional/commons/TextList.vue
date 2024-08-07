@@ -37,11 +37,9 @@
                   type="application/pdf"
                   width="100%"
                   height="300px"
-                >
+                />
               </p>
-              <p v-else-if="item.link">
-                No preview available
-              </p>
+              <p v-else-if="item.link">No preview available</p>
             </v-col>
           </v-row>
           <v-row class="pt-5">
@@ -84,14 +82,14 @@
     />
   </div>
 </template>
-  
-  
+
 <script lang="ts">
-import { defineComponent, ref, PropType, computed } from "vue";
-import EditDialog from "@/features/admin/features/the-additional/commons/EditTextItemDialog.vue";
+import { computed, defineComponent, PropType, ref } from "vue";
+
 import DeleteDialog from "@/features/admin/features/the-additional/commons/DeleteTextItemDialog.vue";
-import { TextItem } from "@/features/commons/types/Item";
+import EditDialog from "@/features/admin/features/the-additional/commons/EditTextItemDialog.vue";
 import LoadingSpinner from "@/features/commons/components/LoadingSpinner.vue";
+import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-additional/common/model/PageType";
 
 export default defineComponent({
@@ -108,8 +106,8 @@ export default defineComponent({
     },
     pageType: {
       type: String as PropType<PageType>,
-      default: PageType.GLOSSARY
-    }
+      default: PageType.GLOSSARY,
+    },
   },
   setup(props) {
     const editDialog = ref(false);
@@ -128,7 +126,9 @@ export default defineComponent({
 
     const sortedItems = computed(() => {
       return [...props.items].sort((a, b) => {
-        return a.header.localeCompare(b.header, undefined, { sensitivity: 'base' });
+        return a.header.localeCompare(b.header, undefined, {
+          sensitivity: "base",
+        });
       });
     });
 
@@ -138,7 +138,7 @@ export default defineComponent({
       currentItem,
       openEditDialog,
       openDeleteDialog,
-      sortedItems
+      sortedItems,
     };
   },
 });

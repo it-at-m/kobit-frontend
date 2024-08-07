@@ -26,14 +26,10 @@
             :key="tabIndex"
           >
             <v-card>
-              <v-card-title
-                v-if="step.name"
-              >
+              <v-card-title v-if="step.name">
                 <h5>{{ step.name }}</h5>
               </v-card-title>
-              <v-card-title
-                v-else
-              >
+              <v-card-title v-else>
                 <h5>Schritt {{ step.stepCount }}</h5>
               </v-card-title>
               <v-card-text>
@@ -41,7 +37,9 @@
                   v-for="(solution, solutionIndex) in tab.possibleSolutions"
                   :key="solutionIndex"
                 >
-                  <p><b>{{ solution.header }}</b></p>
+                  <p>
+                    <b>{{ solution.header }}</b>
+                  </p>
                   <p>{{ solution.text }}</p>
                 </div>
               </v-card-text>
@@ -54,18 +52,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {Step} from '../StepView';
+import { defineComponent } from "vue";
+
+import { Step } from "../StepView";
 
 export default defineComponent({
-  name: 'StepItems',
+  name: "StepItems",
   props: {
     step: {
-      type: Step
+      type: Step,
     },
     currentStep: {
-      type: Number
-    }
-  }
+      type: Number,
+    },
+  },
 });
 </script>

@@ -20,8 +20,9 @@
         <v-card>
           <v-card>Soll die Anlaufstelle wirklich gelöscht werden?</v-card>
           <v-card-text>
-            Das Löschen der Anlaufstelle kann nicht rückgängig gemacht werden. Eine Löschung kann nur durch das
-            erneute Anlegen der Anlaufstelle bereinigt werden.
+            Das Löschen der Anlaufstelle kann nicht rückgängig gemacht werden.
+            Eine Löschung kann nur durch das erneute Anlegen der Anlaufstelle
+            bereinigt werden.
           </v-card-text>
           <v-card-actions>
             <v-spacer />
@@ -57,9 +58,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
-import { useDeleteContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
+import { defineComponent, PropType, ref } from "vue";
 import { useRouter } from "vue-router/composables";
+
+import { useDeleteContactPoint } from "@/features/admin/features/the-contact-points/middelware/useContactPoints";
 import { ContactPoint } from "@/features/commons/types/ContactPoint";
 
 export default defineComponent({
@@ -96,7 +98,6 @@ export default defineComponent({
         .catch(() => emit("error"));
     };
 
-
     return {
       isLoading,
       isDialogActive,
@@ -109,6 +110,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

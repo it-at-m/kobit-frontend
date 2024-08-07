@@ -48,7 +48,12 @@
                     placeholder="Datei auswählen"
                   >
                     <template v-slot:selection>
-                      <span>{{ customFileName(file? file.name : '', maxFileNameInputLength) }}</span>
+                      <span>{{
+                        customFileName(
+                          file ? file.name : "",
+                          maxFileNameInputLength
+                        )
+                      }}</span>
                     </template>
                   </v-file-input>
                 </v-col>
@@ -81,42 +86,65 @@
       color="success"
       bottom
     >
-      <p class="pa-0 ma-0">
-        {{ snackbarMessage }} <v-icon>mdi-check</v-icon>
-      </p>
+      <p class="pa-0 ma-0">{{ snackbarMessage }} <v-icon>mdi-check</v-icon></p>
     </v-snackbar>
   </v-row>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, computed, ref, onMounted, getCurrentInstance } from "vue";
-import { TextItem } from "@/features/commons/types/Item";
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn, VCol, VContainer, VFileInput, VForm, VIcon, VRow, VSnackbar, VTextarea, VTextField } from "vuetify/lib";
-import { useCreateNewTextItem } from "../features/middelware/useTextItem";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  PropType,
+  ref,
+  watch,
+} from "vue";
 import { useRouter } from "vue-router/composables";
+import {
+  VBtn,
+  VCard,
+  VCardActions,
+  VCardText,
+  VCardTitle,
+  VCol,
+  VContainer,
+  VDialog,
+  VFileInput,
+  VForm,
+  VIcon,
+  VRow,
+  VSnackbar,
+  VSpacer,
+  VTextarea,
+  VTextField,
+} from "vuetify/lib";
+
 import ErrorHandler from "@/features/commons/components/ErrorHandler.vue";
+import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-additional/common/model/PageType";
+import { useCreateNewTextItem } from "../features/middelware/useTextItem";
 
 export default defineComponent({
   name: "AddDialog",
   components: { ErrorHandler },
   data: () => ({
-    isFormValid: false
+    isFormValid: false,
   }),
   props: {
     showDialog: {
       type: Boolean,
-      default: false
+      default: false,
     },
     currentItem: {
       type: Object as () => TextItem | null,
-      default: () => null
+      default: () => null,
     },
     pageType: {
       type: String as PropType<PageType>,
-      default: PageType.GLOSSARY
-    }
-
+      default: PageType.GLOSSARY,
+    },
   },
   setup(props, { emit }) {
     const dialog = ref(false);
@@ -125,7 +153,7 @@ export default defineComponent({
     const isSnackbarActive = ref(false);
     const router = useRouter();
     const isWriteError = ref(false);
-    const errorMessage = ref('');
+    const errorMessage = ref("");
     const instance = getCurrentInstance();
     const root = instance?.proxy.$root || null;
 
@@ -143,8 +171,14 @@ export default defineComponent({
     const fileRules = computed(() => [
       (value: File | null) => !!value || "Eine Datei muss ausgewählt werden.",
       (value: File | null) =>
-        !!value && ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.oasis.opendocument.text"].includes(value.type) ||
-        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt."
+        (!!value &&
+          [
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/vnd.oasis.opendocument.text",
+          ].includes(value.type)) ||
+        "Nur PDF-, DOC-, DOCX- und ODF-Dateien sind erlaubt.",
     ]);
 
     const headerRule = (value: string) => {
@@ -222,29 +256,33 @@ export default defineComponent({
       isWriteError.value = false;
     };
 
-    const customFileName = (fileName: string, maxFileNameInputLength: number) => {
-      if (!fileName) return '';
-      if (fileName.length <= maxFileNameInputLength) return fileName.toUpperCase();
+    const customFileName = (
+      fileName: string,
+      maxFileNameInputLength: number
+    ) => {
+      if (!fileName) return "";
+      if (fileName.length <= maxFileNameInputLength)
+        return fileName.toUpperCase();
 
       const halfLength = Math.floor((maxFileNameInputLength - 3) / 2);
       return (
         fileName.slice(0, halfLength) +
-        '...' +
+        "..." +
         fileName.slice(fileName.length - halfLength)
       ).toUpperCase();
     };
 
     const maxFileNameInputLength = computed(() => {
       switch (root?.$vuetify.breakpoint.name) {
-        case 'xs':
+        case "xs":
           return 25;
-        case 'sm':
+        case "sm":
           return 40;
-        case 'md':
+        case "md":
           return 50;
-        case 'lg':
+        case "lg":
           return 60;
-        case 'xl':
+        case "xl":
           return 70;
         default:
           return 50;
@@ -255,7 +293,7 @@ export default defineComponent({
       addedItem.value.pageType = props.pageType;
 
       const headers = {
-        'Content-Type': 'multipart/form-data'
+        "Content-Type": "multipart/form-data",
       };
 
       mutateAsync({
@@ -286,13 +324,12 @@ export default defineComponent({
         .catch((error) => {
           const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
+          const customErrorMessage =
+            error.response?.data?.message || fallbackErrorMessage;
           errorMessage.value = customErrorMessage;
           isWriteError.value = true;
         });
     }
-
-
 
     return {
       props,
@@ -318,10 +355,8 @@ export default defineComponent({
       isLoading,
       SNACKBAR_TIMEOUT: 3000, // in milliseconds
     };
-  }
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

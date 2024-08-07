@@ -1,10 +1,9 @@
-import {ContactPointListItem} from "@/features/commons/types/ContactPoint";
+import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
 
 export default interface ListItemToCompetenceView {
-    listItem: ContactPointListItem;
+  listItem: ContactPointListItem;
 
-   competences: string[];
+  competences: string[];
 
-   position: number;
-
+  position: number;
 }

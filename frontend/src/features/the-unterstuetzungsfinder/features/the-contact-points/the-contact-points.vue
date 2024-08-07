@@ -17,7 +17,11 @@
         <v-list
           v-if="listItems?.length > 0"
           dense
-          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
+          :style="
+            $vuetify.breakpoint.xs || $vuetify.breakpoint.sm
+              ? 'height:33vh;'
+              : 'height:70vh;'
+          "
           style="overflow-y: scroll"
           class="custom-scrollbar"
           order-last
@@ -29,7 +33,7 @@
             :key="listItem.id"
             three-line
             link
-            :class="{ 'selected': listItem.id === selectedItemId }"
+            :class="{ selected: listItem.id === selectedItemId }"
             @click="setSelectedItem(listItem)"
           >
             <v-list-item-content>
@@ -57,7 +61,9 @@
         order-sm-first
         order-md-last
       >
-        <the-card-initial-anlaufstelle-page v-if="selectedItemId === undefined" />
+        <the-card-initial-anlaufstelle-page
+          v-if="selectedItemId === undefined"
+        />
         <base-card-anlaufstelle v-else />
       </v-col>
     </v-row>
@@ -65,30 +71,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
-import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
-import { useGetContactPointListItems } from "@/features/commons/middleware/useGetContactPoints";
-import {
-  THE_ANLAUFSTELLEN_ROUTE_NAME
-} from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
-import { THE_ANGEBOTE_ROUTE_META_ICON } from "@/features/the-angebote/the-angebote.routes";
-import { THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT } from "@/features/the-additional/the-additional.routes";
+import { defineComponent, onBeforeUnmount, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router/composables";
-import TheCardInitialAnlaufstellePage
-  from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
-import BaseCardAnlaufstelle
-  from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-card-the-contact-point.vue";
+
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
+import { useGetContactPointListItems } from "@/features/commons/middleware/useGetContactPoints";
+import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
+import { THE_ERFAHRE_MEHR_ROUTE_META_INFO_TEXT } from "@/features/the-additional/the-additional.routes";
+import { THE_ANGEBOTE_ROUTE_META_ICON } from "@/features/the-angebote/the-angebote.routes";
+import BaseCardAnlaufstelle from "@/features/the-unterstuetzungsfinder/features/the-contact-points/base-card-the-contact-point.vue";
+import TheCardInitialAnlaufstellePage from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
+import { THE_ANLAUFSTELLEN_ROUTE_NAME } from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.routes";
 
 export default defineComponent({
   name: "TheAnlaufstellen",
-  components: { BackButton, BasePageContent, BaseCardAnlaufstelle, TheCardInitialAnlaufstellePage },
+  components: {
+    BackButton,
+    BasePageContent,
+    BaseCardAnlaufstelle,
+    TheCardInitialAnlaufstellePage,
+  },
   setup() {
     const router = useRouter();
     const route = useRoute();
     const selectedItemId = ref<string | undefined>(route.params.id);
-    const {isLoading, isError, data: listItems, error} = useGetContactPointListItems();
+    const {
+      isLoading,
+      isError,
+      data: listItems,
+      error,
+    } = useGetContactPointListItems();
 
     const handleIdChange = (newId: string | undefined) => {
       if (newId) {
@@ -102,7 +115,7 @@ export default defineComponent({
           }
         }
       }
-    }
+    };
 
     watch(isLoading, (current, previous) => {
       if (previous === true && current === false) {
@@ -110,11 +123,14 @@ export default defineComponent({
       }
     });
 
-    const unwatch = watch(() => route.params.id, newId => {
-      if (!isLoading.value) {
-        handleIdChange(newId);
+    const unwatch = watch(
+      () => route.params.id,
+      (newId) => {
+        if (!isLoading.value) {
+          handleIdChange(newId);
+        }
       }
-    });
+    );
 
     onBeforeUnmount(() => {
       unwatch();
@@ -125,11 +141,11 @@ export default defineComponent({
       if (value?.id) {
         router.push({ path: "/anlaufstellen/" + selectedItemId.value });
       }
-    }
+    };
 
     const back = () => {
       router.push("/");
-    }
+    };
 
     return {
       name: THE_ANLAUFSTELLEN_ROUTE_NAME,
@@ -142,12 +158,10 @@ export default defineComponent({
       selectedItemId,
       setSelectedItem,
       back,
-    }
+    };
   },
-})
-
+});
 </script>
-
 
 <style scoped>
 /* custom scrollbar */

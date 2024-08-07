@@ -1,19 +1,17 @@
-import {LinkModel} from "@/features/commons/types/link-model.type";
+import { LinkModel } from "@/features/commons/types/link-model.type";
 
-export const THE_ERFAHRE_MEHR_MODULE_NAME = 'theErfahreMehrStoreModule';
+export const THE_ERFAHRE_MEHR_MODULE_NAME = "theErfahreMehrStoreModule";
 
 export interface TheErfahreMehrModuleState {
-    erfahreMehr: LinkModel;
+  erfahreMehr: LinkModel;
 }
 
 export const theErfahreMehrStoreModule = {
-    namespaced: true,
-    state: {
-    } as TheErfahreMehrModuleState,
-    getters: {
-    }
+  namespaced: true,
+  state: {} as TheErfahreMehrModuleState,
+  getters: {},
 };
 
 function namespaced(toAddNamespace: string): string {
-    return THE_ERFAHRE_MEHR_MODULE_NAME + '/' + toAddNamespace;
+  return THE_ERFAHRE_MEHR_MODULE_NAME + "/" + toAddNamespace;
 }

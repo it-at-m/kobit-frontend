@@ -17,7 +17,11 @@
         <v-list
           v-if="!isLoading && listItems.length > 0"
           dense
-          :style="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? 'height:33vh;' : 'height:70vh;'"
+          :style="
+            $vuetify.breakpoint.xs || $vuetify.breakpoint.sm
+              ? 'height:33vh;'
+              : 'height:70vh;'
+          "
           style="overflow-y: scroll"
           class="custom-scrollbar"
           order-last
@@ -35,7 +39,7 @@
             three-line
             link
             :disabled="selectedItem !== undefined || isAddNew"
-            :class="{ 'selected': item === selectedItem }"
+            :class="{ selected: item === selectedItem }"
             @click="setSelectedItem(item)"
           >
             <v-list-item-content>
@@ -75,7 +79,8 @@
           @unselectItem="unselectItem"
         />
         <p v-else>
-          Klicken Sie auf eine Anlaufstelle, um sie zu bearbeiten oder fügen Sie eine neue Anlaufstelle hinzu.
+          Klicken Sie auf eine Anlaufstelle, um sie zu bearbeiten oder fügen Sie
+          eine neue Anlaufstelle hinzu.
         </p>
       </v-col>
     </v-row>
@@ -83,37 +88,45 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, onBeforeUnmount } from "vue";
-import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import { defineComponent, onBeforeUnmount, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router/composables";
+
+import EditContactPoint from "@/features/admin/features/the-contact-points/components/EditContactPoint.vue";
+import NewContactPointView from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
+import NewContactPoint from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
+import NewContactPointListItem from "@/features/admin/features/the-contact-points/components/NewContactPointListItem.vue";
+import { adminContactPointLabels } from "@/features/admin/features/the-contact-points/i18n";
 import {
   ADMIN_CONTACTPOINTS_ICON,
   ADMIN_CONTACTPOINTS_INFO_TEXT,
-  ADMIN_CONTACTPOINTS_ROUTE_NAME
+  ADMIN_CONTACTPOINTS_ROUTE_NAME,
 } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
-import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
-import { useRouter, useRoute } from "vue-router/composables";
+import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
 import BackButton from "@/features/commons/components/BackButton.vue";
-import NewContactPointListItem from "@/features/admin/features/the-contact-points/components/NewContactPointListItem.vue";
-import { adminContactPointLabels } from "@/features/admin/features/the-contact-points/i18n";
-import NewContactPointView from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
-import NewContactPoint from "@/features/admin/features/the-contact-points/components/NewContactPoint.vue";
-import EditContactPoint from "@/features/admin/features/the-contact-points/components/EditContactPoint.vue";
-import TheCardInitialAnlaufstellePage
-  from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
 import { useGetEditableContactPoints } from "@/features/commons/middleware/useGetContactPoints";
-
+import { ContactPointListItem } from "@/features/commons/types/ContactPoint";
+import TheCardInitialAnlaufstellePage from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-card-initial-the-contact-point-page.vue";
 
 export default defineComponent({
   name: "ContactPointsOverview",
   components: {
     TheCardInitialAnlaufstellePage,
     EditContactPoint,
-    NewContactPoint, NewContactPointView, NewContactPointListItem, BackButton, BasePageContent
+    NewContactPoint,
+    NewContactPointView,
+    NewContactPointListItem,
+    BackButton,
+    BasePageContent,
   },
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const { isLoading, isError, data: listItems, error } = useGetEditableContactPoints();
+    const {
+      isLoading,
+      isError,
+      data: listItems,
+      error,
+    } = useGetEditableContactPoints();
 
     const selectedItem = ref<ContactPointListItem>();
     const isAddNew = ref(false);
@@ -126,7 +139,7 @@ export default defineComponent({
       } else if (newId !== "hinzufuegen") {
         if (newId) {
           if (listItems.value) {
-            const item = listItems.value.find(item => item.id === newId);
+            const item = listItems.value.find((item) => item.id === newId);
             if (!item && !item == undefined && item == null) {
               router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
               router.go(0);
@@ -140,7 +153,7 @@ export default defineComponent({
           isAddNew.value = false;
         }
       }
-    }
+    };
 
     watch(isLoading, (current, previous) => {
       if (previous === true && current === false) {
@@ -148,11 +161,14 @@ export default defineComponent({
       }
     });
 
-    const unwatch = watch(() => route.params.id, newId => {
-      if (!isLoading.value) {
-        handleIdChange(newId);
+    const unwatch = watch(
+      () => route.params.id,
+      (newId) => {
+        if (!isLoading.value) {
+          handleIdChange(newId);
+        }
       }
-    });
+    );
 
     onBeforeUnmount(() => {
       unwatch();
@@ -166,29 +182,28 @@ export default defineComponent({
         router.push("/admin");
         router.go(0);
       }
-    }
+    };
 
     const unselectItem = () => {
       selectedItem.value = undefined;
       router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
-    }
+    };
 
     const setSelectedItem = (item: ContactPointListItem) => {
       selectedItem.value = item;
       router.push({ path: "/admin/anlaufstellen/" + selectedItem.value.id });
-    }
+    };
 
     const setIsAddNew = () => {
       isAddNew.value = true;
       router.push({ path: "/admin/anlaufstellen/hinzufuegen" });
       router.go(0);
-    }
-
+    };
 
     const cancelNew = () => {
       isAddNew.value = false;
       router.push({ name: ADMIN_CONTACTPOINTS_ROUTE_NAME });
-    }
+    };
 
     return {
       back,
@@ -205,14 +220,11 @@ export default defineComponent({
       icon: ADMIN_CONTACTPOINTS_ICON,
       name: ADMIN_CONTACTPOINTS_ROUTE_NAME,
       infoText: ADMIN_CONTACTPOINTS_INFO_TEXT,
-      label: adminContactPointLabels
-    }
-  }
-
-})
+      label: adminContactPointLabels,
+    };
+  },
+});
 </script>
-
-
 
 <style scoped>
 ::-webkit-scrollbar {

@@ -23,26 +23,27 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { ContentItem } from "@/features/commons/types/Item";
-import { UseUpdateContentItem } from "@/features/admin/features/the-additional/features/middelware/useContentItem";
 import { useRouter } from "vue-router/composables";
+
+import { UseUpdateContentItem } from "@/features/admin/features/the-additional/features/middelware/useContentItem";
+import { ContentItem } from "@/features/commons/types/Item";
 
 export default defineComponent({
   name: "SaveUpdateContentItem",
   props: {
     contentItemToSave: {
-      type: Object as () => ContentItem
+      type: Object as () => ContentItem,
     },
     id: {
-      type: String
+      type: String,
     },
     pageType: {
-      type: String
+      type: String,
     },
     disabled: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   setup(props, { emit }) {
     const { isLoading, mutateAsync } = UseUpdateContentItem();
@@ -54,11 +55,18 @@ export default defineComponent({
     };
 
     const save = () => {
-      if (!props.contentItemToSave?.content || props.contentItemToSave.content?.length === 0) {
+      if (
+        !props.contentItemToSave?.content ||
+        props.contentItemToSave.content?.length === 0
+      ) {
         emit("error", "Textbereich darf nicht leer sein.");
         return;
       }
-      mutateAsync({ id: props.id, pageType: props.pageType, contentItem: props.contentItemToSave })
+      mutateAsync({
+        id: props.id,
+        pageType: props.pageType,
+        contentItem: props.contentItemToSave,
+      })
         .then(() => {
           showSuccessSnackbar();
           setTimeout(() => {
@@ -68,22 +76,20 @@ export default defineComponent({
         .catch((error) => {
           const statusCode = error.response?.status;
           const fallbackErrorMessage = "An unexpected error occurred";
-          const customErrorMessage = error.response?.data?.message || fallbackErrorMessage;
+          const customErrorMessage =
+            error.response?.data?.message || fallbackErrorMessage;
 
           emit("error", customErrorMessage);
-
         });
     };
 
     return {
       isLoading,
       save,
-      showSnackbar
-    }
-  }
+      showSnackbar,
+    };
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -13,18 +13,16 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "LoadingSpinner",
   props: {
     isLoading: {
-      type: Boolean
-    }
-  }
-})
+      type: Boolean,
+    },
+  },
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

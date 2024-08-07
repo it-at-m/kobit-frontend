@@ -46,7 +46,9 @@
             lg="12"
             xl="12"
           >
-            <p class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center">
+            <p
+              class="text-xs-center text-sm-center text-md-center text-lg-center text-xl-center"
+            >
               <button
                 :class="{ active: filterLetter === '' }"
                 class="pa-2"
@@ -58,14 +60,17 @@
               <span
                 v-for="(letter, letterIndex) in glossaryAlphabet"
                 :key="letterIndex"
-              ><button
-                :key="letterIndex"
-                :class="{ active: filterLetter === letter }"
-                class="pa-2"
-                @click="filterLetter = letter"
-              >{{
-                letter
-              }}</button><span v-if="letterIndex + 1 !== glossaryAlphabet.length">·</span></span>
+                ><button
+                  :key="letterIndex"
+                  :class="{ active: filterLetter === letter }"
+                  class="pa-2"
+                  @click="filterLetter = letter"
+                >
+                  {{ letter }}</button
+                ><span v-if="letterIndex + 1 !== glossaryAlphabet.length"
+                  >·</span
+                ></span
+              >
             </p>
           </v-col>
         </v-row>
@@ -89,20 +94,20 @@
 </template>
 
 <script lang="ts">
-
 import { computed, defineComponent, ref } from "vue";
+import { useRouter } from "vue-router/composables";
+
+import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
 import TextList from "@/features/admin/features/the-additional/commons/TextList.vue";
+import {
+  ADMIN_GLOSSAR_ROUTE_META_ICON,
+  ADMIN_GLOSSAR_ROUTE_META_INFO_TEXT,
+  ADMIN_GLOSSAR_ROUTE_NAME,
+} from "@/features/admin/features/the-additional/features/the-glossar/the-glossar.routes";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
-import {
-  ADMIN_GLOSSAR_ROUTE_NAME,
-  ADMIN_GLOSSAR_ROUTE_META_ICON,
-  ADMIN_GLOSSAR_ROUTE_META_INFO_TEXT
-} from "@/features/admin/features/the-additional/features/the-glossar/the-glossar.routes";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import { useRouter } from "vue-router/composables";
-import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
 
 export default defineComponent({
   name: "TheGlossar",
@@ -110,7 +115,9 @@ export default defineComponent({
   setup() {
     const searchText = ref<string>("");
     const filterLetter = ref<string>("");
-    const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.GLOSSARY);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.GLOSSARY
+    );
     const router = useRouter();
     const addDialog = ref(false);
 
@@ -118,28 +125,28 @@ export default defineComponent({
       addDialog.value = true;
     }
     function back() {
-      router.push('/admin/erfahre-mehr');
+      router.push("/admin/erfahre-mehr");
     }
     const filteredGlossary = computed(() => {
-      return data.value?.textItemView?.filter((item) => {
-        return (
-          item.header
-            .toLowerCase()
-            .indexOf(searchText.value.toLowerCase()) != -1
-          &&
-          item.header
-            .toLowerCase()
-            .startsWith(filterLetter.value.toLowerCase()))
-          ;
-      }) ?? [];
+      return (
+        data.value?.textItemView?.filter((item) => {
+          return (
+            item.header.toLowerCase().indexOf(searchText.value.toLowerCase()) !=
+              -1 &&
+            item.header
+              .toLowerCase()
+              .startsWith(filterLetter.value.toLowerCase())
+          );
+        }) ?? []
+      );
     });
 
-    const glossaryAlphabet = computed(() => data.value?.textItemView
-      ?.map((it) =>
-        it.header.charAt(0).toUpperCase())
-      .sort()
-      .filter((it, i, self) => self.indexOf(it) == i)
-      ?? []
+    const glossaryAlphabet = computed(
+      () =>
+        data.value?.textItemView
+          ?.map((it) => it.header.charAt(0).toUpperCase())
+          .sort()
+          .filter((it, i, self) => self.indexOf(it) == i) ?? []
     );
 
     const pageType = computed(() => PageType.GLOSSARY);
@@ -158,12 +165,9 @@ export default defineComponent({
       name: ADMIN_GLOSSAR_ROUTE_NAME,
       pageType,
       back,
-      openAddDialog
+      openAddDialog,
     };
-  }
+  },
 });
-
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

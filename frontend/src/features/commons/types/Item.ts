@@ -16,5 +16,3 @@ export interface ItemWrapper {
   textItemView: TextItem[] | null; // Use an array of TextItem
   contentItemView: ContentItem[] | null;
 }
-
-  

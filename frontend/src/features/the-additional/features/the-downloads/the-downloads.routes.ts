@@ -6,12 +6,12 @@ export const DOWNLOADS_ROUTE_META_ICON = "mdi-download";
 export const DOWNLOADS_ROUTE_META_INFO_TEXT = "Hier finden Sie alle Downloads.";
 
 export const downloadsRoutes = {
-    name: DOWNLOADS_ROUTE_NAME,
-    path: DOWNLOADS_ROUTE_LINK,
-    component: TheDownloads,
-    meta: {
-        icon: DOWNLOADS_ROUTE_META_ICON,
-        infoText: DOWNLOADS_ROUTE_META_INFO_TEXT
-    },
-    color:"#FFDC00"
+  name: DOWNLOADS_ROUTE_NAME,
+  path: DOWNLOADS_ROUTE_LINK,
+  component: TheDownloads,
+  meta: {
+    icon: DOWNLOADS_ROUTE_META_ICON,
+    infoText: DOWNLOADS_ROUTE_META_INFO_TEXT,
+  },
+  color: "#FFDC00",
 };

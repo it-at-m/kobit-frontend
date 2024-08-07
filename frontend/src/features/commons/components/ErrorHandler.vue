@@ -1,9 +1,7 @@
 <template>
   <v-overlay :value="isError">
     <v-card>
-      <v-card-title>
-        Es ist ein Fehler aufgetreten!
-      </v-card-title>
+      <v-card-title> Es ist ein Fehler aufgetreten! </v-card-title>
       <v-card-text>
         <p v-if="message">
           {{ message }}
@@ -36,19 +34,17 @@ export default defineComponent({
   props: {
     isError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     message: {
-      type: String
+      type: String,
     },
     validationErrors: {
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

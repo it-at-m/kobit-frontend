@@ -1,3 +1,1 @@
-export default class Angebot {
-
-}
+export default class Angebot {}

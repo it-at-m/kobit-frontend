@@ -15,7 +15,6 @@
         class="ma-0 pa-0"
       />
 
-
       <v-col
         cols="7"
         sm="5"
@@ -55,12 +54,13 @@
 </template>
 
 <script lang="ts">
-import { ref, inject } from 'vue';
-import { DOWNLOAD_DATENSCHUTZ } from '@/core/services/downloads/download-provider.service';
-import PrivacyPolicy from '@/core/services/downloads/privacypolicy.vue';
-import { adminInformationLabels } from '@/features/admin/i18n';
-import UserInformationDialog from "@/features/admin/components/userinformation/UserInformationDialog.vue";
+import { inject, ref } from "vue";
 import { useRoute } from "vue-router/composables";
+
+import { DOWNLOAD_DATENSCHUTZ } from "@/core/services/downloads/download-provider.service";
+import PrivacyPolicy from "@/core/services/downloads/privacypolicy.vue";
+import UserInformationDialog from "@/features/admin/components/userinformation/UserInformationDialog.vue";
+import { adminInformationLabels } from "@/features/admin/i18n";
 
 export default {
   components: { PrivacyPolicy, UserInformationDialog },

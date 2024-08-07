@@ -58,20 +58,20 @@
 </template>
 
 <script lang="ts">
-
 import { computed, defineComponent, ref } from "vue";
+import { useRouter } from "vue-router/composables";
+
+import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
 import TextList from "@/features/admin/features/the-additional/commons/TextList.vue";
+import {
+  ADMIN_FAQ_ROUTE_META_ICON,
+  ADMIN_FAQ_ROUTE_META_INFO_TEXT,
+  ADMIN_FAQ_ROUTE_NAME,
+} from "@/features/admin/features/the-additional/features/the-faq/the-faq.routes";
 import BasePageContent from "@/features/commons/base-page-content/base-page-content.vue";
+import BackButton from "@/features/commons/components/BackButton.vue";
 import { useGetAdditionalContent } from "@/features/the-additional/common/middleware/AdditionalPageService";
 import { PageType } from "@/features/the-additional/common/model/PageType";
-import {
-  ADMIN_FAQ_ROUTE_NAME,
-  ADMIN_FAQ_ROUTE_META_ICON,
-  ADMIN_FAQ_ROUTE_META_INFO_TEXT
-} from "@/features/admin/features/the-additional/features/the-faq/the-faq.routes";
-import BackButton from "@/features/commons/components/BackButton.vue";
-import { useRouter } from "vue-router/composables";
-import AddDialog from "@/features/admin/features/the-additional/commons/AddTextItemDialog.vue";
 
 export default defineComponent({
   name: "TheFaq",
@@ -79,7 +79,9 @@ export default defineComponent({
   setup() {
     const searchText = ref<string>("");
     const filterLetter = ref<string>("");
-    const { isLoading, isError, data, error } = useGetAdditionalContent(PageType.FAQ);
+    const { isLoading, isError, data, error } = useGetAdditionalContent(
+      PageType.FAQ
+    );
     const router = useRouter();
     const addDialog = ref(false);
 
@@ -87,28 +89,28 @@ export default defineComponent({
       addDialog.value = true;
     }
     function back() {
-      router.push('/admin/erfahre-mehr');
+      router.push("/admin/erfahre-mehr");
     }
     const filteredFaqy = computed(() => {
-      return data.value?.textItemView?.filter((item) => {
-        return (
-          item.header
-            .toLowerCase()
-            .indexOf(searchText.value.toLowerCase()) != -1
-          &&
-          item.header
-            .toLowerCase()
-            .startsWith(filterLetter.value.toLowerCase()))
-          ;
-      }) ?? [];
+      return (
+        data.value?.textItemView?.filter((item) => {
+          return (
+            item.header.toLowerCase().indexOf(searchText.value.toLowerCase()) !=
+              -1 &&
+            item.header
+              .toLowerCase()
+              .startsWith(filterLetter.value.toLowerCase())
+          );
+        }) ?? []
+      );
     });
 
-    const faqyAlphabet = computed(() => data.value?.textItemView
-      ?.map((it) =>
-        it.header.charAt(0).toUpperCase())
-      .sort()
-      .filter((it, i, self) => self.indexOf(it) == i)
-      ?? []
+    const faqyAlphabet = computed(
+      () =>
+        data.value?.textItemView
+          ?.map((it) => it.header.charAt(0).toUpperCase())
+          .sort()
+          .filter((it, i, self) => self.indexOf(it) == i) ?? []
     );
 
     const pageType = computed(() => PageType.FAQ);
@@ -127,12 +129,9 @@ export default defineComponent({
       infoText: ADMIN_FAQ_ROUTE_META_INFO_TEXT,
       name: ADMIN_FAQ_ROUTE_NAME,
       back,
-      openAddDialog
+      openAddDialog,
     };
-  }
+  },
 });
-
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <v-col
-    v-if="! isGivenAnswersEmpty"
+    v-if="!isGivenAnswersEmpty"
     cols="12"
     sm="12"
     md="12"
@@ -23,7 +23,9 @@
           class="mb-1"
           elevation="3"
         >
-          <v-card-title><h5>{{ element.questionAnswered }}</h5></v-card-title>
+          <v-card-title
+            ><h5>{{ element.questionAnswered }}</h5></v-card-title
+          >
           <v-card-subtitle>{{ element.answerValue }}</v-card-subtitle>
         </v-card>
       </v-col>
@@ -40,33 +42,32 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from "vue";
+import { defineComponent, PropType } from "vue";
+
 import BaseHeadLine from "@/features/the-unterstuetzungsfinder/components/base-head-line.vue";
-import {QuestionAndAnswer} from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 import DownloadPDF from "@/features/the-unterstuetzungsfinder/features/the-mail/components/download-pdf.vue";
 import Conversation from "@/features/the-unterstuetzungsfinder/types/conversation.type";
+import { QuestionAndAnswer } from "@/features/the-unterstuetzungsfinder/types/QuestionAndAnswer";
 
 export default defineComponent({
   name: "GivenAnswers",
-  components: {DownloadPDF, BaseHeadLine},
+  components: { DownloadPDF, BaseHeadLine },
   props: {
     isGivenAnswersEmpty: {
-      type: Boolean
+      type: Boolean,
     },
     labels: {
       //typeof I18nLabel
-      type: Object
+      type: Object,
     },
     givenAnswers: {
-      type: Array as PropType<Array<QuestionAndAnswer>>
+      type: Array as PropType<Array<QuestionAndAnswer>>,
     },
     convo: {
-      type: Object as () => Conversation
-    }
-  }
+      type: Object as () => Conversation,
+    },
+  },
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

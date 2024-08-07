@@ -22,22 +22,19 @@
 </template>
 
 <script lang="ts">
-
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "BackButton",
   props: {
     text: {
       type: String,
-      default: "Zurück"
+      default: "Zurück",
     },
     callback: {
-      type: Function
+      type: Function,
     },
-  }
+  },
 });
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

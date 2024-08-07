@@ -7,7 +7,9 @@
       :href="item.link"
     >
       <v-list-item-content>
-        <v-list-item-title><b>{{ item.header }}</b></v-list-item-title>
+        <v-list-item-title
+          ><b>{{ item.header }}</b></v-list-item-title
+        >
         <v-list-item-subtitle>
           <p class="item-entry">
             {{ item.entry }}
@@ -19,8 +21,7 @@
 </template>
 
 <script lang="ts">
-
-import { defineComponent, computed } from "vue";
+import { computed, defineComponent } from "vue";
 
 export default defineComponent({
   name: "TextList",
@@ -28,21 +29,22 @@ export default defineComponent({
     items: {
       //type of TextItem
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props) {
     const sortedItems = computed(() => {
       return [...props.items].sort((a, b) => {
-        return a.header.localeCompare(b.header, undefined, { sensitivity: 'base' });
+        return a.header.localeCompare(b.header, undefined, {
+          sensitivity: "base",
+        });
       });
     });
 
     return {
-      sortedItems
+      sortedItems,
     };
-
-  }
+  },
 });
 </script>
 

@@ -22,22 +22,23 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import {I18nLabel} from "@/core/core.translation";
+import { defineComponent } from "vue";
+
+import { I18nLabel } from "@/core/core.translation";
 
 export default defineComponent({
   name: "NewContactPointListItem",
   props: {
     label: {
-      type: Object as () => I18nLabel
+      type: Object as () => I18nLabel,
     },
     setIsAddNew: {
-      type: Function
+      type: Function,
     },
     disabled: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 });
 </script>

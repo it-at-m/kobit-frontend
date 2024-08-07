@@ -3,21 +3,19 @@
     <v-stepper v-model="currentStep">
       <v-stepper-header>
         <v-stepper-step
-          v-for="(position) in lastStep"
+          v-for="position in lastStep"
           :key="position"
           :complete="currentStep > position"
           :step="String(position)"
           :color="stepColor(position)"
           complete-icon="mdi-close"
-          :class="{ 'active' : position === currentStep}"
+          :class="{ active: position === currentStep }"
         >
           Schritt
         </v-stepper-step>
         <v-divider v-if="!step.hasNext" />
       </v-stepper-header>
-      <v-stepper-content
-        :step="currentStep"
-      >
+      <v-stepper-content :step="currentStep">
         <v-card
           class="mb-10"
           min-height="125px"
@@ -106,37 +104,41 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
-import {useGetLastStep} from '../middleware/StepService';
-import {Step} from '../StepView';
+import { defineComponent } from "vue";
+
+import { useGetLastStep } from "../middleware/StepService";
+import { Step } from "../StepView";
 
 export default defineComponent({
-  name: 'StepperHeader',
+  name: "StepperHeader",
   props: {
     step: {
-      type: Step
+      type: Step,
     },
     setIsFinished: {
-      type: Function
+      type: Function,
     },
     nextStep: {
-      type: Function
+      type: Function,
     },
     currentStep: {
-      type: Number
-    }
+      type: Number,
+    },
   },
   setup(props) {
-    const {isLoading, isError, data} = useGetLastStep();
+    const { isLoading, isError, data } = useGetLastStep();
 
     function stepColor(stepCount: number) {
-      return props.currentStep === stepCount ? 'secondary' : 'red darke-3';
+      return props.currentStep === stepCount ? "secondary" : "red darke-3";
     }
 
     return {
-      isLoading, lastStep: data, isError, stepColor
+      isLoading,
+      lastStep: data,
+      isError,
+      stepColor,
     };
-  }
+  },
 });
 </script>
 

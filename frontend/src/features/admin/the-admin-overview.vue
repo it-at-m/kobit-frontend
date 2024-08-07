@@ -45,21 +45,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
-import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
+import { defineComponent, ref } from "vue";
+
+import { adminUFinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
+import { adminExperienceMoreRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminContactPointsRoutes } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminBaseHeadLineLabels } from "@/features/admin/i18n";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
-
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
-import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
-import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
-
-
-import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
+import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
+import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
 
 export default defineComponent({
   name: "AdminOverview",
-  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
+  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain },
   setup() {
     const isInfoDialogActive = ref(false);
 
@@ -67,23 +65,19 @@ export default defineComponent({
       isInfoDialogActive.value = false;
     }
 
-
     const anlaufstellen = {
-    ...adminContactPointsRoutes,
-    path: adminContactPointsRoutes.path.replace('/:id?', '/')
-     };
+      ...adminContactPointsRoutes,
+      path: adminContactPointsRoutes.path.replace("/:id?", "/"),
+    };
 
     return {
       labels: adminBaseHeadLineLabels,
       anlaufstellen: adminContactPointsRoutes,
       unterstuetzungsfinder: adminUFinderRoutes,
-      erfahreMehr: adminExperienceMoreRoutes
-    }
-  }
-})
+      erfahreMehr: adminExperienceMoreRoutes,
+    };
+  },
+});
 </script>
 
-<style scoped>
-
-
-</style>
+<style scoped></style>

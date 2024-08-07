@@ -10,8 +10,9 @@
           Soll die Definition wirklich gelöscht werden?
         </v-card-title>
         <v-card-text>
-          Das Löschen der Definition kann nicht rückgängig gemacht werden. Eine Löschung kann nur
-          durch das erneute Anlegen der Definition bereinigt werden.
+          Das Löschen der Definition kann nicht rückgängig gemacht werden. Eine
+          Löschung kann nur durch das erneute Anlegen der Definition bereinigt
+          werden.
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -36,20 +37,27 @@
       color="green darken-1"
       bottom
     >
-      <p class="pa-0 ma-0">
-        {{ snackbarMessage }} <v-icon>mdi-check</v-icon>
-      </p>
+      <p class="pa-0 ma-0">{{ snackbarMessage }} <v-icon>mdi-check</v-icon></p>
     </v-snackbar>
   </v-row>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, PropType, ref, computed } from "vue";
-import { TextItem } from "@/features/commons/types/Item";
-import { VDialog, VCard, VCardTitle, VCardText, VCardActions, VSpacer, VBtn } from "vuetify/lib";
-import { UseDeleteTextItem } from "../features/middelware/useTextItem";
+import { computed, defineComponent, PropType, ref, watch } from "vue";
 import { useRouter } from "vue-router/composables";
+import {
+  VBtn,
+  VCard,
+  VCardActions,
+  VCardText,
+  VCardTitle,
+  VDialog,
+  VSpacer,
+} from "vuetify/lib";
+
+import { TextItem } from "@/features/commons/types/Item";
 import { PageType } from "@/features/the-additional/common/model/PageType";
+import { UseDeleteTextItem } from "../features/middelware/useTextItem";
 
 export default defineComponent({
   name: "DeleteDialog",
@@ -64,8 +72,8 @@ export default defineComponent({
     },
     pageType: {
       type: String as PropType<PageType>,
-      default: PageType.GLOSSARY
-    }
+      default: PageType.GLOSSARY,
+    },
   },
   setup(props, { emit }) {
     const localShowDialog = ref(props.showDialog);
@@ -89,7 +97,12 @@ export default defineComponent({
         emit("delete", props.currentItem);
       }
       emit("update:showDialog", false);
-      mutateAsync({ id: props.currentItem.id, pageType: props.currentItem.pageType, link: props.currentItem.link,  textItem: props.currentItem })
+      mutateAsync({
+        id: props.currentItem.id,
+        pageType: props.currentItem.pageType,
+        link: props.currentItem.link,
+        textItem: props.currentItem,
+      })
         .then(() => {
           isSnackbarActive.value = true;
           setTimeout(() => {
@@ -106,7 +119,6 @@ export default defineComponent({
           }, 1000); // delay for 1 second
         })
         .catch(() => emit("error"));
-
     };
 
     const snackbarMessage = computed(() => {
