@@ -199,17 +199,6 @@
       </v-row>
       <v-row>
         <v-col
-          offset-xl="6"
-        >
-          <v-checkbox
-            v-if="isMoreThenOneRecipient"
-            v-model="email.releasedFromConfidentiality"
-            :label="labels.confidentiality"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
           sm="12"
           md="2"
           lg="2"
