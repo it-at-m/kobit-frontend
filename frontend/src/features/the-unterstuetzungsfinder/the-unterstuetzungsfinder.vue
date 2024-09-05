@@ -95,48 +95,6 @@
                           {{ answer.germanDescription }}
                         </p>
                       </v-col>
-                      <v-col
-                        cols="1"
-                        sm="1"
-                        class="pl-0 pr-0"
-                        @click="selectedToolTip !== answerIndex ? openToolTip(answerIndex) : closeToolTips()"
-                      >
-                        <v-row v-if="answer.shortDescription">
-                          <v-col cols="12">
-                            <p
-                              v-if="selectedToolTip !== answerIndex"
-                              style="text-align: right;"
-                            >
-                              <i class="mdi mdi-information secondary--text" />
-                            </p>
-                            <p
-                              v-if="selectedToolTip === answerIndex"
-                              style="text-align: right;"
-                            >
-                              <i class="mdi mdi-close secondary--text" />
-                            </p>
-                          </v-col>
-                          <v-col
-                            cols="12"
-                            class="mt-0 mb-0 pt-0 pb-0"
-                            style="height:0 !important;"
-                          >
-                            <v-tooltip
-                              v-if="selectedToolTip === answerIndex"
-                              v-model="show"
-                              bottom
-                            >
-                              <template v-slot:activator="{ on, attrs }">
-                                <span
-                                  v-bind="attrs"
-                                  v-on="on"
-                                />
-                              </template>
-                              <p> {{ answer.shortDescription }}</p>
-                            </v-tooltip>
-                          </v-col>
-                        </v-row>
-                      </v-col>
                     </v-row>
                   </v-card-title>
                   <v-card-actions class="pt-0 mt-0 pb-0 mb-0">
