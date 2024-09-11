@@ -28,7 +28,9 @@
             color="secondary"
             link
           >
-            <v-card-title>{{ item.name }}</v-card-title>
+            <v-card-title class="title">
+              {{ item.name }}
+            </v-card-title>
             <v-card-text class="text--text">
               {{ item.meta.infoText }}
             </v-card-text>
@@ -43,7 +45,7 @@
                     cols="12"
                     class="ma-0 pa-0 text-right text-bottom fill-height"
                   >
-                    <p class="secondary--text ma-0 pa-0">
+                    <p class="text--secondary ma-0 pa-0">
                       <i class="mdi mdi-menu-right" />
                     </p>
                   </v-col>
@@ -93,5 +95,11 @@ export default class BaseLinkCard extends Vue {
     right: 0;
     padding: 2px 5px;
     font-size: 28px;
+}
+.title{
+  white-space: pre-wrap !important;
+  text-indent: 0em !important;
+  word-break: keep-all;
+  line-height: normal;
 }
 </style>

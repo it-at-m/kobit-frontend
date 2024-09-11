@@ -14,29 +14,44 @@
         <v-container>
           <v-row>
             <v-col
+              v-if="adminInfoLoaded"
               cols="12"
               sm="12"
               md="12"
-              lg="4"
+              class="text-center"
             >
-              <base-link-card :item="anlaufstellen" />
+              <span v-if="isCentralAdmin">Sie sind Zentraler Admin.</span>
+              <span v-else>Sie sind Berreichsadmin.</span>
             </v-col>
-            <v-col
-              cols="12"
-              sm="12"
-              md="12"
-              lg="4"
-            >
-              <base-link-card :item="unterstuetzungsfinder" />
-            </v-col>
-            <v-col
-              cols="12"
-              sm="12"
-              md="12"
-              lg="4"
-            >
-              <base-link-card :item="erfahreMehr" />
-            </v-col>
+            <template>
+              <v-col
+                v-if="adminInfoLoaded"
+                cols="12"
+                sm="12"
+                md="12"
+                :lg="isCentralAdmin ? 4 : 6"
+              >
+                <base-link-card :item="anlaufstellen" />
+              </v-col>
+              <v-col
+                v-if="adminInfoLoaded"
+                cols="12"
+                sm="12"
+                md="12"
+                :lg="isCentralAdmin ? 4 : 6"
+              >
+                <base-link-card :item="unterstuetzungsfinder" />
+              </v-col>
+              <v-col
+                v-if="isCentralAdmin"
+                cols="12"
+                sm="12"
+                md="12"
+                lg="4"
+              >
+                <base-link-card :item="erfahreMehr" />
+              </v-col>
+            </template>
           </v-row>
         </v-container>
       </v-col>
@@ -45,45 +60,46 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import { defineComponent, ref } from "vue";
 import BaseHeadlineMain from "@/features/the-main/components/base-headline-main.vue";
 import TheRandomQuoteGenerator from "@/features/random-quote-generator/the-random-quote-generator.vue";
 import BaseLinkCard from "@/features/commons/base-link-card/base-link-card.vue";
 
-import {adminExperienceMoreRoutes} from "@/features/admin/features/the-additional/the-additional-overview-routes";
-import {adminBaseHeadLineLabels} from "@/features/admin/i18n";
-import {adminContactPointsRoutes} from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminAdditionalRoutes } from "@/features/admin/features/the-additional/the-additional-overview-routes";
+import { adminBaseHeadLineLabels } from "@/features/admin/i18n";
+import { adminContactPointsRoutes } from "@/features/admin/features/the-contact-points/the-contact-points-routes";
+import { adminUnterstuetzungsfinderRoutes } from "@/features/admin/components/u-finder/u-finder.routes";
 
-
-import {adminUFinderRoutes} from "@/features/admin/components/u-finder/u-finder.routes";
+import { getAdminUserInfo } from "@/features/admin/components/userinformation/api/AdminInfoClient";
 
 export default defineComponent({
   name: "AdminOverview",
-  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain},
+  components: { BaseLinkCard, TheRandomQuoteGenerator, BaseHeadlineMain },
   setup() {
-    const isInfoDialogActive = ref(false);
+    const isCentralAdmin = ref<null | boolean>(null);
+    const adminInfoLoaded = ref(false);
 
-    function closeInfoDialog() {
-      isInfoDialogActive.value = false;
-    }
-
+    getAdminUserInfo().then((info) => {
+      isCentralAdmin.value = info.isCentralAdmin;
+      adminInfoLoaded.value = true;
+    });
 
     const anlaufstellen = {
-    ...adminContactPointsRoutes,
-    path: adminContactPointsRoutes.path.replace('/:id?', '/')
-     };
+      ...adminContactPointsRoutes,
+      path: adminContactPointsRoutes.path.replace('/:id?', '/')
+    };
 
     return {
       labels: adminBaseHeadLineLabels,
-      anlaufstellen: adminContactPointsRoutes,
-      unterstuetzungsfinder: adminUFinderRoutes,
-      erfahreMehr: adminExperienceMoreRoutes
-    }
+      anlaufstellen,
+      unterstuetzungsfinder: adminUnterstuetzungsfinderRoutes,
+      erfahreMehr: adminAdditionalRoutes,
+      isCentralAdmin,
+      adminInfoLoaded
+    };
   }
-})
+});
 </script>
 
 <style scoped>
-
-
 </style>

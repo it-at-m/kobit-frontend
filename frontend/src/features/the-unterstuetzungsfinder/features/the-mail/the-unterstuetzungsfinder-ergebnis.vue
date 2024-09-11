@@ -15,6 +15,9 @@
             v-if="convo.contactPoints.length !== 0"
             vertical
             color="secondary"
+            class="black--text"
+            active-class="active-tab-class"
+            background-color="#f1f1f1"
           >
             <template v-for="anlaufstelle in convo.contactPoints">
               <v-tab
@@ -36,8 +39,7 @@
                       :key="contact.contactPointId"
                     >
                       <v-btn
-                        text
-                        color="secondary"
+                        flat
                         @click="addAddress(contact, anlaufstelle.shortCut)"
                       >
                         + {{ contact.email }}
@@ -57,7 +59,7 @@
             class="black--text"
             elevation="4"
             type="warning"
-            color="orange"
+            color="#eabc00"
           >
             {{ multiRecipientsDisclaimer }}
           </v-alert>
@@ -69,7 +71,7 @@
             v-if="isPrivacyDisclaimerAlertActive"
             elevation="4"
             type="warning"
-            color="orange"
+            color="#eabc00"
             class="black--text"
           >
             <v-row>
@@ -177,7 +179,7 @@
               dismissible
               class="black--text"
               type="info"
-              color="orange"
+              color="#eabc00"
             >
               {{ labels.textFieldAlert }}
             </v-alert>
@@ -197,26 +199,14 @@
       </v-row>
       <v-row>
         <v-col
-          offset-xl="6"
-        >
-          <v-checkbox
-            v-if="isMoreThenOneRecipient"
-            v-model="email.releasedFromConfidentiality"
-            :label="labels.confidentiality"
-          />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
           sm="12"
           md="2"
           lg="2"
           xl="2"
         >
           <v-btn
-            color="secondary"
-            text
             outlined
+            tonal
             :aria-label="finderLabel.restartFinder"
             @click="restart"
           >
@@ -233,7 +223,8 @@
           offset-xl="1"
         >
           <v-btn
-            class="justify-end"
+            color="secondary"
+            class="justify-end black--text"
             :disabled="recipients.length === 0 || !email.subject || !email.message"
             @click="sendMail({from: mailAddress.emailAddress, to: recipients.map(it => it.contact.email), ...email})"
           >
@@ -285,7 +276,7 @@ export default defineComponent({
     const isPrivacyDisclaimerAlertActive = ref(false);
     const needToSendMail = ref(false)
     const recipients = ref<Recipient[]>([]);
-    const isMoreThenOneRecipient = computed(() => recipients.value.length > 1);
+    const isMoreThenOneRecipient = ref<boolean>(false);
     const multipleRecipientsDialog = ref(false);
     const email = ref<Email>({});
 
@@ -304,7 +295,11 @@ export default defineComponent({
       if (recipients.value.find(it => it.contact.email === value.email)) {
         //do nothing because contact already added
       } else {
-        recipients.value.push({contact: value, shortCut: shortCut});
+        if (recipients.value.length > 0) {
+          isMoreThenOneRecipient.value = true
+        }
+        // recipients.value.push({contact: value, shortCut: shortCut});
+        recipients.value = [{contact: value, shortCut: shortCut}]
       }
     }
 
@@ -379,5 +374,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.active-tab-class {
+  color: black;
+  font-weight: 500;
+}
 </style>

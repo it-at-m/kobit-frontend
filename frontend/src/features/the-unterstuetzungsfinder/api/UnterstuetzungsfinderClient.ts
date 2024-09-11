@@ -4,3 +4,7 @@ import Conversation from "@/features/the-unterstuetzungsfinder/types/conversatio
 export const nextStep = (competence: string[]) => {
     return httpPostJson<Conversation>("/unterstuetzungsfinder/next", competence);
 };
+
+export const nextStepAll = (competence: string[]) => {
+    return httpPostJson<Conversation>("/unterstuetzungsfinder/nextAll", competence);
+};

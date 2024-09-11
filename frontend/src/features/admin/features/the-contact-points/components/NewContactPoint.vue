@@ -24,6 +24,7 @@
               xl="6"
             >
               <v-text-field
+                color="secondary"
                 :value="newContactPoint?.name"
                 label="Name der Anlaufstelle"
                 :rules="[v => !!v || 'Name ist erforderlich', v => (v && v.length >= 5 && v.length <= 100) || 'Der Name muss 5 bis 100 Zeichen lang sein.']"
@@ -40,6 +41,7 @@
               xl="3"
             >
               <v-text-field
+                color="secondary"
                 :value="newContactPoint?.shortCut"
                 label="Kurzbezeichnung der Anlaufstelle"
                 :rules="[v => !!v || 'Kurzbezeichnung ist erforderlich', v => (v && v.length >= 3 && v.length <= 10) || 'Die Kurzbezeichnung muss 3 bis 10 Zeichen lang sein.']"
@@ -61,6 +63,7 @@
                 multiple
                 persistent-hint
                 small-chips
+                :items="referatItems"
                 :disabled="!isCentralAdmin"
                 @input="changeDepartment"
               >
@@ -152,7 +155,8 @@
             <v-col cols="6">
               <v-textarea
                 id="description-textarea"
-                :value="newContactPoint.description"
+                color="secondary"
+                :value="newContactPoint?.description"
                 label="Beschreibung"
                 rows="12"
                 :rules="[v => !!v || 'Beschreibung ist erforderlich', v => (v && v.length <= 2000) || 'Die Beschreibung muss weniger als 2000 Zeichen umfassen']"
@@ -193,6 +197,7 @@
             >
               <v-text-field
                 v-model="contact.email"
+                color="secondary"
                 label="E-Mail"
                 readonly
               />
@@ -252,6 +257,7 @@
             >
               <v-text-field
                 v-model="link.name"
+                color="secondary"
                 label="Titel"
                 readonly
               />
@@ -264,6 +270,7 @@
             >
               <v-text-field
                 v-model="link.url"
+                color="secondary"
                 label="URL"
                 readonly
               />
@@ -378,6 +385,9 @@ export default defineComponent({
   },
   data: () => ({
     isFormValid: false,
+    referatItems: [
+      "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KULT", "MOR", "POR", "RAW", "RBS", "RKU", "PLAN", "SOZ", "SKA"
+    ]
   }),
   setup() {
     const newContactPoint = ref<ContactPoint>();
@@ -401,7 +411,7 @@ export default defineComponent({
         newContactPoint.value = { ...newContactPoint.value, departments: [department] } as ContactPoint;
         isCentralAdmin.value = newValue.isCentralAdmin;
       }
-    })
+    }, { immediate: true })
 
     const computeMarkdown = computed(() => marked.parse(newContactPoint.value?.description || ""));
 

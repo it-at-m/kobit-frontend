@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+
     "init": "npm install",
     "serve": "vue-cli-service serve --port 8081 --openssl-legacy-provider",
-    "build": "vue-cli-service lint --fix && vue-cli-service build --openssl-legacy-provider",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint --fix && vue-cli-service build --openssl-legacy-provider",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint --fix",
     "create-feature": "bash ./scripts/createFeature.sh"
