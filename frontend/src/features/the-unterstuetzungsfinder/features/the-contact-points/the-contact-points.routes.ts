@@ -1,6 +1,7 @@
 import TheAnlaufstellen from "@/features/the-unterstuetzungsfinder/features/the-contact-points/the-contact-points.vue";
 
 export const THE_ANLAUFSTELLEN_ROUTE_NAME = "Anlaufstellen";
+export const THE_ANLAUFSTELLEN_ROUTE_INFO_TEXT = "Hier finden Sie Informationen zu allen Anlaufstellen.";
 export const THE_ANLAUFSTELLEN_ROUTE_PATH = `/anlaufstellen/:id?`;
 export const THE_ANLAUFSTELLEN_ROUTE_META_ICON = "mdi-card-account-details-outline";
 
@@ -8,6 +9,7 @@ export const THE_ANLAUFSTELLEN_ROUTE_META_ICON = "mdi-card-account-details-outli
 export const theAnlaufstellenRoutes = {
     name: THE_ANLAUFSTELLEN_ROUTE_NAME,
     path: THE_ANLAUFSTELLEN_ROUTE_PATH,
+    infoTest: THE_ANLAUFSTELLEN_ROUTE_INFO_TEXT,
     component: TheAnlaufstellen,
     props: true, // Pass route.params to props
     meta: {
