@@ -128,3 +128,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE) file for more informat
 ## Contact
 
 it@M - opensource@muenchen.de
+
+## Old Screenshot
+![kobit_1](https://github.com/user-attachments/assets/2589be09-c1f5-4164-a54c-6e7efa42cf9c)
+![kobit_admin_1](https://github.com/user-attachments/assets/fed65357-87e7-43f7-9686-8974d90c9328)
