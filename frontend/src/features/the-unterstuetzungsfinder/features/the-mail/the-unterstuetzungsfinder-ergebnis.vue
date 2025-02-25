@@ -126,7 +126,7 @@
                 @click="select"
                 @click:close="unselect(item)"
               >
-                {{ item.shortCut }}
+                {{ item.email }}
               </v-chip>
             </template>
           </v-combobox>
