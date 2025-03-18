@@ -436,7 +436,7 @@ export default defineComponent({
   data: () => ({
     isFormValid: false,
     referatItems: [
-        "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KULT", "MOR", "POR", "RAW", "RBS", "RKU", "PLAN", "SOZ", "SKA"
+        "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KUL", "MOR", "POR", "RAW", "RBS", "RKU", "PLAN", "SOZ", "SKA"
     ]
   }),
   setup(props) {
@@ -449,7 +449,7 @@ export default defineComponent({
     const errorMessage = ref('');
     const writableContactPoint = ref<ContactPoint>();
 
-    
+
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;
