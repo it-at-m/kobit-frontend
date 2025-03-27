@@ -45,7 +45,7 @@
                     cols="12"
                     class="ma-0 pa-0 text-right text-bottom fill-height"
                   >
-                    <p class="secondary--text ma-0 pa-0">
+                    <p class="text--secondary ma-0 pa-0">
                       <i class="mdi mdi-menu-right" />
                     </p>
                   </v-col>

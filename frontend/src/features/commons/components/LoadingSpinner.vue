@@ -2,10 +2,11 @@
   <div
     v-if="isLoading"
     class="v-progress-linear"
+    style="position: absolute; left: 45%; top: 45%; z-index: 1000"
   >
     <v-progress-circular
       :size="150"
-      :width="8"
+      :width="10"
       color="secondary"
       indeterminate
     />

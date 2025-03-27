@@ -1,5 +1,8 @@
-spring:
+logging:
+  level:
+    root: warn
 
+spring:
   # Define the local keycloak realm here
   realm: ${REALM}
 
@@ -16,6 +19,8 @@ spring:
             allowedOrigins:
               - "http://localhost:8081"
               - "http://127.0.0.1:8081"
+            allowed-origin-patterns:
+              - "https://*.muenchen.de"
             allowedMethods: "*"
             allowedHeaders: "*"
             allowCredentials: true

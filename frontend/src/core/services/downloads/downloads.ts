@@ -8,7 +8,7 @@ export const allDownloads = [
   {
     name: "Datenschutzerklärung",
     description: "Informationen zum Datenschutz",
-    filename: "KoBITApp_Formblatt_Datenschutzerklärung.pdf"
+    filename: "UFO App_Formblatt_Datenschutzerklärung.pdf"
   },
 
 ];

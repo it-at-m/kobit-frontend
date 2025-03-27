@@ -63,6 +63,7 @@
                 multiple
                 persistent-hint
                 small-chips
+                :items="referatItems"
                 :disabled="!isCentralAdmin"
                 @input="changeDepartment"
               >
@@ -384,6 +385,9 @@ export default defineComponent({
   },
   data: () => ({
     isFormValid: false,
+    referatItems: [
+      "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KUL", "MOR", "POR", "RAW", "RBS", "RKU", "PLA", "SOZ", "SKA"
+    ]
   }),
   setup() {
     const newContactPoint = ref<ContactPoint>();

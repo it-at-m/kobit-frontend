@@ -43,9 +43,9 @@ export default defineComponent({
 
       pdf.setFontSize(17.5);
 
-      pdf.text("Ihre Antworten im Unterstützungsfinder der KoBITApp", 80, 80);
+      pdf.text("Ihre Antworten im Unterstützungsfinder der UFO App", 80, 80);
 
-      pdf.text("Ihr KoBIT-Fragebaum:", 80, 125);
+      pdf.text("Ihr UFO-Fragebaum:", 80, 125);
       pdf.line(80, 130, 970, 130);
 
 
@@ -81,7 +81,7 @@ export default defineComponent({
       pdf.line(80, 80 + pdfSpacer, 970, 80 + pdfSpacer);
       pdfSpacer = pdfSpacer + 5;
       pdf.text("Weitere Informationen und Hilfestellungen finden Sie unter ", 80, 100 + pdfSpacer);
-      pdf.textWithLink('https://kobit.muenchen.de/#/erfahre-mehr', 537, 100 + pdfSpacer, { url: 'https://kobit.muenchen.de/#/erfahre-mehr' });
+      pdf.textWithLink('https://ufo.muenchen.de/#/erfahre-mehr', 537, 100 + pdfSpacer, { url: 'https://ufo.muenchen.de/#/erfahre-mehr' });
       pdf.text(".", 858, 100 + pdfSpacer);
 
       pdf.setFontSize(12);
@@ -91,10 +91,10 @@ export default defineComponent({
       pdf.text(today, 915, 30);
       pdf.text(today, 915, 1455);
 
-      pdf.text("KoBIT. Digital. Erleben.", 80, 30);
-      pdf.text("KoBIT. Digital. Erleben.", 80, 1455);
+      pdf.text("UFO. Digital. Erleben.", 80, 30);
+      pdf.text("UFO. Digital. Erleben.", 80, 1455);
 
-      pdf.save("kobit_fragebogen.pdf");
+      pdf.save("ufo_fragebogen.pdf");
 
     }
 

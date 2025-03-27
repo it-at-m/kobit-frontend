@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="backgroundColor">
     <transition mode="out-in">
       <the-app-bar key="the-app-bar" />
     </transition>
@@ -39,6 +39,9 @@ export default class App extends Vue{
 <style>
 .v-main {
   padding-top: 64px !important; /* or whatever value you want for the padding */
+}
+.backgroundColor {
+  background-color: #f2f2f2 !important;
 }
 .v-navigation-drawer {
   top: 64px !important; /* or whatever value you want for the top position */

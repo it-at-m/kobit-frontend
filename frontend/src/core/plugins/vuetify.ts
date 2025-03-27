@@ -31,15 +31,16 @@ const lhmTheme = {
 const kobitTheme = {
     themes: {
         light: {
-            primary: "#FFE400",
+            primary: "#005A9F",
             text: "#404040",
-            secondary: "#1B98D5",
+            secondary: "#FECC00",
             accent: "#004376",
             error: "#984447",
             info: "#2196F3",
             success: "#3A7F53",
             warning: "#FCAA67",
-            buttonText: "#000000"
+            buttonText: "#000000",
+            darkSecondary: "#eabc00",
         },
         dark: {
             primary: colors.blue.lighten3,
@@ -50,7 +51,8 @@ const kobitTheme = {
             warning: colors.orange.darken1,
             error: colors.red.accent2,
             success: colors.green.base,
-            buttonText: "#000000"
+            buttonText: "#000000",
+            darkSecondary: "#eabc00",
         }
     }
 };

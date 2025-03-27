@@ -64,6 +64,7 @@
                   persistent-hint
                   small-chips
                   :disabled="!isCentralAdmin"
+                  :items="referatItems"
                   @input="changeDepartment"
                 >
                   <template v-slot:no-data>
@@ -434,6 +435,9 @@ export default defineComponent({
   },
   data: () => ({
     isFormValid: false,
+    referatItems: [
+        "ITM", "RIT", "POR", "BAU", "GSR", "KR", "KVR", "KUL", "MOR", "POR", "RAW", "RBS", "RKU", "PLA", "SOZ", "SKA"
+    ]
   }),
   setup(props) {
     const id = ref(props.listItem?.id);
@@ -445,7 +449,7 @@ export default defineComponent({
     const errorMessage = ref('');
     const writableContactPoint = ref<ContactPoint>();
 
-    
+
     watch(contactPoint, (newValue) => {
       if (!writableContactPoint.value) {
         writableContactPoint.value = newValue;

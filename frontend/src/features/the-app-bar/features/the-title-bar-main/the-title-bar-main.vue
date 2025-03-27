@@ -8,7 +8,12 @@
       <a
         style="color:#111;text-decoration: none;"
         href="/"
-      >KoBIT. Digital. Erleben.</a>
+      >
+        <img
+          src="@/assets/ufo-logo-mit-schriftzug.svg"
+          style="width: 65px; height: 65px; padding-top: 5px"
+        >
+      </a>
     </v-toolbar-title>
     <v-spacer />
     <a
