@@ -19,7 +19,7 @@
 
     <properties>
         <exec.maven.plugin>1.6.0</exec.maven.plugin>
-        <maven.clean.plugin>3.1.0</maven.clean.plugin>
+        <maven.clean.plugin>3.5.0</maven.clean.plugin>
     </properties>
 
 
