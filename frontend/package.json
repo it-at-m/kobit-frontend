@@ -65,6 +65,9 @@
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.4.3"
   },
+  "overrides": {
+    "@achrinza/node-ipc": "9.2.9"
+  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
