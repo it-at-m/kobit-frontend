@@ -56,6 +56,9 @@ spring:
           keycloak:
             client-id: kobit
             client-secret: ${client-secret}
+            scope:
+              - openid
+              - roles
 
   http:
     log-request-details: on
