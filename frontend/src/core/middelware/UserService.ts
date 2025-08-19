@@ -8,7 +8,13 @@ const DEPARTMENT_ADMIN = ""
 export const useIsAdmin = () => {
     const {isLoading, isError, data} = useQuery(
         ['user'],
-        () => getIsAdmin()
+        () => getIsAdmin(),
+        {
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchOnMount: false,
+            staleTime: 60 * 60 * 1000,
+        }
     );
     return {isLoading, isError, isAdmin: data};
 }
