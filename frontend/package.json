@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-
     "init": "npm install",
     "serve": "vue-cli-service serve --port 8081 --openssl-legacy-provider",
     "build": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint --fix && vue-cli-service build --openssl-legacy-provider",
@@ -56,8 +55,6 @@
     "jest-fetch-mock": "^3.0.3",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2",
     "typescript": "~3.8.3",
     "url-loader": "^4.1.0",
     "vue-cli-plugin-axios": "0.0.4",
