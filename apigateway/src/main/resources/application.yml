@@ -59,7 +59,7 @@ spring:
             client-id: ${client-id:kobit}
             client-secret: ${client-secret}
             scope:
-              - LHM
+              - LHM_Extended
               - openid
               - roles
 
