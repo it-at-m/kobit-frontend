@@ -5,15 +5,15 @@
   >
     <v-app-bar-nav-icon @click.stop="changeDrawer" />
     <v-toolbar-title>
-      <a
+      <router-link
         style="color:#111;text-decoration: none;"
-        href="/"
+        to="/"
       >
         <img
           src="@/assets/ufo-logo-mit-schriftzug.svg"
           style="width: 65px; height: 65px; padding-top: 5px"
         >
-      </a>
+      </router-link>
     </v-toolbar-title>
     <v-spacer />
     <a
