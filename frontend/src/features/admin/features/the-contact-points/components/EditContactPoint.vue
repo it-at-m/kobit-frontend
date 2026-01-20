@@ -436,7 +436,7 @@ export default defineComponent({
   data: () => ({
     isFormValid: false,
     referatItems: [
-      "ITM", "RIT", "POR", "BAU", "GSR", "KOM", "DIR", "KVR", "KUL", "MOR", "POR", "RAW", "RBS", "RKU", "PLA", "SOZ", "SKA", "AWM", "MKS", "MSE", "REV", "FBM", "JC", "SGM", "MM"
+      "ITM", "RIT", "POR", "BAU", "GSR", "KOM", "DIR", "KVR", "KUL", "MOR", "POR", "RAW", "RBS", "RKU", "PLA", "SOZ", "SKA", "AWM", "MKS", "MSE", "REV", "FBM", "MHM"
     ],
   }),
   setup(props) {
