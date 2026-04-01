@@ -9,6 +9,7 @@ import Toast from "vue-toastification";
 import i18n from "@/core/plugins/i18n";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 import vuetify, { adminTheme, kobitTheme } from "@/core/plugins/vuetify";
+import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 
 Vue.config.productionTip = false;
 
@@ -44,6 +45,12 @@ new Vue({
     provide("store", store);
   },
 }).$mount("#app");
+
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify: Vuetify,
+  iconsGroup: "html"
+})
+
 
 // Use Vue.nextTick to wait for the theme to be applied before rendering the page
 Vue.nextTick(() => {
