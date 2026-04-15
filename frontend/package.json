@@ -11,7 +11,7 @@
     "create-feature": "bash ./scripts/createFeature.sh"
   },
   "dependencies": {
-    "@tanstack/vue-query": "4.13.3",
+    "@tanstack/vue-query": "4.44.0",
     "@types/jspdf": "^2.0.0",
     "@types/marked": "^4.0.8",
     "babel-polyfill": "^6.26.0",
