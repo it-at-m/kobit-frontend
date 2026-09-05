@@ -63,7 +63,7 @@
     "vuetify-loader": "^1.4.3"
   },
   "overrides": {
-    "@achrinza/node-ipc": "9.2.9"
+    "@achrinza/node-ipc": "9.2.10"
   },
   "postcss": {
     "plugins": {
